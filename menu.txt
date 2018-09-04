@@ -1,0 +1,25 @@
+#---------------------------------------------------------
+
+import nuke, nukescripts
+
+#---------------------------------------------------------
+
+path = 'C:\\Users\\frank\\Google Drive\\F_Pipe'
+
+#---------------------------------------------------------
+
+nuke.pluginAddPath(path);              # F_Pipe folder path
+
+#import callbacksTrace                  # show all callbacks
+
+import CGEV_Tools                      # CGEV gizmos
+import F_Tools, F_Panels, F_Hub        # gizmos / panels / menu
+
+import Dots, mirrorNodes               # import now               (link to F_Hub)
+
+import W_hotbox, W_hotboxManager       # '<'
+import knob_scripter                   # 'Alt + z'
+import channel_hotbox                  # 'racine carre'           (link to F_Tools)
+import autoBackdrop as autoBackdrop    # 'Alt + b'                (link to F_Tools)
+
+#---------------------------------------------------------

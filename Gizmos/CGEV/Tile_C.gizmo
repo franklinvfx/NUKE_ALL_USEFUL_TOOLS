@@ -1,0 +1,56 @@
+Group {
+ name Tile_More
+ help "Tile More\n\nTiles the input image into itself.\nThis is useful for repeating 3D textures.\n"
+ tile_color 0xa57aaaff
+ selected true
+ addUserKnob {20 FT l "Tile More"}
+ addUserKnob {3 rows l "          Rows"}
+ rows 2
+ addUserKnob {6 mx l Mirror -STARTLINE}
+ addUserKnob {3 columns l Columns}
+ columns 2
+ addUserKnob {6 my l Mirror -STARTLINE}
+ addUserKnob {26 S2 l " " T " "}
+ addUserKnob {12 offset l Translate}
+ addUserKnob {26 S3 l " " T " "}
+ addUserKnob {41 filter l Filter T STMap1.filter}
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 by3 l " " -STARTLINE T "<font color=\"#1C1C1C\"> Franklin - 2016"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 286
+  ypos 441
+ }
+set N7d1ed000 [stack 0]
+ Expression {
+  expr0 ((x-offset.x)<0?1+((x-offset.x)/width*rows)-int((x-offset.x)/width*rows):((x-offset.x)/width*rows)-int((x-offset.x)/width*rows))
+  expr1 ((y-offset.y)<0?1+((y-offset.y)/height*columns)-int((y-offset.y)/height*columns):((y-offset.y)/height*columns)-int((y-offset.y)/height*columns))
+  name Expression1
+  xpos 176
+  ypos 508
+ }
+ Expression {
+  expr0 mx?(x-offset.x>=0?0:1)+fmod(int((x-offset.x)/width*rows),2)!=0?1-r:r:r
+  expr1 my?(y-offset.y>=0?0:1)+fmod(int((y-offset.y)/height*columns),2)!=0?1-g:g:g
+  name Expression2
+  xpos 176
+  ypos 532
+ }
+push $N7d1ed000
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap1
+  selected true
+  xpos 286
+  ypos 594
+ }
+ Output {
+  name FranklinVFX
+  xpos 286
+  ypos 642
+ }
+end_group

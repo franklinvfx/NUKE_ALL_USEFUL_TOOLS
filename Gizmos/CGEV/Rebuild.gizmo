@@ -1,0 +1,218 @@
+Group {
+ name ReBuild_Fr
+ help "Rebuild Frames\n\nL'outil permet de recreer des frames (manquantes ou de mauvaises qualitees) .\nGeneralement on l'utilise apres une stabilisation pour enlever sur certaines images le flou de mouvement d'origine."
+ onCreate "if nuke.thisNode()\['created_1'].value() == False:\n    n = nuke.thisNode()\['inputframe']\n    kt = nuke.thisNode()\['kt']\n    ko = nuke.thisNode()\['ko']\n    p = nuke.thisNode()\['passthrough']\n    f = nuke.thisNode().firstFrame()\n    l = nuke.thisNode().lastFrame()\n\n    on = nuke.thisNode()\['originalrange']\n\n    n.clearAnimated()\n    kt.clearAnimated()\n    ko.clearAnimated()\n    n.setAnimated()\n\n    n.animation(0).setKey(f,f)\n    n.animation(0).setKey(l,l)\n    p.setValue(0)\n\n    n.setAnimated()\n    on.setAnimated()\n\n    on.animation(0).setKey(f,f)\n    on.animation(0).setKey(l,l)\n    \n    for i in xrange( f, l, 1 ):\n    \tn.setValueAt(i, i)\n        on.setValueAt(i, i)\n\n    nuke.thisNode().knob('storeframe').setValue('<font color=\"grey\">...')\n    nuke.thisNode()\['created_1'].setValue(True)"
+ knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\ninputT = nuke.exists(\"Mask\")\nc = nuke.toNode('Copy2')\n\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(1) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')"
+ tile_color 0xb0a45dff
+ selected true
+ addUserKnob {20 FT l "Rebuild Frames" t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE}
+ addUserKnob {6 created_1 l INVISIBLE +INVISIBLE +STARTLINE}
+ addUserKnob {3 originalrange l INVISIBLE +INVISIBLE}
+ originalrange {{inputframe x1 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100}}
+ addUserKnob {3 inputframe l INVISIBLE t "You should remove all keyframes on every frames you want to ReBuild." -STARTLINE +INVISIBLE}
+ inputframe {{curve x1 1 2 3 4 5}}
+ addUserKnob {26 S00 l " " T " "}
+ addUserKnob {3 frame_to_rebuild l " "}
+ addUserKnob {22 addkey l "Add Current" t "Press the button to add the current frame to the list. \nAll these frames are going to be rebuid." -STARTLINE T "n = nuke.thisNode()\['inputframe']\nt = nuke.frame()\nn.removeKeyAt(t)\n\nnode = nuke.thisNode()\nframenumber = str(int(n.value()))\n\nknob = nuke.thisNode().knob('storeframe')\nif knob.value() == ' ':\n    knob.setVisible(True)\n    knob.setValue('<font color=\"grey\">...')\nelse:\n    if framenumber in knob.value():\n        cur = str(t)\n        nuke.message('Frame ' + cur + ' is already in list.')\n    else:\n        k = node\['inputframe']\n        animCurve = k.animation(0)\n        \n        ok = node\['originalrange']\n        originCurve = ok.animation(0)\n        \n        animKeys = \[int(key.x) for key in animCurve.keys()]\n        originKeys = \[int(key.x) for key in originCurve.keys()]\n        result = list(set(originKeys) - set(animKeys))\n        result = sorted(result)\n        result = \[str(number) for number in result]\n\n        newList = \[]\n        for i in range(0, len(result)):\n            if i % 20 == 0 and i != 0:\n                newList.append('\\n'+result\[i])\n            else:\n                newList.append(result\[i])\n\n        knob.setValue(', '.join(newList))\n\n        invert = nuke.thisNode()\['frame_to_rebuild']\n        invert.setAnimated()\n        invert.setValue(nuke.frame())\n        \n        nuke.thisNode().knob('rebuild').setEnabled(True)\n\ndisable = nuke.toNode('disable_node')\ndisable.knob('disable').setValue(True)\n"}
+ addUserKnob {22 removekey l "Remove Current" t "Remove the current frame from the list." -STARTLINE T "n = nuke.thisNode()\['inputframe']\nn.setAnimated()\nt = nuke.frame()\nn.animation(0).setKey(t,t)\n\nnode = nuke.thisNode()\nframenumber = str(int(n.value()))\n\nknob = nuke.thisNode().knob('storeframe')\n\nif framenumber in knob.value():\n    listValues = knob.value().split(', ')\n    listValues.remove(str(int(nuke.frame())))\n\n    newList = \[]\n    for i in range(0, len(listValues)):\n        if i % 13 == 0 and i != 0:\n            newList.append('\\n'+listValues\[i].replace('\\n', ''))\n        else:\n            print listValues\[i]\n            newList.append(listValues\[i].replace('\\n', ''))\n\n    newList = ', '.join(newList)\n    knob.setValue(newList)\n    \n    invert = nuke.thisNode()\['frame_to_rebuild']\n    invert.removeKey()\n    \n    nuke.thisNode().knob('rebuild').setEnabled(True)\n\ndisable = nuke.toNode('disable_node')\ndisable.knob('disable').setValue(True)"}
+ addUserKnob {26 T01 l " " -STARTLINE T "   "}
+ addUserKnob {22 resetall l "Reset All " t "Reset the current list." -STARTLINE T "n = nuke.thisNode()\['inputframe']\nkt = nuke.thisNode()\['kt']\nko = nuke.thisNode()\['ko']\np = nuke.thisNode()\['passthrough']\nf = nuke.thisNode().firstFrame()\nl = nuke.thisNode().lastFrame()\n\non = nuke.thisNode()\['originalrange']\n\nn.clearAnimated()\nkt.clearAnimated()\nko.clearAnimated()\nn.setAnimated()\n\nn.animation(0).setKey(f,f)\nn.animation(0).setKey(l,l)\np.setValue(0)\n\nn.setAnimated()\non.setAnimated()\n\non.animation(0).setKey(f,f)\non.animation(0).setKey(l,l)\n\nfor i in xrange( f, l, 1 ):\n    n.setValueAt(i, i)\n    on.setValueAt(i, i)\n\nknob = nuke.thisNode().knob('storeframe')\nknob.setValue('<font color=\"grey\">...')\n\ninvert = nuke.thisNode().knob('frame_to_rebuild')\ninvert.setValue(0)\ninvert.clearAnimated()\n\nfirst = str(f)\nlast = str(l)\nnuke.message('Node Reset!\\nWorking in Frame Range: \\n\\n' + first + ' - ' + last)\n\ndisable = nuke.toNode('disable_node')\ndisable.knob('disable').setValue(True)\nnuke.thisNode().knob('rebuild').setEnabled(True)"}
+ addUserKnob {26 S03 l " " T " "}
+ addUserKnob {26 storeframe l "        Frame list : " t "All these frames are going to be re-build." T "<font color=\"grey\">..."}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {22 rebuild l "Re-build Frames" t "Re-build all the frame in list." T "k = nuke.thisNode()\['inputframe']\n\nif(k.isAnimated()):\n    tOriginalCurve = k.animation(0)\n    tKeys = tOriginalCurve.keys()\n    i = 0\n\n    kt = nuke.thisNode()\['kt']\n    ko = nuke.thisNode()\['ko']\n\n    kt.clearAnimated()\n    ko.clearAnimated()\n    kt.setAnimated()\n    ko.setAnimated()\n\n    for tKey in tKeys:\n        tFrame = tKey.x\n        tFrameY = tKey.y\n        ko.setValueAt(i, tFrame)\n        kt.setValueAt(tFrame, i)\n        i = i+1\n\n    koKeys = ko.animation(0).keys()\n    for tKey in koKeys:\n        tKey.interpolation = nuke.LINEAR\n    ktKeys = kt.animation(0).keys()\n    for tKey in ktKeys:\n        tKey.interpolation = nuke.LINEAR\n\np = nuke.thisNode()\['passthrough']\np.setValue(1)\n\ndisable = nuke.toNode('disable_node')\ndisable.knob('disable').setValue(False)\nnuke.thisNode().knob('rebuild').setEnabled(False)" +STARTLINE}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {3 kt l INVISIBLE +INVISIBLE}
+ kt 24
+ addUserKnob {3 passthrough l INVISIBLE +INVISIBLE}
+ addUserKnob {3 ko l INVISIBLE +INVISIBLE}
+ ko 22
+ addUserKnob {20 more l "Options (Render):" n 1}
+ more 0
+ addUserKnob {4 algo l Methode M {OFlow Kronos}}
+ algo Kronos
+ addUserKnob {6 lin l RAW t "Change the colorspace to RAW to be more accurate in generally." -STARTLINE}
+ lin true
+ addUserKnob {26 S04 l " " T " "}
+ addUserKnob {3 shuttersamples l "Shutter Samples" t "How many in-between images to average together for the motion blur."}
+ shuttersamples 1
+ addUserKnob {7 shuttertime l "Shutter Time" t "Sets the equivalent shutter time of the retimed sequence." R 0 10}
+ addUserKnob {6 autoshuttertime l "Automatic Shutter Time" t "Automatically calculate the shutter time throughout the sequence.\n\nNote that this will only produce motion blur when the retimed speed is greater than the original speed." +STARTLINE}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 by2 l " " T "                                                                                                     "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter votre superviseur\n" -STARTLINE T "<font color=\"#1C1C1C\"> v03 - CGEV - 2017"}
+ addUserKnob {26 ""}
+ addUserKnob {41 from0 l "               mask" t "Use this channel from the original input to mix the output with the original input." T Copy2.from0}
+ addUserKnob {41 invertMask l invert -STARTLINE T Keymix2.invertMask}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[value algo]"
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 214
+  ypos -12
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {6 in +STARTLINE}
+  in {{"\[exists input1]"}}
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels3
+  xpos 214
+  ypos 12
+ }
+set N90d9d400 [stack 0]
+push $N90d9d400
+ Copy {
+  inputs 2
+  to0 rgba.alpha
+  name Copy2
+  xpos 214
+  ypos 36
+  disable {{!parent.mask.in i}}
+ }
+ Invert {
+  name Invert2
+  xpos 214
+  ypos 72
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 475
+  ypos -755
+ }
+ Dot {
+  name Dot3
+  xpos 509
+  ypos -679
+ }
+set N90d9c400 [stack 0]
+ Dot {
+  name Dot2
+  xpos 647
+  ypos -679
+ }
+ Dot {
+  name Dot1
+  xpos 647
+  ypos -19
+ }
+set Na0cd9c00 [stack 0]
+ Dot {
+  name Dot4
+  xpos 647
+  ypos 81
+ }
+push $N90d9c400
+ TimeWarp {
+  lookup {{parent.kt}}
+  time ""
+  name TimeWarp5
+  xpos 475
+  ypos -602
+ }
+set Na0cd9400 [stack 0]
+ Log2Lin {
+  operation lin2log
+  name Log2Lin1
+  label "\[if \{\[value operation]==\"lin2log\"\} \{return \"\[knob this.icon F_iconstart.png]\"\} \{return \"\[knob this.icon F_iconend.png]\"\}]"
+  xpos 475
+  ypos -521
+  icon F_iconstart.png
+  disable {{!parent.lin}}
+ }
+set Na0cd9000 [stack 0]
+ Kronos {
+  retimedChannels all
+  timing2 Frame
+  timingFrame2 {{parent.ko}}
+  showLegacyMode false
+  motionEstimation Regularized
+  Shutter 1
+  shutterSamples {{parent.shuttersamples}}
+  shutterTime {{parent.shuttertime}}
+  autoShutterTime {{parent.autoshuttertime}}
+  legacyModeNuke9 false
+  name Kronos1
+  xpos 343
+  ypos -417
+ }
+push $Na0cd9000
+ OFlow2 {
+  timing2 Frame
+  timingFrame2 {{parent.ko}}
+  Shutter 1
+  shutterSamples {{parent.shuttersamples}}
+  shutterTime {{parent.shuttertime}}
+  autoShutterTime {{parent.autoshuttertime}}
+  name OFlow1
+  xpos 475
+  ypos -409
+ }
+ Switch {
+  inputs 2
+  which {{parent.algo}}
+  name Switch3
+  xpos 475
+  ypos -309
+ }
+ Log2Lin {
+  name Log2Lin2
+  label "\[if \{\[value operation]==\"lin2log\"\} \{return \"\[knob this.icon F_iconstart.png]\"\} \{return \"\[knob this.icon F_iconend.png]\"\}]"
+  xpos 475
+  ypos -224
+  icon F_iconend.png
+  disable {{!parent.lin}}
+ }
+push $Na0cd9400
+ Dot {
+  name Dot5
+  xpos 260
+  ypos -598
+ }
+ Dot {
+  name Dot6
+  xpos 260
+  ypos -134
+ }
+ Switch {
+  inputs 2
+  which 1
+  name disable_node
+  xpos 475
+  ypos -138
+  disable true
+ }
+push $Na0cd9c00
+ Switch {
+  inputs 2
+  which {{parent.passthrough}}
+  name Switch1
+  xpos 475
+  ypos -22
+ }
+set N4cc47600 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos 354
+  ypos 72
+  disable {{!parent.mask.in i}}
+ }
+push $N4cc47600
+ Switch {
+  inputs 2
+  which {{Copy2.from0 i}}
+  name Switch2
+  xpos 475
+  ypos 186
+ }
+ Output {
+  name FranklinVFX
+  xpos 475
+  ypos 252
+ }
+end_group

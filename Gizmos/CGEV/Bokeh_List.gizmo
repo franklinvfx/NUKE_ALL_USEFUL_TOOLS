@@ -1,0 +1,107 @@
+Group {
+ inputs 0
+ name Bokeh_List3
+ tile_color 0xeb883aff
+ selected true
+ addUserKnob {20 User l "Bokeh List"}
+ addUserKnob {4 r_name l INVISIBLE +INVISIBLE M {Iris_Clean Iris_Confusion Iris_Disc Iris_Ghost Iris_Grainy Iris_Green Iris_Messy Iris_Moon Iris_Obscured Iris_Octogon Iris_Orb Iris_Petagon Iris_Plain Iris_Refractive Iris_Silk Iris_Soft Iris_Specks Iris_Spots Iris_Spotty Iris_Wave Iris_Wood}}
+ r_name {{bokeh_choice}}
+ addUserKnob {4 bokeh_choice l "          Type" M {"Bokeh 01" "Bokeh 02" "Bokeh 03" "Bokeh 04" "Bokeh 05" "Bokeh 06" "Bokeh 07" "Bokeh 08" "Bokeh 09" "Bokeh 10" "Bokeh 11" "Bokeh 12" "Bokeh 13" "Bokeh 14" "Bokeh 15" "Bokeh 16" "Bokeh 17" "Bokeh 18" "Bokeh 19" "Bokeh 20" "Bokeh 21" "" "" "" "" ""}}
+ addUserKnob {3 format_size l "     Output Size" -STARTLINE}
+ format_size 512
+ addUserKnob {6 anamorphic l Anamorphic -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {20 lookgroup l "Bokeh Preview" n 1}
+ addUserKnob {26 T01 l 01 -STARTLINE T "<file://http://franklinvfx.com/wp-content/uploads/2017/11/v43.png>"}
+ addUserKnob {26 T02 l 02 -STARTLINE T "<img src=\"C:/Users/franklin/.nuke/Gizmos/Filter/Blur/Iris_Confusion.png\">"}
+ addUserKnob {26 T03 l 03 -STARTLINE T "<img src=\"C:/Users/franklin/.nuke/Gizmos/Filter/Blur/Iris_Disc.png\">"}
+ addUserKnob {26 T04 l 04 T "<img src=\"C:/Users/franklin/.nuke/Gizmos/Filter/Blur/Iris_Ghost.png\">"}
+ addUserKnob {26 T05 l 05 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Grainy.png\">"}
+ addUserKnob {26 T06 l 06 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Green.png\">"}
+ addUserKnob {26 T07 l 07 T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Messy.png\">"}
+ addUserKnob {26 T08 l 08 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Moon.png\">"}
+ addUserKnob {26 T09 l 09 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Obscured.png\">"}
+ addUserKnob {26 T10 l 10 T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Octogon.png\">"}
+ addUserKnob {26 T11 l 11 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Orb.png\">"}
+ addUserKnob {26 T12 l 12 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Petagon.png\">"}
+ addUserKnob {26 T13 l 13 T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Plain.png\">"}
+ addUserKnob {26 T14 l 14 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Refractive.png\">"}
+ addUserKnob {26 T15 l 15 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Silk.png\">"}
+ addUserKnob {26 T16 l 16 T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Soft.png\">"}
+ addUserKnob {26 T17 l 17 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Specks.png\">"}
+ addUserKnob {26 T18 l 18 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Spots.png\">"}
+ addUserKnob {26 T19 l 19 T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Spotty.png\">"}
+ addUserKnob {26 T20 l 20 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Wave.png\">"}
+ addUserKnob {26 T21 l 21 -STARTLINE T "<img src=\"//STORA/diska/global/templates/Bokeh_List_images/Iris_Wood.png\">"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 by1 l " " T " \n"}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v03 - CGEV - 2016"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[value bokeh_choice]"
+}
+ Read {
+  inputs 0
+  file "//stora/diska/TRI_WIP/Optical Flares Textures/Elements/\[value parent.r_name].png"
+  format "110 110 0 0 110 110 1 "
+  origset true
+  raw true
+  name Bokeh_1
+  label "\[value file]"
+  selected true
+  xpos -1354
+  ypos -72
+  postage_stamp false
+  addUserKnob {20 ftracktab l ftrack}
+  addUserKnob {1 fcompname l "Component Name:"}
+  fcompname main
+  addUserKnob {20 scriptTab l Script}
+  addUserKnob {1 scriptPath l Path +HIDDEN}
+  addUserKnob {3 scriptFrame l "Ref Frame" +HIDDEN}
+  addUserKnob {22 loadFull l "Load full" T "from cgev.nuke.tools.nodes import read;reload(read);from cgev.nuke.tools.nodes import read;read.loadScript(nuke.thisNode(),full=True)" +STARTLINE}
+  addUserKnob {22 loadlite l "Load Lite" -STARTLINE T "from cgev.nuke.tools.nodes import read;read.loadScript(nuke.thisNode(),full=False)"}
+  addUserKnob {6 forceCheckAll l "Force check All" +STARTLINE}
+ }
+ Reformat {
+  format "512 512 0 0 512 512 1 square_512"
+  filter Simon
+  clamp true
+  name Reformat_bokeh
+  xpos -1354
+  ypos 10
+ }
+ Transform {
+  scale {1 0.5}
+  center {256 256}
+  filter Simon
+  clamp true
+  shutteroffset centred
+  name Transform_Anamorphic
+  xpos -1354
+  ypos 70
+  disable {{!parent.anamorphic}}
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.format_size}}
+  box_height {{box_width}}
+  box_fixed true
+  box_pixel_aspect {{"anamorphic ? 2 : 1"}}
+  filter Simon
+  clamp true
+  name Reformat_Bokeh_final
+  xpos -1354
+  ypos 107
+ }
+ Colorspace {
+  colorspace_in sRGB
+  name Colorspace_bokeh
+  xpos -1354
+  ypos 148
+ }
+ Output {
+  name Output1
+  xpos -1354
+  ypos 197
+ }
+end_group

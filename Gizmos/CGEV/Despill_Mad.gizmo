@@ -1,0 +1,1067 @@
+Group {
+name DespillMadness_C
+help "Despill Madness avec plus de paramétres, permet de conserver la luminance, multiplier l'alpha, et avec une entrée Mask."
+tile_color 0x7aa9ffff
+addUserKnob {20 DespillMadness l "Despill C"}
+addUserKnob {6 DespillTint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {41 screenType l "screen type" T GizmoControl.screenType}
+addUserKnob {41 primary_in l Primary -STARTLINE T IN_Colorspace.primary_in}
+addUserKnob {41 algorithm l "despill algorithm" T GizmoControl.algorithm}
+addUserKnob {41 LimitPercentage l "fine tune" T RedLimitsGreen.LimitPercentage}
+addUserKnob {26 ""}
+addUserKnob {26 text_2 l "" +STARTLINE T "Spill Correction\n"}
+addUserKnob {18 DespillTint l "Despill Tint"}
+DespillTint {1 1 1}
+addUserKnob {6 DespillTint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {22 resetTint l Reset -STARTLINE T nuke.thisNode().knob('DespillTint').setValue(1)}
+addUserKnob {7 MixLuminance l "Mix Luminance"}
+addUserKnob {26 s l " " T " "}
+addUserKnob {41 spillMatteOut l "output spill matte in alpha" T GizmoControl.spillMatteOut}
+addUserKnob {7 Multiply l "Multiply Alpha" R 0 4}
+Multiply 1
+addUserKnob {26 ""}
+addUserKnob {41 maskChannelMask l mask -STARTLINE T MergeMask.maskChannelMask}
+addUserKnob {41 inject -STARTLINE T MergeMask.inject}
+addUserKnob {41 invert_mask l invert -STARTLINE T MergeMask.invert_mask}
+addUserKnob {41 fringe -STARTLINE T MergeMask.fringe}
+addUserKnob {41 mix T MergeMask.mix}
+}
+Input {
+inputs 0
+name InputMask
+xpos 991
+ypos 1530
+number 1
+}
+Dot {
+name Dot12
+xpos 1026
+ypos 1634
+}
+Input {
+inputs 0
+name Input
+xpos 261
+ypos -335
+}
+Colorspace {
+name IN_Colorspace
+xpos 262
+ypos -268
+addUserKnob {20 ProjectColor}
+addUserKnob {22 set T "from cgev.pipeline.data import session\n\nprojectColorSpace = session.getContext().getProjectObject().getLogColorspace()\n\nprint projectColorSpace\nnuke.thisNode()\['colorspace_out'].setValue(projectColorSpace)" +STARTLINE}
+}
+Dot {
+name Dot6
+tile_color 0x8ce08ff
+xpos 296
+ypos -192
+}
+set N5602a800 [stack 0]
+Dot {
+name Dot2
+xpos 296
+ypos -39
+}
+set N5602a400 [stack 0]
+Dot {
+name Dot3
+xpos 426
+ypos -39
+}
+set N5602a000 [stack 0]
+Dot {
+name Dot18
+tile_color 0x8ce08ff
+xpos 563
+ypos -39
+}
+set N5605bc00 [stack 0]
+Dot {
+name Dot17
+tile_color 0x8ce08ff
+xpos 697
+ypos -39
+}
+set N5605b800 [stack 0]
+Dot {
+name Dot22
+tile_color 0x8ce08ff
+xpos 948
+ypos -39
+}
+set N5605b400 [stack 0]
+Dot {
+name Dot23
+tile_color 0x8ce08ff
+xpos 1088
+ypos -39
+}
+set N5605b000 [stack 0]
+Expression {
+expr0 r>g*LimitPercentage?g*LimitPercentage:r
+expr3 r-g*LimitPercentage
+name GreenLimitsRed
+tile_color 0xff0000ff
+xpos 1053
+ypos 66
+addUserKnob {20 User}
+addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+LimitPercentage {{RedLimitsGreen.LimitPercentage}}
+}
+push $N5605b400
+Expression {
+expr0 r>b*LimitPercentage?r*LimitPercentage:r
+expr3 r-b*LimitPercentage
+name BlueLimitsRed
+tile_color 0xff0000ff
+xpos 913
+ypos 65
+addUserKnob {20 User}
+addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+LimitPercentage {{RedLimitsGreen.LimitPercentage}}
+}
+push $N5605b000
+Dot {
+name Dot24
+tile_color 0x8ce08ff
+xpos 1231
+ypos -39
+}
+set N5612bc00 [stack 0]
+Expression {
+expr0 r>(g+b)/2*LimitPercentage?(g+b)/2*LimitPercentage:r
+expr2 b>(g+r)/2*LimitPercentage?(g+r)/2*LimitPercentage:b
+expr3 b-(r+g)*LimitPercentage/2
+name BlueAndGreenLimitRed
+tile_color 0xff0000ff
+xpos 1196
+ypos 60
+addUserKnob {20 User}
+addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+LimitPercentage {{RedLimitsGreen.LimitPercentage}}
+}
+Switch {
+inputs 3
+which {{GizmoControl.algorithm i}}
+name SwitchBlue1
+tile_color 0xff0000ff
+xpos 1053
+ypos 192
+}
+Dot {
+name Dot25
+tile_color 0x8ce08ff
+xpos 1080
+ypos 364
+}
+push $N5605bc00
+Expression {
+expr2 b>g*LimitPercentage?g*LimitPercentage:b
+expr3 b-g*LimitPercentage
+name GreenLimitsBlue1
+tile_color 0x3fffff
+xpos 528
+ypos 44
+addUserKnob {20 User}
+addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+LimitPercentage {{RedLimitsGreen.LimitPercentage}}
+}
+push $N5602a000
+Expression {
+expr2 b>r*LimitPercentage?r*LimitPercentage:b
+expr3 b-r*LimitPercentage
+name RedLimitsBlue
+tile_color 0x3fffff
+xpos 392
+ypos 44
+addUserKnob {20 User}
+addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+}
+push $N5605b800
+Expression {
+expr2 b>(g+r)/2*LimitPercentage?(g+r)/2*LimitPercentage:b
+expr3 b-(r+g)*LimitPercentage/2
+name RedAndGreenLimitBlue
+tile_color 0x3fffff
+xpos 662
+ypos 44
+addUserKnob {20 User}
+addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+}
+Switch {
+inputs 3
+which {{GizmoControl.algorithm i}}
+name SwitchBlue
+tile_color 0x3fffff
+xpos 528
+ypos 190
+}
+Dot {
+name Dot5
+xpos 562
+ypos 370
+}
+push $N5602a400
+Dot {
+name Dot1
+xpos 164
+ypos -39
+}
+set N56157000 [stack 0]
+Dot {
+name Dot20
+tile_color 0x8ce08ff
+xpos 20
+ypos -39
+}
+set N56156c00 [stack 0]
+Expression {
+expr1 g>b*LimitPercentage?b*LimitPercentage:g
+expr3 g-b*LimitPercentage
+name BlueLimitsGreen
+tile_color 0x7fff00ff
+xpos -15
+ypos 44
+addUserKnob {20 User}
+addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+}
+push $N56156c00
+Dot {
+name Dot19
+tile_color 0x8ce08ff
+xpos -125
+ypos -39
+}
+Expression {
+expr1 g>r*LimitPercentage?r*LimitPercentage:g
+expr3 g-r*LimitPercentage
+name RedLimitsGreen
+tile_color 0x7fff00ff
+xpos -160
+ypos 44
+addUserKnob {20 User}
+addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+LimitPercentage 0.94
+}
+push $N56157000
+Expression {
+expr1 g>(b+r)/2*LimitPercentage?(b+r)/2*LimitPercentage:g
+expr3 g-(r+b)*LimitPercentage/2
+name RedAveBlueLimitsGreen
+tile_color 0x7fff00ff
+xpos 130
+ypos 44
+addUserKnob {20 User}
+addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+}
+Switch {
+inputs 3
+which {{GizmoControl.algorithm i}}
+name SwitchGreen
+tile_color 0x7fff00ff
+xpos -15
+ypos 199
+}
+Dot {
+name Dot4
+xpos 19
+ypos 370
+}
+Switch {
+inputs 3
+which {{GizmoControl.screenType i}}
+name SwitchMain
+xpos 527
+ypos 497
+}
+Clamp {
+channels alpha
+name Clamp1
+xpos 527
+ypos 539
+}
+Dot {
+name Dot21
+tile_color 0x8ce08ff
+xpos 562
+ypos 694
+}
+set N5617c400 [stack 0]
+push $N5602a800
+Dot {
+name Dot7
+xpos -345
+ypos -186
+}
+Dot {
+name Dot8
+xpos -345
+ypos 1194
+}
+set N561b3c00 [stack 0]
+Shuffle {
+alpha white
+name Shuffle1
+xpos 74
+ypos 1189
+}
+push $N5617c400
+push $N5612bc00
+Dot {
+name Dot16
+tile_color 0x8ce08ff
+xpos 1727
+ypos -39
+}
+Dot {
+name Dot15
+tile_color 0x8ce08ff
+xpos 1727
+ypos 711
+}
+push $N5617c400
+Merge2 {
+inputs 2
+operation minus
+name Merge9
+xpos 790
+ypos 690
+}
+Saturation {
+saturation 0
+name Saturation_off
+xpos 790
+ypos 728
+}
+Grade {
+white {{parent.DespillTint.r} {parent.DespillTint.g} {parent.DespillTint.b} 1}
+black_clamp false
+name Grade_despilltint
+xpos 790
+ypos 798
+}
+Merge2 {
+inputs 2
+operation plus
+output {rgba.red rgba.green rgba.blue -rgba.alpha}
+name Merge11
+xpos 790
+ypos 948
+}
+push $N5617c400
+MergeExpression {
+inputs 2
+temp_name0 BY
+temp_expr0 "( 0.213*(Br<= 0.0031308 ? 12.92*Br : ( 1.055*pow(Br,1.0 / 2.4)) - 0.055)) + ( 0.715*(Bg<= 0.0031308 ? 12.92*Bg : ( 1.055*pow(Bg,1.0 / 2.4)) - 0.055)) + ( 0.072*(Bb<= 0.0031308 ? 12.92*Bb : ( 1.055*pow(Bb,1.0 / 2.4)) - 0.055))"
+temp_name1 APb
+temp_expr1 "(-0.115*(Ar<= 0.0031308 ? 12.92*Ar : ( 1.055*pow(Ar,1.0 / 2.4)) - 0.055)) + (-0.385*(Ag<= 0.0031308 ? 12.92*Ag : ( 1.055*pow(Ag,1.0 / 2.4)) - 0.055)) + ( 0.500*(Ab<= 0.0031308 ? 12.92*Ab : ( 1.055*pow(Ab,1.0 / 2.4)) - 0.055))"
+temp_name2 APr
+temp_expr2 "( 0.500*(Ar<= 0.0031308 ? 12.92*Ar : ( 1.055*pow(Ar,1.0 / 2.4)) - 0.055)) + (-0.454*(Ag<= 0.0031308 ? 12.92*Ag : ( 1.055*pow(Ag,1.0 / 2.4)) - 0.055)) + (-0.046*(Ab<= 0.0031308 ? 12.92*Ab : ( 1.055*pow(Ab,1.0 / 2.4)) - 0.055))"
+expr0 "(( 1.000*BY) + ( 0.000*APb) + ( 1.575*APr))<.04045 ? (( 1.000*BY) + ( 0.000*APb) + ( 1.575*APr))/12.92 : pow(((( 1.000*BY) + ( 0.000*APb) + ( 1.575*APr))+.055)/1.055, 2.4)"
+expr1 "(( 1.000*BY) + (-0.187*APb) + (-0.468*APr))<.04045 ? (( 1.000*BY) + (-0.187*APb) + (-0.468*APr))/12.92 : pow(((( 1.000*BY) + (-0.187*APb) + (-0.468*APr))+.055)/1.055, 2.4)"
+expr2 "(( 1.000*BY) + ( 1.856*APb) + ( 0.000*APr))<.04045 ? (( 1.000*BY) + ( 1.856*APb) + ( 0.000*APr))/12.92 : pow(((( 1.000*BY) + ( 1.856*APb) + ( 0.000*APr))+.055)/1.055, 2.4)"
+name Washer
+xpos 525
+ypos 948
+}
+Shuffle {
+alpha white
+name Shuffle2
+xpos 527
+ypos 1083
+}
+Group {
+inputs 2
+name Group1
+help "Does a pixel-by-pixel merge operation on the two input images with similar blending modes to Adobe Photoshop. "
+note_font "Bitstream Vera Sans"
+xpos 527
+ypos 1190
+mapsize {0.15 0.15}
+addUserKnob {20 User}
+addUserKnob {4 operation t "Blending mode." M {normal screen "color dodge" overlay multiply darken "color burn" "linear burn" lighten "linear dodge" "lighter color" "soft light" "hard light" "vivid light" "linear light" "pin light" "hard mix" difference exclusion subtract divide hue saturation color luminosity "" "" "" "" ""}}
+operation luminosity
+addUserKnob {6 sRGB l "sRGB colorspace" t "Photoshop merge operations are done in sRGB colorspace. If this option is checked ( the default ) the input is converted to sRGB from linear, the merge performed and the result converted back to linear." -STARTLINE}
+sRGB true
+addUserKnob {26 ""}
+addUserKnob {26 mask -STARTLINE T ""}
+addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge5.maskChannelInput}
+addUserKnob {41 invert_mask l invert -STARTLINE T Merge5.invert_mask}
+addUserKnob {41 mix T Merge5.mix}
+}
+BackdropNode {
+inputs 0
+name BackdropNode1
+tile_color 0x7171c600
+label HUE
+note_font_size 42
+xpos 3568
+ypos 580
+bdwidth 255
+bdheight 319
+}
+BackdropNode {
+inputs 0
+name BackdropNode2
+tile_color 0x7171c600
+label Saturation
+note_font_size 42
+xpos 3870
+ypos 582
+bdwidth 255
+bdheight 319
+}
+BackdropNode {
+inputs 0
+name BackdropNode3
+tile_color 0x7171c600
+label Color
+note_font_size 42
+xpos 4165
+ypos 584
+bdwidth 255
+bdheight 319
+}
+BackdropNode {
+inputs 0
+name BackdropNode4
+tile_color 0x7171c600
+label Luminosity
+note_font_size 42
+xpos 4471
+ypos 585
+bdwidth 255
+bdheight 319
+}
+Input {
+inputs 0
+name A
+xpos 3181
+ypos -1077
+number 1
+}
+Colorspace {
+colorspace_out sRGB
+name Colorspace15
+xpos 3181
+ypos -1039
+disable {{"! sRGB"}}
+}
+set N56213c00 [stack 0]
+Dot {
+name Dot2
+xpos 5192
+ypos 782
+}
+Dot {
+name Dot43
+xpos 2476
+ypos 1946
+}
+set N56213400 [stack 0]
+Multiply {
+value 0
+maskChannelInput {{{parent.Merge5.maskChannelInput}}}
+invert_mask {{"! parent.Merge5.invert_mask"}}
+name Multiply1
+xpos 2442
+ypos 1986
+disable {{mask==0 x1 1}}
+}
+Input {
+inputs 0
+name B
+xpos 1655
+ypos -1082
+}
+Colorspace {
+colorspace_out sRGB
+name Colorspace14
+xpos 1655
+ypos -1011
+disable {{"! sRGB"}}
+}
+set N56212800 [stack 0]
+Dot {
+name Dot60
+xpos -384
+ypos -376
+}
+Dot {
+name Dot61
+xpos -384
+ypos 1688
+}
+Dot {
+name Dot46
+xpos 2158
+ypos 1996
+}
+set N5623dc00 [stack 0]
+Dot {
+name Dot1
+xpos 2158
+ypos 2102
+}
+Merge2 {
+inputs 2
+operation max
+Achannels alpha
+Bchannels alpha
+output alpha
+name Merge1
+xpos 2442
+ypos 2092
+}
+push $N56213400
+push $N56212800
+Colorspace {
+colorspace_in sRGB
+colorspace_out CIE-LCH
+name Colorspace11
+xpos 4483
+ypos 723
+}
+push $N56213c00
+Colorspace {
+colorspace_in sRGB
+colorspace_out CIE-LCH
+name Colorspace12
+xpos 4577
+ypos 724
+}
+ShuffleCopy {
+inputs 2
+green green
+blue blue
+name ShuffleCopy4
+xpos 4483
+ypos 783
+}
+Colorspace {
+colorspace_in CIE-LCH
+colorspace_out sRGB
+name Colorspace13
+xpos 4483
+ypos 822
+}
+push $N56212800
+Colorspace {
+colorspace_in sRGB
+colorspace_out CIE-LCH
+name Colorspace8
+xpos 4177
+ypos 722
+}
+push $N56213c00
+Colorspace {
+colorspace_in sRGB
+colorspace_out CIE-LCH
+name Colorspace9
+xpos 4271
+ypos 723
+}
+ShuffleCopy {
+inputs 2
+red red
+name ShuffleCopy3
+xpos 4177
+ypos 782
+}
+Colorspace {
+colorspace_in CIE-LCH
+colorspace_out sRGB
+name Colorspace10
+xpos 4177
+ypos 821
+}
+push $N56212800
+Colorspace {
+colorspace_in sRGB
+colorspace_out CIE-LCH
+name Colorspace4
+xpos 3882
+ypos 720
+}
+push $N56213c00
+Colorspace {
+colorspace_in sRGB
+colorspace_out CIE-LCH
+name Colorspace5
+xpos 3976
+ypos 719
+}
+ShuffleCopy {
+inputs 2
+red red
+blue blue
+name ShuffleCopy2
+xpos 3882
+ypos 780
+}
+Colorspace {
+colorspace_in CIE-LCH
+colorspace_out sRGB
+name Colorspace7
+xpos 3882
+ypos 819
+}
+push $N56212800
+Colorspace {
+colorspace_in sRGB
+colorspace_out CIE-LCH
+name Colorspace1
+xpos 3580
+ypos 718
+}
+push $N56213c00
+Colorspace {
+colorspace_in sRGB
+colorspace_out CIE-LCH
+name Colorspace2
+xpos 3674
+ypos 719
+}
+ShuffleCopy {
+inputs 2
+red red
+green green
+alpha black
+name ShuffleCopy1
+xpos 3580
+ypos 778
+}
+Colorspace {
+colorspace_in CIE-LCH
+colorspace_out sRGB
+name Colorspace3
+xpos 3580
+ypos 817
+}
+push $N56213c00
+Expression {
+expr0 1/r
+expr1 1/g
+expr2 1/b
+name Divide
+xpos 3446
+ypos 708
+}
+push $N56212800
+Merge2 {
+inputs 2
+operation multiply
+bbox A
+name Merge35
+xpos 3351
+ypos 735
+}
+Clamp {
+name Clamp1
+xpos 3351
+ypos 770
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation from
+bbox A
+name subtract
+xpos 3166
+ypos 727
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation exclusion
+bbox A
+name exclusion
+xpos 2949
+ypos 719
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation difference
+bbox A
+name Difference
+xpos 2750
+ypos 729
+}
+push $N56213c00
+push $N56212800
+MergeExpression {
+inputs 2
+expr0 "((Ar < 0.5) ? (((2.0 * Ar) == 0.0) ? (2.0 * Ar) : max((1.0 - ((1.0 - Br) / (2.0 * Ar))), 0.0)) : (((2.0 * (Ar - 0.5)) == 1.0) ? (2.0 * (Ar - 0.5)) : min(Br / (1.0 - (2.0 * (Ar - 0.5))), 1.0)) ) < 0.5 ? 0.0 : 1.0"
+expr1 "((Ag < 0.5) ? (((2.0 * Ag) == 0.0) ? (2.0 * Ag) : max((1.0 - ((1.0 - Bg) / (2.0 * Ag))), 0.0)) : (((2.0 * (Ag - 0.5)) == 1.0) ? (2.0 * (Ag - 0.5)) : min(Bg / (1.0 - (2.0 * (Ag - 0.5))), 1.0)) ) < 0.5 ? 0.0 : 1.0"
+expr2 "((Ab < 0.5) ? (((2.0 * Ab) == 0.0) ? (2.0 * Ab) : max((1.0 - ((1.0 - Bb) / (2.0 * Ab))), 0.0)) : (((2.0 * (Ab - 0.5)) == 1.0) ? (2.0 * (Ab - 0.5)) : min(Bb / (1.0 - (2.0 * (Ab - 0.5))), 1.0)) ) < 0.5 ? 0.0 : 1.0"
+name Hardmix
+xpos 2570
+ypos 717
+}
+push $N56213c00
+push $N56212800
+MergeExpression {
+inputs 2
+expr0 "((Ar < 0.5) ? min(Br, (2.0 * Ar)) : max(Br, (2.0 *(Ar - 0.5))))"
+expr1 "((Ag < 0.5) ? min(Bg, (2.0 * Ag)) : max(Bg, (2.0 *(Ag - 0.5))))"
+expr2 "((Ab < 0.5) ? min(Bb, (2.0 * Ab)) : max(Bb, (2.0 *(Ab - 0.5))))"
+name pinlight
+xpos 2408
+ypos 712
+}
+push $N56213c00
+push $N56212800
+MergeExpression {
+inputs 2
+expr0 "(Ar < 0.5 ? max(Br + (2.0 * Ar) - 1.0, 0)  :  min(Br + (2.0 * (Ar - 0.5)), 1.0))"
+expr1 "(Ag < 0.5 ? max(Bg + (2.0 * Ag) - 1.0, 0)  :  min(Bg + (2.0 * (Ag - 0.5)), 1.0))"
+expr2 "(Ab < 0.5 ? max(Bb + (2.0 * Ab) - 1.0, 0)  :  min(Bb + (2.0 * (Ab - 0.5)), 1.0))"
+name Linearlight
+xpos 2245
+ypos 707
+}
+push $N56213c00
+push $N56212800
+MergeExpression {
+inputs 2
+expr0 "((Ar < 0.5) ? (((2.0 * Ar) == 0.0) ? (2.0 * Ar) : max((1.0 - ((1.0 - Br) / (2.0 * Ar))), 0.0)) : (((2.0 * (Ar - 0.5)) == 1.0) ? (2.0 * (Ar - 0.5)) : min(Br / (1.0 - (2.0 * (Ar - 0.5))), 1.0)) )"
+expr1 "((Ag < 0.5) ? (((2.0 * Ag) == 0.0) ? (2.0 * Ag) : max((1.0 - ((1.0 - Bg) / (2.0 * Ag))), 0.0)) : (((2.0 * (Ag - 0.5)) == 1.0) ? (2.0 * (Ag - 0.5)) : min(Bg / (1.0 - (2.0 * (Ag - 0.5))), 1.0)) )"
+expr2 "((Ab < 0.5) ? (((2.0 * Ab) == 0.0) ? (2.0 * Ab) : max((1.0 - ((1.0 - Bb) / (2.0 * Ab))), 0.0)) : (((2.0 * (Ab - 0.5)) == 1.0) ? (2.0 * (Ab - 0.5)) : min(Bb / (1.0 - (2.0 * (Ab - 0.5))), 1.0)) )"
+name vividlight
+xpos 2093
+ypos 701
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation hard-light
+bbox A
+name Merge23
+xpos 1940
+ypos 691
+}
+push $N56213c00
+push $N56212800
+MergeExpression {
+inputs 2
+expr0 "((Ar < 0.5) ? (2.0 * Br * Ar + Br * Br * (1.0 - 2.0 * Ar)) : (sqrt(Br) * (2.0 * Ar - 1.0) + 2.0 * Br * (1.0 - Ar)))"
+expr1 "((Ag < 0.5) ? (2.0 * Bg * Ag + Bg * Bg * (1.0 - 2.0 * Ag)) : (sqrt(Bg) * (2.0 * Ag - 1.0) + 2.0 * Bg * (1.0 - Ag)))"
+expr2 "((Ab < 0.5) ? (2.0 * Bb * Ab + Bb * Bb * (1.0 - 2.0 * Ab)) : (sqrt(Bb) * (2.0 * Ab - 1.0) + 2.0 * Bb * (1.0 - Ab)))"
+name softlight
+xpos 1757
+ypos 694
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation max
+name lightcolor
+xpos 1603
+ypos 684
+}
+push $N56213c00
+push $N56212800
+MergeExpression {
+inputs 2
+expr0 "min(Br + Ar, 1.0)"
+expr1 "min(Bg + Ag, 1.0)"
+expr2 "min(Bb + Ab, 1.0)"
+name lindodge
+xpos 1464
+ypos 679
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation max
+bbox A
+name lighten
+xpos 1311
+ypos 683
+}
+push $N56213c00
+push $N56212800
+MergeExpression {
+inputs 2
+expr0 "max(Br + Ar - 1.0, 0.0)"
+expr1 "max(Bg + Ag - 1.0, 0.0)"
+expr2 "max(Bb + Ab - 1.0, 0.0)"
+name linburn
+xpos 1156
+ypos 680
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation color-burn
+bbox A
+name Merge15
+xpos 962
+ypos 677
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation min
+name Darken
+xpos 764
+ypos 667
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation multiply
+bbox A
+name Merge12
+xpos 527
+ypos 660
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation overlay
+bbox A
+name Merge10
+xpos 377
+ypos 660
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation color-dodge
+bbox A
+name Merge8
+xpos 216
+ypos 656
+}
+push $N56213c00
+push $N56212800
+Merge2 {
+inputs 2
+operation screen
+bbox A
+name Merge6
+xpos 7
+ypos 647
+}
+push $N56213c00
+Dot {
+name Dot62
+xpos -204
+ypos 650
+}
+Switch {
+inputs 25
+which {{operation}}
+name Switch1
+xpos 2310
+ypos 1892
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+xpos 2310
+ypos 1936
+}
+push $N5623dc00
+Merge2 {
+inputs 2
+operation matte
+mix {{parent.parent.MixLuminance}}
+name Merge5
+xpos 2310
+ypos 1992
+}
+ShuffleCopy {
+inputs 2
+name ShuffleCopy5
+xpos 2310
+ypos 2134
+}
+set N563aec00 [stack 0]
+Colorspace {
+colorspace_in sRGB
+name Colorspace6
+xpos 2310
+ypos 2177
+disable {{"! sRGB"}}
+}
+Output {
+name Output1
+xpos 2310
+ypos 2220
+}
+push $N563aec00
+Viewer {
+input_process false
+name Viewer1
+xpos 2572
+ypos 2172
+}
+end_group
+Dot {
+name Dot14
+tile_color 0x8ce08ff
+xpos 562
+ypos 1296
+}
+set N563ae000 [stack 0]
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+bbox B
+name Copy2
+xpos 626
+ypos 1286
+}
+Dot {
+name Dot9
+tile_color 0x8ce08ff
+xpos 725
+ypos 1296
+}
+Dot {
+name Dot10
+xpos 725
+ypos 1474
+}
+Multiply {
+channels alpha
+value {{parent.Multiply}}
+name Multiply1
+xpos 637
+ypos 1462
+}
+push $N561b3c00
+Dot {
+name Dot11
+xpos -345
+ypos 1410
+}
+set N56400c00 [stack 0]
+Expression {
+channel0 {-rgba.red -rgba.green -rgba.blue none}
+expr0 0
+channel1 {-rgba.red -rgba.green -rgba.blue none}
+expr1 0
+channel2 {-rgba.red -rgba.green -rgba.blue none}
+expr2 0
+channel3 {rgba.alpha none none rgba.alpha}
+expr3 a==0?0:a
+name AlphaError
+label "To avid Gizmo being in state of\nerror without something plugged in input."
+xpos 234
+ypos 1394
+}
+push $N563ae000
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+from3 rgba.alpha
+to3 rgba.alpha
+name CopyAlpha
+xpos 527
+ypos 1394
+}
+Switch {
+inputs 2
+which {{GizmoControl.spillMatteOut}}
+name SwitchSpillMap
+xpos 527
+ypos 1468
+}
+push $N56400c00
+Dot {
+name Dot13
+xpos -345
+ypos 1634
+}
+Expression {
+channel0 {-rgba.red -rgba.green -rgba.blue none}
+expr0 0
+channel1 {-rgba.red -rgba.green -rgba.blue none}
+expr1 0
+channel2 {-rgba.red -rgba.green -rgba.blue none}
+expr2 0
+channel3 {rgba.alpha none none rgba.alpha}
+expr3 a==0?0:a
+name AlphaError1
+label "To avid Gizmo being in state of\nerror without something plugged in input."
+xpos -101
+ypos 1618
+}
+Shuffle {
+alpha black
+name black_alpha
+label "\[value in]"
+xpos 91
+ypos 1624
+disable {{"GizmoControl.spillMatteOut ? 0 : 1"}}
+}
+Merge2 {
+inputs 2+1
+operation copy
+name MergeMask
+xpos 527
+ypos 1630
+}
+Colorspace {
+channels {{{IN_Colorspace.channel}}}
+colorspace_in {{IN_Colorspace.colorspace_out}}
+illuminant_in {{IN_Colorspace.illuminant_out}}
+primary_in {{IN_Colorspace.primary_out}}
+illuminant_out {{IN_Colorspace.illuminant_in}}
+primary_out {{IN_Colorspace.primary_in}}
+bradford_matrix {{IN_Colorspace.bradford_matrix}}
+maskChannelMask {{{IN_Colorspace.maskChannelMask}}}
+maskChannelInput {{{IN_Colorspace.mask}}}
+inject {{IN_Colorspace.inject}}
+invert_mask {{IN_Colorspace.invert_mask}}
+fringe {{IN_Colorspace.fringe}}
+process_mask {{IN_Colorspace.process_mask}}
+unpremult {{{IN_Colorspace.unpremult}}}
+invert_unpremult {{IN_Colorspace.invert_unpremult}}
+mix {{IN_Colorspace.mix}}
+name OUT_Colorspace
+xpos 527
+ypos 1727
+}
+Output {
+name Output1
+xpos 527
+ypos 1795
+}
+NoOp {
+inputs 0
+name GizmoControl
+selected true
+xpos 99
+ypos 1291
+addUserKnob {20 User}
+addUserKnob {26 version l v1.0}
+addUserKnob {4 screenType l "screen type" M {green blue red}}
+addUserKnob {4 algorithm l "despill algorithm" M {average "red limit" "green/blue limit" ""}}
+addUserKnob {6 spillMatteOut l "output spill matte in alpha" +STARTLINE}
+}
+end_group

@@ -1,0 +1,231 @@
+set cut_paste_input [stack 0]
+version 6.0 v5
+push $cut_paste_input
+Group {
+name ChromaticAberration
+selected true
+icon F_onnode.png
+addUserKnob {20 ChromaticAberration l Chromatic_Aberration}
+addUserKnob {26 Chromatic_Aberration}
+addUserKnob {41 Red T Red_Aberration.distortion1}
+addUserKnob {41 Green T Green_Aberration.distortion1}
+addUserKnob {41 Blue T Blue_Aberration.distortion1}
+addUserKnob {41 invertDistortion l Remove T Red_Aberration.invertDistortion}
+addUserKnob {26 Blur_Aberration}
+addUserKnob {41 Blur T Aberration_Blur.defocus}
+addUserKnob {41 Blur_Area T Blur_matte.defocus}
+addUserKnob {26 Crop l "  " T " "}
+addUserKnob {6 crop l "Crop BBox like Input" +STARTLINE}
+crop true
+addUserKnob {26 ""}
+addUserKnob {41 mix T MIX.mix}
+addUserKnob {20 About}
+addUserKnob {26 ChromaticAberration_1 l "" +STARTLINE T "Created By:\nFabio Luongo\nfabioluongo.com"}
+addUserKnob {26 ""}
+}
+Input {
+inputs 0
+name Src
+selected true
+xpos -428
+ypos -303
+}
+Remove {
+channels alpha
+name Remove2
+selected true
+xpos -428
+ypos -228
+}
+set N47c65490 [stack 0]
+Dot {
+name Dot2
+selected true
+xpos -167
+ypos -223
+}
+set N47c65b70 [stack 0]
+Shuffle {
+alpha white
+name Shuffle1
+selected true
+xpos -66
+ypos -226
+}
+Dot {
+name Dot3
+xpos -32
+ypos 474
+}
+push $N47c65b70
+push $N47c65490
+Remove {
+channels {rgba.red rgba.green -rgba.blue none}
+name Blue
+xpos -282
+ypos -110
+}
+Shuffle {
+black blue
+out2 alpha
+name Blue_Alpha
+xpos -282
+ypos -64
+}
+LensDistortion1_0 {
+serializeKnob ""
+serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+distortion2 {{parent.Red_Aberration.distortion2.main i}}
+invertDistortion {{parent.Red_Aberration.invertDistortion.main i}}
+cardScale {1.005102873 1.005102873 1}
+a -0.01392426062
+b 0.01001844276
+c 8.660675121e-006
+name Blue_Aberration
+xpos -282
+ypos 7
+}
+Crop {
+box {0 0 {input.width} {input.height}}
+crop false
+name Crop2
+xpos -282
+ypos 44
+disable {{parent.Crop1.disable}}
+}
+push $N47c65490
+Remove {
+channels {rgba.red -rgba.green rgba.blue none}
+name Green
+xpos -428
+ypos -110
+}
+Shuffle {
+black green
+out2 alpha
+name Green_Alpha
+xpos -428
+ypos -67
+}
+LensDistortion1_0 {
+serializeKnob ""
+serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+distortion1 0.002
+distortion2 {{parent.Red_Aberration.distortion2.main i}}
+invertDistortion {{parent.Red_Aberration.invertDistortion.main i}}
+cardScale {1.352203488 1.352203488 1}
+a -0.7927795053
+b 0.02417497151
+c 0.6320559382
+name Green_Aberration
+xpos -428
+ypos 10
+}
+Crop {
+box {0 0 {input.width} {input.height}}
+crop false
+name Crop1
+xpos -428
+ypos 46
+disable {{!parent.crop}}
+}
+push $N47c65490
+Remove {
+channels {-rgba.red rgba.green rgba.blue none}
+name Red
+xpos -567
+ypos -110
+}
+Shuffle {
+black red
+out2 alpha
+name Red_Alpha
+xpos -567
+ypos -67
+}
+LensDistortion1_0 {
+serializeKnob ""
+serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+distortion1 0.004
+distortion2 {{(distortion1.main)/0.8 i}}
+"Card Parameters" 1
+cardScale {1.009262323 1.009262323 1}
+a -0.01403482724
+b 0.004659189377
+c 0.001843329868
+name Red_Aberration
+xpos -567
+ypos 5
+}
+Crop {
+box {0 0 {input.width} {input.height}}
+crop false
+name Crop14
+xpos -567
+ypos 47
+disable {{parent.Crop1.disable}}
+}
+Merge2 {
+inputs 2
+operation screen
+name Red_and_Green
+xpos -483
+ypos 126
+}
+Merge2 {
+inputs 2
+operation screen
+name Red_and_Green_and_Blue
+xpos -379
+ypos 206
+}
+set N47c69cc0 [stack 0]
+Difference {
+inputs 2
+name Matte_Aberration
+xpos -201
+ypos 200
+}
+Defocus {
+channels alpha
+defocus 10
+name Blur_matte
+xpos -201
+ypos 286
+}
+ColorCorrect {
+channels alpha
+gamma {{parent.Blur_matte.defocus.main/4 i}}
+gain {{parent.Blur_matte.defocus.main/4 i}}
+name Gamma_matte
+xpos -201
+ypos 359
+}
+push $N47c69cc0
+Remove {
+channels alpha
+name Remove1
+xpos -379
+ypos 290
+}
+Defocus {
+inputs 1+1
+name Aberration_Blur
+xpos -379
+ypos 359
+}
+Merge2 {
+inputs 2
+operation matte
+invert_mask true
+mix 0
+name MIX
+xpos -379
+ypos 471
+}
+Output {
+name Out
+xpos -379
+ypos 543
+}
+end_group

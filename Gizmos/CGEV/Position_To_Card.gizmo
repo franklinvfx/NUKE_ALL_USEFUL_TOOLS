@@ -1,0 +1,42 @@
+Group {
+ name Pos_To_Card
+ help "Position to Axis / Card\n\nPick the value of a pixel on the Position pass and create a Card or an Axis exacly at this position in 3D space.\n"
+ tile_color 0xdda92aff
+ selected true
+ addUserKnob {20 User l "Position to... Axis / Card"}
+ addUserKnob {41 in l "Position Channel" t "Choose the position pass channel." T Shuffle1.in}
+ addUserKnob {26 S00 l " " T " "}
+ addUserKnob {41 pos l Center T Shuffle1.pos}
+ addUserKnob {26 ""}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {22 card l "Create Card" t "Create a Card at the position you choose.\n\n\"rgb\" corresponding to \"xyz\"" T "groupNode = nuke.thisNode()\n\nNewCard = nuke.nodes.Card(translate=\"parent.pos.r parent.pos.g parent.pos.b\")\nNewCard\['translate'].clearAnimated()\n\nNewCard.setSelected(True)\n\nnuke.nodeCopy('%clipboard%')\n\nn = nuke.selectedNode()\nnuke.delete(n)\n\nnuke.selectAll() \nnuke.invertSelection()\n\nnodePos = ( nuke.thisNode().xpos(), nuke.thisNode().ypos()) \n\ngroupNode.end()\n\nfor node in nuke.allNodes():\n    node.setSelected(False)\n\nnuke.nodePaste('%clipboard%')\n\ngroupNode.setSelected(False)\n\nnodesToPlace = sorted( nuke.selectedNodes(), key=lambda node: node.ypos())\n\nfor index,node in enumerate(nodesToPlace):\n    node.setXYpos(nodePos\[0]+100, nodePos\[1])" +STARTLINE}
+ addUserKnob {26 T01 l "" -STARTLINE T "               "}
+ addUserKnob {22 test l "Create Axis" t "Create an Axis at the position you choose.\n\n\"rgb\" corresponding to \"xyz\"" -STARTLINE T "groupNode = nuke.thisNode()\n\nNewAxis = nuke.nodes.Axis(translate=\"parent.pos.r parent.pos.g parent.pos.b\")\nNewAxis\['translate'].clearAnimated()\n\nNewAxis.setSelected(True)\n\nnuke.nodeCopy('%clipboard%')\n\nn = nuke.selectedNode()\nnuke.delete(n)\n\nnuke.selectAll() \nnuke.invertSelection()\n\nnodePos = ( nuke.thisNode().xpos(), nuke.thisNode().ypos()) \n\ngroupNode.end()\n\nfor node in nuke.allNodes():\n    node.setSelected(False)\n\ngroupNode.setSelected(True)\n\nnuke.nodePaste('%clipboard%')\n\ngroupNode.setSelected(False)\n\nnodesToPlace = sorted( nuke.selectedNodes(), key=lambda node: node.ypos())\n\nfor index,node in enumerate(nodesToPlace):\n    node.setXYpos(nodePos\[0]+100, nodePos\[1])"}
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 by3 l " " -STARTLINE T "<font color=\"#1C1C1C\">Franklin - 2016"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[value in]"
+}
+ Input {
+  inputs 0
+  name Position
+  xpos 484
+  ypos 423
+ }
+ Shuffle {
+  in worldPositions
+  name Shuffle1
+  xpos 484
+  ypos 463
+  addUserKnob {20 User}
+  addUserKnob {18 pos}
+  pos {0 0 0}
+  addUserKnob {6 pos_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Output {
+  name FranklinVFX
+  xpos 484
+  ypos 509
+ }
+end_group

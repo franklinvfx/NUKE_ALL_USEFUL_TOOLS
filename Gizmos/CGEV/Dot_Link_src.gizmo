@@ -1,0 +1,27 @@
+NoOp {
+ name NoOp
+ help "Postage Stamp avec une connection automatique.\n\nLe node passe en rouge quand le input est masqué \"hide input\".\n\n\nRapel de raccourci Nuke:\n\nHide input: alt + H\n"
+ tile_color 0x9e9e9eff
+ gl_color 0xffffffff
+ note_font_color 0x50505ff
+ selected true
+ addUserKnob {20 User l "Dot Link"}
+ addUserKnob {26 T01 l "Name Presets" T ""}
+ addUserKnob {22 master l Master -STARTLINE T "node = nuke.thisNode()\nnode\['name'].setValue('Master')"}
+ addUserKnob {22 master_denoise l Master_Denoise -STARTLINE T "node = nuke.thisNode()\nnode\['name'].setValue('Master_Denoise')"}
+ addUserKnob {22 master_undisto l Master_Undisto -STARTLINE T "node = nuke.thisNode()\nnode\['name'].setValue('Master_Undisto')"}
+ addUserKnob {22 roto l Roto T "node = nuke.thisNode()\nnode\['name'].setValue('Roto')" +STARTLINE}
+ addUserKnob {22 key l Key T "node = nuke.thisNode()\nnode\['name'].setValue('Key')" +STARTLINE}
+ addUserKnob {22 matte l Matte T "node = nuke.thisNode()\nnode\['name'].setValue('Matte')" +STARTLINE}
+ addUserKnob {26 S01 l " "}
+ addUserKnob {22 camera l Camera -STARTLINE T "node = nuke.thisNode()\nnode\['name'].setValue('Camera')"}
+ addUserKnob {22 reformat_undisto l Reformat_Undisto T "node = nuke.thisNode()\nnode\['name'].setValue('Reformat_Undisto')" +STARTLINE}
+ addUserKnob {26 S02 l " "}
+ addUserKnob {22 cg l CG T "node = nuke.thisNode()\nnode\['name'].setValue('CG')" +STARTLINE}
+ addUserKnob {22 deep l Deep T "node = nuke.thisNode()\nnode\['name'].setValue('Deep')" +STARTLINE}
+ addUserKnob {22 deep_pointcloud l Deep_PointCloud -STARTLINE T "node = nuke.thisNode()\nnode\['name'].setValue('Deep_PointCloud')"}
+ addUserKnob {26 by2 l "                     " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "To DotLink"
+}

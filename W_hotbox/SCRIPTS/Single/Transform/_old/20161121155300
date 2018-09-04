@@ -1,0 +1,10 @@
+#----------------------------------------------------------------------------------------------------------
+#
+# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+#
+# NAME: Set Black Outside
+#
+#----------------------------------------------------------------------------------------------------------
+
+for node in nuke.selectedNodes():
+	node.knob('black_outside').setValue(True)

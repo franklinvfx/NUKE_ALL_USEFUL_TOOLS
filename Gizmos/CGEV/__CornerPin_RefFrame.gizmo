@@ -1,0 +1,82 @@
+set cut_paste_input [stack 0]
+version 6.0 v5
+push $cut_paste_input
+Group {
+name CornerPin2D
+tile_color 0xa57aaaff
+label "Ref Frame: \[python -eval \{int(nuke.thisNode()\['frame'].value())\}]"
+selected true
+icon F_onnode.png
+addUserKnob {20 CornerPin}
+addUserKnob {41 to1 T CornerPin2D1.to1}
+addUserKnob {41 enable1 -STARTLINE T CornerPin2D1.enable1}
+addUserKnob {41 to2 T CornerPin2D1.to2}
+addUserKnob {41 enable2 -STARTLINE T CornerPin2D1.enable2}
+addUserKnob {41 to3 T CornerPin2D1.to3}
+addUserKnob {41 enable3 -STARTLINE T CornerPin2D1.enable3}
+addUserKnob {41 to4 T CornerPin2D1.to4}
+addUserKnob {41 enable4 -STARTLINE T CornerPin2D1.enable4}
+addUserKnob {22 input l "Set to input BBox" T "nuke.selectedNode()\['from1'].setExpression('\[value name].bbox.x', 0)\nnuke.selectedNode()\['from1'].setExpression('\[value name].bbox.y', 1)\nnuke.selectedNode()\['from1'].clearAnimated()\nnuke.selectedNode()\['from2'].setExpression('\[value name].bbox.r', 0)\nnuke.selectedNode()\['from2'].setExpression('\[value name].bbox.y', 1)\nnuke.selectedNode()\['from2'].clearAnimated()\nnuke.selectedNode()\['from3'].setExpression('\[value name].bbox.r', 0)\nnuke.selectedNode()\['from3'].setExpression('\[value name].bbox.t', 1)\nnuke.selectedNode()\['from3'].clearAnimated()\nnuke.selectedNode()\['from4'].setExpression('\[value name].bbox.x', 0)\nnuke.selectedNode()\['from4'].setExpression('\[value name].bbox.t', 1)\nnuke.selectedNode()\['from4'].clearAnimated()\n\nnuke.selectedNode()\['to1'].setExpression('\[value name].bbox.x', 0)\nnuke.selectedNode()\['to1'].setExpression('\[value name].bbox.y', 1)\nnuke.selectedNode()\['to1'].clearAnimated()\nnuke.selectedNode()\['to2'].setExpression('\[value name].bbox.r', 0)\nnuke.selectedNode()\['to2'].setExpression('\[value name].bbox.y', 1)\nnuke.selectedNode()\['to2'].clearAnimated()\nnuke.selectedNode()\['to3'].setExpression('\[value name].bbox.r', 0)\nnuke.selectedNode()\['to3'].setExpression('\[value name].bbox.t', 1)\nnuke.selectedNode()\['to3'].clearAnimated()\nnuke.selectedNode()\['to4'].setExpression('\[value name].bbox.x', 0)\nnuke.selectedNode()\['to4'].setExpression('\[value name].bbox.t', 1)\nnuke.selectedNode()\['to4'].clearAnimated()\n" +STARTLINE}
+addUserKnob {22 copy_to_custom l "Copy 'From'" -STARTLINE T "node = nuke.thisNode()\nknobsTo = \['to1','to2','to3','to4']\nknobsFrom = \['from1','from2','from3','from4']\nfor index in range(len(knobsTo)):\n    knobTo     = node\[knobsTo\[index]]\n    knobFrom = node\[knobsFrom\[index]]\n\n    knobTo.fromScript(knobFrom.toScript())\n"}
+addUserKnob {41 copy_from_to l INVISIBLE +INVISIBLE T CornerPin2D1.copy_from_to}
+addUserKnob {20 "extra matrix" n 2}
+addUserKnob {41 transform_matrix l "" -STARTLINE T CornerPin2D1.transform_matrix}
+addUserKnob {20 "" n -1}
+addUserKnob {41 invert T CornerPin2D1.invert}
+addUserKnob {41 filter T CornerPin2D1.filter}
+addUserKnob {41 clamp -STARTLINE T CornerPin2D1.clamp}
+addUserKnob {41 black_outside l "black outside" -STARTLINE T CornerPin2D1.black_outside}
+addUserKnob {41 motionblur T CornerPin2D1.motionblur}
+addUserKnob {41 shutter T CornerPin2D1.shutter}
+addUserKnob {41 shutteroffset l "shutter offset" T CornerPin2D1.shutteroffset}
+addUserKnob {41 shuttercustomoffset l "" -STARTLINE T CornerPin2D1.shuttercustomoffset}
+addUserKnob {20 "" l From}
+addUserKnob {41 from1 T CornerPin2D1.from1}
+addUserKnob {41 from2 T CornerPin2D1.from2}
+addUserKnob {41 from3 T CornerPin2D1.from3}
+addUserKnob {41 from4 T CornerPin2D1.from4}
+addUserKnob {41 set_to_input l "Set to input" T CornerPin2D1.set_to_input}
+addUserKnob {22 copy_from_custom l "Copy 'To'" -STARTLINE T "node = nuke.thisNode()\nknobsTo = \['to1','to2','to3','to4']\nknobsFrom = \['from1','from2','from3','from4']\nfor index in range(len(knobsTo)):\n    knobTo     = node\[knobsTo\[index]]\n    knobFrom = node\[knobsFrom\[index]]\n\n    knobFrom.fromScript(knobTo.toScript())\n"}
+addUserKnob {41 copy_from_to_1 l INVISIBLE -STARTLINE +INVISIBLE T CornerPin2D1.copy_from_to}
+addUserKnob {26 ""}
+addUserKnob {41 frame l Frame T CornerPin2D1.frame}
+addUserKnob {41 frezzeFrame l Freeze t "Enlève les clefs d'animation tout en gardant les valeurs à la frame référence selectionnée." -STARTLINE T CornerPin2D1.frezzeFrame}
+}
+Input {
+inputs 0
+name Input
+xpos 239
+ypos -140
+}
+CornerPin2D {
+to1 {0 0}
+to2 {2048 0}
+to3 {2048 1152}
+to4 {0 1152}
+invert false
+shutteroffset centred
+from1 {0 0}
+from2 {2048 0}
+from3 {2048 1152}
+from4 {0 1152}
+name CornerPin2D1
+selected true
+xpos 239
+ypos -75
+addUserKnob {20 FromCustom l "From Custom"}
+addUserKnob {41 from1_1 l from1 T from1}
+addUserKnob {41 from2_1 l from2 T from2}
+addUserKnob {41 from3_1 l from3 T from3}
+addUserKnob {41 from4_1 l from4 T from4}
+addUserKnob {41 set_to_input_1 l "Set to input" T set_to_input}
+addUserKnob {41 copy_from_to_1 l INVISIBLE +INVISIBLE T copy_from_to}
+addUserKnob {41 copy_from_to_2 l "Copy 'to'" -STARTLINE T copy_from_to}
+addUserKnob {3 frame l Frame}
+addUserKnob {22 frezzeFrame l Freeze -STARTLINE T "actualFrame = nuke.frame()\nnode = nuke.thisNode()\nrefFrame= int(node\['frame'].value())\nknobsTo = \['to1','to2','to3','to4']\nknobsFrom = \['from1','from2','from3','from4']\nfor index in range(len(knobsTo)):\n    knobTo     = node\[knobsTo\[index]]\n    knobFrom = node\[knobsFrom\[index]]\n    refValue = knobTo.valueAt(refFrame)\n    for index,element in enumerate(refValue):\n        knobFrom.setValueAt(element,actualFrame,index)\n    knobFrom.clearAnimated()"}
+}
+Output {
+name Output1
+xpos 239
+ypos 25
+}
+end_group

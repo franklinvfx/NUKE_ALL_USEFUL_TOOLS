@@ -1,0 +1,158 @@
+Group {
+ name UV_Card
+ knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\ninputT = nuke.exists(\"Proj_Cam\") \n\nif nuke.thisKnob().name() == 'cam2':\n    if nuke.thisKnob().value():\n        if str(inputT)==\"False\":\n            nuke.message(\"Add New \\\"Camera\\\" Input\")\n            o = nuke.toNode('Cam')\n            o\['name'].setValue('Proj_Cam')\n            i = nuke.createNode('Input', inpanel=False )\n            i\['name'].setValue('Cam')\n            n = nuke.toNode('Dot2')\n            n.setInput(0,i)\n            s = nuke.toNode('Switch1')\n            s\['which'].setValue('1')\n\n    else:\n        if str(inputT)==\"True\":\n            node.setInput(2,None)\n            n = nuke.toNode('Cam')\n            nuke.delete(n)\n            o = nuke.toNode('Proj_Cam')\n            o\['name'].setValue('Cam')\n            s = nuke.toNode('Switch1')\n            s\['which'].setValue('0')\n"
+ tile_color 0x1e88a8ff
+ selected true
+ icon F_iconrgb.png
+ addUserKnob {20 FT l "UV Card"}
+ addUserKnob {7 z l "<font color=\"green\">@b;Card Dist" t "Adjust in the 3D view the distance between the card and the camera." R 0 100}
+ z 50
+ addUserKnob {3 project_frame l "          Ref Frame" t "Enter the reference frame you want for the camera projection on the card."}
+ project_frame 1
+ addUserKnob {22 setframe l "Set Current" t "Set automatically the reference frame to the current frame." -STARTLINE T nuke.thisNode().knob('project_frame').setValue(nuke.frame())}
+ addUserKnob {3 overscan l Overscan t "Increase the scale of the card to avoid crop problem.\nIt's also increase the global ovescan value." R 0 100}
+ addUserKnob {6 cam2 l "Film with an other Camera" t "This is usefull for duplicate setup for other shots." +STARTLINE}
+ addUserKnob {6 vector l "Output Vectors" t "Allow to output the motion vector pass, the position pass and the normal pass." +STARTLINE}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "Frame \[value project_frame]"
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
+}
+ Dot {
+  inputs 0
+  name Dot2
+  xpos -342
+  ypos 152
+ }
+ Input {
+  inputs 0
+  name Cam
+  xpos -258
+  ypos -143
+  number 1
+ }
+ Switch {
+  inputs 2
+  name Switch1
+  xpos -258
+  ypos 148
+ }
+ Camera2 {
+  inputs 0
+  read_from_file true
+  display solid+wireframe
+  selectable false
+  translate {{"\[topnode parent.input1].translate (parent.project_frame)"} {"\[topnode parent.input1].translate (parent.project_frame)"} {"\[topnode parent.input1].translate (parent.project_frame)"}}
+  rotate {{"\[topnode parent.input1].rotate (parent.project_frame)"} {"\[topnode parent.input1].rotate (parent.project_frame)"} {"\[topnode parent.input1].rotate (parent.project_frame)"}}
+  matrix {
+      {{"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"}}
+      {{"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"}}
+      {{"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"}}
+      {{"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"} {"\[topnode parent.input2].world_matrix (parent.project_frame)"}}
+    }
+  focal {{"\[topnode parent.input1].focal (parent.project_frame)"}}
+  haperture {{"\[topnode parent.input1].haperture (parent.project_frame)"}}
+  vaperture {{"\[topnode parent.input1].vaperture (parent.project_frame)"}}
+  name Camera
+  gl_color 0x820000ff
+  xpos 218
+  ypos -17
+ }
+set Nd3f4d400 [stack 0]
+push $Nd3f4d400
+ Input {
+  inputs 0
+  name Reformat
+  selected true
+  xpos -148
+  ypos -148
+ }
+ Remove {
+  name Remove2
+  xpos -148
+  ypos -91
+ }
+set N9eb00400 [stack 0]
+ AdjBBox {
+  numpixels {{parent.overscan}}
+  name AdjBBox1
+  xpos -17
+  ypos -85
+ }
+ Expression {
+  expr0 (x/width)*width/width
+  expr1 (y/height)*height/height
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  name Expression1
+  xpos -17
+  ypos -39
+ }
+ Project3D2 {
+  inputs 2
+  crop false
+  name Project3D1
+  xpos -17
+  ypos 3
+ }
+ Card2 {
+  selectable false
+  cast_shadow false
+  receive_shadow false
+  rows 2
+  columns 2
+  lens_in_focal {{parent.Camera.focal}}
+  lens_in_haperture {{parent.Camera.haperture}}
+  uniform_scale {{parent.z+parent.overscan/(100/parent.z)}}
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos -17
+  ypos 74
+ }
+ TransformGeo {
+  inputs 2
+  translate {0 0 {-parent.z}}
+  name TransformGeo1
+  xpos -17
+  ypos 148
+ }
+push $N9eb00400
+add_layer {position position.red position.green position.blue}
+add_layer {normals normals.red normals.green normals.blue}
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  overscan {{parent.overscan/10 x16 1000}}
+  shutteroffset centred
+  motion_vectors_type distance
+  output_shader_vectors true
+  P_channel position
+  N_channel normals
+  name ScanlineRender3
+  xpos -148
+  ypos 148
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos -148
+  ypos 193
+  disable {{parent.vector}}
+ }
+ Output {
+  name FranklinVFX
+  xpos -148
+  ypos 246
+ }
+end_group

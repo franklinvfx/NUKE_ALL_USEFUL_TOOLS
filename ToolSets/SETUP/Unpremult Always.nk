@@ -1,0 +1,165 @@
+set cut_paste_input [stack 0]
+version 10.0 v1
+push $cut_paste_input
+Group {
+ name Unpremult
+ label Always
+ selected true
+ xpos 5686
+ ypos -2336
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 509
+  ypos -637
+ }
+ Dot {
+  name Dot51
+  xpos 543
+  ypos -548
+ }
+set Ncfce4c00 [stack 0]
+ Dot {
+  name Dot55
+  xpos 399
+  ypos -548
+ }
+set N9e2c8c00 [stack 0]
+ Dot {
+  name Dot59
+  xpos 283
+  ypos -547
+ }
+ Dot {
+  name Dot61
+  xpos 283
+  ypos 13
+ }
+push $Ncfce4c00
+ Dot {
+  name Dot63
+  xpos 741
+  ypos -548
+ }
+ Unpremult {
+  name Unpremult11
+  xpos 707
+  ypos -493
+ }
+push $Ncfce4c00
+ Dot {
+  name Dot62
+  xpos 543
+  ypos -416
+ }
+set Nd7bf7400 [stack 0]
+ Merge2 {
+  inputs 2
+  operation difference
+  name Merge9
+  xpos 707
+  ypos -420
+ }
+set Nb11e4c00 [stack 0]
+push $Nb11e4c00
+ Dot {
+  name Dot65
+  xpos 851
+  ypos -416
+ }
+ Blur {
+  size 900
+  name Blur10
+  xpos 817
+  ypos -372
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  name Merge10
+  xpos 707
+  ypos -366
+ }
+ Reformat {
+  type scale
+  scale 0.5
+  name Reformat2
+  xpos 707
+  ypos -280
+ }
+ Dilate {
+  size {{input.width}}
+  name Dilate1
+  xpos 707
+  ypos -254
+ }
+ Reformat {
+  type scale
+  scale 2
+  name Reformat3
+  xpos 707
+  ypos -216
+ }
+ Shuffle {
+  alpha white
+  name Shuffle14
+  xpos 707
+  ypos -165
+ }
+ Expression {
+  expr0 "r <= 0.001 ? r : 1"
+  expr1 "g <= 0.001 ? g : 1"
+  expr2 "b <= 0.001 ? b : 1"
+  name Expression3
+  xpos 707
+  ypos -139
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle15
+  xpos 707
+  ypos -113
+ }
+ Grade {
+  blackpoint 0.001
+  white_clamp true
+  name Grade8
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 707
+  ypos -87
+  icon -
+ }
+push $Nd7bf7400
+push $N9e2c8c00
+ Unpremult {
+  name Unpremult12
+  xpos 365
+  ypos -434
+ }
+ Dot {
+  name Dot66
+  xpos 399
+  ypos -77
+ }
+ Keymix {
+  inputs 3
+  maskChannel rgba.red
+  name Keymix3
+  xpos 509
+  ypos -87
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox3
+  xpos 509
+  ypos 9
+ }
+ Output {
+  name Output1
+  xpos 509
+  ypos 133
+ }
+end_group

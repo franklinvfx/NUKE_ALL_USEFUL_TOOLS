@@ -1,0 +1,513 @@
+Group {
+ name P_Mask
+ help "P_Mask\n\nCreate a mask using the render of the Position pass. \nIt will have a shape of circle or cube.\n\nThe result mask is create in the Alpha channel.\n"
+ onCreate "if nuke.thisNode()\['created'].value() == False:\n    nuke.thisNode()\['created'].setValue(True)\n    \n    if nuke.thisNode().input(0) is not None:\n        w = nuke.thisNode().input(0).width()\n        h = nuke.thisNode().input(0).height()\n        nuke.thisNode().knob('_Picker').setValue((w/2, h/2))\n    else:\n        rw = nuke.root().format().width()\n        rh = nuke.root().format().height()\n        nuke.thisNode().knob('_Picker').setValue((rw/2, rh/2))"
+ knobChanged "if nuke.thisKnob().name() == '_Picker':\n    if nuke.root().knob('proxy').value() == True:\n        nuke.message('You have to disable the proxy mode')\n    else:\n        animated = nuke.thisKnob().isAnimated()\n        xPos, yPos =  nuke.thisNode().knob('_Picker').value()\n        with nuke.thisNode():\n            node = nuke.toNode('Shuffle_input_channel')\n            r = node.sample('red', xPos, yPos)\n            g = node.sample('green', xPos, yPos)\n            b = node.sample('blue', xPos, yPos)\n            \n            node = nuke.toNode('Sphere')\n            if animated:\n                if not node.knob('center').isAnimated():\n                    node.knob('center').setAnimated()\n            else:\n                node.knob('center').clearAnimated()\n    \n            node.knob('center').setValue(\[r,g,b])\n            \n            posval = nuke.thisNode()\['center_1'].value()\n            nuke.thisNode()\['pivot'].setValue(posval)\n    \n\n\nif nuke.thisKnob().name() in ('matte', 'showPanel'):\n    inputT = nuke.exists('Alpha')\n    mode = nuke.thisNode()\['matte'].value()\n    if mode == 'rgba.alpha':\n        if str(inputT)== 'True':\n            nuke.thisNode().setInput(1,None)\n            n = nuke.toNode('Alpha')\n            nuke.delete(n)\n    else:\n        if str(inputT)== 'False':\n            #nuke.message('Add New Input in Node')\n            i = nuke.createNode('Input', inpanel=False )\n            i\['name'].setValue('Alpha')\n            n = nuke.toNode('Switch2')\n            n.setInput(0,i)\n\nif nuke.thisKnob().name() == 'visualise':\n    if nuke.thisKnob().value():\n        nuke.thisNode()\['point_detail'].setEnabled(True)\n        nuke.thisNode()\['point_size'].setEnabled(True)\n    else:\n        nuke.thisNode()\['point_detail'].setEnabled(False)\n        nuke.thisNode()\['point_size'].setEnabled(False)\n\n"
+ tile_color 0xdda92aff
+ selected true
+ icon F_iconalpha.png
+ addUserKnob {20 PM l "Position Mask"}
+ addUserKnob {6 created l INVISIBLE +INVISIBLE +STARTLINE}
+ created true
+ addUserKnob {41 in l "<font color=\"green\">@b;P channel" t "Choose the position pass channel." T Shuffle_input_channel.in}
+ addUserKnob {26 ""}
+ addUserKnob {41 center_1 l INVISIBLE t "Pick a value. \nIt will be the center of the sphere." +INVISIBLE T Sphere.center}
+ addUserKnob {4 shape l Shape t "Chose between cube or sphere for the shape of the mask." M {Sphere Cube ""}}
+ addUserKnob {12 _Picker l "   Center " t "Set a position.\nIt will be the center of the 3D mask." -STARTLINE}
+ _Picker {960 540}
+ addUserKnob {26 S06 l " "}
+ addUserKnob {7 uni_scale l "<font color=\"white\">Global <font color=\"grey\">Scale" t "Adjust the uniform scale." R 0 100}
+ uni_scale 10
+ addUserKnob {7 radius l "<font color=\"white\">Out<font color=\"grey\"> Scale" t "Adjust feather." R 0 100}
+ radius 5
+ addUserKnob {7 inner_radius l "<font color=\"white\">In <font color=\"grey\">Scale" t "Adjust inner scale." R 0 100}
+ inner_radius 2
+ addUserKnob {6 linear l Linear +STARTLINE}
+ linear true
+ addUserKnob {26 S03 l " " T " "}
+ addUserKnob {4 falloff l INVISIBLE t "Falloff profile of the feathered edge." +INVISIBLE M {Linear Smoothstep Cubic "Inverse Cubic" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ falloff Cubic
+ addUserKnob {4 color l Overlay t "Show on the RGB the resulting mask using the overlay method. \nChoose the color of the overlay mask." M {none red green blue black "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ color red
+ addUserKnob {26 ""}
+ addUserKnob {20 options l "3D Options :" n 1}
+ options 0
+ addUserKnob {13 offset l Translate}
+ addUserKnob {13 rotate l Rotate}
+ addUserKnob {13 scalediv l Scale}
+ scalediv {1 1 1}
+ addUserKnob {13 pivot l Pivot t "Pivot of the 3D mask." +DISABLED}
+ addUserKnob {26 S01 l " "}
+ addUserKnob {6 visualise l "Visualize in 3D" t "Build Volume and Point Cloud in 3D Space." +STARTLINE}
+ addUserKnob {7 point_detail l "Point Detail" t "Controls the number of available points to display in the Viewer. \n0 = No points, 1 = All available points" +DISABLED}
+ point_detail 1
+ addUserKnob {7 point_size l "Point Size" t "Controls the display size of the points in the Viewer" +DISABLED R 0 10}
+ point_size 4
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[if \{\[value visualise]==\"true\"\} \{return \"\[knob this.tile_color 0xa30000ff]\"\}  \{return \"\[knob this.tile_color 0xdda92aff]\"\}]\[value shape]"
+ addUserKnob {26 T01 l "   (Un)Premult by" T ""}
+ addUserKnob {6 premult l "" t "The Position Pass is divide by the Alpha channel before being processed, and multiplied again afterwards. This can improve the texturing of anti-aliased edges." -STARTLINE}
+ addUserKnob {4 matte l "" t "Choose the Alpha channel.\nAlpha is usefull for a better result with clean edge (UnPremult / Premult).\n\nrgba.alpha: \nPick automaticaly the Alpha from the Input.\n\nrgba.alpha (New Input):\nPick the Alpha from an other Input." -STARTLINE M {rgba.alpha "rgba.alpha (New Input)" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {7 mix l Mix t "Adjust the opacity of the output mask."}
+ mix 1
+ addUserKnob {26 FT1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
+}
+ Input {
+  inputs 0
+  name Position
+  xpos -594
+  ypos -1070
+ }
+ Dot {
+  name col
+  xpos -560
+  ypos -962
+ }
+set Nc5b7a000 [stack 0]
+ Dot {
+  name Dot9
+  xpos -855
+  ypos -962
+ }
+set N50ef5000 [stack 0]
+push 0
+ Switch {
+  inputs 2
+  which {{!matte i}}
+  name Switch2
+  xpos -1235
+  ypos -966
+ }
+ NoOp {
+  name AlphaCheck
+  xpos -1235
+  ypos -854
+  addUserKnob {20 User}
+  addUserKnob {6 alpha +STARTLINE}
+  alpha {{"\[python \"len(\\\[n for n in nuke.channels(nuke.thisNode().input(0)) if n.find(\\\".a\\\") != -1])>0\"]"}}
+ }
+ AddChannels {
+  channels rgba
+  name AddAlpha
+  xpos -1235
+  ypos -830
+ }
+ Dot {
+  name Dot11
+  xpos -1201
+  ypos -697
+ }
+set Ndbd9b800 [stack 0]
+ Dot {
+  name Dot12
+  xpos -1201
+  ypos 408
+ }
+push $Ndbd9b800
+push $Nc5b7a000
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -594
+  ypos -708
+ }
+set N1c9e6800 [stack 0]
+ Unpremult {
+  name Unpremult1
+  xpos -489
+  ypos -609
+  disable {{!AlphaCheck.alpha i}}
+ }
+push $N1c9e6800
+ Switch {
+  inputs 2
+  which {{parent.premult}}
+  name Switch5
+  xpos -594
+  ypos -517
+ }
+ Dot {
+  name Dot5
+  xpos -560
+  ypos -148
+ }
+set N1cbc1c00 [stack 0]
+ Dot {
+  name Dot6
+  xpos -424
+  ypos -148
+ }
+ Dot {
+  name Dot7
+  xpos -424
+  ypos 317
+ }
+push $Nc5b7a000
+ Shuffle {
+  name Shuffle1
+  xpos -319
+  ypos -966
+  disable {{!parent.visualise}}
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos -319
+  ypos -704
+  disable {{!parent.visualise}}
+ }
+set N561c1800 [stack 0]
+push $Ndbd9b800
+push $N50ef5000
+ Shuffle {
+  in none
+  name Shuffle_input_channel
+  knobChanged "if nuke.thisKnob().name() == 'in':\n    xPos, yPos = nuke.thisGroup().knob('_Picker').value()\n    r = nuke.thisNode().sample('red', xPos, yPos)\n    g = nuke.thisNode().sample('green', xPos, yPos)\n    b = nuke.thisNode().sample('blue', xPos, yPos)\n \n    node = nuke.toNode('Sphere')\n    node.knob('center').setValue(\[r,g,b])\n    nuke.thisGroup().knob('pivot').setValue(\[r, g, b])"
+  xpos -889
+  ypos -829
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos -889
+  ypos -705
+ }
+set Ndbd9bc00 [stack 0]
+ Unpremult {
+  name Unpremult2
+  xpos -1001
+  ypos -600
+  disable {{!AlphaCheck.alpha i}}
+ }
+push $Ndbd9bc00
+ Switch {
+  inputs 2
+  which {{parent.premult}}
+  name Switch9
+  xpos -889
+  ypos -513
+ }
+ Dot {
+  name xyz
+  xpos -855
+  ypos -439
+ }
+set N1a6d8800 [stack 0]
+ PositionToPoints {
+  inputs 2
+  display textured
+  selectable false
+  render_mode textured
+  detail {{point_detail}}
+  pointSize {{point_size}}
+  name PositionToPoints1
+  xpos -319
+  ypos -443
+  disable {{!parent.visualise}}
+ }
+ Dot {
+  name Dot10
+  xpos -285
+  ypos -176
+ }
+ Constant {
+  inputs 0
+  color {0 0 1 0.5}
+  name Constant1
+  xpos 378
+  ypos -474
+  disable {{!parent.visualise}}
+  postage_stamp false
+ }
+set Nc64d3400 [stack 0]
+ Cube {
+  selectable false
+  render_mode off
+  rows 1
+  columns 1
+  separate_faces false
+  cube {-1 -1 -1 1 1 1}
+  translate {{parent.Cube1.translate} {parent.Cube1.translate} {parent.Cube1.translate}}
+  rotate {{parent.rotate.x} {parent.rotate.y} {parent.rotate.z}}
+  scaling {{Sphere.scale.x} {Sphere.scale.y} {Sphere.scale.z}}
+  uniform_scale {{"parent.radius > parent.inner_radius ? parent.inner_radius:parent.radius"}}
+  name Cube2
+  xpos 378
+  ypos -450
+  disable {{!parent.visualise}}
+ }
+ Constant {
+  inputs 0
+  color {1 0 0 0.5}
+  name Constant2
+  xpos 4
+  ypos -472
+  disable {{!parent.visualise}}
+  postage_stamp false
+ }
+set N2ebe3400 [stack 0]
+ Cube {
+  selectable false
+  render_mode off
+  rows 1
+  columns 1
+  separate_faces false
+  cube {-1 -1 -1 1 1 1}
+  translate {{Sphere.center.r+parent.offset.x} {Sphere.center.g+parent.offset.y} {Sphere.center.b+parent.offset.z}}
+  rotate {{parent.rotate.x} {parent.rotate.y} {parent.rotate.z}}
+  scaling {{Sphere.scale.x} {Sphere.scale.y} {Sphere.scale.z}}
+  uniform_scale {{parent.radius}}
+  name Cube1
+  xpos 130
+  ypos -446
+  disable {{!parent.visualise}}
+ }
+ Scene {
+  inputs 2
+  render_mode off
+  name Scene3
+  xpos 388
+  ypos -351
+  disable {{!parent.visualise}}
+ }
+push $N2ebe3400
+ Sphere {
+  selectable false
+  render_mode off
+  rows 20
+  columns 20
+  radius {{parent.radius}}
+  translate {{Sphere.center.r+parent.offset.x} {Sphere.center.g+parent.offset.y} {Sphere.center.b+parent.offset.z}}
+  rotate {{parent.rotate.x} {parent.rotate.y} {parent.rotate.z}}
+  scaling {{Sphere.scale.x} {Sphere.scale.y} {Sphere.scale.z}}
+  name Sphere2
+  xpos 4
+  ypos -446
+  disable {{!parent.visualise}}
+ }
+push $Nc64d3400
+ Sphere {
+  selectable false
+  render_mode off
+  radius {{"parent.radius > parent.inner_radius ? parent.inner_radius:parent.radius"}}
+  translate {{Sphere.center.r+parent.offset.x} {Sphere.center.g+parent.offset.y} {Sphere.center.b+parent.offset.z}}
+  rotate {{parent.rotate.x} {parent.rotate.y} {parent.rotate.z}}
+  scaling {{Sphere.scale.x} {Sphere.scale.y} {Sphere.scale.z}}
+  name Sphere1
+  xpos 255
+  ypos -449
+  disable {{!parent.visualise}}
+ }
+ Scene {
+  inputs 2
+  selectable false
+  name Scene2
+  xpos 14
+  ypos -351
+  disable {{!parent.visualise}}
+ }
+ Switch {
+  inputs 2
+  which {{shape}}
+  name Switch4
+  xpos 194
+  ypos -331
+ }
+ Scene {
+  inputs 2
+  selectable false
+  name Scene1
+  xpos 204
+  ypos -200
+  disable {{!parent.visualise}}
+ }
+push $N561c1800
+ Dot {
+  name Dot14
+  xpos 542
+  ypos -700
+ }
+ ScanlineRender {
+  inputs 2
+  name ScanlineRender1
+  xpos 508
+  ypos 178
+  disable true
+ }
+push $N1a6d8800
+ Expression {
+  temp_name0 x
+  temp_expr0 abs(normX.x*(center.r+parent.offset.x-r)+normX.y*(center.g+parent.offset.y-g)+normX.z*(center.b+parent.offset.z-b))
+  temp_name1 y
+  temp_expr1 abs(normY.x*(center.r+parent.offset.x-r)+normY.y*(center.g+parent.offset.y-g)+normY.z*(center.b+parent.offset.z-b))
+  temp_name2 z
+  temp_expr2 abs(normZ.x*(center.r+parent.offset.x-r)+normZ.y*(center.g+parent.offset.y-g)+normZ.z*(center.b+parent.offset.z-b))
+  channel0 none
+  channel1 none
+  channel2 none
+  channel3 {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr3 1-max(x/scale.x/parent.radius*2,y/scale.y/parent.radius*2,z/scale.z/parent.radius*2)/2
+  name Cube
+  xpos -837
+  ypos -350
+  cached true
+  addUserKnob {20 User}
+  addUserKnob {18 center l Center}
+  center {{parent.Sphere.center} {parent.Sphere.center} {parent.Sphere.center}}
+  addUserKnob {6 center_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {26 ""}
+  addUserKnob {13 rad}
+  rad {{radians(parent.rotate.x)} {radians(parent.rotate.y)} {radians(parent.rotate.z)}}
+  addUserKnob {13 normX}
+  normX {{cos(rad.z)*(cos(rad.y))} {sin(rad.z)*(cos(rad.y))} {-sin(rad.y)}}
+  addUserKnob {13 normY}
+  normY {{cos(rad.z)*(sin(rad.y)*(-sin(rad.x)))-sin(rad.z)*(cos(rad.x))} {sin(rad.z)*(sin(rad.y)*(-sin(rad.x)))-cos(rad.z)*(cos(rad.x))} {(cos(rad.y)*(-sin(rad.x)))}}
+  addUserKnob {13 normZ}
+  normZ {{cos(rad.z)*(sin(rad.y)*cos(rad.x))-sin(rad.z)*sin(rad.x)} {cos(rad.z)*(sin(rad.y)*cos(rad.x))+cos(rad.z)*sin(rad.x)} {cos(rad.y)*cos(rad.x)}}
+  addUserKnob {26 ""}
+  addUserKnob {13 scale}
+  scale {{scalediv.x/10*parent.uni_scale} {scalediv.y/10*parent.uni_scale} {scalediv.z/10*parent.uni_scale}}
+ }
+push $N1a6d8800
+ Expression {
+  temp_name0 x
+  temp_expr0 abs(normX.x*(center.r+parent.offset.x-r)+normX.y*(center.g+parent.offset.y-g)+normX.z*(center.b+parent.offset.z-b))
+  temp_name1 y
+  temp_expr1 abs(normY.x*(center.r+parent.offset.x-r)+normY.y*(center.g+parent.offset.y-g)+normY.z*(center.b+parent.offset.z-b))
+  temp_name2 z
+  temp_expr2 abs(normZ.x*(center.r+parent.offset.x-r)+normZ.y*(center.g+parent.offset.y-g)+normZ.z*(center.b+parent.offset.z-b))
+  channel0 none
+  channel1 none
+  channel2 none
+  channel3 {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr3 "r == 0 && g == 0 && b == 0?0:(scale.x != 1 || scale.y != 1 || scale.z != 1?1-(sqrt(pow2(x)/pow2(scale.x)+pow2(y)/pow2(scale.y)+pow2(z)/pow2(scale.z))/parent.radius):1-(sqrt(pow2(x)+pow2(y)+pow2(z))/parent.radius))"
+  name Sphere
+  xpos -952
+  ypos -349
+  cached true
+  addUserKnob {20 User}
+  addUserKnob {18 center l Center}
+  center {0 0 0}
+  addUserKnob {6 center_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {26 ""}
+  addUserKnob {13 rad}
+  rad {{radians(parent.rotate.x)} {radians(parent.rotate.y)} {radians(parent.rotate.z)}}
+  addUserKnob {13 normX}
+  normX {{cos(rad.z)*(cos(rad.y))} {sin(rad.z)*(cos(rad.y))} {-sin(rad.y)}}
+  addUserKnob {13 normY}
+  normY {{cos(rad.z)*(sin(rad.y)*(-sin(rad.x)))-sin(rad.z)*(cos(rad.x))} {sin(rad.z)*(sin(rad.y)*(-sin(rad.x)))-cos(rad.z)*(cos(rad.x))} {(cos(rad.y)*(-sin(rad.x)))}}
+  addUserKnob {13 normZ}
+  normZ {{cos(rad.z)*(sin(rad.y)*cos(rad.x))-sin(rad.z)*sin(rad.x)} {cos(rad.z)*(sin(rad.y)*cos(rad.x))+cos(rad.z)*sin(rad.x)} {cos(rad.y)*cos(rad.x)}}
+  addUserKnob {26 ""}
+  addUserKnob {13 scale}
+  scale {{scalediv.x/10*parent.uni_scale} {scalediv.y/10*parent.uni_scale} {scalediv.z/10*parent.uni_scale}}
+ }
+ Switch {
+  inputs 2
+  which {{shape}}
+  name Switch3
+  xpos -889
+  ypos -282
+ }
+ Grade {
+  channels alpha
+  whitepoint {{"1-(min(parent.inner_radius, parent.radius)*(1/parent.radius))"}}
+  white_clamp true
+  name inner_Radius
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos -889
+  ypos -186
+  icon -
+ }
+ Expression {
+  expr3 pow(a,2)
+  name Cubic1
+  xpos -889
+  ypos -106
+  disable {{parent.linear}}
+ }
+ Dot {
+  name Dot13
+  xpos -855
+  ypos -41
+ }
+set N1c9e7400 [stack 0]
+ Dot {
+  name Dot4
+  xpos -855
+  ypos 42
+ }
+push $N1c9e7400
+push $N1cbc1c00
+ Grade {
+  inputs 1+1
+  white 0
+  add {{"\[python -execlocal col\\ =\\ nuke.thisGroup().knob('color').value()\\n\\nif\\ col\\ ==\\ \\\"red\\\":\\n\\ ret\\ =\\ 1\\nelse:\\n\\ ret\\ =\\ 0]"} {"\[python -execlocal col\\ =\\ nuke.thisGroup().knob('color').value()\\n\\nif\\ col\\ ==\\ \\\"green\\\":\\n\\ ret\\ =\\ 1\\nelse:\\n\\ ret\\ =\\ 0]"} {"\[python -execlocal col\\ =\\ nuke.thisGroup().knob('color').value()\\n\\nif\\ col\\ ==\\ \\\"blue\\\":\\n\\ ret\\ =\\ 1\\nelse:\\n\\ ret\\ =\\ 0]"} {multiply}}
+  mix {{parent.mix}}
+  name Grade1
+  xpos -594
+  ypos -45
+  disable {{"\[python -execlocal col\\ =\\ nuke.thisGroup().knob('color').value()\\n\\nif\\ col\\ ==\\ \\\"none\\\":\\n\\ ret\\ =\\ 1\\nelse:\\n\\ ret\\ =\\ 0]"}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos -594
+  ypos 32
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge1
+  xpos -594
+  ypos 178
+  disable true
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos -594
+  ypos 313
+ }
+set N225c6400 [stack 0]
+ Multiply {
+  inputs 1+1
+  value 0
+  invert_mask true
+  name Multiply3
+  xpos -709
+  ypos 396
+  disable {{!AlphaCheck.alpha i}}
+ }
+push $N225c6400
+ Switch {
+  inputs 2
+  which {{parent.premult}}
+  name Switch10
+  xpos -594
+  ypos 484
+ }
+ Multiply {
+  channels alpha
+  value {{parent.mix}}
+  name Multiply2
+  xpos -594
+  ypos 574
+ }
+ Output {
+  name FranklinVFX
+  xpos -594
+  ypos 665
+ }
+end_group

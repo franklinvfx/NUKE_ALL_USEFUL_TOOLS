@@ -1,0 +1,353 @@
+Group {
+ name IDSelector
+ onCreate nuke.thisNode().knob('chan').setValue('green')
+ tile_color 0xffffffff
+ gl_color 0xff0000ff
+ selected true
+ addUserKnob {20 IDSelectortab l "ID Selector"}
+ addUserKnob {41 in l Channel T Shuffle3.in}
+ addUserKnob {4 chan l " " -STARTLINE M {red green blue alpha}}
+ chan green
+ addUserKnob {41 posID l Picker T ColorPickerNoop.posID}
+ addUserKnob {41 colorIDpick l INVISIBLE +INVISIBLE T ColorPickerNoop.colorIDpick}
+ addUserKnob {6 MatteOverlay l Overlay -STARTLINE}
+ MatteOverlay true
+ addUserKnob {6 colorIDpick_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {6 antal l Antialiasing +STARTLINE}
+ addUserKnob {41 mix l "" -STARTLINE T AA_Matrix.mix}
+ addUserKnob {26 ""}
+ addUserKnob {22 crt l Create T "group = nuke.thisNode()\nvalueID = group.knob(\"colorIDpick\").value()\n\nwith nuke.thisGroup():\n    for node in nuke.selectedNodes():\n        node.setSelected(False)\n\n    #create nodes in group\n    superdot = nuke.toNode(\"superdot\")\n    \n    clamp = nuke.createNode(\"Clamp\", inpanel=False)\n    clamp.knob(\"minimum\").setValue(valueID+\[0])\n    clamp.knob(\"maximum\").setValue(valueID+\[0])\n    clamp.knob(\"maximum\").setExpression(\"minimum\")\n    clamp.setInput(0, superdot)\n    \n    #link and create knob in group\n    nameMask = clamp.name() + \"mask\"\n    namedisID = clamp.name() + \"disable\"\n\n    link_knob = nuke.Link_Knob(nameMask, \"Key\")\n    link_knob.makeLink(clamp.name(), \"minimum\")\n    group.addKnob(link_knob)\n    \n    disableID = nuke.Link_Knob(namedisID, \"disable\")\n    disableID.makeLink(clamp.name(), \"disable\")\n    disableID.clearFlag(0x00001000)\n    group.addKnob(disableID)\n    \n    \n    difference = nuke.createNode(\"Difference\", inpanel=False)\n    difference.knob(\"gain\").setValue(1)\n    difference.setInput(0, superdot)\n    difference.setInput(1, clamp)\n    \n    invert = nuke.createNode(\"Invert\", inpanel=False)\n    invert.setInput(0, difference)\n    \n    switch = nuke.createNode(\"Switch\", inpanel=False)\n    switch.knob(\"which\").setExpression(clamp.name() + '.disable')\n    switch.setSelected(False)\n    switch.setInput(0, invert)\n    \n    merge_plus = nuke.toNode(\"Mergeplus\")\n    \n    #link Switch to merge\n    merge_plus.setInput(merge_plus.inputs() if merge_plus.inputs()!=2 else 3, switch)" +STARTLINE}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter votre superviseur\n" -STARTLINE T "<font color=\"#1C1C1C\"> v05 - CGEV - 2017"}
+ addUserKnob {26 ""}
+}
+ Merge2 {
+  inputs 0
+  operation plus
+  name Mergeplus
+  xpos -495
+  ypos -56
+ }
+ Clamp {
+  channels rgba
+  name ClampALL
+  xpos -495
+  ypos 16
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 255
+  ypos -806
+ }
+ Dot {
+  name Dot2
+  xpos 290
+  ypos -744
+ }
+set N75d13400 [stack 0]
+ Dot {
+  name Dot4
+  xpos 175
+  ypos -744
+ }
+set N9fa99800 [stack 0]
+ Shuffle {
+  in other
+  name Shuffle3
+  label "\[value in]"
+  xpos -516
+  ypos -754
+ }
+ Dot {
+  name Dot3
+  xpos -873
+  ypos -744
+ }
+set N76506400 [stack 0]
+ Shuffle {
+  in {{{parent.InputRenderID.in}}}
+  red alpha
+  green alpha
+  blue alpha
+  name InputRenderID3
+  tile_color 0xfefefeff
+  xpos -746
+  ypos -653
+ }
+push $N76506400
+ Shuffle {
+  in rgb
+  red blue
+  green blue
+  alpha blue
+  name InputRenderID2
+  tile_color 0xffff
+  xpos -854
+  ypos -651
+ }
+push $N76506400
+ Shuffle {
+  in rgb
+  red green
+  blue green
+  alpha green
+  name InputRenderID
+  tile_color 0xff00ff
+  xpos -955
+  ypos -650
+ }
+push $N76506400
+ Shuffle {
+  in rgb
+  green red
+  blue red
+  alpha red
+  name InputRenderID1
+  tile_color 0xff0000ff
+  xpos -1064
+  ypos -649
+ }
+ Switch {
+  inputs 4
+  which {{parent.chan}}
+  name Switch1
+  xpos -908
+  ypos -564
+ }
+ NoOp {
+  name ColorPickerNoop
+  xpos -908
+  ypos -481
+  addUserKnob {20 User}
+  addUserKnob {12 posID l "Position ID"}
+  posID {1273 347.5}
+  addUserKnob {18 colorIDpick l "color ID value"}
+  colorIDpick {{"\[sample this red posID.x posID.y]"} {"\[sample this green posID.x posID.y]"} {"\[sample this blue posID.x posID.y]"}}
+  addUserKnob {6 colorIDpick_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+set Na0f0c800 [stack 0]
+ Dot {
+  name Dot5
+  xpos -341
+  ypos -477
+ }
+ Invert {
+  channels alpha
+  name Invert7
+  xpos -376
+  ypos -111
+ }
+ Clamp {
+  name Clamp21
+  xpos -376
+  ypos -63
+ }
+set N6e0ac800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name m_minus
+  xpos -313
+  ypos 16
+ }
+push $N6e0ac800
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy1
+  xpos -144
+  ypos 16
+ }
+set Na0c65c00 [stack 0]
+ Dot {
+  name Dot1
+  xpos -109
+  ypos -285
+ }
+set N6e0ad800 [stack 0]
+ Shuffle {
+  in alpha
+  name Shuffle1
+  label "\[value in]"
+  xpos -34
+  ypos -251
+ }
+ Clamp {
+  name Clamp8
+  xpos -34
+  ypos -210
+ }
+ Matrix {
+  channels alpha
+  matrix {
+      {1 2 1}
+      {2 4 2}
+      {1 2 1}
+    }
+  normalize true
+  name AA_Matrix1
+  selected true
+  xpos -34
+  ypos -97
+  disable {{!antal}}
+ }
+ Grade {
+  white 0
+  add {1 0 0 0}
+  name Grade1
+  xpos -34
+  ypos -61
+ }
+ Premult {
+  name Premult2
+  xpos -34
+  ypos -33
+ }
+push $N6e0ad800
+push $Na0f0c800
+ Clamp {
+  maximum_enable false
+  MinClampTo 1
+  MinClampTo_enable true
+  name Clamp2
+  xpos -909
+  ypos -375
+ }
+set N75b03800 [stack 0]
+push $N9fa99800
+ Grade {
+  white 0
+  add {{parent.colorIDpick.r} {parent.colorIDpick.g} {parent.colorIDpick.b} 0}
+  black_clamp false
+  name Grade_ValuePick
+  xpos 140
+  ypos -510
+ }
+ Difference {
+  inputs 2
+  name Difference1
+  xpos 140
+  ypos -375
+ }
+ Invert {
+  name Invert1
+  xpos 140
+  ypos -337
+ }
+ ChannelMerge {
+  inputs 2
+  operation stencil
+  name ChannelMerge1
+  xpos 140
+  ypos -301
+ }
+ Shuffle {
+  in alpha
+  name Shuffle2
+  label "\[value in]"
+  xpos 140
+  ypos -243
+ }
+ Clamp {
+  name Clamp1
+  xpos 140
+  ypos -207
+ }
+ Matrix {
+  channels alpha
+  matrix {
+      {1 2 1}
+      {2 4 2}
+      {1 2 1}
+    }
+  normalize true
+  name AA_Matrix
+  xpos 140
+  ypos -171
+  disable {{!antal}}
+ }
+ Grade {
+  white 0
+  add {0 1 0 0}
+  name Grade2
+  xpos 140
+  ypos -135
+ }
+ Expression {
+  expr1 a
+  name Expression1
+  xpos 140
+  ypos -106
+ }
+ Premult {
+  name Premult1
+  xpos 140
+  ypos -82
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge3
+  label "mix :\[value mix]"
+  xpos 140
+  ypos -39
+ }
+push $N75d13400
+ Merge2 {
+  inputs 2
+  operation plus
+  screen_alpha true
+  bbox B
+  Achannels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  mix {{parent.MatteOverlay}}
+  name Merge1
+  xpos 255
+  ypos -33
+ }
+push $Na0c65c00
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  alpha alpha2
+  name ShuffleCopy2
+  xpos 255
+  ypos 16
+  disable {{!MatteOverlay}}
+ }
+push $Na0c65c00
+ Switch {
+  inputs 2
+  which {{"\$gui"}}
+  name Switch2
+  xpos 255
+  ypos 67
+ }
+ Matrix {
+  channels alpha
+  matrix {
+      {1 2 1}
+      {2 4 2}
+      {1 2 1}
+    }
+  normalize true
+  mix {{parent.AA_Matrix.mix}}
+  name AA_matrix2
+  xpos 255
+  ypos 196
+  disable {{!antal}}
+ }
+ Output {
+  name Output1
+  xpos 255
+  ypos 316
+ }
+push $N75b03800
+ Dot {
+  name superdot
+  xpos -874
+  ypos -282
+ }
+end_group

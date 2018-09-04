@@ -1,0 +1,22 @@
+StickyNote {
+ inputs 0
+ name FrameRange_Infos
+ knobChanged "if nuke.thisKnob().name() == 'note':\n    out = nuke.thisNode().knob('output').toScript()\n    if nuke.thisNode().knob('note').value() == '...' or nuke.thisNode().knob('note').value() == '':\n        no = '<center>\"\[value this.noden]\"\\n<font size = 3 color=\"green\"><b>\[value \[value this.noden].first_frame] - \[value \[value this.noden].last_frame] </b>\\n                                 '\n        nuke.thisNode().knob('output').setValue(no)\n    else:\n        yes ='<center>\"\[value this.noden]\"\\n<font size = 3 color=\"green\"><b>\[value \[value this.noden].first_frame] - \[value \[value this.noden].last_frame]</b><font color=\"black\">\\n\\n- \[value note] -\\n\\n                                      '\n        nuke.thisNode().knob('output').setValue(yes)   "
+ tile_color 0x3a3a3aff
+ label "\[value output]"
+ note_font Verdana
+ note_font_size 40
+ selected true
+ bookmark true
+ addUserKnob {20 FR l "Frame Range Infos"}
+ addUserKnob {1 noden l "<font color=\"green\">@b;Node Name"}
+ noden Read1
+ addUserKnob {22 goto l "Focus on Node" -STARTLINE T "this = nuke.thisNode().knob(\"selected\").setValue(True)\nn = nuke.thisNode().knob(\"noden\").value()\nsel = nuke.toNode(n)\np = nuke.selectedNode().knob(\"selected\").setValue(True)\n\nif sel:\n    nuke.zoom( 1, \[ sel.xpos(), sel.ypos() ])\n    nuke.thisNode().knob(\"selected\").setValue(False)\nelse:\n    nuke.message('\"' + n + '\"' + \" don't exist!\\nPlease enter a valide node name.\")"}
+ addUserKnob {1 note l "                  Note"}
+ note ...
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "<center>\"\[value this.noden]\"\n<font size = 3 color=\"green\"><b>\[value \[value this.noden].first_frame] - \[value \[value this.noden].last_frame] </b>\n                                 "
+ addUserKnob {26 FT1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
+}

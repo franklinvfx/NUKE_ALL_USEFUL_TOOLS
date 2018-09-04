@@ -1,0 +1,149 @@
+Group {
+ inputs 2
+ name DeepToPosition
+ tile_color 0x60ff
+ selected true
+ addUserKnob {20 User l "Deep To Position"}
+ addUserKnob {26 S01 l " " T " "}
+}
+ Input {
+  inputs 0
+  name Cam
+  label "\[value number]"
+  xpos -365
+  ypos -348
+  number 1
+ }
+ Axis2 {
+  display off
+  selectable false
+  name Axis1
+  xpos -355
+  ypos 345
+ }
+ Input {
+  inputs 0
+  name Deep
+  label "\[value number]"
+  xpos -588
+  ypos -355
+ }
+ DeepToImage {
+  name DeepToImage4
+  xpos -588
+  ypos -226
+ }
+set N3dfb9400 [stack 0]
+ Dot {
+  name Dot1
+  xpos -698
+  ypos -222
+ }
+ Dot {
+  name Dot2
+  xpos -698
+  ypos 530
+ }
+push $N3dfb9400
+ Unpremult {
+  channels all
+  name Unpremult1
+  xpos -588
+  ypos -150
+ }
+ Dot {
+  name Dot83
+  xpos -554
+  ypos -56
+ }
+set Nd9c92000 [stack 0]
+ Shuffle {
+  in deep
+  name Shuffle_deep
+  label "\[value in]"
+  xpos -479
+  ypos 6
+ }
+push $Nd9c92000
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.blue
+  name Copy2
+  xpos -588
+  ypos 71
+ }
+ Expression {
+  expr0 cx
+  expr1 cy*(input.width/input.height)*input.pixel_aspect
+  name Expression7
+  label NDC
+  xpos -588
+  ypos 183
+ }
+ Expression {
+  temp_name0 h_tan
+  temp_expr0 (haperture/2)/focal
+  temp_name1 v_tan
+  temp_expr1 (vaperture/2)/focal
+  expr0 b*(r*h_tan)
+  expr1 b*(g*v_tan)
+  name Expression8
+  label "NDC to Pcam"
+  xpos -588
+  ypos 243
+  addUserKnob {20 User}
+  addUserKnob {7 focal}
+  focal {{"\[topnode parent.input1].focal"}}
+  addUserKnob {7 haperture}
+  haperture {{"\[topnode parent.input1].haperture"}}
+  addUserKnob {7 vaperture}
+  vaperture {{"\[topnode parent.input1].vaperture"}}
+ }
+ Multiply {
+  channels {-rgba.red -rgba.green rgba.blue none}
+  value -1
+  name Multiply10
+  xpos -588
+  ypos 308
+ }
+ ColorMatrix {
+  matrix {
+      {{Axis1.world_matrix.0} {Axis1.world_matrix.1} {Axis1.world_matrix.2}}
+      {{Axis1.world_matrix.4} {Axis1.world_matrix.5} {Axis1.world_matrix.6}}
+      {{Axis1.world_matrix.8} {Axis1.world_matrix.9} {Axis1.world_matrix.10}}
+    }
+  name ColorMatrix3
+  label "Inverse Cam rotation"
+  xpos -588
+  ypos 352
+ }
+ Add {
+  channels rgb
+  value {{Axis1.world_matrix.3} {Axis1.world_matrix.7} {Axis1.world_matrix.11} {curve}}
+  name Add3
+  label "World minus Camera pos"
+  xpos -588
+  ypos 408
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -588
+  ypos 520
+ }
+ Premult {
+  channels all
+  name Premult1
+  selected true
+  xpos -588
+  ypos 592
+ }
+ Output {
+  name Output1
+  xpos -588
+  ypos 660
+ }
+end_group

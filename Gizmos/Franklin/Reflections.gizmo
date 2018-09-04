@@ -1,0 +1,365 @@
+Group {
+ name Reflections
+ onCreate "if nuke.thisNode().knob('fresnel').value() == True:\n    with nuke.thisNode():\n        shuf = nuke.toNode('Fresnel_chan')\n        shuf.knob('out').setEnabled(True)\nelse:\n    with nuke.thisNode():\n        shuf = nuke.toNode('Fresnel_chan')\n        shuf.knob('out').setEnabled(False)"
+ knobChanged "if nuke.thisKnob().name() == 'fresnel':\n    if nuke.thisNode().knob('fresnel').value() == True:\n        nuke.thisNode().knob('fresnel_value').setEnabled(True)\n        nuke.thisNode().knob('output').setValue('\[value out]')\n        with nuke.thisNode():\n            shuf = nuke.toNode('Fresnel_chan')\n            shuf.knob('out').setEnabled(True)\n    else:\n        nuke.thisNode().knob('fresnel_value').setEnabled(False)\n        nuke.thisNode().knob('output').setValue('rgb')\n        with nuke.thisNode():\n            shuf = nuke.toNode('Fresnel_chan')\n            shuf.knob('out').setEnabled(False)"
+ tile_color 0xfefefeff
+ selected true
+ icon F_iconrgb.png
+ addUserKnob {20 reflect l Reflections}
+ addUserKnob {41 in_1 l "<font color=\"green\">@b;Position" T pos.in}
+ addUserKnob {41 in l "<font color=\"green\">@b;Normals" T norm.in}
+ addUserKnob {26 S00 l " " T " "}
+ addUserKnob {7 rot_y l "          Rotate X" R -180 180}
+ addUserKnob {6 mir_y l Mirror -STARTLINE}
+ addUserKnob {7 rot_x l Y R -180 180}
+ addUserKnob {6 mir_x l Mirror -STARTLINE}
+ addUserKnob {26 S01 l " "}
+ addUserKnob {41 blur_size l "Env. Blur" T Blur1.size}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {41 refl_filter l Filter t "switch to the \"Notch\" if tehre is a banding looking occurred " T STMap.filter}
+ addUserKnob {6 premult l Premult -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 FT l Fresnel T ""}
+ addUserKnob {6 fresnel l " " -STARTLINE}
+ addUserKnob {7 fresnel_value l "     Value" -STARTLINE +DISABLED}
+ fresnel_value 0.45
+ addUserKnob {41 out l Output T Fresnel_chan.out}
+ addUserKnob {26 T l " " -STARTLINE T "                                                                            "}
+ addUserKnob {26 FT1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output rgb
+}
+ Input {
+  inputs 0
+  name Cam
+  xpos -141
+  ypos 355
+  number 2
+ }
+ Axis2 {
+  display off
+  selectable false
+  name data
+  xpos -131
+  ypos 739
+ }
+ Input {
+  inputs 0
+  name Color
+  xpos -1069
+  ypos 358
+ }
+ Dot {
+  name Dot7
+  xpos -1035
+  ypos 562
+ }
+set N47bb4c00 [stack 0]
+ Dot {
+  name Dot4
+  xpos -636
+  ypos 562
+ }
+set N47bb4800 [stack 0]
+ Dot {
+  name Dot10
+  xpos -303
+  ypos 562
+ }
+ Shuffle {
+  in none
+  name norm
+  xpos -337
+  ypos 656
+ }
+ ColorMatrix {
+  matrix {
+      {{data.world_matrix.0} {data.world_matrix.1} {data.world_matrix.2}}
+      {{data.world_matrix.4} {data.world_matrix.5} {data.world_matrix.6}}
+      {{data.world_matrix.8} {data.world_matrix.9} {data.world_matrix.10}}
+    }
+  invert true
+  name ColorMatrix2
+  xpos -337
+  ypos 758
+ }
+set N47bd5c00 [stack 0]
+ ColorCorrect {
+  contrast {{parent.fresnel_value*2.5}}
+  gamma {{Fresnel.contrast*2}}
+  gain {{Fresnel.contrast*0.75}}
+  shadows 0
+  midtones 0
+  highlights 0
+  name Fresnel
+  xpos -337
+  ypos 1269
+  disable {{!parent.fresnel}}
+ }
+set N47bd5800 [stack 0]
+ Shuffle {
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos -337
+  ypos 1674
+  disable {{!parent.fresnel}}
+ }
+push $N47bb4c00
+ Dot {
+  name Dot5
+  xpos -1035
+  ypos 1401
+ }
+set N47bd5000 [stack 0]
+ AddChannels {
+  channels alpha
+  name AddChannels3
+  xpos -873
+  ypos 1391
+ }
+push $N47bd5800
+push $N47bb4800
+ Shuffle {
+  in none
+  name pos
+  xpos -670
+  ypos 663
+ }
+ Expression {
+  temp_name0 v_length
+  temp_expr0 "sqrt( r*r + g*g + b*b )"
+  expr0 "r/ v_length"
+  expr1 "g/ v_length"
+  expr2 "b/ v_length"
+  name nomailze1
+  xpos -670
+  ypos 760
+ }
+push $N47bd5c00
+ Expression {
+  temp_name0 v_length
+  temp_expr0 "sqrt( r*r + g*g + b*b )"
+  expr0 "r/ v_length"
+  expr1 "g/ v_length"
+  expr2 "b/ v_length"
+  name nomailze
+  xpos -497
+  ypos 758
+ }
+ Dot {
+  name Dot12
+  xpos -463
+  ypos 833
+ }
+set N47c11400 [stack 0]
+ MergeExpression {
+  inputs 2
+  temp_name0 dot_VN
+  temp_expr0 "B.r * A.r + B.g * A.g + B.b * A.b"
+  expr0 "2 * dot_VN * Ar"
+  expr1 "2 * dot_VN * Ag"
+  expr2 "2 * dot_VN * Ab"
+  name _2xdot_VN
+  xpos -670
+  ypos 829
+ }
+push $N47c11400
+ Dot {
+  name Dot1
+  xpos -463
+  ypos 918
+ }
+ MergeExpression {
+  inputs 2
+  expr0 "A.r - B.r"
+  expr1 "A.g - B.g"
+  expr2 "A.b - B.b"
+  expr3 0
+  name vec_Rref
+  xpos -670
+  ypos 914
+ }
+ Expression {
+  expr0 "isnan(r) ? 0 : r"
+  expr1 "isnan(g) ? 0 : g"
+  expr2 "isnan(b) ? 0 : b"
+  name NaN
+  xpos -670
+  ypos 1018
+ }
+ Expression {
+  temp_name0 u
+  temp_expr0 "( atan(r,b) + pi )/ (2*pi)"
+  temp_name1 v
+  temp_expr1 "( asin(g) + 0.5*pi )/ pi"
+  expr0 u
+  expr1 v
+  expr2 0
+  expr3 0
+  name Expression1
+  xpos -670
+  ypos 1044
+ }
+ Expression {
+  temp_name0 rot_x
+  temp_expr0 "(parent.rot_x + 360)/ 360"
+  temp_name1 rot_y
+  temp_expr1 "(parent.rot_y + 360)/ 360"
+  expr0 "abs( (rot_y + r ) % 1.0 )"
+  expr1 "abs( (rot_x + g) % 1.0 )"
+  expr2 0
+  expr3 0
+  enable_mix_luminance false
+  name Expression3
+  tile_color 0xfefefeff
+  xpos -670
+  ypos 1070
+ }
+ Input {
+  inputs 0
+  name Env
+  xpos -869
+  ypos 356
+  number 1
+ }
+ Dot {
+  name boxinfo
+  xpos -835
+  ypos 492
+ }
+ Reformat {
+  type scale
+  scale 3
+  filter Simon
+  name Reformat2
+  xpos -869
+  ypos 686
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Mirror2 {
+  flip true
+  name Mirror2_1
+  xpos -869
+  ypos 712
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Tile {
+  rows 3
+  mirrorRows true
+  columns 3
+  filter Simon
+  name Tile1
+  xpos -869
+  ypos 738
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Transform {
+  translate {0.5 {translate.x}}
+  center {2790 1395}
+  invert_matrix true
+  filter Simon
+  black_outside false
+  shutteroffset centred
+  name Transform2
+  xpos -869
+  ypos 764
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Blur {
+  channels rgba
+  crop false
+  name Blur1
+  xpos -869
+  ypos 839
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Crop {
+  box {{boxinfo.bbox.x+boxinfo.bbox.r} {boxinfo.bbox.y+boxinfo.bbox.t} {boxinfo.bbox.r+boxinfo.bbox.r} {boxinfo.bbox.t+boxinfo.bbox.t}}
+  reformat true
+  crop false
+  name Crop3
+  xpos -869
+  ypos 899
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Mirror2 {
+  flip {{!parent.mir_x}}
+  flop {{parent.mir_y}}
+  name Mirror2_2
+  xpos -869
+  ypos 958
+ }
+ Dot {
+  name Dot6
+  xpos -835
+  ypos 1164
+ }
+ STMap {
+  inputs 2
+  channels rgba
+  uv rgb
+  blur_scale 0.01
+  maskChannel rgba.alpha
+  invert_mask true
+  name STMap
+  xpos -670
+  ypos 1160
+ }
+ Multiply {
+  inputs 1+1
+  channels rgb
+  value 0
+  maskChannelMask rgba.blue
+  name Multiply1
+  xpos -670
+  ypos 1269
+  disable {{!parent.fresnel}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -670
+  ypos 1391
+ }
+ Premult {
+  name Premult1
+  xpos -670
+  ypos 1429
+  disable {{!parent.premult}}
+ }
+ Dot {
+  name Dot3
+  xpos -636
+  ypos 1560
+ }
+push $N47bd5000
+ Copy {
+  inputs 2
+  channels rgb
+  name Copy2
+  xpos -1069
+  ypos 1543
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green black
+  blue black
+  out rgb
+  name Fresnel_chan
+  xpos -1069
+  ypos 1674
+  disable {{!parent.fresnel}}
+ }
+ Output {
+  name FranklinVFX
+  xpos -1069
+  ypos 1810
+ }
+end_group

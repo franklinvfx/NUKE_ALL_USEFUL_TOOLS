@@ -1,0 +1,365 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+Group {
+name ICornerPin_C
+help "Déforme (IDistort) l'image \"src\" a l'aide  d'outils de transformations 2D et d'un mask \"warp_mask\".\nCelui-ci sert à déterminer la partie affectée de l'image et sa quantité de blur adoucit la déformation dans ses contours.\n\nL'autre entrée \"mask\" permet de contraindre l'effet dans une partie précise."
+tile_color 0xa57aaaff
+label "\[value filter] "
+addUserKnob {20 "" l Transform}
+addUserKnob {26 CORNER_FROM}
+addUserKnob {41 from1 T CornerPin2D1.from1}
+addUserKnob {41 from2 T CornerPin2D1.from2}
+addUserKnob {41 from3 T CornerPin2D1.from3}
+addUserKnob {41 from4 T CornerPin2D1.from4}
+addUserKnob {22 get_input_values_1 l get_input_values T "nuke.thisNode()\['from1'].setValue(0,0)\nnuke.thisNode()\['from1'].setValue(0,1)\nnuke.thisNode()\['from1'].clearAnimated()\nnuke.thisNode()\['from2'].setExpression('\[value name].input.width', 0)\nnuke.thisNode()\['from2'].setValue(0,1)\nnuke.thisNode()\['from2'].clearAnimated()\nnuke.thisNode()\['from3'].setExpression('\[value name].input.width', 0)\nnuke.thisNode()\['from3'].setExpression('\[value name].input.height', 1)\nnuke.thisNode()\['from3'].clearAnimated()\nnuke.thisNode()\['from4'].setValue(0,0)\nnuke.thisNode()\['from4'].setExpression('\[value name].input.height', 1)\nnuke.thisNode()\['from4'].clearAnimated()" +STARTLINE}
+addUserKnob {22 get_Bbox_values_1 l INVISIBLE -STARTLINE +INVISIBLE T "nuke.thisNode()\['from1'].setExpression('\[value name].bbox.x', 0)\nnuke.thisNode()\['from1'].setExpression('\[value name].bbox.y', 1)\nnuke.thisNode()\['from1'].clearAnimated()\nnuke.thisNode()\['from2'].setExpression('\[value name].bbox.r', 0)\nnuke.thisNode()\['from2'].setExpression('\[value name].bbox.y', 1)\nnuke.thisNode()\['from2'].clearAnimated()\nnuke.thisNode()\['from3'].setExpression('\[value name].bbox.r', 0)\nnuke.thisNode()\['from3'].setExpression('\[value name].bbox.t', 1)\nnuke.thisNode()\['from3'].clearAnimated()\nnuke.thisNode()\['from4'].setExpression('\[value name].bbox.x', 0)\nnuke.thisNode()\['from4'].setExpression('\[value name].bbox.t', 1)\nnuke.thisNode()\['from4'].clearAnimated()"}
+addUserKnob {22 get_root_values_1 l get_root_values -STARTLINE T "nuke.thisNode()\['from1'].setValue(0,0)\nnuke.thisNode()\['from1'].setValue(0,1)\nnuke.thisNode()\['from1'].clearAnimated()\nnuke.thisNode()\['from2'].setExpression('root.width', 0)\nnuke.thisNode()\['from2'].setValue(0, 1)\nnuke.thisNode()\['from2'].clearAnimated()\nnuke.thisNode()\['from3'].setExpression('root.width', 0)\nnuke.thisNode()\['from3'].setExpression('root.height', 1)\nnuke.thisNode()\['from3'].clearAnimated()\nnuke.thisNode()\['from4'].setValue(0, 0)\nnuke.thisNode()\['from4'].setExpression('root.height', 1)\nnuke.thisNode()\['from4'].clearAnimated()"}
+addUserKnob {26 CORNER_TO}
+addUserKnob {41 to1 T CornerPin2D1.to1}
+addUserKnob {41 to2 T CornerPin2D1.to2}
+addUserKnob {41 to3 T CornerPin2D1.to3}
+addUserKnob {41 to4 T CornerPin2D1.to4}
+addUserKnob {22 get_input_values_2 l get_input_values T "nuke.thisNode()\['to1'].setValue(0,0)\nnuke.thisNode()\['to1'].setValue(0,1)\nnuke.thisNode()\['to1'].clearAnimated()\nnuke.thisNode()\['to2'].setExpression('\[value name].input.width', 0)\nnuke.thisNode()\['to2'].setValue(0,1)\nnuke.thisNode()\['to2'].clearAnimated()\nnuke.thisNode()\['to3'].setExpression('\[value name].input.width', 0)\nnuke.thisNode()\['to3'].setExpression('\[value name].input.height', 1)\nnuke.thisNode()\['to3'].clearAnimated()\nnuke.thisNode()\['to4'].setValue(0,0)\nnuke.thisNode()\['to4'].setExpression('\[value name].input.height', 1)\nnuke.thisNode()\['to4'].clearAnimated()" +STARTLINE}
+addUserKnob {22 get_Bbox_values_2 l INVISIBLE -STARTLINE +INVISIBLE T "nuke.thisNode()\['to1'].setExpression('\[value name].bbox.x', 0)\nnuke.thisNode()\['to1'].setExpression('\[value name].bbox.y', 1)\nnuke.thisNode()\['to1'].clearAnimated()\nnuke.thisNode()\['to2'].setExpression('\[value name].bbox.r', 0)\nnuke.thisNode()\['to2'].setExpression('\[value name].bbox.y', 1)\nnuke.thisNode()\['to2'].clearAnimated()\nnuke.thisNode()\['to3'].setExpression('\[value name].bbox.r', 0)\nnuke.thisNode()\['to3'].setExpression('\[value name].bbox.t', 1)\nnuke.thisNode()\['to3'].clearAnimated()\nnuke.thisNode()\['to4'].setExpression('\[value name].bbox.x', 0)\nnuke.thisNode()\['to4'].setExpression('\[value name].bbox.t', 1)\nnuke.thisNode()\['to4'].clearAnimated()"}
+addUserKnob {22 get_root_values_2 l get_root_values -STARTLINE T "nuke.thisNode()\['to1'].setValue(0,0)\nnuke.thisNode()\['to1'].setValue(0,1)\nnuke.thisNode()\['to1'].clearAnimated()\nnuke.thisNode()\['to2'].setExpression('root.width', 0)\nnuke.thisNode()\['to2'].setValue(0,1)\nnuke.thisNode()\['to2'].clearAnimated()\nnuke.thisNode()\['to3'].setExpression('root.width', 0)\nnuke.thisNode()\['to3'].setExpression('root.height', 1)\nnuke.thisNode()\['to3'].clearAnimated()\nnuke.thisNode()\['to4'].setValue(0,0)\nnuke.thisNode()\['to4'].setExpression('root.height', 1)\nnuke.thisNode()\['to4'].clearAnimated()"}
+addUserKnob {26 ""}
+addUserKnob {7 Amp l Amplitude R -1 1}
+Amp 1
+addUserKnob {26 s l " " T " "}
+addUserKnob {41 filter T IDistort2.filter}
+addUserKnob {6 linear l Linear -STARTLINE}
+addUserKnob {26 d l " " T " "}
+addUserKnob {26 ""}
+addUserKnob {4 CtrlBbox l Bbox M {"Adjust Bbox" "Crop to format" ""}}
+addUserKnob {26 CtrlAdjustBbox}
+addUserKnob {14 AdjBBox1_numpixels l "" +STARTLINE R 0 100}
+AdjBBox1_numpixels {0 0}
+addUserKnob {20 add l INVISIBLE +INVISIBLE n 1}
+add 0
+addUserKnob {20 endGroup l INVISIBLE +INVISIBLE n -1}
+addUserKnob {26 ""}
+addUserKnob {41 maskChannel l "mask channel" T Keymix1.maskChannel}
+addUserKnob {41 invertMask l invert -STARTLINE T Keymix1.invertMask}
+}
+Input {
+inputs 0
+name mask
+xpos 349
+ypos -529
+number 2
+}
+set Nc4935c00 [stack 0]
+Crop {
+box {0 0 {Crop1.width} {Dot5.height}}
+crop false
+name Crop2
+xpos 349
+ypos -458
+}
+push $Nc4935c00
+Dot {
+name Dot1
+tile_color 0x8ce08ff
+xpos 508
+ypos -525
+}
+Switch {
+inputs 2
+which {{parent.Switch1.which}}
+name Switch2
+xpos 474
+ypos -340
+}
+Invert {
+name Invert1
+xpos 474
+ypos 866
+}
+Dot {
+name Dot7
+tile_color 0x8ce08ff
+xpos 508
+ypos 968
+}
+Input {
+inputs 0
+name src
+xpos -770
+ypos -651
+}
+Dot {
+name Dot5
+tile_color 0x8ce08ff
+xpos -736
+ypos -260
+}
+set Ne4482400 [stack 0]
+Remove {
+name Remove1
+xpos -210
+ypos -269
+}
+AdjBBox {
+numpixels {{parent.AdjBBox1_numpixels.w} {parent.AdjBBox1_numpixels.h}}
+name AdjBBox1
+xpos -210
+ypos -213
+}
+Expression {
+expr0 x
+expr1 y
+name Expression1
+xpos -210
+ypos -173
+}
+set Ne4483000 [stack 0]
+Dot {
+name Dot16
+tile_color 0x8ce08ff
+xpos -351
+ypos -170
+}
+set Ne4483800 [stack 0]
+Dot {
+name Dot2
+tile_color 0x8ce08ff
+xpos -592
+ypos -170
+}
+set Ne4483c00 [stack 0]
+push $Ne4482400
+add_layer {SizeBbox SizeBbox.a}
+ChannelMerge {
+inputs 2
+A SizeBbox.a
+output SizeBbox.a
+name ChannelMerge1
+xpos -770
+ypos -187
+}
+Dot {
+name Dot4
+tile_color 0x8ce08ff
+xpos -736
+ypos 203
+}
+set Nb27bdc00 [stack 0]
+Dot {
+name Dot6
+tile_color 0x8ce08ff
+xpos -736
+ypos 968
+}
+Input {
+inputs 0
+name warp_mask
+xpos -18
+ypos -531
+number 1
+}
+set N505ce800 [stack 0]
+Crop {
+box {0 0 {Crop1.width} {Dot5.height}}
+crop false
+name Crop14
+xpos -18
+ypos -463
+}
+push $N505ce800
+Dot {
+name Dot3
+tile_color 0x8ce08ff
+xpos 151
+ypos -527
+}
+Switch {
+inputs 2
+which {{parent.Switch3.which}}
+name Switch1
+xpos 117
+ypos -339
+}
+Clamp {
+channels alpha
+name Clamp1
+xpos 117
+ypos -256
+}
+Shuffle {
+red alpha
+green alpha
+blue alpha
+alpha black
+name Shuffle1
+xpos 117
+ypos 86
+}
+push $Ne4483800
+CornerPin2D {
+to1 {{parent.CornerPin2D1.to1} {parent.CornerPin2D1.to1}}
+to2 {{parent.CornerPin2D1.to2} {parent.CornerPin2D1.to2}}
+to3 {{parent.CornerPin2D1.to3} {parent.CornerPin2D1.to3}}
+to4 {{parent.CornerPin2D1.to4} {parent.CornerPin2D1.to4}}
+invert false
+black_outside false
+shutteroffset centred
+from1 {{parent.CornerPin2D1.from1} {parent.CornerPin2D1.from1}}
+from2 {{parent.CornerPin2D1.from2} {parent.CornerPin2D1.from2}}
+from3 {{parent.CornerPin2D1.from3} {parent.CornerPin2D1.from3}}
+from4 {{parent.CornerPin2D1.from4} {parent.CornerPin2D1.from4}}
+name CornerPin2D2
+xpos -385
+ypos -37
+}
+push $Ne4483000
+Merge2 {
+inputs 2
+operation minus
+bbox B
+name Merge1
+xpos -210
+ypos -37
+}
+Merge2 {
+inputs 2
+operation multiply
+name Merge2
+xpos -210
+ypos 86
+}
+AddChannels {
+channels forward
+name AddChannels1
+xpos -210
+ypos 136
+}
+push $Nb27bdc00
+Copy {
+inputs 2
+from0 rgba.red
+to0 forward.u
+from1 rgba.green
+to1 forward.v
+name Copy1
+xpos -210
+ypos 186
+}
+Log2Lin {
+operation lin2log
+name Log2Lin1
+xpos -210
+ypos 276
+disable {{!parent.linear}}
+}
+IDistort {
+uv forward
+uv_scale {{parent.Amp}}
+blur_scale 0
+filter Simon
+name IDistort2
+xpos -210
+ypos 300
+}
+Log2Lin {
+name Log2Lin2
+xpos -210
+ypos 336
+disable {{!parent.linear}}
+}
+Dot {
+name Dot8
+tile_color 0x8ce08ff
+xpos -176
+ypos 595
+}
+set Na3a09800 [stack 0]
+Dot {
+name Dot9
+tile_color 0x8ce08ff
+xpos -73
+ypos 595
+}
+Crop {
+box {0 0 {input.width} {input.height}}
+reformat true
+name Crop1
+xpos -107
+ypos 654
+}
+Dot {
+name Dot10
+tile_color 0x8ce08ff
+xpos -73
+ypos 725
+}
+push $Na3a09800
+Switch {
+inputs 2
+which {{parent.CtrlBbox}}
+name Switch3
+xpos -210
+ypos 721
+}
+Keymix {
+inputs 3
+bbox B
+name Keymix1
+xpos -210
+ypos 958
+}
+Remove {
+channels SizeBbox
+name Remove2
+xpos -210
+ypos 1008
+}
+Output {
+name Output1
+xpos -210
+ypos 1257
+}
+Transform {
+inputs 0
+center {1024 576}
+filter Simon
+black_outside false
+name Transform1
+tile_color 0xff0000ff
+label "expresison link this\nto avoid st map overlay"
+xpos -1093
+ypos -27
+hide_input true
+}
+push $Ne4483c00
+Crop {
+box {0 0 {Crop1.width} {Dot5.height}}
+name Crop3
+xpos -626
+ypos -108
+}
+CornerPin2D {
+to1 {0 0}
+to2 {2158 0}
+to3 {2158 1224}
+to4 {0 1224}
+invert false
+black_outside false
+shutteroffset centred
+from1 {0 0}
+from2 {2158 0}
+from3 {2158 1224}
+from4 {0 1224}
+name CornerPin2D1
+selected true
+xpos -626
+ypos -39
+}
+Viewer {
+frame_range 44-93
+colour_sample_bbox {0.265625 -0.091796875 0.2666015625 -0.0908203125}
+input_process false
+name Viewer1
+xpos 43
+ypos 1155
+}
+end_group

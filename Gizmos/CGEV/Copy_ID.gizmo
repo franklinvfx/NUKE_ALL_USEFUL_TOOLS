@@ -1,0 +1,184 @@
+Group {
+ name Channel_ID
+ help "Channel ID\n\nKeep in the Channel you want the color you want (r g b and a). \nBring all them in the channel Alpha (by default) or in all rgba.\nIf you select many color you have the choise to merge them using two differents operations \"Plus\" or \"Screen\".\n"
+ knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\nif knob.name() in ('merge', 'showPanel'):\n    mode = node\['merge'].value()\n    if mode == 'Plus':\n        node\['clamp'].setVisible(True)\n    elif mode == 'Screen':\n        node\['clamp'].setVisible(False)\n\nred = node.knob('red').value()\ngreen = node.knob('green').value()\nblue = node.knob('blue').value()\nredgreen = node.knob('red').value() and node.knob('green').value()\nredblue = node.knob('red').value() and node.knob('blue').value()\ngreenblue = node.knob('green').value() and node.knob('blue').value()\nalpha = node.knob('alpha').value()\n\n\nif red == True and green == False and blue == False: # R\n    node.knob('tile_color').setValue(2989502719)\n\nif red == False and green == True and blue == False: # G\n    node.knob('tile_color').setValue(715011327)\n\nif red == False and green == False and blue == True: # B\n    node.knob('tile_color').setValue(845462783)\n\nif red == True and green == True and blue == True: # RGB\n    node.knob('tile_color').setValue(2189591295)\n\nif red == False and green == False and blue == False: # 0\n    node.knob('tile_color').setValue(2654757887)\n\nif redgreen == True and blue == False: # RG\n    node.knob('tile_color').setValue(3132890879)\n\nif redblue == True and green == False: # RB\n    node.knob('tile_color').setValue(3158359039)\n\nif greenblue == True and red == False: # GB\n    node.knob('tile_color').setValue(899522303)\n\nif alpha == True: # A\n    node.knob('icon').setValue('F_iconalpha.png')\nelse:\n    node.knob('icon').setValue('')"
+ tile_color 0x9e3c63ff
+ note_font_color 0x40404ff
+ selected true
+ addUserKnob {20 User l "Channel ID"}
+ addUserKnob {41 in l Channel t "Input Channel" -STARTLINE T Shuffle1.in}
+ addUserKnob {26 S1 l " " T " "}
+ addUserKnob {26 S3 l " " T " "}
+ addUserKnob {6 red l "<font size = 3 color=\"black\">.<font size = 3 color=\"#FE2E2E\"> Red" t "Select to keep the channel in render." -STARTLINE}
+ addUserKnob {6 green l "<font size = 3 color=\"black\">.<font size = 3 color=\"green\"> Green" t "Select to keep the channel in render." -STARTLINE}
+ addUserKnob {6 blue l "<font size = 3 color=\"black\">.<font size = 3 color=\"#0080FF\"> Blue" t "Select to keep the channel in render." -STARTLINE}
+ addUserKnob {6 alpha l "Alpha           " t "Select to keep the channel in render." -STARTLINE}
+ addUserKnob {26 arr l "<img src=\":qrc/images/arrow_right.png\">" t "Merge all them to the selected channel behind." -STARTLINE T " "}
+ addUserKnob {4 out l "         " t "Choose the output channel. \n(Alpha or rgba)" -STARTLINE M {rgba Alpha "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {26 S2 l " " T " "}
+ addUserKnob {4 merge l "     Merge" t "Operation:\n\nPlus A+B\nScreen A+B-AB if A and B between 0-1, else A if A>B else B" M {"" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" Plus Screen "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ merge Plus
+ addUserKnob {26 S4 l " " -STARTLINE T "   "}
+ addUserKnob {6 clamp l Clamp t "Clamp the channel to the 0..1 range." -STARTLINE}
+ clamp true
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 by2 l " " T "                                                                                                     "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contactez votre superviseur\n" -STARTLINE T "<font color=\"#1C1C1C\"> v03 - CGEV - 2017"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[value in] / \[value merge]"
+}
+ Input {
+  inputs 0
+  name Input
+  tile_color 0x222222ff
+  note_font_size -9
+  xpos -1093
+  ypos 527
+ }
+ Shuffle {
+  name Shuffle1
+  tile_color 0x222222ff
+  xpos -1093
+  ypos 590
+ }
+set Nb82c2c00 [stack 0]
+ Dot {
+  name Dot2
+  xpos -852
+  ypos 593
+  icon F_ondot.png
+ }
+set Na07ee400 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle5
+  tile_color 0xffffffff
+  xpos -667
+  ypos 655
+  disable {{!parent.alpha i}}
+ }
+ Remove {
+  name Remove1
+  tile_color 0xffffffff
+  xpos -667
+  ypos 679
+  disable {{parent.alpha i}}
+ }
+push $Na07ee400
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle4
+  tile_color 0xff00
+  xpos -777
+  ypos 655
+  disable {{!parent.blue i}}
+ }
+ Remove {
+  name Remove2
+  tile_color 0xff00
+  xpos -777
+  ypos 679
+  disable {{parent.blue i}}
+ }
+push 0
+push $Na07ee400
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle2
+  tile_color 0xff000000
+  xpos -997
+  ypos 658
+  disable {{!parent.red i}}
+ }
+ Remove {
+  name Remove4
+  tile_color 0xff000000
+  xpos -997
+  ypos 682
+  disable {{parent.red i}}
+ }
+push $Na07ee400
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle3
+  tile_color 0xff0000
+  xpos -886
+  ypos 655
+  disable {{!parent.green i}}
+ }
+ Remove {
+  name Remove3
+  tile_color 0xff0000
+  xpos -886
+  ypos 679
+  disable {{parent.green i}}
+ }
+ Merge2 {
+  inputs 4+1
+  operation {{parent.merge i}}
+  name Merge
+  tile_color 0xffffffff
+  xpos -886
+  ypos 763
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle6
+  tile_color 0xffffffff
+  xpos -886
+  ypos 787
+ }
+ Clamp {
+  channels rgba
+  name Clamp1
+  tile_color 0x222222ff
+  xpos -886
+  ypos 854
+  disable {{!parent.clamp}}
+ }
+set N19cc3c00 [stack 0]
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  tile_color 0x222222ff
+  xpos -983
+  ypos 854
+ }
+push $Nb82c2c00
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  tile_color 0x222222ff
+  xpos -1093
+  ypos 848
+ }
+push $N19cc3c00
+ Switch {
+  inputs 2
+  which {{parent.out i}}
+  name Switch2
+  tile_color 0x222222ff
+  xpos -986
+  ypos 911
+ }
+ Output {
+  name FranklinVFX
+  tile_color 0x222222ff
+  label "\n\n\n\n\n\n\n\n\n\n."
+  xpos -986
+  ypos 885
+  icon F_greyg.png
+ }
+end_group

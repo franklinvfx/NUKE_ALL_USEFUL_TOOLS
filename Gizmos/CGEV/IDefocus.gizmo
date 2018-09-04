@@ -1,0 +1,615 @@
+Group {
+ name IDefocus
+ help "IDefocus\n\nSimilar to the original Nuke node (Zefocus). \nBut more simple and faster.\n"
+ knobChanged "c = nuke.toNode('Copy1')\n\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(2) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')"
+ tile_color 0xcc804eff
+ selected true
+ addUserKnob {20 FT l IDefocus}
+ addUserKnob {41 channels l "   Channels" T Blur11.channels}
+ addUserKnob {7 blur l Defocus R 0 100}
+ blur 1
+ addUserKnob {26 by1 l " " T " \n\n"}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 by3 l " " -STARTLINE T "<font color=\"#1C1C1C\">Franklin - 2016"}
+ addUserKnob {26 ""}
+ addUserKnob {41 from0 l mask T Copy1.from0}
+ addUserKnob {41 invertMask l invert -STARTLINE T Keymix27.invertMask}
+}
+ Input {
+  inputs 0
+  name mask
+  label "\[value number]"
+  xpos 2679
+  ypos -142
+  number 2
+  addUserKnob {20 User}
+  addUserKnob {6 in +STARTLINE}
+  in {{"\[exists input1]"}}
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos 2679
+  ypos 110
+ }
+set Ne0a46000 [stack 0]
+push $Ne0a46000
+ Copy {
+  inputs 2
+  to0 rgba.alpha
+  name Copy1
+  xpos 2679
+  ypos 134
+  disable {{!parent.mask.in i}}
+ }
+ Invert {
+  name Invert1
+  xpos 2679
+  ypos 170
+ }
+ Input {
+  inputs 0
+  name Input
+  label rgba
+  xpos -2
+  ypos -136
+ }
+ Dot {
+  name Dot58
+  xpos 32
+  ypos -24
+ }
+set Ne0a79000 [stack 0]
+ Blur {
+  size {{blur/10/4 i}}
+  name Blur11
+  xpos -2
+  ypos 26
+  disable true
+ }
+ Dot {
+  name Dot56
+  xpos 32
+  ypos 94
+ }
+set Ne0a78800 [stack 0]
+ Dot {
+  name Dot59
+  tile_color 0xffffffff
+  xpos 32
+  ypos 179
+ }
+ Input {
+  inputs 0
+  name ctrl_Blur
+  label a
+  selected true
+  xpos 212
+  ypos -145
+  number 1
+ }
+ Dot {
+  name Dot2
+  xpos 246
+  ypos -64
+ }
+set Ne0aa1c00 [stack 0]
+ Dot {
+  name Dot4
+  xpos 445
+  ypos -64
+ }
+set Ne0aa1800 [stack 0]
+ Dot {
+  name Dot32
+  xpos 651
+  ypos -64
+ }
+set Ne0aa1400 [stack 0]
+ Dot {
+  name Dot33
+  xpos 850
+  ypos -64
+ }
+set Ne0aa1000 [stack 0]
+ Dot {
+  name Dot34
+  xpos 1045
+  ypos -64
+ }
+set Ne0aa0c00 [stack 0]
+ Dot {
+  name Dot35
+  xpos 1233
+  ypos -65
+ }
+set Ne0aa0800 [stack 0]
+ Dot {
+  name Dot36
+  xpos 1438
+  ypos -65
+ }
+set Ne0aa0400 [stack 0]
+ Dot {
+  name Dot37
+  xpos 1634
+  ypos -65
+ }
+set Ne0aa0000 [stack 0]
+ Dot {
+  name Dot38
+  xpos 1834
+  ypos -65
+ }
+set Ne0abbc00 [stack 0]
+ Dot {
+  name Dot39
+  xpos 2036
+  ypos -65
+ }
+set Ne0abb800 [stack 0]
+ Dot {
+  name Dot40
+  xpos 2234
+  ypos -65
+ }
+set Ne0abb400 [stack 0]
+ Dot {
+  name Dot41
+  xpos 2432
+  ypos -66
+ }
+set Ne0abb000 [stack 0]
+ Dot {
+  name Dot42
+  xpos 2624
+  ypos -66
+ }
+ Grade {
+  channels rgba
+  blackpoint 0.9
+  white_clamp true
+  name Grade12
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 2590
+  ypos 27
+  icon -
+ }
+push $Ne0a79000
+ Dot {
+  name Dot43
+  xpos 152
+  ypos -24
+ }
+set Ne0aba400 [stack 0]
+ Dot {
+  name Dot44
+  xpos 354
+  ypos -24
+ }
+set Ne0aba000 [stack 0]
+ Dot {
+  name Dot45
+  xpos 557
+  ypos -24
+ }
+set Ne0adbc00 [stack 0]
+ Dot {
+  name Dot46
+  xpos 756
+  ypos -24
+ }
+set Ne0adb800 [stack 0]
+ Dot {
+  name Dot47
+  xpos 954
+  ypos -24
+ }
+set Ne0adb400 [stack 0]
+ Dot {
+  name Dot48
+  xpos 1142
+  ypos -25
+ }
+set Ne0adb000 [stack 0]
+ Dot {
+  name Dot49
+  xpos 1347
+  ypos -25
+ }
+set Ne0adac00 [stack 0]
+ Dot {
+  name Dot50
+  xpos 1543
+  ypos -25
+ }
+set Ne0ada800 [stack 0]
+ Dot {
+  name Dot51
+  xpos 1743
+  ypos -25
+ }
+set Ne0ada400 [stack 0]
+ Dot {
+  name Dot52
+  xpos 1945
+  ypos -25
+ }
+set Ne0ada000 [stack 0]
+ Dot {
+  name Dot53
+  xpos 2143
+  ypos -25
+ }
+set Ne0af3c00 [stack 0]
+ Dot {
+  name Dot54
+  xpos 2341
+  ypos -26
+ }
+set Ne0af3800 [stack 0]
+ Dot {
+  name Dot55
+  xpos 2533
+  ypos -26
+ }
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur}}
+  name Defocus13
+  xpos 2499
+  ypos 27
+ }
+push $Ne0abb000
+ Grade {
+  channels rgba
+  blackpoint 0.8
+  whitepoint 0.9
+  white_clamp true
+  name Grade15
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 2398
+  ypos 27
+  icon -
+ }
+push $Ne0af3800
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10*9 i}}
+  name Defocus12
+  xpos 2307
+  ypos 27
+ }
+push $Ne0abb400
+ Grade {
+  channels rgba
+  blackpoint 0.7
+  whitepoint 0.8
+  white_clamp true
+  name Grade16
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 2200
+  ypos 27
+  icon -
+ }
+push $Ne0af3c00
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10*8 i}}
+  name Defocus11
+  xpos 2109
+  ypos 27
+ }
+push $Ne0abb800
+ Grade {
+  channels rgba
+  blackpoint 0.6
+  whitepoint 0.7
+  white_clamp true
+  name Grade17
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 2002
+  ypos 27
+  icon -
+ }
+push $Ne0ada000
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10*7 i}}
+  name Defocus10
+  xpos 1911
+  ypos 27
+ }
+push $Ne0abbc00
+ Grade {
+  channels rgba
+  blackpoint 0.5
+  whitepoint 0.6
+  white_clamp true
+  name Grade18
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 1800
+  ypos 27
+  icon -
+ }
+push $Ne0ada400
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10*6 i}}
+  name Defocus9
+  xpos 1709
+  ypos 27
+ }
+push $Ne0aa0000
+ Grade {
+  channels rgba
+  blackpoint 0.4
+  whitepoint 0.5
+  white_clamp true
+  name Grade19
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 1600
+  ypos 27
+  icon -
+ }
+push $Ne0ada800
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10*5 i}}
+  name Defocus8
+  xpos 1509
+  ypos 27
+ }
+push $Ne0aa0400
+ Grade {
+  channels rgba
+  blackpoint 0.3
+  whitepoint 0.4
+  white_clamp true
+  name Grade20
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 1404
+  ypos 27
+  icon -
+ }
+push $Ne0adac00
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10*4 i}}
+  name Defocus7
+  xpos 1313
+  ypos 27
+ }
+push $Ne0aa0800
+ Grade {
+  channels rgba
+  blackpoint 0.2
+  whitepoint 0.3
+  white_clamp true
+  name Grade21
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 1199
+  ypos 27
+  icon -
+ }
+push $Ne0adb000
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10*3 i}}
+  name Defocus6
+  xpos 1108
+  ypos 28
+ }
+push $Ne0aa0c00
+ Grade {
+  channels rgba
+  blackpoint 0.1
+  whitepoint 0.2
+  white_clamp true
+  name Grade22
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 1011
+  ypos 27
+  icon -
+ }
+push $Ne0adb400
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10*2 i}}
+  name Defocus5
+  xpos 920
+  ypos 27
+ }
+push $Ne0aa1000
+ Grade {
+  channels rgba
+  blackpoint 0.075
+  whitepoint 0.1
+  white_clamp true
+  name Grade23
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 816
+  ypos 27
+  icon -
+ }
+push $Ne0adb800
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10 i}}
+  name Defocus4
+  xpos 722
+  ypos 27
+ }
+push $Ne0aa1400
+ Grade {
+  channels rgba
+  blackpoint 0.05
+  whitepoint 0.075
+  white_clamp true
+  name Grade24
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 617
+  ypos 27
+  icon -
+ }
+push $Ne0adbc00
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10/4*3 i}}
+  name Defocus3
+  xpos 523
+  ypos 27
+ }
+push $Ne0aa1800
+ Grade {
+  channels rgba
+  blackpoint 0.025
+  whitepoint 0.05
+  white_clamp true
+  name Grade25
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 411
+  ypos 27
+  icon -
+ }
+push $Ne0aba000
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10/4*2 i}}
+  name Defocus2
+  xpos 320
+  ypos 27
+ }
+push $Ne0aa1c00
+ Grade {
+  channels rgba
+  whitepoint 0.025
+  white_clamp true
+  name Grade26
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 212
+  ypos 27
+  icon -
+ }
+push $Ne0aba400
+ Defocus {
+  channels {{{parent.Blur11.channels}}}
+  defocus {{blur/10/4 i}}
+  name Defocus1
+  xpos 118
+  ypos 27
+ }
+push $Ne0a78800
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix1
+  xpos 118
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix15
+  xpos 320
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix16
+  xpos 523
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix17
+  xpos 722
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix18
+  xpos 920
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix19
+  xpos 1108
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix20
+  xpos 1313
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix21
+  xpos 1509
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix22
+  xpos 1709
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix23
+  xpos 1911
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix24
+  xpos 2109
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix25
+  xpos 2307
+  ypos 85
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix26
+  xpos 2499
+  ypos 85
+ }
+set Ne006bc00 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix27
+  xpos 2351
+  ypos 170
+  disable {{!parent.mask.in}}
+ }
+push $Ne006bc00
+ Switch {
+  inputs 2
+  which {{Copy1.from0 i}}
+  name Switch2
+  xpos 2499
+  ypos 253
+ }
+ Output {
+  name FranklinVFX
+  xpos 2499
+  ypos 311
+ }
+end_group

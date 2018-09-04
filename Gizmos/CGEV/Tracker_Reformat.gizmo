@@ -1,0 +1,53 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+push $cut_paste_input
+Group {
+ name Track_Reformat
+ knobChanged "n=nuke.thisNode() \nk=nuke.thisKnob() \nif k.name() == \"rootformat\": \n if k.value() : \n  n\[\"i_format\"].setExpression(\"root.format\") \n else: \n  n\[\"i_format\"].setExpression(\"\")"
+ tile_color 0xa57aaaff
+ selected true
+ xpos -52
+ ypos -64
+ addUserKnob {20 Track_Reformat}
+ addUserKnob {41 i_format l "Input Format" T Reformat1.format}
+ addUserKnob {6 rootformat l "Use root format" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {22 reformat l Reformat T "n = nuke.thisNode()\n\n_input = n.input(0)\n\ni_width = n\['i_format'].value().width()\ni_height = n\['i_format'].value().height()\ni_pixelAspect = n\['i_format'].value().pixelAspect()\no_width = n\['o_format'].value().width()\no_height = n\['o_format'].value().height()\no_pixelAspect = n\['o_format'].value().pixelAspect()\n\n_multX = 1\n_multY = 1\n_pxlA = float(o_pixelAspect)/float(i_pixelAspect)\n\ni = n\['scale'].getValue()\n\nif i == 0 :\n    _multX = 1\nelif i == 1 :\n    _multX = float(o_width)/float(i_width)\nelif i == 2 :\n    _multX = float(o_height)/float(i_height)\nelif i == 3 :\n    _multX = float(o_width)/float(i_width) if i_width >= i_height else float(o_height)/float(i_height)\nelif i == 4 :\n    _multX = float(o_width)/float(i_width) if i_width <= i_height else float(o_height)/float(i_height)\nelse :\n    _multX = float(o_width)/float(i_width)\n\n_multY = float(o_height)/float(i_height) if i == 5 else _multX * _pxlA\n\nif(_input.Class() == 'Tracker4'):\n\n    #Create new node\n    nuke.root().begin()\n    _newNode = nuke.createNode(_input.Class())\n    _newNode\['name'].setValue('%s_reformat' %_input.name())\n    _newNode\n\n    #Check the amount of trackers in the incoming tracker-node\n    count = str(1)\n    while True:\n        try:\n            nuke.tcl('set', 'This', count)\n            nuke.tcl('set', 'Tracker', _input.name())\n            p = '\$Tracker.tracks.\$This.track_x'\n            TT = nuke.tcl('subst', p)\n            Xpos = nuke.tcl('value', TT)\n            if Xpos == '1':\n                break\n            else:\n                count = int(count) + 1\n                count = str(count)\n        except:\n            break\n\n    trLen = int(count) -1\n\n    #Copy tracks and animations to the new node\n    kOld = _input\['tracks']\n    kNew = _newNode\['tracks']\n\n    _numColumns = 31\n    _colTrackX = 2\n    _colTrackY = 3\n\n    for t in range(trLen):\n        _newNode\['add_track'].execute()\n\n        for f in range(nuke.root().firstFrame(), nuke.root().lastFrame() + 1):\n            xValue = kOld.getValueAt(f, _numColumns*t + _colTrackX)\n            xValue -= (i_width/2)\n            xValue *= _multX\n            xValue += (o_width/2)\n            kNew.setValueAt(xValue, f, _numColumns*t + _colTrackX)\n\n            yValue = kOld.getValueAt(f, _numColumns*t + _colTrackY)\n            yValue -= (i_height/2)\n            yValue *= _multY\n            yValue += (o_height/2)\n            kNew.setValueAt(yValue, f, _numColumns*t + _colTrackY)\n\nelif (_input.Class() == 'CornerPin2D'):\n\n    #Create new node\n    nuke.root().begin()\n    _newNode = nuke.createNode(_input.Class())\n    _newNode\['name'].setValue('%s_reformat' %_input.name())\n\n    for f in range(nuke.root().firstFrame(), nuke.root().lastFrame() + 1):\n        for i in range(4):\n            if _input\['to%i' %(i+1)].isAnimated():\n                _newNode\['to%i' %(i+1)].setAnimated()\n                xValue = _input\['to%i' %(i+1)].getValueAt(f)\[0]\n                xValue -= (i_width/2)\n                xValue *= _multX\n                xValue += (o_width/2)\n                _newNode\['to%i' %(i+1)]\n                _newNode\['to%i' %(i+1)].setValueAt(xValue,f,0)\n                yValue = _input\['to%i' %(i+1)].getValueAt(f)\[1]\n                yValue -= (i_height/2)\n                yValue *= _multY\n                yValue += (o_height/2)\n                _newNode\['to%i' %(i+1)].setValueAt(yValue,f,1)\n\n            elif _input\['from%i' %(i+1)].isAnimated():\n                _newNode\['from%i' %(i+1)].setAnimated()\n                xValue = _input\['from%i' %(i+1)].getValueAt(f)\[0]\n                xValue -= (i_width/2)\n                xValue *= _multX\n                xValue += (o_width/2)\n                _newNode\['to%i' %(i+1)].setValueAt(xValue,f,0)\n                yValue = _input\['from%i' %(i+1)].getValueAt(f)\[1]\n                yValue -= (i_height/2)\n                yValue *= _multY\n                yValue += (o_height/2)\n                _newNode\['to%i' %(i+1)].setValueAt(xValue,f,1)" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {4 scale l "Resize Type" t "• width to scale the original so that it fills the output width. Height is then scaled in such a manner as to preserve the original aspect ratio. \n• height to scale the original so that it fills the output height. Width is then scaled in such a manner as to preserve the original aspect ratio. \n• fit to scale the original so that its smallest side fills the output width or height. The longest side is then scaled in such a manner as to preserve the original aspect ratio. \n• fill to scale the original so that its longest side fills the output width or height. The smallest side is then scaled in such a manner as to preserve the original aspect ratio. \n• distort to scale the original so that both sides fill the output dimensions. This option does not preserve the original aspect ratio, so distortions may occur." M {none width height fit fill distort "" ""}}
+ scale width
+ addUserKnob {41 o_format l "Output Format" T Reformat2.format}
+ addUserKnob {26 credits l INVISIBLE +INVISIBLE T "\nOnly Nuke7+ trackers and Cornerpins supported."}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 34
+  ypos 87
+ }
+ Reformat {
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  pbb true
+  name Reformat1
+  xpos 34
+  ypos 127
+ }
+ Dot {
+  name Dot1
+  label "The rest is python really....."
+  xpos 68
+  ypos 178
+ }
+ Reformat {
+  format "640 480 0 0 640 480 1 PC_Video"
+  pbb true
+  name Reformat2
+  xpos 34
+  ypos 207
+ }
+ Output {
+  name Output1
+  xpos 34
+  ypos 253
+ }
+end_group

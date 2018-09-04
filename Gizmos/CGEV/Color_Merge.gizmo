@@ -1,0 +1,332 @@
+Group {
+ name Color_Merge
+ help "Color Merge\n\nMerge the color from the Input \"Color\" to the footage in Input \"Lum\".\n\nIf the \"Mix Color\" slider is on 0, the color is keep from the Input \"Lum\".\nIt's possible to adjust the grading directly in this node before mix.\n"
+ knobChanged "\nif nuke.thisKnob().name().endswith('_solo') and nuke.thisKnob().value()  == True:\n    for knob in \[knob for knob in nuke.thisNode().knobs().values() if knob != nuke.thisKnob() and knob.name().endswith('_solo')]:\n        knob.setValue(False)\n"
+ tile_color 0x7aa9ffff
+ selected true
+ icon F_iconrgb.png
+ addUserKnob {20 User l "Color Merge"}
+ addUserKnob {41 which l "             Mix Color" T Dissolve1.which}
+ addUserKnob {26 S0 l " " T " "}
+ addUserKnob {26 T02 l "" +STARTLINE}
+ addUserKnob {26 T01 l " " T "<font color=\"grey\">Grading Color and Lum Inputs!\n"}
+ addUserKnob {26 ""}
+ addUserKnob {20 GradeGroupL l "Luminosity      (Lum)" t " " n 1}
+ GradeGroupL 0
+ addUserKnob {41 contrast l Contrast T Luminance.contrast}
+ addUserKnob {41 gamma l Gamma T Luminance.gamma}
+ addUserKnob {41 gain l Gain T Luminance.gain}
+ addUserKnob {41 offset l Offset T Luminance.offset}
+ addUserKnob {6 disablelum l "<font color=\"grey\">_Enable Luminosity Grade" +STARTLINE}
+ disablelum true
+ addUserKnob {6 lum_solo l "View Only     " +STARTLINE}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 GradeGroupC l "Color             (Color)" n 1}
+ GradeGroupC 0
+ addUserKnob {18 satcolor l Saturation R 0 4}
+ satcolor {1 1 1}
+ addUserKnob {6 satcolor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 gaincolor l Gain R 0 4}
+ gaincolor {1 1 1}
+ addUserKnob {6 gaincolor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 offsetcolor l Offset R -1 1}
+ offsetcolor {0 0 0}
+ addUserKnob {6 offsetcolor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 gammacolor l Gamma R 0.2 5}
+ gammacolor {1 1 1}
+ addUserKnob {6 gammacolor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 disablecolor l "<font color=\"grey\">_Enable Color Grade" +STARTLINE}
+ disablecolor true
+ addUserKnob {6 color_solo l "View Only     " +STARTLINE}
+ addUserKnob {26 S1 l " " T " "}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {1 lumlab l INVISIBLE +INVISIBLE}
+ addUserKnob {1 colorlab l INVISIBLE +INVISIBLE}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[if \{\[value lum_solo]==\"true\"\} \{return \"\[knob this.lumlab \"Luminosity\"]\"\} \{return \"\[knob this.lumlab \"\"]\"\}]\[if \{\[value color_solo]==\"true\"\} \{return \"\[knob this.colorlab \"Color\"]\"\} \{return \"\[knob this.colorlab \"\"]\"\}]\[value lumlab]\[value colorlab]"
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 by2 l " " T "                                                                                                  "}
+ addUserKnob {26 by3 l " " -STARTLINE T "<font color=\"#1C1C1C\">Franklin - 2016"}
+}
+ Input {
+  inputs 0
+  name Lum
+  xpos 27
+  ypos -438
+ }
+set N48ccd000 [stack 0]
+ Dot {
+  name Dot5
+  xpos -83
+  ypos -435
+ }
+ Dot {
+  name Dot6
+  xpos -83
+  ypos 379
+ }
+set N48ccc800 [stack 0]
+ Dot {
+  name Dot7
+  xpos -83
+  ypos 614
+ }
+ Input {
+  inputs 0
+  name Color
+  xpos 207
+  ypos -439
+  number 1
+ }
+ PLogLin {
+  operation "lin to log"
+  name PLogLin1
+  label "\[if \{\[value operation]==\"lin2log\"\} \{return \"\[knob this.icon F_iconstart.png]\"\} \{return \"\[knob this.icon F_iconend.png]\"\}]"
+  xpos 207
+  ypos -339
+  icon F_iconend.png
+ }
+ Saturation {
+  channels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  saturation {{parent.satcolor.r i}}
+  name Saturation1
+  xpos 207
+  ypos -286
+  disable {{!parent.disablecolor i}}
+ }
+ Saturation {
+  channels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  saturation {{parent.satcolor.g i}}
+  name Saturation2
+  xpos 207
+  ypos -250
+  disable {{!parent.disablecolor i}}
+ }
+ Saturation {
+  channels {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  saturation {{parent.satcolor.b i}}
+  name Saturation3
+  xpos 207
+  ypos -214
+  disable {{!parent.disablecolor i}}
+ }
+ Grade {
+  white {{parent.gaincolor.r i} {parent.gaincolor.g i} {parent.gaincolor.b i} 1}
+  add {{parent.offsetcolor.r i} {parent.offsetcolor.g i} {parent.offsetcolor.b i} 0}
+  gamma {{parent.gammacolor.r i} {parent.gammacolor.g i} {parent.gammacolor.b i} 1}
+  black_clamp false
+  name Grade1
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 207
+  ypos -149
+  icon -
+  disable {{!parent.disablecolor i}}
+ }
+ PLogLin {
+  name PLogLin2
+  label "\[if \{\[value operation]==\"lin2log\"\} \{return \"\[knob this.icon F_iconstart.png]\"\} \{return \"\[knob this.icon F_iconend.png]\"\}]"
+  xpos 207
+  ypos -83
+  icon F_iconend.png
+ }
+ Dot {
+  name Dot8
+  xpos 241
+  ypos 13
+ }
+set N48d06400 [stack 0]
+ Dot {
+  name Dot15
+  xpos 351
+  ypos 13
+ }
+set N48d06000 [stack 0]
+ Dot {
+  name Dot14
+  xpos 482
+  ypos 13
+ }
+set N48d4bc00 [stack 0]
+ Dot {
+  name Dot13
+  xpos 592
+  ypos 13
+ }
+set N48d4b800 [stack 0]
+ Dot {
+  name Dot12
+  xpos 727
+  ypos 13
+ }
+set N48d4b400 [stack 0]
+push $N48d4b400
+ Dot {
+  name Dot11
+  xpos 837
+  ypos 13
+ }
+ ColorMatrix {
+  matrix {
+      {0 0 0}
+      {0 0 0}
+      {1 1 1}
+    }
+  name ColorMatrix4
+  xpos 803
+  ypos 94
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge1
+  xpos 693
+  ypos 94
+ }
+ Dot {
+  name Dot9
+  xpos 727
+  ypos 219
+ }
+push $N48d4bc00
+push $N48d4b800
+ ColorMatrix {
+  matrix {
+      {0 0 0}
+      {1 1 1}
+      {0 0 0}
+    }
+  name ColorMatrix3
+  xpos 558
+  ypos 92
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge3
+  xpos 448
+  ypos 92
+ }
+ Dot {
+  name Dot10
+  xpos 482
+  ypos 152
+ }
+push $N48d06400
+push $N48d06000
+ ColorMatrix {
+  matrix {
+      {1 1 1}
+      {0 0 0}
+      {0 0 0}
+    }
+  name ColorMatrix2
+  xpos 317
+  ypos 91
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge2
+  xpos 207
+  ypos 91
+ }
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.green
+  name Copy1
+  xpos 207
+  ypos 143
+ }
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.blue
+  name Copy2
+  xpos 207
+  ypos 210
+ }
+ Dot {
+  name Dot2
+  xpos 241
+  ypos 292
+ }
+set N48d74400 [stack 0]
+ Dot {
+  name Dot3
+  xpos 241
+  ypos 536
+ }
+push $N48ccd000
+ ColorCorrect {
+  saturation {1 1 1 1}
+  name Luminance
+  xpos 27
+  ypos -214
+  disable {{!parent.disablelum i}}
+ }
+ ColorMatrix {
+  matrix {
+      {1 1 1}
+      {1 1 1}
+      {1 1 1}
+    }
+  name ColorMatrix1
+  xpos 27
+  ypos 95
+ }
+ Dot {
+  name Dot1
+  xpos 61
+  ypos 292
+ }
+set N48dab400 [stack 0]
+ Dot {
+  name Dot4
+  xpos 61
+  ypos 461
+ }
+push $N48d74400
+push $N48dab400
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge4
+  xpos 121
+  ypos 289
+ }
+push $N48ccc800
+ Dissolve {
+  inputs 2
+  which 1
+  name Dissolve1
+  xpos 121
+  ypos 370
+ }
+ Switch {
+  inputs 2
+  which {{parent.lum_solo i}}
+  name Switch2
+  xpos 121
+  ypos 458
+ }
+ Switch {
+  inputs 2
+  which {{parent.color_solo i}}
+  name Switch3
+  xpos 121
+  ypos 533
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 121
+  ypos 611
+ }
+ Output {
+  name FranklinVFX
+  xpos 121
+  ypos 691
+ }
+end_group

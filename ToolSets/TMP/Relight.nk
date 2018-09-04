@@ -1,0 +1,1681 @@
+set cut_paste_input [stack 0]
+version 10.0 v1
+Diffuse {
+inputs 0
+white 0.022
+name Diffuse3
+selected true
+xpos -5091
+ypos 4735
+}
+set Nb8e32c00 [stack 0]
+Camera2 {
+inputs 0
+selectable false
+translate {{curve x1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0} {curve x1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0} {curve x1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}}
+rotate {{curve x1 0.0005032865245 0.0005183175863 -0.0006412364605 0.001002772876 -0.0001830910655 -0.001301083156 -0.000676245154 0.0009616466238 -0.000330462654 -0.002974699137 -0.001764853281 0.002431845336 0.0004711505068 -0.0003259397142 -0.0008793313826 -0.001978894244 -0.003889617302 -0.0001559745857 0.0006457600179 -0.003084174388 -0.003040764084 -0.003574153882 -0.002945604519 -0.003217430595 -0.002679419755 -0.002418793978 -0.002082317238 -0.0009353357543 4.64071417e-005 -0.001838244463 -0.0007998478029 -0.0007964063647 0.002230480248 0.003400149077 0.004634563089 0.002768720342 0.00244489606 0.0007690742416 0.00171711508 -0.0003188215921 -0.001167838061 -0.003233891073 -0.003185541481 -0.003893273434 -0.003090276679 -0.002391694082 -0.001624238063 -0.003707220131 -0.00305119224 -0.003033596441 -0.004093888161 -0.003749712307 -0.003563051566 -0.003404189523 -0.003433072396 -0.00358052749 -0.002649037763 -0.004268808112 -0.002407603326 -0.00145995094 -0.002172281855 -0.00169331267 -0.002135111588 -0.001689362873 -0.003735930553 -0.002497417875 -0.003054174482 -0.002075406717 -0.001214124315 -0.00119102758 -0.0008262251877 0.0006724211626 -0.0005528431588 -0.001998222113 -0.001278331855 -2.307100773e-005 0.0006987338771 2.311336674e-005 0.001311663206 -0.0003680360498 0.0009204143183 -0.0005094329235 -0.00168429433 0.0008940242539 0.000208839125 0.0006900696144 -0.0005722080597 0.002037114763 -0.001055209683 0.0009207951344 -0.0005019219686 -0.0008426296904 0.000319062718 0.000569387925 0.001839116842 0.001191758014 -0.0002339856128 0.0004775040288 0.0003210090853 -0.001190728316 0.0004762449932 -0.0005823705566 -0.0002920280996 -0.001654387432 -0.0009307629287 0.0002568360005 0.0008468834272 -0.0009390543335 0.001426788433 -1.631251268e-005 0.001383548317 -0.000440411221 0.001686208384 -5.804196792e-005 0.0009343625773 -0.0004029435051 -0.0008227049254 0.0004237113434 -0.0007249638391 0.0006414061711 0.000293936183 0.0007032670901 -0.0007974156646 0.0001048381945 0.0006730118846 0.001499240229 0.001504707249 0.0001044296787 0.001277344288 0.002307924158 0.002408184372 0.003199535369 0.004446665089 0.003977128477 0.001773916272 0.0009819619144 0.0013666754 0.002884826512 0.002986841023 0.002925214789 0.00245389026 0.001514857997 0.002034006291 0.001526099187 0.00232298883 0.001630862864 0.002635476339 0.002502571311 0.002573104804 0.003136787273 0.001517560734 0.002772349731 0.0008674909102 0.00326037678 0.003381445207 0.001933294334 0.001099792532 0.001241627691 0.002052262287 0.002643113285 0.001831683752 0.002975497444 0.001384919474 0.0004617583593 0.0009331992287 0.001240092625 0.002236208201 0.001478813456 0.002126492402 0.002695748635 0.001960302074 0.001302756501 -0.0001354053532 -0.001533694973 -0.0008828518322 0.0008920043954 0.002059350042 -0.0004829977705 -0.0004537944774 -0.001637695891 -0.001769060719 0.0001786921803 -0.0005485538801 -0.002447590088 -0.001809276687 -0.001996429336 -0.0008386420946 -0.003057825298 -0.003122421208 -0.002648624649 -0.0003589401797 0.0002252812855 0.0004505301521 -0.002648521449 -0.00297082251 -0.004427398979 -0.002935948705 -0.0004744857904 -0.002028846534 -0.0003497305377 -0.0005803378012 0.0001289063058 -0.0003390338172 -0.0009547481252 0.0006044252154 0.002022827875 0.001224618163 0.002091335671 0.0005635554201 0.001198175854 0.002112197637 0.001585439004 0.001519901337 -0.001851929974 -0.001859856701 -0.001827748661 -0.0003121560507 -0.001156457673 0.001115030702 0.0008434223779 0.001288226279 0.002299261081 0.001546409664 -3.320416119e-005 0.0009090652171 0.001105762048 -0.0003934938139 -0.001300717276 -0.001283656338 0.0002913973334 -0.001521710764 -0.002390362786 -0.00291724455 -0.003067831307 -0.002320468067 -0.0001147595696 0.001242067844 0.001456206585 0.002797503454 0.00358880556 0.005596957027 0.008274528415 0.00916134667 0.009093347028 0.01040809435 0.01178035106 0.01148129034 0.0120944613 0.01084800343 0.01218913777 0.01490424179 0.01370269754 0.01356859828 0.01256159295 0.01009395147 0.009570816325 0.01042833641 0.009886725289 0.008752932285 0.01072590842 0.01032550773 0.01016850111 0.009707860369 0.0108578789 0.01004781916} {curve x1 0 0.00271576115 0.003833355379 0.00556329912 0.002852651317 0.00201416736 5.120903892e-005 0.001001470683 -0.000178359455 -0.003571882474 -0.003095694146 -0.005740082742 -0.005328590182 -0.004907136332 -0.003606908062 -0.002572924477 -0.003040301969 -0.004195480964 -0.003768798212 -0.005693578321 -0.005927351368 -0.01038518785 -0.008312306515 -0.007204747427 -0.006686671785 -0.007532266611 -0.01034112467 -0.008946645602 -0.01000050652 -0.01082578808 -0.004194404232 -0.003449255887 0 0.001904687153 0.003380437021 0.003702019794 0.005109471971 0.001508012142 0.00254400364 0.0004153543261 -0.0004639762571 -0.001309926973 -8.589155302e-005 -0.002351556072 -0.0007387687204 -0.0008604884614 -0.0008688925631 -0.002056809517 -0.001355068641 -0.001144344375 -0.001266533123 -0.0009395710348 -0.001898354784 -0.002359462825 -0.001471653371 -0.001985326328 -0.0006090960768 -0.003348703837 -0.002256780161 -0.002358849889 -0.00258726084 -0.001815937122 -0.001736175824 -0.001283784927 -0.002945199711 -0.002524411214 -0.002886917625 -0.00170467318 -0.002452522924 -0.003232138899 -0.003402788883 -0.001091390166 -0.002176661614 -0.003893062938 -0.005205651914 -0.00448586744 -0.004215206827 -0.005162883065 -0.003968132943 -0.004460973451 -0.003047305014 -0.004433066322 -0.005530386784 -0.003444952536 -0.004247093995 -0.004328206751 -0.004842685859 -0.003169489862 -0.005391783844 -0.003918807168 -0.004704758654 -0.005011946475 -0.004496241195 -0.00471918327 -0.002677828148 -0.002436896757 -0.00278904403 -0.002766385982 -0.002345270261 -0.005209702096 -0.003853415432 -0.004441510824 -0.005768428977 -0.007158650151 -0.006981679978 -0.006894510168 -0.00753014556 -0.01035502995 -0.00711313526 -0.008463435316 -0.007369992009 -0.008991530828 -0.006976131669 -0.00911155988 -0.007987930659 -0.008296163743 -0.008131934701 -0.007136347859 -0.009249441179 -0.008783844845 -0.009075420299 -0.009168732726 -0.0113268718 -0.01209480251 -0.01300351963 -0.01303863628 -0.01286371148 -0.01592775349 -0.01578259573 -0.0165912408 -0.02076335491 -0.02175615403 -0.01865162894 -0.01597918881 -0.01732250687 -0.01725586968 -0.01683637985 -0.01580620817 -0.01175963252 -0.01119505374 -0.01250227829 -0.01270468052 -0.01360467146 -0.01781526479 -0.01686162074 -0.01862246365 -0.0181930419 -0.01826904908 -0.01881837885 -0.01631833509 -0.0183521691 -0.01685494712 -0.0189119787 -0.01785346215 -0.01616117183 -0.01471702444 -0.01489422754 -0.01357561923 -0.01202459121 -0.01211990363 -0.014456888 -0.01610808792 -0.01684466258 -0.01676570253 -0.01966041362 -0.02085821379 -0.02090075161 -0.02123654702 -0.01930307383 -0.01755484482 -0.01818295395 -0.0185588402 -0.02029628684 -0.02042192377 -0.02062885507 -0.02156309938 -0.01848306715 -0.0211765386 -0.02054114657 -0.02475496423 -0.0218614092 -0.02158573326 -0.0248512543 -0.03110681409 -0.03073173105 -0.02817134657 -0.02627174693 -0.0294007286 -0.02870439132 -0.02924647062 -0.03183237703 -0.03470170562 -0.03521247834 -0.03653598019 -0.03190308215 -0.03022764842 -0.02923994706 -0.02729536212 -0.02720418388 -0.02288065633 -0.02178806701 -0.02178467606 -0.02070738498 -0.02018334993 -0.01996487447 -0.01912516844 -0.01899756504 -0.01912091782 -0.02246510137 -0.0224130417 -0.02121721319 -0.02367006559 -0.02319276145 -0.02305334202 -0.02090918292 -0.02020081258 -0.01850838583 -0.01613901084 -0.01113697507 -0.008890956276 -0.009667348493 -0.00769256531 -0.006950166152 -0.007956263921 -0.006329006017 -0.005854395429 -0.006992339896 -0.007654767771 -0.005868564784 -0.00333855542 -0.005629140552 -0.006835749342 -0.008438689607 -0.008610803838 -0.006767961469 -0.005860031652 -0.006460797487 -0.01303594152 -0.01460060964 -0.01711036868 -0.01853337309 -0.02061988722 -0.02581305146 -0.0325165801 -0.03308469653 -0.03325543678 -0.034063427 -0.03136574457 -0.03245949621 -0.02984865139 -0.02825900059 -0.02911764293 -0.02579096697 -0.0285202269 -0.02688141194 -0.02208751599 -0.02310244913 -0.02940006805 -0.02959319206 -0.02641017507 -0.02534639492 -0.02506437991 -0.02466038255 -0.02350750978 -0.02445350743} {curve x1 -0.00271626925 3.444844074e-006 0.001651747345 -0.00576458817 -0.002974223497 -0.001185756177 0.002227631719 -0.006828216814 -0.006181545766 -0.006089947119 0.008961775495 -0.006019822515 -0.001514146881 0.004822424006 -0.004471616123 -0.01000912821 0.005965463257 0.001980685855 -0.006976311212 0.003949983131 -0.005975224251 0.005876225622 0.001380711662 0.004977199359 -0.0002599132547 -0.007669451326 0.0008552387739 -0.00223213306 -0.009467728993 0.001602228364 -0.009626250624 -0.001999673641 -0.01687245676 -0.01615570683 -0.02484728289 -0.01859110166 -0.02198498165 -0.00671123296 -0.009558417783 0.0009440895143 0.00377709773 0.007835422532 0.003575249564 0.01883689191 0.01282946346 0.01172421211 0.008011015756 0.01542040963 0.01364788772 0.01566339535 0.01722123258 0.01130194688 0.01496569728 0.01208634777 0.01342825061 0.014188632 0.009079598003 0.01759867444 0.01364317953 0.01358515345 0.01004533028 0.01023215917 0.01215408066 0.007714967308 0.01900600647 0.01330153022 0.0149942663 0.01094378833 0.009047342047 0.01216898222 0.01477568135 0.002059234338 0.006885255614 0.01027849249 0.01057339393 0.005058902057 0.001684974134 0.00770792153 0.0003165296751 0.008028813396 -0.0001825756277 0.006679028429 0.009930275809 -0.001395069959 0.001761585758 0.0009448439051 0.00681918971 -0.006728884104 0.007780906593 -0.00542776087 0.002400309844 0.002720719156 -0.002847975562 -0.001279751543 -0.005531530974 -0.006214663806 -0.001589498483 -0.008440036898 -0.01322722033 0.00464629693 -0.009026251843 -0.005771703992 -0.002083068837 -0.0001892562274 -0.003170965785 -0.004233500987 -0.00300565647 0.01173564624 -0.009487155674 0.00222895395 -0.002632911377 0.005444920898 -0.01092656371 0.001476919115 -0.002952473932 0.0009473037925 0.001422811087 -0.003612412867 0.003827573369 -0.003216856219 6.119974809e-005 -0.000354975155 0.006175321025 0.0001587837716 0.001006955847 -0.00156259389 -0.009205716536 0.002248611383 -0.002804224804 -0.009783097466 -0.006721810055 -0.005855701632 -0.002430275117 -0.01001657784 -0.0005259890219 -0.001821310892 -0.001489070069 0.001862533833 -0.006834226083 -0.01230592317 -0.008866899518 -0.004829415843 -0.005431357148 0.003934443859 -0.008428198226 -0.005481125502 -0.00837366869 -0.005185885453 0.0002537917929 -0.01101836423 -0.002212976586 -0.01115457573 0.001004782786 -0.003230693319 -0.01217733706 -0.007783402709 -0.004398093227 -0.00573255142 -0.01172365325 -0.01015617126 -0.007369624283 -0.01443618082 -0.002567712478 0.0001080722451 -0.008886135853 -0.006677998093 -0.008739435808 -0.008857476227 -0.006597964375 -0.01130142764 -0.007645861857 -0.003029424211 0.00423678349 0.002150772207 -0.001874519377 -0.001174187566 -0.01017669547 0.008733441167 -0.01170338767 -0.001336565773 0.006147284647 -0.003042125998 -0.007034030655 0.006600009544 0.0007041168891 -0.001600728361 -0.003999841192 0.004788530218 0.002053836121 0.007120619499 -0.00285559899 -0.003677346923 -0.005051882505 0.003696263096 -0.004526436748 0.008948340322 0.007593562192 -0.007226618348 0.002509399157 -0.007726225019 -0.006885356849 -0.007201454108 -0.004006012968 -0.002471924145 -0.007241981997 -0.01067170523 -0.004553172689 -0.007823606413 -0.003547662781 -0.006309223779 -0.008668724027 -0.002698992059 -0.008177286307 0.009367773855 0.005715478869 0.004816796897 0.0006752146588 0.002045340002 -0.002764624918 0.003170864681 0.0103331734 -0.0008649227312 0.005486553428 0.008631079831 2.760466334e-005 0.003568989951 0.007666234119 0.006394060756 0.003968696154 -0.007476046541 0.006979073167 0.01354059632 0.01330265516 0.009342001923 -0.001647270973 -0.00776642216 -0.01856346674 -0.0169727847 -0.02221216841 -0.02467520471 -0.03042944788 -0.0358370097 -0.0356290155 -0.04540805413 -0.04759871626 -0.05031265903 -0.04323098406 -0.05388148905 -0.04732363691 -0.05238700205 -0.0540643241 -0.04308395565 -0.05894689163 -0.05227792354 -0.04902207444 -0.05178583326 -0.05621205813 -0.05259712815 -0.05034620193 -0.05799788455 -0.05448562729 -0.05287280052 -0.050745573 -0.05648488168 -0.05088855061}}
+focal {{curve x1 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35}}
+haperture 24.13039687
+vaperture 13.59655055
+name camera_099_020_master_v01_0_4
+selected true
+xpos -5217
+ypos 4644
+}
+set N8ee97400 [stack 0]
+Light {
+inputs 0
+intensity 900
+falloff_type Linear
+translate {-7.400000095 22 -190.3999939}
+depthmap_slope_bias 0.01
+name Point4
+selected true
+xpos -4632
+ypos 4662
+icon F_noicon.png
+}
+push $cut_paste_input
+Light {
+intensity 60
+falloff_type Linear
+translate {31.64999962 8.649999619 -174.25}
+depthmap_slope_bias 0.01
+name Point3
+selected true
+xpos -4520
+ypos 4645
+}
+Scene {
+inputs 2
+name Scene3
+selected true
+xpos -4649
+ypos 4780
+}
+set Nfb7b3400 [stack 0]
+Read {
+inputs 0
+file //stora/diska/tmp/FT/test/scanout.####.exr
+localizationPolicy off
+format "2080 1172 0 0 2080 1172 1 jourj_Undisto_099-020-master_v01"
+first 30
+last 70
+origfirst 30
+origlast 70
+origset true
+on_error black
+name Read4
+selected true
+xpos -4954
+ypos 4386
+addUserKnob {20 ftracktab l ftrack}
+addUserKnob {1 fcompname l "Component Name:"}
+fcompname main
+addUserKnob {20 scriptTab l Script}
+addUserKnob {1 scriptPath l Path +HIDDEN}
+addUserKnob {3 scriptFrame l "Ref Frame" +HIDDEN}
+addUserKnob {22 loadFull l "Load full" T "from cgev.nuke.tools.nodes import read;reload(read);from cgev.nuke.tools.nodes import read;read.loadScript(nuke.thisNode(),full=True)" +STARTLINE}
+addUserKnob {22 loadlite l "Load Lite" -STARTLINE T "from cgev.nuke.tools.nodes import read;read.loadScript(nuke.thisNode(),full=False)"}
+addUserKnob {6 forceCheckAll l "Force check All" +STARTLINE}
+}
+ColorCorrect {
+gamma 5
+gain 400
+offset 2
+unpremult rgba.alpha
+name ColorCorrect7
+selected true
+xpos -4954
+ypos 4532
+}
+set N4746b800 [stack 0]
+add_layer {normals normals.red normals.green normals.blue normals.alpha}
+add_layer {position position.red position.green position.blue position.alpha}
+ReLight {
+inputs 4
+use_alpha true
+normal normals
+position position
+name ReLight1
+selected true
+xpos -4758
+ypos 4628
+}
+push $N8ee97400
+push $Nb8e32c00
+push $Nfb7b3400
+push $N4746b800
+Group {
+inputs 4
+name Relight_C3
+selected true
+xpos -4954
+ypos 4871
+addUserKnob {20 relight l Relight}
+addUserKnob {41 position l Positions T ReLight1.position}
+addUserKnob {41 normal l "    Normals" T ReLight1.normal}
+addUserKnob {6 usealpha l "Use Alpha" +STARTLINE}
+usealpha true
+addUserKnob {6 antialiasing l Antialiasing -STARTLINE}
+antialiasing true
+addUserKnob {26 S01 l " " T " "}
+addUserKnob {26 "" +STARTLINE}
+addUserKnob {4 view3D l "3D View" M {None Active ""}}
+view3D Active
+addUserKnob {26 T01 l " " -STARTLINE T "<font color=\"grey\"> The preview in 3D View don't show the reel shader."}
+addUserKnob {41 detail l Detail T PositionToPoints1.detail}
+addUserKnob {41 pointSize l "Point Size" T PositionToPoints1.pointSize}
+addUserKnob {26 S02 l " " T " "}
+addUserKnob {26 ""}
+addUserKnob {7 mix l Mix}
+mix 1
+addUserKnob {1 output l INVISIBLE +INVISIBLE}
+output 2D
+}
+Input {
+inputs 0
+name Image
+xpos 225
+ypos -755
+}
+AddChannels {
+channels {rgba.alpha none none rgba.alpha}
+name AddChannels1
+xpos 225
+ypos -334
+}
+set Ne9ad4000 [stack 0]
+Dot {
+name Dot2
+xpos 259
+ypos 391
+}
+set N5f585c00 [stack 0]
+Shuffle {
+red white
+green white
+blue white
+alpha white
+name Shuffle2
+label "\[value in]"
+xpos 153
+ypos 624
+}
+ColorCorrect {
+gain 0.008
+name ColorCorrect2
+xpos 153
+ypos 662
+}
+push $N5f585c00
+Copy {
+inputs 2
+channels rgba
+name Copy2
+xpos 225
+ypos 739
+}
+PositionToPoints2 {
+display textured
+selectable false
+render_mode textured
+P_channel {{{parent.ReLight1.position}}}
+N_channel {{{parent.ReLight1.normal}}}
+pointSize 4
+name PositionToPoints1
+xpos 225
+ypos 835
+disable {{!view3D}}
+}
+push 0
+ScanlineRender {
+inputs 2
+conservative_shader_sampling false
+shutteroffset centred
+motion_vectors_type distance
+name ScanlineRender1
+tile_color 0xff0000ff
+xpos -94
+ypos 835
+disable true
+}
+push $N5f585c00
+Input {
+inputs 0
+name Material
+xpos -385
+ypos -759
+number 2
+}
+Input {
+inputs 0
+name Cam
+xpos 20
+ypos -763
+number 3
+}
+Input {
+inputs 0
+name Lights
+xpos -204
+ypos -764
+number 1
+}
+push $Ne9ad4000
+ReLight {
+inputs 4
+use_alpha {{usealpha}}
+normal normals
+position position
+name ReLight1
+xpos -204
+ypos -328
+}
+Dot {
+name Dot1
+xpos -170
+ypos -157
+}
+set N92637000 [stack 0]
+Group {
+name EdgeDetect_C
+help "Edge Detect C\n\nMore options than in the original Nuke node (Edge Detect Wrapper).\n"
+knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\n\nif knob.name() in ('pulldownden', 'showPanel'):\n    mode = node\['pulldownden'].value()\n    if mode == 'None':\n        node\['noise'].setVisible(False)\n    elif mode != 'None':\n        node\['noise'].setVisible(True)\n\nif knob.name() in ('Darkness', 'showPanel'):\n    mode = node\['Darkness'].value()\n    if mode == 'None':\n        node\['darkval'].setVisible(False)\n        node\['darkthreshold'].setVisible(False)\n    elif mode == 'Active':\n        node\['darkval'].setVisible(True)\n        node\['darkthreshold'].setVisible(True)"
+tile_color 0xcc804eff
+xpos -377
+ypos -161
+icon //stora/diska/global/templatesProd/Other_images/F_iconrgb.png
+addUserKnob {20 FT l "Edge Detect C"}
+addUserKnob {7 size l "                Size" t "Size of the edges." R 0 10}
+addUserKnob {41 gain l Gain t "Gain of the edges." T ctrl.gain}
+addUserKnob {26 ""}
+addUserKnob {20 Edge l Edges n 1}
+addUserKnob {41 maximum_enable l "White Clamp     " T Clamp1.maximum_enable}
+addUserKnob {41 softer l "Soften White Edges" t "White edges more soft." -STARTLINE T ctrl.softer}
+addUserKnob {41 minimum_enable l "Black Clamp     " T Clamp1.minimum_enable}
+addUserKnob {6 black l "Correct on Black" t "Disable edges arround Black area and Alpha." -STARTLINE}
+addUserKnob {20 endGroup n -1}
+addUserKnob {26 ""}
+addUserKnob {4 pulldownden l Denoise M {None Active "" ""}}
+addUserKnob {7 noise l "   Value " -STARTLINE +HIDDEN R 0 4}
+noise 1
+addUserKnob {26 S01 l " " T " "}
+addUserKnob {4 Darkness l Darken M {None Active ""}}
+Darkness Active
+addUserKnob {7 darkval l Value t "Density of the dark." R 0 100}
+darkval 100
+addUserKnob {7 darkthreshold l Threshold t "Area affected by the dark." R 0 4}
+darkthreshold 0.26
+addUserKnob {1 output l INVISIBLE +INVISIBLE}
+output "\[regsub -all \"None\" \[regsub -all \"Active\" \[value pulldownden] \"Nuke X\"] \"rgba\"]"
+addUserKnob {26 by1 l " " T " "}
+addUserKnob {26 by2 l " " T "                                                                                               "}
+addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+}
+Input {
+inputs 0
+name Input
+note_font_color 0x545454ff
+xpos 1452
+ypos 508
+}
+Dot {
+name Dot1
+xpos 1486
+ypos 576
+}
+set N887ab000 [stack 0]
+Crop {
+box {0 0 {input.width} {input.height}}
+crop false
+name Crop14
+xpos 1452
+ypos 632
+}
+set N19e39800 [stack 0]
+NoOp {
+name ctrl
+tile_color 0xffffffff
+label .
+xpos 1342
+ypos 626
+addUserKnob {20 User}
+addUserKnob {7 soft l INVISIBLE +INVISIBLE R 0 0.3}
+soft 0.3
+addUserKnob {7 key l INVISIBLE +INVISIBLE}
+key 0.12
+addUserKnob {7 gain R -1 1}
+gain 3
+addUserKnob {7 noise l Noise R 0 4}
+noise 1
+addUserKnob {26 OffsetDark l "Offset Dark"}
+addUserKnob {7 mult l Value +HIDDEN R 0 100}
+mult 100
+addUserKnob {7 sec l Size +HIDDEN R 0 10}
+sec 10
+addUserKnob {6 softer +STARTLINE}
+softer true
+addUserKnob {7 er l erodecrop}
+er {{parent.size/4 i}}
+}
+push $N887ab000
+Dot {
+name Dot3
+xpos 1754
+ypos 576
+}
+Dot {
+name Dot9
+xpos 1754
+ypos 1536
+}
+set N1b1b6000 [stack 0]
+Dot {
+name Dot2
+xpos 1754
+ypos 1791
+}
+push $N1b1b6000
+Keyer {
+operation "luminance key"
+range {0 0.007 1 1}
+name Keyer1
+xpos 1604
+ypos 1527
+}
+Erode {
+name Erode1
+xpos 1604
+ypos 1563
+}
+FilterErode {
+size 4
+name FilterErode1
+xpos 1604
+ypos 1599
+}
+push $N19e39800
+Colorspace {
+colorspace_out YPbPr
+name Colorspace1
+label "Out (\[if \{\[value colorspace_in]==\"RGB\"\} \{return \"\[knob this.icon F_iconstart]\"\} \{return \"\[knob this.icon F_iconend]\"\}]\[value colorspace_out])"
+xpos 1452
+ypos 702
+icon F_iconstart
+}
+DegrainSimple {
+rVal 0
+gVal 25
+bVal 25
+name DegrainSimple1
+xpos 1452
+ypos 738
+}
+Colorspace {
+colorspace_in YPbPr
+name Colorspace2
+label "Out (\[if \{\[value colorspace_in]==\"RGB\"\} \{return \"\[knob this.icon F_iconstart]\"\} \{return \"\[knob this.icon F_iconend]\"\}]\[value colorspace_out])"
+xpos 1452
+ypos 774
+icon F_iconend
+}
+OFXuk.co.thefoundry.noisetools.denoise_v100 {
+type Film
+model Modulated
+profile Constant
+output Result
+amount 1
+rolloff 2
+smoothness 1
+sharpen 0
+lumablend 0.7
+chromablend 1
+"Noise Analysis" 0
+mode "Pen Up"
+analysisfile ""
+regionBL {811.6001081 622.1999002}
+regionTR {1130.399923 913.800078}
+analysisframe 1
+profileframe 1
+plotProfile false
+"Tune Profile" 0
+tuneProfile false
+lowGain 1
+midGain 1
+highGain 1
+"Tune Frequencies" 0
+processHigh true
+highAmount 1
+processMedium true
+mediumAmount 1
+processLow true
+lowAmount 1
+processVeryLow true
+verylowAmount 1
+"Tune Channels" 0
+lumaAmount 1
+chromaAmount 5
+hasBeenAnalyzed true
+inputHasChanged false
+hasBeenProfiled false
+frameOutsideRange false
+profileExists true
+writeFailed false
+readFailed false
+fileIsEmpty false
+threshold0HHY 0.001234246767
+threshold0LHY 0.002607665258
+threshold0HLY 0.001234246767
+threshold0LLY 0.5641650558
+threshold0HHCb 0.0004131956375
+threshold0LHCb 0.0008889776072
+threshold0HLCb 0.0004131956375
+threshold0LLCb 0.673561275
+threshold0HHCr 0.0002240218309
+threshold0LHCr 0.0004832903214
+threshold0HLCr 0.0002240218309
+threshold0LLCr 0.3680107594
+threshold1HHY 0.0008805379039
+threshold1LHY 0.002449578606
+threshold1HLY 0.0008805379039
+threshold1LLY 0
+threshold1HHCb 0.0003050114319
+threshold1LHCb 0.0008103403961
+threshold1HLCb 0.0003050114319
+threshold1LLCb 0
+threshold1HHCr 0.000165457197
+threshold1LHCr 0.0004434779985
+threshold1HLCr 0.000165457197
+threshold1LLCr 0
+threshold2HHY 0.0007041588542
+threshold2LHY 0.001413235441
+threshold2HLY 0.0007041588542
+threshold2LLY 0
+threshold2HHCb 0.0003506572684
+threshold2LHCb 0.0007371711545
+threshold2HLCb 0.0003506572684
+threshold2LLCb 0
+threshold2HHCr 0.0001689090132
+threshold2LHCr 0.0003102622868
+threshold2HLCr 0.0001689090132
+threshold2LLCr 0
+threshold3HHY 0.0001276963158
+threshold3LHY 0.0001048069244
+threshold3HLY 0.0001276963158
+threshold3LLY 0
+threshold3HHCb 0.0002031970798
+threshold3LHCb 0.0001981165551
+threshold3HLCb 0.0002031970798
+threshold3LLCb 0
+threshold3HHCr 7.182861737e-005
+threshold3LHCr 6.672689778e-005
+threshold3HLCr 7.182861737e-005
+threshold3LLCr 0
+profile0 0
+profile1 0
+profile2 0
+profile3 0
+profile4 0
+profile5 0
+profile6 0
+profile7 0
+profile8 0
+cacheBreaker false
+name Denoise2
+xpos 1452
+ypos 867
+disable {{!parent.pulldownden i}}
+}
+Log2Lin {
+operation lin2log
+name Log2Lin1
+label "\[if \{\[value operation]==\"lin2log\"\} \{return \"\[knob this.icon F_iconstart.png]\"\} \{return \"\[knob this.icon F_iconend.png]\"\}]"
+xpos 1452
+ypos 936
+icon F_iconstart.png
+}
+Dot {
+name Dot6
+xpos 1486
+ypos 1018
+}
+set N83c0a400 [stack 0]
+Dot {
+name Dot7
+xpos 1267
+ypos 1018
+}
+Dot {
+name Dot11
+xpos 1267
+ypos 1103
+}
+set N18c98800 [stack 0]
+EdgeDetectWrapper {
+threshold {{0+darkthreshold i}}
+name EdgeDetect2
+xpos 1233
+ypos 1266
+}
+push $N83c0a400
+push $N18c98800
+Blur {
+size {{parent.size/2+1 i}}
+name Size
+xpos 1343
+ypos 1094
+}
+Merge2 {
+inputs 2
+operation minus
+name Merge8
+xpos 1452
+ypos 1100
+}
+Grade {
+channels rgba
+white {{ctrl.gain*50+50}}
+black_clamp false
+name Gain
+label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+xpos 1452
+ypos 1180
+icon -
+}
+Multiply {
+inputs 1+1
+value {{-parent.darkval/100+1 i}}
+invert_mask true
+name Darken
+xpos 1452
+ypos 1266
+disable {{!parent.Darkness i}}
+}
+Dot {
+name Dot5
+xpos 1486
+ypos 1371
+}
+set N784d9000 [stack 0]
+Invert {
+name Invert1
+xpos 1238
+ypos 1362
+}
+Group {
+name soften
+help "EdgeDetect am�lior�\nPermet de choisir le mode d'erode et de regler ind�pendamment l'interieur et l'exterieur du EdgeDetect\n\nL'entr�e mask permet de restreindre le resultat dans la zone convenue"
+tile_color 0xffffffff
+label "\n"
+note_font_color 0xff
+xpos 1238
+ypos 1457
+addUserKnob {20 User l "Ctrl Edge"}
+addUserKnob {7 ErodeIn l Erode R -1 1}
+ErodeIn 1
+addUserKnob {41 BlurIn l Blur T Blur_IN.size}
+addUserKnob {26 ""}
+addUserKnob {7 ErodeOut l Erode R -100 100}
+ErodeOut 5
+addUserKnob {41 BlurOut l Blur T Blur_OUT.size}
+}
+Input {
+inputs 0
+name Input
+xpos 585
+ypos 580
+}
+set N3ca86c00 [stack 0]
+Erode {
+size {{parent.ErodeIn}}
+name Erode_IN
+xpos 738
+ypos 671
+}
+Blur {
+channels alpha
+size 6.2
+name Blur_IN
+xpos 738
+ypos 707
+}
+push $N3ca86c00
+Erode {
+size {{-parent.ErodeOut}}
+name Erode_OUT
+xpos 448
+ypos 674
+}
+Blur {
+channels alpha
+size {{parent.parent.size/2}}
+name Blur_OUT
+xpos 448
+ypos 710
+}
+ChannelMerge {
+inputs 2
+operation stencil
+name ChannelMerge_Stencil
+xpos 585
+ypos 793
+}
+Output {
+name FranklinVFX
+xpos 585
+ypos 856
+}
+end_group
+push $N784d9000
+Multiply {
+inputs 1+1
+value 0
+name Softer
+note_font_color 0x10101ff
+xpos 1452
+ypos 1451
+disable {{!ctrl.softer}}
+}
+Multiply {
+inputs 1+1
+value 0
+invert_mask true
+name Black_Correct
+xpos 1452
+ypos 1599
+disable {{!parent.black}}
+}
+Clamp {
+name Clamp1
+xpos 1452
+ypos 1690
+}
+CopyBBox {
+inputs 2
+name CopyBBox1
+xpos 1452
+ypos 1788
+}
+Output {
+name FranklinVFX
+note_font_color 0xff
+xpos 1452
+ypos 1884
+}
+end_group
+Group {
+name Channel_ID
+help "Channel ID\n\nKeep in the Channel you want the color you want (r g b and a). \nBring all them in the channel Alpha (by default) or in all rgba.\nIf you select many color you have the choise to merge them using two differents operations \"Plus\" or \"Screen\".\n"
+knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\nif knob.name() in ('merge', 'showPanel'):\n    mode = node\['merge'].value()\n    if mode == 'Plus':\n        node\['clamp'].setVisible(True)\n    elif mode == 'Screen':\n        node\['clamp'].setVisible(False)"
+tile_color 0x9e3c63ff
+note_font_color 0x40404ff
+xpos -377
+ypos -135
+icon //stora/diska/global/templatesProd/Other_images/F_iconalpha.png
+cached true
+addUserKnob {20 User l "Channel ID"}
+addUserKnob {41 in l Channel t "Input Channel" -STARTLINE T Shuffle1.in}
+addUserKnob {26 S1 l " " T " "}
+addUserKnob {26 S3 l " " T " "}
+addUserKnob {6 red l "<font size = 3 color=\"#FE2E2E\">_Red" t "Select to keep the channel in render." -STARTLINE}
+red true
+addUserKnob {6 green l "<font size = 3 color=\"green\">_Green" t "Select to keep the channel in render." -STARTLINE}
+green true
+addUserKnob {6 blue l "<font size = 3 color=\"#0080FF\">_Blue" t "Select to keep the channel in render." -STARTLINE}
+blue true
+addUserKnob {6 alpha l "<font size = 3 color=\"#D8D8D8\">_Alpha      " t "Select to keep the channel in render." -STARTLINE}
+alpha true
+addUserKnob {26 arr l "       <img src=\":qrc/images/arrow_right.png\">" t "Merge all them to the selected channel behind." -STARTLINE T " "}
+addUserKnob {4 out l "   " t "Choose the output channel. \n(Alpha or rgba)" -STARTLINE M {rgba Alpha "" "" "" "" "" "" "" "" "" "" ""}}
+out Alpha
+addUserKnob {26 S2 l " " T " "}
+addUserKnob {4 merge l "     Merge" t "Operation:\n\nPlus A+B\nScreen A+B-AB if A and B between 0-1, else A if A>B else B" M {"" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" Plus Screen "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+merge Plus
+addUserKnob {26 S4 l " " -STARTLINE T "   "}
+addUserKnob {6 clamp l Clamp t "Clamp the channel to the 0..1 range." -STARTLINE}
+clamp true
+addUserKnob {26 by1 l " " T " "}
+addUserKnob {26 by2 l " " T "                                                                                                     "}
+addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+addUserKnob {1 output l INVISIBLE +INVISIBLE}
+output "\[value in]\[if \{\[value out]==\"rgba\"\} \{return \"\[knob this.icon //stora/diska/global/templatesProd/Other_images/F_iconrgba.png]\"\} \{return \"\[knob this.icon //stora/diska/global/templatesProd/Other_images/F_iconalpha.png]\"\}]\[string map \{\"true\" \" R\" \"false\" \"\"\} \"\[value red]\" ]\[string map \{\"true\" \" G\" \"false\" \"\"\} \"\[value green]\" ]\[string map \{\"true\" \" B\" \"false\" \"\"\} \"\[value blue]\" ]\[string map \{\"true\" \" A\" \"false\" \"\"\} \"\[value alpha]\" ]"
+}
+Input {
+inputs 0
+name Input
+tile_color 0x222222ff
+note_font_size -9
+xpos -1093
+ypos 527
+}
+Shuffle {
+name Shuffle1
+tile_color 0x222222ff
+xpos -1093
+ypos 590
+}
+set N81578c00 [stack 0]
+Dot {
+name Dot2
+xpos -852
+ypos 593
+icon F_ondot.png
+}
+set N78494800 [stack 0]
+Shuffle {
+red alpha
+green alpha
+blue alpha
+name Shuffle5
+tile_color 0xffffffff
+xpos -667
+ypos 655
+disable {{!parent.alpha i}}
+}
+Remove {
+name Remove1
+tile_color 0xffffffff
+xpos -667
+ypos 679
+disable {{parent.alpha i}}
+}
+push $N78494800
+Shuffle {
+red blue
+green blue
+alpha blue
+name Shuffle4
+tile_color 0xff00
+xpos -777
+ypos 655
+disable {{!parent.blue i}}
+}
+Remove {
+name Remove2
+tile_color 0xff00
+xpos -777
+ypos 679
+disable {{parent.blue i}}
+}
+push 0
+push $N78494800
+Shuffle {
+green red
+blue red
+alpha red
+name Shuffle2
+tile_color 0xff000000
+xpos -997
+ypos 658
+disable {{!parent.red i}}
+}
+Remove {
+name Remove4
+tile_color 0xff000000
+xpos -997
+ypos 682
+disable {{parent.red i}}
+}
+push $N78494800
+Shuffle {
+red green
+blue green
+alpha green
+name Shuffle3
+tile_color 0xff0000
+xpos -886
+ypos 655
+disable {{!parent.green i}}
+}
+Remove {
+name Remove3
+tile_color 0xff0000
+xpos -886
+ypos 679
+disable {{parent.green i}}
+}
+Merge2 {
+inputs 4+1
+operation {{parent.merge i}}
+name Merge
+tile_color 0xffffffff
+xpos -886
+ypos 763
+}
+Shuffle {
+red alpha
+green alpha
+blue alpha
+name Shuffle6
+tile_color 0xffffffff
+xpos -886
+ypos 787
+}
+Clamp {
+channels rgba
+name Clamp1
+tile_color 0x222222ff
+xpos -886
+ypos 854
+disable {{!parent.clamp}}
+}
+set Nc911b400 [stack 0]
+AddChannels {
+channels rgba
+name AddChannels1
+tile_color 0x222222ff
+xpos -983
+ypos 854
+}
+push $N81578c00
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+tile_color 0x222222ff
+xpos -1093
+ypos 848
+}
+push $Nc911b400
+Switch {
+inputs 2
+which {{parent.out i}}
+name Switch2
+tile_color 0x222222ff
+xpos -986
+ypos 911
+}
+Output {
+name FranklinVFX
+tile_color 0x222222ff
+label "\n\n\n\n\n\n\n\n\n\n."
+xpos -986
+ypos 885
+icon F_greyg.png
+}
+end_group
+FilterErode {
+channels rgba
+size -1
+name FilterErode1
+xpos -377
+ypos -97
+}
+push $N92637000
+Blur {
+inputs 1+1
+size 2
+name Blur1
+selected true
+xpos -204
+ypos -103
+disable {{!antialiasing}}
+}
+Group {
+name Push_Blur1
+help "Push Blur\n\nPush RGB pixels using the Alpha channel as mask.\n"
+knobChanged "c = nuke.toNode('Copy2')\n\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(1) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')"
+tile_color 0xcc804eff
+xpos -204
+ypos -9
+icon //stora/diska/global/templatesProd/Other_images/F_iconrgba.png
+disable {{usealpha}}
+addUserKnob {20 FT l "Push Blur"}
+addUserKnob {41 channels l Channels T Premult8.channels}
+addUserKnob {26 S00 l " " T " "}
+addUserKnob {7 edge l "     Edge Select" R 0.1 20}
+edge 1
+addUserKnob {26 ""}
+addUserKnob {7 ExtendSize l Spacing R 0 60}
+ExtendSize 10.6
+addUserKnob {7 Smooth l "Soft Edge" R 0 5}
+Smooth 2
+addUserKnob {7 SmoothProgressif_Multiplier l "Distance Blur"}
+}
+Input {
+inputs 0
+name Input
+xpos 1600
+ypos -1502
+}
+AddChannels {
+channels rgba
+name AddChannels2
+xpos 1600
+ypos -1427
+}
+set N6cbab000 [stack 0]
+Dot {
+name Dot32
+xpos 1832
+ypos 2190
+}
+push $N6cbab000
+Dot {
+name Dot30
+xpos 2120
+ypos -1423
+}
+Dot {
+name Dot31
+xpos 2120
+ypos 1995
+}
+push $N6cbab000
+Dot {
+name Dot27
+xpos 1634
+ypos -608
+}
+set N55381800 [stack 0]
+Dot {
+name Dot6
+xpos 1634
+ypos -407
+}
+set N37444400 [stack 0]
+AddChannels {
+channels rgba
+name AddChannels1
+xpos 1600
+ypos 1454
+}
+push $N55381800
+Dot {
+name Dot4
+xpos -842
+ypos -608
+}
+Dot {
+name Dot5
+xpos -842
+ypos 976
+}
+set Neeb1b400 [stack 0]
+push $N37444400
+Dot {
+name Dot100
+xpos 1446
+ypos -407
+}
+set N19b67c00 [stack 0]
+Dot {
+name Dot101
+xpos 484
+ypos -407
+}
+set N19b67800 [stack 0]
+Erode {
+channels alpha
+size {{parent.edge}}
+name Erode4
+xpos 450
+ypos -351
+}
+Premult {
+channels all
+name Premult2
+xpos 450
+ypos -313
+}
+Dot {
+name Dot33
+xpos 484
+ypos -242
+}
+set N19b67400 [stack 0]
+Dot {
+name Dot9
+xpos -431
+ypos -66
+}
+Unpremult {
+channels {{{parent.Premult8.channels}}}
+name Unpremult9
+xpos -465
+ypos 247
+}
+Keyer {
+input alpha
+operation "luminance key"
+range {0 0 1 1}
+name Keyer12
+xpos -465
+ypos 285
+}
+Premult {
+channels {{{parent.Premult8.channels}}}
+name Premult32
+xpos -465
+ypos 438
+}
+EdgeBlur {
+channels {{{parent.Premult8.channels}}}
+size {{"0.1+parent.EdgeBlur_MASTER.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur10
+xpos -465
+ypos 476
+}
+EdgeBlur {
+channels alpha
+size {{"0.1+parent.EdgeBlur_MASTER1.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur16
+xpos -465
+ypos 514
+disable {{parent.EdgeBlur_MASTER1.disable}}
+}
+push $N19b67400
+Dot {
+name Dot10
+xpos -210
+ypos -78
+}
+set Neb956400 [stack 0]
+Blur {
+channels alpha
+size {{"(parent.BlurMASTER.size /8)"}}
+name Blur1
+xpos -201
+ypos -17
+}
+push $Neb956400
+Blur {
+channels {{{parent.Premult8.channels}}}
+size {{"(parent.BlurMASTER.size /8)"}}
+name Blur38
+xpos -304
+ypos -19
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+xpos -247
+ypos 85
+}
+Unpremult {
+channels {{{parent.Premult8.channels}}}
+name Unpremult2
+xpos -247
+ypos 250
+}
+Keyer {
+input alpha
+operation "luminance key"
+range {0 0 1 1}
+name Keyer1
+xpos -247
+ypos 288
+}
+Premult {
+channels {{{parent.Premult8.channels}}}
+name Premult20
+xpos -247
+ypos 437
+}
+EdgeBlur {
+channels {{{parent.Premult8.channels}}}
+size {{"0.1+parent.EdgeBlur10.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur4
+xpos -247
+ypos 475
+}
+EdgeBlur {
+channels alpha
+size {{"0.1+parent.EdgeBlur16.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur14
+xpos -247
+ypos 513
+disable {{parent.EdgeBlur_MASTER1.disable}}
+}
+push $N19b67400
+Dot {
+name Dot11
+xpos 11
+ypos -79
+}
+set N67348400 [stack 0]
+Blur {
+channels alpha
+size {{"(parent.BlurMASTER.size /8) *2"}}
+name Blur2
+xpos 31
+ypos -18
+}
+push $N67348400
+Blur {
+channels {{{parent.Premult8.channels}}}
+size {{"(parent.BlurMASTER.size /8) *2"}}
+name Blur41
+xpos -75
+ypos -15
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy3
+xpos -21
+ypos 84
+}
+Unpremult {
+channels {{{parent.Premult8.channels}}}
+name Unpremult4
+xpos -21
+ypos 248
+}
+Keyer {
+input alpha
+operation "luminance key"
+range {0 0 1 1}
+name Keyer2
+xpos -21
+ypos 286
+}
+Premult {
+channels {{{parent.Premult8.channels}}}
+name Premult22
+xpos -21
+ypos 439
+}
+EdgeBlur {
+channels {{{parent.Premult8.channels}}}
+size {{"0.1+parent.EdgeBlur4.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur5
+xpos -21
+ypos 477
+}
+EdgeBlur {
+channels alpha
+size {{"0.1+parent.EdgeBlur14.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur13
+xpos -21
+ypos 515
+disable {{parent.EdgeBlur_MASTER1.disable}}
+}
+push $N19b67400
+Dot {
+name Dot12
+xpos 253
+ypos -83
+}
+set N7b899800 [stack 0]
+Blur {
+channels alpha
+size {{"(parent.BlurMASTER.size /8) *3"}}
+name Blur3
+xpos 263
+ypos -19
+}
+push $N7b899800
+Blur {
+channels {{{parent.Premult8.channels}}}
+size {{"(parent.BlurMASTER.size /8) *3"}}
+name Blur42
+xpos 164
+ypos -19
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy5
+xpos 221
+ypos 80
+}
+Unpremult {
+channels {{{parent.Premult8.channels}}}
+name Unpremult5
+xpos 221
+ypos 248
+}
+Keyer {
+input alpha
+operation "luminance key"
+range {0 0 1 1}
+name Keyer8
+xpos 221
+ypos 286
+}
+Premult {
+channels {{{parent.Premult8.channels}}}
+name Premult24
+xpos 221
+ypos 437
+}
+EdgeBlur {
+channels {{{parent.Premult8.channels}}}
+size {{"0.1+parent.EdgeBlur5.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur6
+xpos 221
+ypos 475
+}
+EdgeBlur {
+channels alpha
+size {{"0.1+parent.EdgeBlur13.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur12
+xpos 221
+ypos 513
+disable {{parent.EdgeBlur_MASTER1.disable}}
+}
+push $N19b67400
+Dot {
+name Dot13
+xpos 484
+ypos -94
+}
+set N92412c00 [stack 0]
+Blur {
+channels alpha
+size {{"(parent.BlurMASTER.size /8) *4"}}
+name Blur4
+xpos 490
+ypos -25
+}
+push $N92412c00
+Blur {
+channels {{{parent.Premult8.channels}}}
+size {{"(parent.BlurMASTER.size /8) *4"}}
+name Blur44
+xpos 390
+ypos -17
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy6
+xpos 440
+ypos 81
+}
+Unpremult {
+channels {{{parent.Premult8.channels}}}
+name Unpremult6
+xpos 440
+ypos 250
+}
+Keyer {
+input alpha
+operation "luminance key"
+range {0 0 1 1}
+name Keyer9
+xpos 440
+ypos 288
+}
+Premult {
+channels {{{parent.Premult8.channels}}}
+name Premult26
+xpos 440
+ypos 439
+}
+EdgeBlur {
+channels {{{parent.Premult8.channels}}}
+size {{"0.1+parent.EdgeBlur6.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur7
+xpos 440
+ypos 477
+}
+EdgeBlur {
+channels alpha
+size {{"0.1+parent.EdgeBlur12.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur3
+xpos 440
+ypos 517
+disable {{parent.EdgeBlur_MASTER1.disable}}
+}
+push $N19b67400
+Dot {
+name Dot14
+xpos 710
+ypos -89
+}
+set N9262fc00 [stack 0]
+Blur {
+channels alpha
+size {{"(parent.BlurMASTER.size /8) *5"}}
+name Blur5
+xpos 729
+ypos -25
+}
+push $N9262fc00
+Blur {
+channels {{{parent.Premult8.channels}}}
+size {{"(parent.BlurMASTER.size /8) *5"}}
+name Blur43
+xpos 620
+ypos -17
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy7
+xpos 681
+ypos 77
+}
+Unpremult {
+channels {{{parent.Premult8.channels}}}
+name Unpremult7
+xpos 681
+ypos 250
+}
+Keyer {
+input alpha
+operation "luminance key"
+range {0 0 1 1}
+name Keyer10
+xpos 681
+ypos 288
+}
+Premult {
+channels {{{parent.Premult8.channels}}}
+name Premult28
+xpos 681
+ypos 439
+}
+EdgeBlur {
+channels {{{parent.Premult8.channels}}}
+size {{"0.1+parent.EdgeBlur7.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur8
+xpos 681
+ypos 477
+}
+EdgeBlur {
+channels alpha
+size {{"0.1+parent.EdgeBlur3.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur2
+xpos 681
+ypos 515
+disable {{parent.EdgeBlur_MASTER1.disable}}
+}
+push $N19b67400
+Dot {
+name Dot15
+xpos 945
+ypos -78
+}
+set Ndecc800 [stack 0]
+Blur {
+channels alpha
+size {{"(parent.BlurMASTER.size /8) *6"}}
+name Blur6
+xpos 958
+ypos -18
+}
+push $Ndecc800
+Blur {
+channels {{{parent.Premult8.channels}}}
+size {{"(parent.BlurMASTER.size /8) *6"}}
+name Blur47
+xpos 846
+ypos -16
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy8
+xpos 899
+ypos 78
+}
+Unpremult {
+channels {{{parent.Premult8.channels}}}
+name Unpremult8
+xpos 899
+ypos 249
+}
+Keyer {
+input alpha
+operation "luminance key"
+range {0 0 1 1}
+name Keyer11
+xpos 899
+ypos 287
+}
+Premult {
+channels {{{parent.Premult8.channels}}}
+name Premult30
+xpos 899
+ypos 436
+}
+EdgeBlur {
+channels {{{parent.Premult8.channels}}}
+size {{"0.1+parent.EdgeBlur8.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur9
+xpos 899
+ypos 474
+}
+EdgeBlur {
+channels alpha
+size {{"0.1+parent.EdgeBlur2.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur1
+xpos 899
+ypos 512
+disable {{parent.EdgeBlur_MASTER1.disable}}
+}
+push $N19b67400
+Dot {
+name Dot16
+xpos 1203
+ypos -98
+}
+set N8b54fc00 [stack 0]
+Blur {
+channels alpha
+size {{"(parent.BlurMASTER.size /8) *7"}}
+name Blur7
+xpos 1235
+ypos -16
+}
+push $N8b54fc00
+Blur {
+channels {{{parent.Premult8.channels}}}
+size {{"(parent.BlurMASTER.size /8) *7"}}
+name Blur45
+xpos 1115
+ypos -14
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy9
+selected true
+xpos 1184
+ypos 67
+}
+set N8b54f000 [stack 0]
+Unpremult {
+channels {{{parent.Premult8.channels}}}
+name Unpremult10
+xpos 1184
+ypos 239
+}
+Keyer {
+input alpha
+operation "luminance key"
+range {0 0 1 1}
+name Keyer3
+xpos 1184
+ypos 277
+}
+Premult {
+channels {{{parent.Premult8.channels}}}
+name Premult34
+xpos 1184
+ypos 439
+}
+EdgeBlur {
+channels {{{parent.Premult8.channels}}}
+size {{"0.1+parent.EdgeBlur9.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur11
+xpos 1184
+ypos 477
+}
+EdgeBlur {
+channels alpha
+size {{"0.1+parent.EdgeBlur1.size * (SmoothProgressif_Multiplier+1)"}}
+name EdgeBlur15
+xpos 1184
+ypos 515
+disable {{parent.EdgeBlur_MASTER1.disable}}
+}
+push 0
+push $N19b67c00
+Dot {
+name Dot17
+xpos 1444
+ypos -97
+}
+set N3c5f5800 [stack 0]
+Blur {
+channels alpha
+size {{parent.ExtendSize}}
+name BlurMASTER1
+note_font_color 0x30303ff
+xpos 1466
+ypos -17
+}
+push $N3c5f5800
+Blur {
+channels {{{parent.Premult8.channels}}}
+size {{parent.ExtendSize}}
+name BlurMASTER
+note_font_color 0x30303ff
+xpos 1346
+ypos -18
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy10
+xpos 1412
+ypos 69
+}
+Dot {
+name Dot18
+xpos 1446
+ypos 839
+}
+push 0
+Merge2 {
+inputs 10+1
+also_merge {{{parent.Premult8.channels}}}
+name Merge2
+xpos 440
+ypos 835
+}
+push $N19b67800
+Dot {
+name Dot109
+xpos -626
+ypos -407
+}
+EdgeBlur {
+channels {{{parent.Premult8.channels}}}
+size {{parent.Smooth}}
+name EdgeBlur_MASTER
+note_font_color 0x10101ff
+xpos -660
+ypos 478
+}
+EdgeBlur {
+channels alpha
+size {{parent.Smooth}}
+name EdgeBlur_MASTER1
+note_font_color 0x10101ff
+xpos -660
+ypos 516
+disable {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['all','alpha','rgba'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ ret\\ =\\ 0]"}}
+}
+Merge2 {
+inputs 2
+also_merge {{{parent.Premult8.channels}}}
+name Merge17
+xpos -660
+ypos 835
+}
+set Nc6333c00 [stack 0]
+Dot {
+name Dot28
+xpos -474
+ypos 981
+}
+push $Nc6333c00
+push $Neeb1b400
+Merge2 {
+inputs 2
+also_merge all
+name Merge1
+xpos -660
+ypos 972
+disable {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['none'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ ret\\ =\\ 0]"}}
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy13
+xpos -660
+ypos 1070
+disable {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['alpha'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ ret\\ =\\ 1]"}}
+}
+Copy {
+inputs 2
+channels rgb
+name Copy11
+xpos -660
+ypos 1170
+disable {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['all',\\ 'rgb',\\ 'rgba',\\ 'red',\\ 'blue',\\ 'green',\\ 'red\\ alpha',\\ 'green\\ alpha',\\ 'blue\\ alpha',\\ 'red\\ green',\\ 'red\\ blue',\\ 'green\\ blue',\\ 'red\\ green\\ alpha',\\ 'red\\ blue\\ alpha',\\ 'green\\ blue\\ alpha'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ ret\\ =\\ 0]"}}
+}
+CopyBBox {
+inputs 2
+name CopyBBox1
+xpos -660
+ypos 1454
+}
+Output {
+name FranklinVFX
+xpos -660
+ypos 1546
+}
+Premult {
+inputs 0
+name Premult8
+xpos 1450
+ypos -1514
+}
+push $N8b54f000
+Viewer {
+frame_range 30-70
+gain 0.015625
+colour_sample_bbox {0.3259615302 0.05000000075 0.3269230723 0.05096153915}
+name Viewer1
+xpos 530
+ypos 1024
+}
+end_group
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+xpos -204
+ypos 381
+}
+Premult {
+channels all
+name Premult1
+xpos -204
+ypos 479
+disable {{usealpha}}
+}
+set N81e3dc00 [stack 0]
+push $N81e3dc00
+Multiply {
+value 0
+name Multiply1
+xpos -94
+ypos 686
+}
+Dissolve {
+inputs 2
+which {{parent.mix}}
+name Dissolve1
+xpos -204
+ypos 686
+}
+Merge2 {
+inputs 2
+name Merge1
+tile_color 0xff0000ff
+xpos -204
+ypos 835
+disable true
+}
+Remove {
+operation keep
+channels rgba
+name Remove1
+xpos -204
+ypos 922
+}
+Output {
+name FranklinVFX
+xpos -204
+ypos 976
+}
+push $N81e3dc00
+Viewer {
+frame 55
+frame_range 30-70
+translate {1.274999976 0.06899999827}
+name Viewer1
+xpos -416
+ypos 922
+}
+end_group

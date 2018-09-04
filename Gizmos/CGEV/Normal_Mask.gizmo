@@ -1,0 +1,66 @@
+Group {
+ name Normal_Mask
+ help "Normal Mask\n\nCreate a mask (Alpha) using the normal pass.\n"
+ tile_color 0x54842dff
+ selected true
+ addUserKnob {20 User l "Normal Mask"}
+ addUserKnob {41 in l "Normal Channel" t "Choose the normal pass channel." T Shuffle1.in}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {26 T01 l "@b; Rotation"}
+ addUserKnob {41 round l X T ctrl.round}
+ addUserKnob {41 about l Y T ctrl.about}
+ addUserKnob {26 by1 l " " T " \n"}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 by3 l " " -STARTLINE T "<font color=\"#1C1C1C\">Franklin - 2016"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output Alpha
+}
+ Input {
+  inputs 0
+  name Normal
+  selected true
+  xpos 375
+  ypos 442
+ }
+ Shuffle {
+  in worldNormals
+  name Shuffle1
+  xpos 375
+  ypos 480
+ }
+set N469e6800 [stack 0]
+ NoOp {
+  name ctrl
+  xpos 485
+  ypos 480
+  addUserKnob {20 User}
+  addUserKnob {7 round R -180 180}
+  addUserKnob {7 about R -180 180}
+  addUserKnob {7 lx}
+  lx {{rad*cos(radians(round))}}
+  addUserKnob {7 ly}
+  ly {{sin(radians(about))}}
+  addUserKnob {7 lz}
+  lz {{rad*sin(radians(round))}}
+  addUserKnob {7 rad}
+  rad {{cos(radians(about))}}
+  addUserKnob {18 norm}
+  norm {{lx/sqrt(pow2(lx)+pow2(ly)+pow2(lz))} {ly/sqrt(pow2(lx)+pow2(ly)+pow2(lz))} {lz/sqrt(pow2(lx)+pow2(ly)+pow2(lz))}}
+  addUserKnob {6 norm_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+push $N469e6800
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr3 max((r*ctrl.norm.r)+(g*ctrl.norm.g)+(b*ctrl.norm.b),0)
+  name Expression2
+  xpos 375
+  ypos 524
+ }
+ Output {
+  name FranklinVFX
+  xpos 375
+  ypos 569
+ }
+end_group

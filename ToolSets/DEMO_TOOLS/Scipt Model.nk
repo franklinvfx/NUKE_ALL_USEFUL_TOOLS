@@ -1,0 +1,517 @@
+set cut_paste_input [stack 0]
+version 10.5 v5
+BackdropNode {
+ inputs 0
+ name "BG Defocus_BackdropNode1"
+ tile_color 0xcc8a28ff
+ label "<\[value position]>\[value text]\[if \{\[value text]==\"\"\}  \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\}  \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+ note_font_size 50
+ selected true
+ xpos 12171
+ ypos -4332
+ bdwidth 240
+ bdheight 270
+ addUserKnob {20 FT l BackdropNode}
+ addUserKnob {1 text l Text}
+ text "BG Defocus"
+ addUserKnob {4 position l "" -STARTLINE M {left Center}}
+ position Center
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef grow(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()-step)\n            n\['ypos'].setValue(n\['ypos'].getValue()-step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()+step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()+step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\ngrow(n,50)"}
+ addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef shrink(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()+step)\n            n\['ypos'].setValue(n\['ypos'].getValue()+step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()-step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()-step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\nshrink(n,50)"}
+ addUserKnob {22 colorandom l " <img src=\"ColorBars.png\">" -STARTLINE T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )"}
+ addUserKnob {22 red l " <img src=\"F_r.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.0, 0.77, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 orange l " <img src=\"F_o.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.1, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 yellow l " <img src=\"F_y.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.16, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 green l " <img src=\"F_g.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.33, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 cyan l " <img src=\"F_c.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.46, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 blue l " <img src=\"F_b.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.6, 0.7, 0.76]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 darkblue l " <img src=\"F_db.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.67, 0.74, 0.6]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 magenta l " <img src=\"F_m.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.8, 0.74, 0.65]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 pink l " <img src=\"F_p.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.92, 0.74, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+}
+BackdropNode {
+ inputs 0
+ name "BG Transform_BackdropNode1"
+ tile_color 0x8d2ba5ff
+ label "<\[value position]>\[value text]\[if \{\[value text]==\"\"\}  \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\}  \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+ note_font_size 50
+ selected true
+ xpos 12171
+ ypos -4601
+ bdwidth 240
+ bdheight 270
+ addUserKnob {20 FT l BackdropNode}
+ addUserKnob {1 text l Text}
+ text "BG Transform"
+ addUserKnob {4 position l "" -STARTLINE M {left Center}}
+ position Center
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef grow(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()-step)\n            n\['ypos'].setValue(n\['ypos'].getValue()-step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()+step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()+step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\ngrow(n,50)"}
+ addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef shrink(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()+step)\n            n\['ypos'].setValue(n\['ypos'].getValue()+step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()-step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()-step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\nshrink(n,50)"}
+ addUserKnob {22 colorandom l " <img src=\"ColorBars.png\">" -STARTLINE T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )"}
+ addUserKnob {22 red l " <img src=\"F_r.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.0, 0.77, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 orange l " <img src=\"F_o.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.1, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 yellow l " <img src=\"F_y.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.16, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 green l " <img src=\"F_g.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.33, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 cyan l " <img src=\"F_c.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.46, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 blue l " <img src=\"F_b.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.6, 0.7, 0.76]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 darkblue l " <img src=\"F_db.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.67, 0.74, 0.6]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 magenta l " <img src=\"F_m.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.8, 0.74, 0.65]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 pink l " <img src=\"F_p.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.92, 0.74, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+}
+BackdropNode {
+ inputs 0
+ name BG_BackdropNode1
+ tile_color 0x3a70c1ff
+ label "<\[value position]>\[value text]\[if \{\[value text]==\"\"\}  \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\}  \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+ note_font_size 50
+ selected true
+ xpos 12171
+ ypos -5269
+ bdwidth 240
+ bdheight 342
+ addUserKnob {20 FT l BackdropNode}
+ addUserKnob {1 text l Text}
+ text BG
+ addUserKnob {4 position l "" -STARTLINE M {left Center}}
+ position Center
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef grow(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()-step)\n            n\['ypos'].setValue(n\['ypos'].getValue()-step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()+step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()+step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\ngrow(n,50)"}
+ addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef shrink(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()+step)\n            n\['ypos'].setValue(n\['ypos'].getValue()+step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()-step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()-step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\nshrink(n,50)"}
+ addUserKnob {22 colorandom l " <img src=\"ColorBars.png\">" -STARTLINE T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )"}
+ addUserKnob {22 red l " <img src=\"F_r.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.0, 0.77, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 orange l " <img src=\"F_o.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.1, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 yellow l " <img src=\"F_y.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.16, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 green l " <img src=\"F_g.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.33, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 cyan l " <img src=\"F_c.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.46, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 blue l " <img src=\"F_b.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.6, 0.7, 0.76]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 darkblue l " <img src=\"F_db.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.67, 0.74, 0.6]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 magenta l " <img src=\"F_m.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.8, 0.74, 0.65]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 pink l " <img src=\"F_p.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.92, 0.74, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+}
+BackdropNode {
+ inputs 0
+ name "FG 1_BackdropNode1"
+ tile_color 0x493b3bff
+ label "<\[value position]>\[value text]\[if \{\[value text]==\"\"\}  \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\}  \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+ note_font_size 50
+ selected true
+ xpos 11573
+ ypos -4676
+ bdwidth 240
+ bdheight 342
+ addUserKnob {20 FT l BackdropNode}
+ addUserKnob {1 text l Text}
+ text "FG 1"
+ addUserKnob {4 position l "" -STARTLINE M {left Center}}
+ position Center
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef grow(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()-step)\n            n\['ypos'].setValue(n\['ypos'].getValue()-step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()+step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()+step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\ngrow(n,50)"}
+ addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef shrink(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()+step)\n            n\['ypos'].setValue(n\['ypos'].getValue()+step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()-step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()-step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\nshrink(n,50)"}
+ addUserKnob {22 colorandom l " <img src=\"ColorBars.png\">" -STARTLINE T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )"}
+ addUserKnob {22 red l " <img src=\"F_r.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.0, 0.77, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 orange l " <img src=\"F_o.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.1, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 yellow l " <img src=\"F_y.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.16, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 green l " <img src=\"F_g.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.33, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 cyan l " <img src=\"F_c.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.46, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 blue l " <img src=\"F_b.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.6, 0.7, 0.76]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 darkblue l " <img src=\"F_db.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.67, 0.74, 0.6]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 magenta l " <img src=\"F_m.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.8, 0.74, 0.65]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 pink l " <img src=\"F_p.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.92, 0.74, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+}
+BackdropNode {
+ inputs 0
+ name "BG Grade_BackdropNode1"
+ tile_color 0x23b290ff
+ label "<\[value position]>\[value text]\[if \{\[value text]==\"\"\}  \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\}  \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+ note_font_size 50
+ selected true
+ xpos 12171
+ ypos -4872
+ bdwidth 240
+ bdheight 270
+ z_order 1
+ addUserKnob {20 FT l BackdropNode}
+ addUserKnob {1 text l Text}
+ text "BG Grade"
+ addUserKnob {4 position l "" -STARTLINE M {left Center}}
+ position Center
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef grow(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()-step)\n            n\['ypos'].setValue(n\['ypos'].getValue()-step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()+step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()+step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\ngrow(n,50)"}
+ addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef shrink(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()+step)\n            n\['ypos'].setValue(n\['ypos'].getValue()+step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()-step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()-step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\nshrink(n,50)"}
+ addUserKnob {22 colorandom l " <img src=\"ColorBars.png\">" -STARTLINE T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )"}
+ addUserKnob {22 red l " <img src=\"F_r.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.0, 0.77, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 orange l " <img src=\"F_o.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.1, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 yellow l " <img src=\"F_y.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.16, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 green l " <img src=\"F_g.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.33, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 cyan l " <img src=\"F_c.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.46, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 blue l " <img src=\"F_b.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.6, 0.7, 0.76]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 darkblue l " <img src=\"F_db.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.67, 0.74, 0.6]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 magenta l " <img src=\"F_m.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.8, 0.74, 0.65]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+ addUserKnob {22 pink l " <img src=\"F_p.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.92, 0.74, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+}
+Read {
+ inputs 0
+ file //store/diske/cadeauDuCiel/005bxv-0400/3d/images/lookdev/olourry/005bxv-0400_lookdev_olourry_v001/masterLayer/camera_005bxv_400_masterLayer_005bxv-0400_lookdev_olourry_v001_nohuman.####.exr
+ localizationPolicy off
+ format "1800 1145 0 0 1800 1145 0.999563 "
+ first 1001
+ last 1165
+ origfirst 1001
+ origlast 1165
+ origset true
+ on_error black
+ version 5
+ colorspace "Utility - Linear - Rec.709"
+ name Read14
+ selected true
+ xpos 12799
+ ypos -3715
+ addUserKnob {20 ftracktab l ftrack}
+ addUserKnob {1 fcompname l "Component Name:"}
+ fcompname main
+ addUserKnob {20 scriptTab l Script}
+ addUserKnob {1 scriptPath l Path +HIDDEN}
+ addUserKnob {3 scriptFrame l "Ref Frame" +HIDDEN}
+ addUserKnob {22 loadFull l "Load full" t "This will import the full script, without cleaning nodes that can make problems when rendered" T "from cgev.nuke.tools.nodes import read;reload(read);from cgev.nuke.tools.nodes import read;read.loadScript(nuke.thisNode(),full=True)" +STARTLINE}
+ addUserKnob {22 loadlite l "Load Lite" t "This will import the lite version of the script, it will clean nodes that can make problems when rendered" -STARTLINE T "from cgev.nuke.tools.nodes import read;read.loadScript(nuke.thisNode(),full=False)"}
+ addUserKnob {6 forceCheckAll l "Force check All" +STARTLINE}
+}
+Dot {
+ name Dot18
+ selected true
+ xpos 12833
+ ypos -3575
+}
+set N3bdae000 [stack 0]
+Dot {
+ name Dot19
+ selected true
+ xpos 13041
+ ypos -3575
+}
+OFXcom.absoft.neatvideo_v2 {
+ TFRad 1
+ TFThreshold 100
+ TFAdaptive false
+ TFInterlaced false
+ DNP ""
+ NFP ""
+ LinearInputData true
+ name "Reduce Noise2"
+ selected true
+ xpos 13007
+ ypos -3499
+}
+Keyer {
+ operation "luminance key"
+ name Keyer3
+ selected true
+ xpos 13007
+ ypos -3424
+}
+Roto {
+ output alpha
+ cliptype none
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x44610000 x440f2000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbox {createBezier {
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {900 572.5}
+ name Roto3
+ selected true
+ xpos 13007
+ ypos -3336
+}
+push $N3bdae000
+Grade {
+ name Grade4
+ selected true
+ xpos 12799
+ ypos -3457
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy5
+ selected true
+ xpos 12799
+ ypos -3336
+}
+Transform {
+ center {900 572.5}
+ shutteroffset centred
+ name Transform8
+ selected true
+ xpos 12799
+ ypos -3218
+}
+Defocus {
+ channels rgb
+ name Defocus3
+ selected true
+ xpos 12799
+ ypos -3101
+}
+Dot {
+ name Dot20
+ selected true
+ xpos 12833
+ ypos -2850
+}
+Read {
+ inputs 0
+ file //store/diske/cadeauDuCiel/005bxv-0400/3d/images/lookdev/olourry/005bxv-0400_lookdev_olourry_v001/masterLayer/camera_005bxv_400_masterLayer_005bxv-0400_lookdev_olourry_v001_nohuman.####.exr
+ localizationPolicy off
+ format "1800 1145 0 0 1800 1145 0.999563 "
+ first 1001
+ last 1165
+ origfirst 1001
+ origlast 1165
+ origset true
+ on_error black
+ version 5
+ colorspace "Utility - Linear - Rec.709"
+ name Read13
+ selected true
+ xpos 11653
+ ypos -4506
+ addUserKnob {20 ftracktab l ftrack}
+ addUserKnob {1 fcompname l "Component Name:"}
+ fcompname main
+ addUserKnob {20 scriptTab l Script}
+ addUserKnob {1 scriptPath l Path +HIDDEN}
+ addUserKnob {3 scriptFrame l "Ref Frame" +HIDDEN}
+ addUserKnob {22 loadFull l "Load full" t "This will import the full script, without cleaning nodes that can make problems when rendered" T "from cgev.nuke.tools.nodes import read;reload(read);from cgev.nuke.tools.nodes import read;read.loadScript(nuke.thisNode(),full=True)" +STARTLINE}
+ addUserKnob {22 loadlite l "Load Lite" t "This will import the lite version of the script, it will clean nodes that can make problems when rendered" -STARTLINE T "from cgev.nuke.tools.nodes import read;read.loadScript(nuke.thisNode(),full=False)"}
+ addUserKnob {6 forceCheckAll l "Force check All" +STARTLINE}
+}
+Dot {
+ name Dot15
+ selected true
+ xpos 11687
+ ypos -4191
+}
+set N3be79400 [stack 0]
+Dot {
+ name Dot16
+ selected true
+ xpos 11479
+ ypos -4191
+}
+OFXcom.absoft.neatvideo_v2 {
+ TFRad 1
+ TFThreshold 100
+ TFAdaptive false
+ TFInterlaced false
+ DNP ""
+ NFP ""
+ LinearInputData true
+ name "Reduce Noise1"
+ selected true
+ xpos 11445
+ ypos -4115
+}
+Keyer {
+ operation "luminance key"
+ name Keyer2
+ selected true
+ xpos 11445
+ ypos -4040
+}
+Roto {
+ output alpha
+ cliptype none
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x44610000 x440f2000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbox {createBezier {
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {900 572.5}
+ name Roto2
+ selected true
+ xpos 11445
+ ypos -3952
+}
+push $N3be79400
+Grade {
+ name Grade5
+ selected true
+ xpos 11653
+ ypos -4073
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy4
+ selected true
+ xpos 11653
+ ypos -3952
+}
+Transform {
+ center {900 572.5}
+ shutteroffset centred
+ name Transform7
+ selected true
+ xpos 11653
+ ypos -3834
+}
+Defocus {
+ channels rgb
+ name Defocus2
+ selected true
+ xpos 11653
+ ypos -3717
+}
+Dot {
+ name Dot17
+ selected true
+ xpos 11687
+ ypos -3611
+}
+Read {
+ inputs 0
+ file //store/diske/cadeauDuCiel/005bxv-0400/3d/images/lookdev/olourry/005bxv-0400_lookdev_olourry_v001/masterLayer/camera_005bxv_400_masterLayer_005bxv-0400_lookdev_olourry_v001_nohuman.####.exr
+ localizationPolicy off
+ format "1800 1145 0 0 1800 1145 0.999563 "
+ first 1001
+ last 1165
+ origfirst 1001
+ origlast 1165
+ origset true
+ on_error black
+ version 5
+ colorspace "Utility - Linear - Rec.709"
+ name Read12
+ selected true
+ xpos 12251
+ ypos -5099
+ addUserKnob {20 ftracktab l ftrack}
+ addUserKnob {1 fcompname l "Component Name:"}
+ fcompname main
+ addUserKnob {20 scriptTab l Script}
+ addUserKnob {1 scriptPath l Path +HIDDEN}
+ addUserKnob {3 scriptFrame l "Ref Frame" +HIDDEN}
+ addUserKnob {22 loadFull l "Load full" t "This will import the full script, without cleaning nodes that can make problems when rendered" T "from cgev.nuke.tools.nodes import read;reload(read);from cgev.nuke.tools.nodes import read;read.loadScript(nuke.thisNode(),full=True)" +STARTLINE}
+ addUserKnob {22 loadlite l "Load Lite" t "This will import the lite version of the script, it will clean nodes that can make problems when rendered" -STARTLINE T "from cgev.nuke.tools.nodes import read;read.loadScript(nuke.thisNode(),full=False)"}
+ addUserKnob {6 forceCheckAll l "Force check All" +STARTLINE}
+}
+Grade {
+ name Grade2
+ selected true
+ xpos 12251
+ ypos -4702
+}
+Transform {
+ center {900 572.5}
+ shutteroffset centred
+ name Transform4
+ selected true
+ xpos 12251
+ ypos -4431
+}
+Defocus {
+ channels rgb
+ name Defocus1
+ selected true
+ xpos 12251
+ ypos -4162
+}
+Merge2 {
+ inputs 2
+ bbox B
+ name Merge12
+ selected true
+ xpos 12251
+ ypos -3615
+}
+Glow2 {
+ name Glow1
+ selected true
+ xpos 12251
+ ypos -3510
+}
+Merge2 {
+ inputs 2
+ bbox B
+ name Merge13
+ selected true
+ xpos 12251
+ ypos -2854
+}
+Glow2 {
+ name Glow2
+ selected true
+ xpos 12251
+ ypos -2739
+}
+Flare {
+ name Flare1
+ selected true
+ xpos 12251
+ ypos -2670
+}
+Grain2 {
+ name Grain2_1
+ label other
+ selected true
+ xpos 12251
+ ypos -2587
+ black {0 0 0}
+ minimum {0 0 0}
+}
+Write {
+ in_colorspace "ACES - ACEScg"
+ out_colorspace "ACES - ACEScg"
+ name Write6
+ selected true
+ xpos 12251
+ ypos -2495
+ disable true
+}

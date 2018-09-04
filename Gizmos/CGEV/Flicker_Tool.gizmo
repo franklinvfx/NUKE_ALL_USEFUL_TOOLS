@@ -1,0 +1,257 @@
+set cut_paste_input [stack 0]
+version 6.0 v5
+push 0
+push $cut_paste_input
+Group {
+inputs 2
+name Flicker_Tool
+knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\nif knob.name() in ('apply', 'showPanel'):\n    mode = node\['apply'].value()\n    if mode == 'No Flick on Source':\n        node\['premult'].setVisible(False)\n    elif mode == 'Add Flick on Target':\n        node\['premult'].setVisible(True)"
+selected true
+icon F_onnode.png
+addUserKnob {20 User l Flickering}
+addUserKnob {41 go l "<font color='#2EFE2E'>Analyse Source!" T CurveTool1.go}
+addUserKnob {22 curve l INVISIBLE +INVISIBLE T "ct1 = nuke.toNode(\"CurveTool1\")\nct1.knob('intensitydata').clearAnimated()\n\nnuke.execute(ct1, nuke.frame(), nuke.frame())\n\n" +STARTLINE}
+addUserKnob {26 f l " " -STARTLINE T "                 "}
+addUserKnob {41 numframes l "      Samples" -STARTLINE T FrameBlend1.numframes}
+addUserKnob {26 ""}
+addUserKnob {68 apply l mode M {"No Flick on Source" "Add Flick on Target" "" "" "" "" "" "" "" "" "" ""}}
+addUserKnob {68 premult l "              Target is" -STARTLINE +HIDDEN M {Premult UnPremult "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+premult UnPremult
+addUserKnob {26 g l " " T " "}
+addUserKnob {26 "" +STARTLINE}
+addUserKnob {7 mix}
+mix 1
+}
+Input {
+inputs 0
+name Target
+xpos 1132
+ypos -301
+number 1
+}
+AddChannels {
+channels alpha
+name AddChannels1
+xpos 1132
+ypos 422
+}
+Unpremult {
+name Unpremult1
+xpos 1132
+ypos 560
+hide_input true
+disable {{parent.premult}}
+}
+set N41a687c0 [stack 0]
+Dot {
+name Dot4
+tile_color 0x8ce08ff
+xpos 1349
+ypos 563
+}
+Dot {
+name Dot2
+tile_color 0x8ce08ff
+xpos 1349
+ypos 1089
+}
+Constant {
+inputs 0
+channels rgb
+color {{parent.CurveTool1.intensitydata} {parent.CurveTool1.intensitydata} {parent.CurveTool1.intensitydata} {parent.CurveTool1.intensitydata}}
+format "2048 1152 0 0 2048 1152 1 2K_3Perfs"
+name Constant2
+xpos 703
+ypos -79
+}
+FrameRange {
+first_frame {{Dot1.first_frame}}
+last_frame {{Dot1.last_frame x28 1100}}
+time ""
+name FrameRange1
+xpos 703
+ypos 80
+}
+set N3ea77970 [stack 0]
+FrameHold {
+first_frame {{FrameRange1.last_frame}}
+name FrameHold2
+xpos 824
+ypos 172
+hide_input true
+disable {{"frame < input.first_frame || frame > input.last_frame ? 0 : 1"}}
+}
+push $N3ea77970
+FrameHold {
+first_frame {{input.first_frame}}
+name FrameHold1
+xpos 703
+ypos 167
+hide_input true
+disable {{"frame < FrameRange1.first_frame || frame > frame ? 0 : 1"}}
+}
+Switch {
+inputs 2
+which 1
+name Switch1
+xpos 703
+ypos 276
+hide_input true
+disable {{"frame < FrameRange1.first_frame || frame > frame ? 0 : 1"}}
+}
+Constant {
+inputs 0
+channels rgb
+color 0.5
+name Constant1
+xpos 912
+ypos 384
+}
+Dissolve {
+inputs 2
+which {{(parent.mix*2+1)*0.333 x45 1}}
+name Dissolve1
+xpos 703
+ypos 402
+hide_input true
+}
+Crop {
+box {0 0 {Dot1.width} {Dot1.height}}
+reformat true
+crop false
+name Crop1
+xpos 703
+ypos 564
+hide_input true
+}
+set N41a69580 [stack 0]
+Dot {
+name Dot5
+tile_color 0x8ce08ff
+xpos 948
+ypos 567
+}
+push $N41a687c0
+push $N41a69580
+FrameBlend {
+numframes 20
+startframe 10
+endframe 100
+name FrameBlend1
+xpos 703
+ypos 693
+hide_input true
+}
+FrameBlend {
+numframes {{parent.FrameBlend1.numframes}}
+startframe 10
+endframe 100
+name FrameBlend2
+xpos 703
+ypos 729
+hide_input true
+}
+FrameBlend {
+numframes {{parent.FrameBlend1.numframes}}
+startframe 10
+endframe 100
+name FrameBlend4
+xpos 703
+ypos 765
+hide_input true
+}
+set N41a6a340 [stack 0]
+Merge2 {
+inputs 2
+operation divide
+name Merge1
+xpos 1132
+ypos 771
+hide_input true
+}
+Dot {
+name Dot3
+tile_color 0x8ce08ff
+xpos 1166
+ypos 949
+}
+Merge2 {
+inputs 2
+operation multiply
+name Merge2
+xpos 914
+ypos 946
+hide_input true
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+xpos 914
+ypos 1080
+hide_input true
+}
+Premult {
+name Premult1
+xpos 914
+ypos 1296
+hide_input true
+disable {{parent.premult}}
+}
+push $N41a6a340
+Input {
+inputs 0
+name Src
+xpos 406
+ypos -287
+}
+Dot {
+name Dot1
+tile_color 0x8ce08ff
+xpos 440
+ypos -50
+}
+set N41a6bb50 [stack 0]
+push $N41a69580
+Merge2 {
+inputs 2
+operation divide
+name Merge3
+xpos 406
+ypos 564
+hide_input true
+}
+Merge2 {
+inputs 2
+operation multiply
+name Merge4
+xpos 406
+ypos 771
+hide_input true
+}
+Switch {
+inputs 2
+which {{parent.apply}}
+name Switch2
+xpos 406
+ypos 1296
+}
+Output {
+name OutputFT
+xpos 406
+ypos 1589
+}
+push $N41a6bb50
+CurveTool {
+avgframes 1
+ROI {0 0 {input.width} {input.height}}
+autocropdata {0 0 {input.width} {input.height}}
+intensitydata {0.008686407441 0.00985521944 0.009763345301 1.813883814e-009}
+name CurveTool1
+selected true
+xpos 550
+ypos -53
+hide_input true
+}
+end_group

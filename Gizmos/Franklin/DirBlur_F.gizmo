@@ -1,0 +1,336 @@
+Group {
+ name DirBlur_F
+ help "Directional Blur\n\nanglepreviewectional blur with the original blur effect. More smooth than the DirBlurWrapper node.\n\nChange the angle (degrees).\nIf you need help to adjust it go to the Angle Preview options.\n"
+ onCreate "if nuke.thisNode()\['created'].value() == False:\n    nuke.thisNode()\['selected'].setValue(False)\n    nuke.thisNode()\['selected'].setValue(True)\n    print nuke.selectedNode().input(0)\n    if nuke.thisNode().input(0) is not None:\n        w = nuke.thisNode().input(0).width()\n        h = nuke.thisNode().input(0).height()\n        nuke.thisNode().knob('Center').setValue((w/2, h/2))\n        print 'input'\n    \n    else:\n        rw = nuke.root().format().width()\n        rh = nuke.root().format().height()\n        nuke.thisNode().knob('Center').setValue((rw/2, rh/2))\n        print 'rooot'\n        \n    nuke.thisNode()\['anglepreview'].setValue(True)\n    nuke.thisNode()\['anglepreview'].setValue(False)\n    nuke.thisNode()\['created'].setValue(True)"
+ knobChanged "c = nuke.toNode('Copy1')\n\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(1) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')\n    \nnode = nuke.thisNode()\nknob = nuke.thisKnob()\n\nif knob.name() == 'anglepreview':\n    if knob.value():\n        node\['Center'].setEnabled(True)\n    else:\n        node\['Center'].setEnabled(False)"
+ tile_color 0xca7d4eff
+ selected true
+ addUserKnob {20 DB l DirBlur}
+ addUserKnob {41 channels l "<font color=\"green\">@b;Channels" T Blur1.channels}
+ addUserKnob {6 created_1 l INVISIBLE +INVISIBLE +STARTLINE}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {7 rotation l "            Angle" R -180 180}
+ addUserKnob {6 anglepreview l "Angle Preview        " t "Draw a line to show the blur Angle Preview direction." +STARTLINE}
+ addUserKnob {12 Center l " Center  " t "Adjust the position of the \"Preview Angle\" line." -STARTLINE +DISABLED}
+ Center {1024 778}
+ addUserKnob {26 S03 l " "}
+ addUserKnob {7 blurlenght l "Blur Lenght" R 0 100}
+ addUserKnob {41 filter l Filter T Blur1.filter}
+ addUserKnob {41 quality l "" -STARTLINE T Blur1.quality}
+ addUserKnob {6 cbbox l "Crop to Format " t "If bounding box is at or inside the format, don't enlarge it past the format. This avoids creating oversized images that you don't use." -STARTLINE}
+ cbbox true
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVfx.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin Vfx - 2017"}
+ addUserKnob {26 ""}
+ addUserKnob {41 from0 l Mask T Copy1.from0}
+ addUserKnob {41 invertMask l Invert -STARTLINE T Keymix27.invertMask}
+ addUserKnob {7 mix l Mix}
+ mix 1
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -444
+  ypos -201
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {6 in +STARTLINE}
+  in {{"\[exists input1]"}}
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos -444
+  ypos -143
+ }
+set N62e58400 [stack 0]
+push $N62e58400
+ Copy {
+  inputs 2
+  to0 rgba.alpha
+  name Copy1
+  xpos -444
+  ypos -117
+  disable {{!parent.mask.in i}}
+ }
+ Invert {
+  name Invert1
+  xpos -444
+  ypos -79
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -643
+  ypos -783
+ }
+ Dot {
+  name Dot3
+  xpos -609
+  ypos -712
+ }
+set N62e9f400 [stack 0]
+ Dot {
+  name Dot8
+  xpos -785
+  ypos -712
+ }
+set N62e9f000 [stack 0]
+ Dot {
+  name Dot2
+  xpos -934
+  ypos -712
+ }
+ Dot {
+  name Dot4
+  xpos -934
+  ypos -200
+ }
+set N62e9e800 [stack 0]
+ Dot {
+  name Dot1
+  xpos -934
+  ypos -69
+ }
+set N62e9e400 [stack 0]
+push $N62e9e800
+push $N62e9f000
+ Roto {
+  cliptype none
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x42900000 x43960000      0
+   {=parent.Center 0}
+   {=parent.Center 0}}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup OpenSpline1 1049088 bezier
+     {{cc
+       {f 1056800}
+       {p
+        {}
+        {{a osw 1 osf 0}
+   {=0 xc47012be}
+   {=input.format.h/2 x3dd41c00}}
+        {x42d00000}
+        {}
+        {{a osw 1 osf 0}
+   {=input.format.w x44701a2c}
+   {=input.format.h/2 xbe700800}}
+        {}}}
+      {cc
+       {f 1056800}
+       {p
+        {}
+        {}
+        {x42d00000}
+        {}
+        {}
+        {}}}}
+     {t
+   {=input.width/2 x44800000}
+   {=input.height/2 x44100000}
+   {{x43e38000 0}}
+   {=-curves.OpenSpline1.center x442e2000}
+   {=-curves.OpenSpline1.center x43c3c000}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}  0 x40000000 1
+   {{x43e38000 1}}  0 0
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 1}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 1}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 1}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 0}}
+   {{x43e38000 1}}}
+     {a osbe 0 osee 0 osw
+   {=input.format.w/800
+    {{0 x41200000 -}}}     osf 0 str 1 ltn x43e38000 ltm x43e38000 tt x41200000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 tt 10 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_openspline_width {{input.format.w/800 10}}
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  lifetime_start 455
+  lifetime_end 455
+  motionblur_shutter_offset_type centred
+  openspline_width {{input.format.w/800 10}}
+  name Angle_Preview
+  xpos -819
+  ypos -630
+ }
+ Transform {
+  rotate {{-Rotate.rotate x36 -53.64279827}}
+  center {{parent.Center} {parent.Center}}
+  black_outside false
+  name Rotate_Inv1
+  xpos -819
+  ypos -579
+ }
+ Crop {
+  box {0 0 {input.width} {input.height}}
+  reformat true
+  crop false
+  name Crop1
+  xpos -819
+  ypos -524
+ }
+ Dot {
+  name Dot7
+  xpos -785
+  ypos -307
+ }
+push $N62e9f400
+ Transform {
+  rotate {{parent.rotation.main}}
+  center {{input.format.w/2} {input.format.h/2}}
+  black_outside false
+  name Rotate
+  xpos -643
+  ypos -630
+  disable {{!blurlenght}}
+ }
+ Blur {
+  size {{parent.blurlenght} 0}
+  crop false
+  name Blur1
+  xpos -643
+  ypos -582
+ }
+ Transform {
+  rotate {{-Rotate.rotate x36 -53.64279827}}
+  center {{parent.Rotate.center} {parent.Rotate.center}}
+  black_outside false
+  name Rotate_Inv
+  xpos -643
+  ypos -524
+  disable {{!blurlenght}}
+ }
+push $N62e9f400
+ Dot {
+  name Dot6
+  xpos -433
+  ypos -712
+ }
+ Shuffle {
+  out2 motion
+  name Shuffle7
+  xpos -467
+  ypos -626
+ }
+ Grade {
+  channels motion
+  add {{"(blurlenght * cos (rotation* pi/180))"} {"-(blurlenght * sin (rotation* pi/180))"} {curve} {curve}}
+  black_clamp false
+  name Grade5
+  xpos -467
+  ypos -584
+ }
+ VectorBlur {
+  uv motion
+  grow_bbox 100
+  name VectorBlur2
+  xpos -467
+  ypos -530
+ }
+ Dot {
+  name Dot9
+  xpos -433
+  ypos -426
+ }
+ Dissolve {
+  inputs 2
+  which {{blurlenght/10}}
+  name Small_Value
+  xpos -643
+  ypos -436
+ }
+ Merge2 {
+  inputs 2
+  operation exclusion
+  mix {{parent.anglepreview}}
+  name Preview_Line
+  xpos -643
+  ypos -311
+  disable {{"!\$gui"}}
+ }
+ CopyBBox {
+  inputs 2
+  name Crop
+  xpos -643
+  ypos -204
+  disable {{!cbbox}}
+ }
+set N63b9e800 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix27
+  xpos -816
+  ypos -79
+  disable {{!parent.mask.in}}
+ }
+push $N63b9e800
+ Switch {
+  inputs 2
+  which {{Copy1.from0 i}}
+  name Switch2
+  xpos -643
+  ypos 50
+ }
+push $N62e9e400
+ Dot {
+  name Dot5
+  xpos -934
+  ypos 151
+ }
+ Dissolve {
+  inputs 2
+  which {{parent.mix}}
+  name Dissolve1
+  xpos -643
+  ypos 141
+ }
+ Output {
+  name FranklinVFX
+  xpos -643
+  ypos 233
+ }
+end_group

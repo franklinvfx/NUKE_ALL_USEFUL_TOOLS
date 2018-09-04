@@ -1,0 +1,229 @@
+Group {
+name EdgeDetect_Angle
+help "Gonzo FX\nDaniel Gonzalez Solozabal\nwww.retinaut.com "
+tile_color 0xca7d4eff
+selected true
+addUserKnob {20 User l "Angle Edge"}
+addUserKnob {41 Angler l Angle T Trance.Angler}
+addUserKnob {6 dir l INVISIBLE -STARTLINE +INVISIBLE}
+addUserKnob {26 d l " " T " "}
+addUserKnob {41 weighter l Edge T Trance.weighter}
+addUserKnob {41 size l Blur T Bluhr.size}
+addUserKnob {41 filter -STARTLINE T Bluhr.filter}
+addUserKnob {26 jh l " " T " "}
+addUserKnob {7 Intensity R 1 10}
+Intensity 1
+addUserKnob {26 Signature l INVISIBLE +INVISIBLE T " GONZO FX\tDaniel Gonzalez Solozabal"}
+addUserKnob {6 crop l "Crop output BBox" +STARTLINE}
+crop true
+}
+Input {
+inputs 0
+name Input
+xpos -300
+ypos 211
+}
+Dot {
+name Dot4
+xpos -266
+ypos 274
+}
+set N4058d8c0 [stack 0]
+Shuffle {
+red black
+green black
+blue black
+alpha black
+name Shufflerer1
+xpos -175
+ypos 360
+}
+Roto {
+replace true
+curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44800000 x44428000}
+    {a}
+    {curvegroup OpenSpline1 1049088 bezier
+     {{cc
+       {f 1056800}
+       {p
+        {}
+        {{a osw x3e17a72f osf 0}
+	 {=0 xc39d0a40}
+	 {=input.format.h/2 x44130000}}
+        {x43076873}
+        {}
+        {{a osw x3e089cc6 osf 0}
+      {=input.format.w x45020054}
+      {=input.format.h/2 x4412ed39}}
+        {}}}
+      {cc
+       {f 1056800}
+       {p
+        {}
+        {}
+        {x43076873}
+        {}
+        {}
+        {}}}}
+     {tx x43e38000 x44790000 x44058000}
+     {a osbe 0 osee 0 osw
+      {=input.format.w/192 x41200000}     osf 0 str 1 ltn x43e38000 ltm x43e38000 tt x41200000}}}}}}
+toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 tt 10 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+toolbar_brush_hardness 0.200000003
+toolbar_openspline_width {{input.format.w/192 10}}
+toolbar_source_transform_scale {1 1}
+toolbar_source_transform_center {320 240}
+colorOverlay {0 0 0 0}
+lifetime_type "all frames"
+lifetime_start 455
+lifetime_end 455
+motionblur_shutter_offset_type centred
+openspline_width {{input.format.w/192 10}}
+createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+name Roto_CheckDir
+xpos -175
+ypos 392
+}
+Transform {
+translate {5.192502428e-015 0}
+rotate {{-parent.Angler+90}}
+center {{input.width/2} {input.height/2}}
+shuttercustomoffset -0.89
+name Trance1
+xpos -175
+ypos 506
+addUserKnob {20 User}
+addUserKnob {7 Angler l Angle R 0 360}
+Angler 84
+addUserKnob {7 weighter l weight R 0 50}
+weighter 7
+}
+Crop {
+box {0 0 {input.width} {input.height}}
+crop false
+name Crop14
+xpos -175
+ypos 530
+}
+Dot {
+name Dot3
+tile_color 0x8ce08ff
+xpos -141
+ypos 670
+}
+push $N4058d8c0
+Shuffle {
+red alpha
+green alpha
+blue alpha
+name Shufflerer
+xpos -417
+ypos 351
+}
+Dot {
+name Dot87
+xpos -383
+ypos 408
+}
+set N4058f7b0 [stack 0]
+Dot {
+name Dot2
+xpos -587
+ypos 408
+}
+set N4058fb20 [stack 0]
+Transform {
+translate {{"(weighter * sin (Angler* pi/180))"} {"(weighter * cos (Angler * pi/180))"}}
+center {1231 932}
+shuttercustomoffset -0.89
+name Trance
+xpos -549
+ypos 465
+addUserKnob {20 User}
+addUserKnob {7 Angler l Angle R 0 360}
+addUserKnob {7 weighter l weight R 0 50}
+weighter 10
+}
+push $N4058f7b0
+Merge2 {
+inputs 2
+operation stencil
+name CUTChemist
+xpos -417
+ypos 465
+}
+Blur {
+channels rgba
+name Bluhr
+xpos -417
+ypos 513
+}
+Multiply {
+value {{"parent.Intensity "}}
+name Multiplay
+xpos -417
+ypos 550
+}
+push $N4058fb20
+Dot {
+name Dot1
+xpos -587
+ypos 624
+}
+Merge2 {
+inputs 2
+operation in
+name Inim
+xpos -417
+ypos 620
+}
+Merge2 {
+inputs 2
+operation max
+name Merge1
+xpos -417
+ypos 667
+disable {{!parent.dir}}
+}
+Clamp {
+name Clamppost
+xpos -417
+ypos 719
+}
+Crop {
+box {0 0 {input.width} {input.height}}
+crop false
+name Crop1
+xpos -417
+ypos 774
+disable {{!parent.crop}}
+}
+Output {
+name Output1
+xpos -417
+ypos 876
+}
+end_group

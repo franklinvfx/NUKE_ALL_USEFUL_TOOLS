@@ -1,0 +1,140 @@
+set cut_paste_input [stack 0]
+version 6.0 v4
+Group {
+ inputs 0
+ name Noise
+ help "Noise Spherical\n\nThe noise fit automatically to the sphere you link on the bottom of this node.\n"
+ label Spherical
+ selected true
+ addUserKnob {20 NS l "Noise Spherical"}
+ addUserKnob {41 format l "@b;Format" T Format.format}
+ addUserKnob {26 S0 l " " T " "}
+ addUserKnob {26 T01 l "@b;Noise"}
+ addUserKnob {4 type l Type t "Noise type. Currently supported are fBm (Fractional Brownian Motion) and turbulence, which is similar to fBm, but based on absolute noise values." M {fBm turbulence}}
+ addUserKnob {14 scale l "x/y Size" t "Lowest noise frequency." R 0 100}
+ scale 80
+ addUserKnob {7 scalez l Z t "This knob need to be animated if you want the noise to change over time. The expression 'frame/10' will make it change completly in 10 frames." R 0 5}
+ addUserKnob {7 octaves l Octaves t "Number of Perlin noise fonctions to add." R 0 10}
+ octaves 10
+ addUserKnob {7 lacunarity l Lacunarity t "Each Octaves multiplies frequency by this amount." R 0 10}
+ lacunarity 2
+ addUserKnob {7 gain l Gain}
+ gain 0.5
+ addUserKnob {7 gamma l Gamma}
+ gamma 0.5
+ addUserKnob {26 S1 l " " T " "}
+ addUserKnob {26 T03 l "@b;  Transform"}
+ addUserKnob {12 offset l " " t "Adjust the position on x and y."}
+ addUserKnob {26 S2 l " " T " "}
+ addUserKnob {26 T02 l "@b; Color"}
+ addUserKnob {18 color l " "}
+ color 1
+ addUserKnob {3 offsetz l INVISIBLE -STARTLINE +INVISIBLE}
+ offsetz 1
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 by3 l " " -STARTLINE T "<font color=\"#1C1C1C\">...FranklinVFX.com"}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  name Format
+  xpos 384
+  ypos -269
+  postage_stamp false
+ }
+ Crop {
+  box {0 0 {input.width i} {input.height i}}
+  name Crop
+  xpos 384
+  ypos -211
+ }
+add_layer {rgba rgba.beta}
+ Expression {
+  temp_name0 lat
+  temp_expr0 "y / Crop.box.t * 180- 90"
+  temp_name1 lon
+  temp_expr1 "x / Crop.box.r * 360-180"
+  temp_name2 r
+  temp_expr2 "cos(0.017453292519943295769236907684886 *  lat)"
+  expr0 "(r * cos (0.017453292519943295769236907684886 * lon) +1)*0.5"
+  expr1 "(sin (0.017453292519943295769236907684886 * lat)+1)*.5"
+  expr2 "(r * sin(0.017453292519943295769236907684886 * lon)+1)*.5"
+  name Expression
+  xpos 384
+  ypos -187
+ }
+ Grade {
+  multiply {{100-parent.scale.w i} {100-parent.scale.h i} {100-parent.scale.h i} {curve i}}
+  name Grade
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 384
+  ypos -128
+  icon -
+ }
+set N1956f4c0 [stack 0]
+ Expression {
+  expr0 turbulence(r+(parent.scalez+1),g+(-parent.offset.y*0.01),b+(parent.offset.x*0.005),parent.octaves,parent.lacunarity,parent.gain)*.5+0.5
+  expr1 turbulence(r+(parent.scalez+1),g+(-parent.offset.y*0.01),b+(parent.offset.x*0.005),parent.octaves,parent.lacunarity,parent.gain)*.5+0.5
+  expr2 turbulence(r+(parent.scalez+1),g+(-parent.offset.y*0.01),b+(parent.offset.x*0.005),parent.octaves,parent.lacunarity,parent.gain)*.5+0.5
+  name turbulence
+  xpos 331
+  ypos -69
+ }
+push $N1956f4c0
+ Expression {
+  expr0 fBm(r+(parent.scalez+1),g+(-parent.offset.y*0.01),b+(parent.offset.x*0.005),parent.octaves,parent.lacunarity,parent.gain)*.5+0.5
+  expr1 fBm(r+(parent.scalez+1),g+(-parent.offset.y*0.01),b+(parent.offset.x*0.005),parent.octaves,parent.lacunarity,parent.gain)*.5+0.5
+  expr2 fBm(r+(parent.scalez+1),g+(-parent.offset.y*0.01),b+(parent.offset.x*0.005),parent.octaves,parent.lacunarity,parent.gain)*.5+0.5
+  name fBm
+  xpos 435
+  ypos -69
+ }
+ Switch {
+  inputs 2
+  which {{parent.type i}}
+  name Switch1
+  xpos 384
+  ypos -9
+ }
+ Gamma {
+  channels rgba
+  value {{parent.gamma i}}
+  name Gamma
+  xpos 384
+  ypos 29
+ }
+set N1956fe50 [stack 0]
+ Dot {
+  name Dot1
+  xpos 504
+  ypos 32
+ }
+ Dot {
+  name Dot2
+  xpos 504
+  ypos 100
+ }
+push $N1956fe50
+ Multiply {
+  channels rgb
+  value {{parent.color i} {parent.color i} {parent.color i} 1}
+  name Multiply1
+  xpos 384
+  ypos 67
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.alpha
+  name Copy1
+  xpos 384
+  ypos 91
+ }
+ Output {
+  name FranklinVFX
+  selected true
+  xpos 384
+  ypos 163
+ }
+end_group

@@ -1,0 +1,77 @@
+Group {
+ inputs 2
+ name Normals_Cam
+ help "Normals Camera\n\nThis node convert normals from world to normals from camera.\n\nPossibility to hold the normals rotation at a specific frame.\n\nChoose the output channel to rgb or create a new one. \nChoose the new channel name.\n"
+ knobChanged "if nuke.thisKnob().name() == 'rotation_hold':\n    if nuke.thisNode().knob('rotation_hold').value() == True:\n        nuke.thisNode().knob('ref_frame').setEnabled(True)\n    else:\n        nuke.thisNode().knob('ref_frame').setEnabled(False)\n"
+ tile_color 0x54842dff
+ selected true
+ icon F_iconrgb.png
+ addUserKnob {20 NTC l "Normals Camera"}
+ addUserKnob {41 in l "<font color=\"green\">@b;Normals" t "Choose the channel witch contain the normals data." T norm.in}
+ addUserKnob {6 rotation_hold l Framehold t "Hold the normals rotation at a specific frame." -STARTLINE}
+ addUserKnob {3 ref_frame l "" -STARTLINE +DISABLED}
+ addUserKnob {41 out l Output T Shuffle_chan.out}
+ addUserKnob {26 t l " " -STARTLINE T "                                                                                "}
+ addUserKnob {26 S00 l " " T " "}
+ addUserKnob {26 FT1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[value out]"
+}
+ Input {
+  inputs 0
+  name Cam
+  label "\[value number]"
+  xpos -314
+  ypos -113
+  number 1
+ }
+ Axis2 {
+  useMatrix true
+  name data
+  xpos -304
+  ypos -18
+ }
+ Input {
+  inputs 0
+  name Normals
+  label "\[value number]"
+  xpos -619
+  ypos -113
+ }
+set N41200c00 [stack 0]
+ Shuffle {
+  in none
+  alpha black
+  name norm
+  xpos -459
+  ypos -107
+ }
+ ColorMatrix {
+  matrix {
+      {{"rotation_hold ? data.world_matrix.0 (parent.ref_frame) : data.world_matrix.0"} {"rotation_hold ? data.world_matrix.1 (parent.ref_frame) : data.world_matrix.1"} {"rotation_hold ? data.world_matrix.2 (parent.ref_frame) : data.world_matrix.2"}}
+      {{"rotation_hold ? data.world_matrix.4 (parent.ref_frame) : data.world_matrix.4"} {"rotation_hold ? data.world_matrix.5 (parent.ref_frame) : data.world_matrix.5"} {"rotation_hold ? data.world_matrix.6 (parent.ref_frame) : data.world_matrix.6"}}
+      {{"rotation_hold ? data.world_matrix.8 (parent.ref_frame) : data.world_matrix.8"} {"rotation_hold ? data.world_matrix.9 (parent.ref_frame) : data.world_matrix.9"} {"rotation_hold ? data.world_matrix.10 (parent.ref_frame) : data.world_matrix.10"}}
+    }
+  invert true
+  name normals_rotation
+  xpos -459
+ }
+push $N41200c00
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out rgb
+  name Shuffle_chan
+  xpos -619
+ }
+ Output {
+  name FranklinVFX
+  selected true
+  xpos -619
+  ypos 46
+ }
+end_group

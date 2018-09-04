@@ -1,0 +1,33 @@
+Group {
+ inputs 0
+ name Scanline_Ctrl
+ help "ScanlineRender Controler\n\nLink with expression sample and antialiasing knobs of Scanline Render nodes you want. \n\nThe curent node become the master of each linked nodes.\nYou can have a different value for each knob in user interface and in batch.\n"
+ onCreate nuke.thisNode().knob('saveName').setValue(nuke.thisNode().name())
+ knobChanged "name = nuke.thisNode().name()\nall = nuke.allNodes()\n\nknobsToCheck = \['linkselect', 'linkTo', 'unlinkselect', 'unlink', 'selected']\n\nif nuke.thisKnob().name() in knobsToCheck:\n    expr = \[]\n    for node in nuke.allNodes(group=nuke.root()):\n        for knob in node.allKnobs():\n            if knob.hasExpression() and name + '.' in knob.toScript():\n                expr.append(knob)\n\n    num = int(len(expr)/2)\n    if num == 0:\n        nuke.thisNode().knob('output').setValue('rgb')\n    elif num == 1:\n        nuke.thisNode().knob('output').setValue(str(num) + ' Node')\n    else:\n        nuke.thisNode().knob('output').setValue(str(num) + ' Nodes')\n\nelif nuke.thisKnob().name() == 'name':\n    saveName = nuke.thisNode().knob('saveName').value()\n\n    for node in nuke.allNodes(group=nuke.root()):\n        for knob in node.allKnobs():\n            if knob.hasExpression() and saveName + '.' in knob.toScript():\n                saveExpr = knob.toScript()\n                saveExpr = saveExpr.replace('\{\"\\\\', '')\n                saveExpr = saveExpr.replace('\"\}', '')\n                saveExpr = saveExpr.replace(saveName, name)\n                knob.setExpression(saveExpr)\n\n    nuke.thisNode().knob('saveName').setValue(name)"
+ tile_color 0xffff00ff
+ note_font_color 0xff
+ selected true
+ hide_input true
+ addUserKnob {20 scanlinerender l "ScanlineRender Control"}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {22 linkselect l "  Link Selected Nodes  " t "Link with expression samples and antialiasing knobs of all selected Scanline Render nodes.\nThe curent node become the master of each linked nodes." T "nodeName = nuke.thisNode().name()\nnodes = nuke.root().begin().selectedNodes()\n\nfor node in nodes:\n    if node.Class() == 'ScanlineRender':\n        node\['samples'].setExpression('\$gui ? ' + nodeName + '.local_s   : ' + nodeName + '.batch_s')\n        node\['antialiasing'].setExpression('\$gui ? ' + nodeName + '.local_a : ' + nodeName + '.batch_a')\n    else:\n        nuke.message('This is not a Scanline Render node!')" +STARTLINE}
+ addUserKnob {26 SP02 l "" -STARTLINE T "                "}
+ addUserKnob {22 unlinkselect l "  Unlink Selected  " t "Remove the expression in the selected Scanline Render nodes." -STARTLINE T "nodes = nuke.root().begin().selectedNodes()\nfor node in nodes:\n    if node.Class() == 'ScanlineRender':\n        node\['samples'].clearAnimated()\n        node\['antialiasing'].clearAnimated()\n    else:\n        nuke.message('This is not a Scanline Render node!')"}
+ addUserKnob {22 LinkTo l "  Link All Nodes  " t "Link with expression samples and antialiasing knobs of all Scanline Render nodes in script.\nThe curent node become the master of each linked nodes." T "nodeName = nuke.thisNode().name()\n\nfor node in nuke.allNodes('ScanlineRender', nuke.root()):\n    node\['samples'].setExpression('\$gui ? ' + nodeName + '.local_s   : ' + nodeName + '.batch_s')\n    node\['antialiasing'].setExpression('\$gui ? ' + nodeName + '.local_a : ' + nodeName + '.batch_a')" +STARTLINE}
+ addUserKnob {26 SP03 l "" -STARTLINE T "                         "}
+ addUserKnob {22 unlink l "Unlink All" t "Remove the expression in all Scanline Render nodes in script." -STARTLINE T "name = nuke.thisNode().name()\n\nfor node in nuke.allNodes('ScanlineRender', nuke.root()):\n    for knob in node.allKnobs():\n        if knob.hasExpression() and name + '.' in knob.toScript():\n            node\['samples'].clearAnimated()\n            node\['antialiasing'].clearAnimated()"}
+ addUserKnob {26 S05 l "                         " T " "}
+ addUserKnob {7 local_s l "< font color='lightgrey'>Samples Local" t "This samples value is set to all the linked Scanline Render nodes.\nThis value is use for the user interface ONLY!" R 1 20}
+ local_s 1
+ addUserKnob {7 batch_s l "<font color=\"grey\">Batch" t "This value is use only during a batch but not in user interface!" R 1 20}
+ batch_s 5
+ addUserKnob {26 S06 l " " T " "}
+ addUserKnob {4 local_a l "< font color='lightgrey'>Antialias Local" t "This antialiasing mode is set to all the linked Scanline Render nodes.\nThe mode is use for the user interface ONLY!" M {none low medium high "" "" "" "" "" ""}}
+ addUserKnob {4 batch_a l "<font color=\"grey\">Batch" t "This mode is use only during a batch but not in user interface!" M {none low medium high "" "" "" "" "" ""}}
+ addUserKnob {26 by2 l "                     " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter votre superviseur\n" -STARTLINE T "<font color=\"#1C1C1C\"> v03 - CGEV - 2017"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output rgb
+ addUserKnob {26 saveName l INVISIBLE +INVISIBLE T Scanline_Ctrl}
+}
+end_group

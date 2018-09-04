@@ -1,0 +1,13 @@
+#----------------------------------------------------------------------------------------------------------
+#
+# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+#
+# NAME: rgba/All
+#
+#----------------------------------------------------------------------------------------------------------
+
+for i in nuke.selectedNodes():
+	if i.knob('channels').value() == 'all':
+	    i.knob('channels').setValue('rgba')
+	else:
+	    i.knob('channels').setValue('all')

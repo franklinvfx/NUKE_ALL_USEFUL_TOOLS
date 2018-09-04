@@ -1,0 +1,13 @@
+set cut_paste_input [stack 0]
+version 10.0 v1
+push $cut_paste_input
+Viewer {
+ frame 42
+ frame_range 34-61
+ frame_range_lock true
+ ignore_pixel_aspect true
+ name Viewer1
+ selected true
+ xpos -3780
+ ypos -961
+}

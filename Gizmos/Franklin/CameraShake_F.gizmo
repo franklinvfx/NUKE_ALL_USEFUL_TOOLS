@@ -1,0 +1,227 @@
+Group {
+ name CameraShake_F
+ help "Camera Shake\n\nAdd different frequency on all Transform knobs to add a random Camera Shake.\n\nReplace Input by CheckerBoard to preview the animation faster.\n\nCreate a Transform Node that have all knobs linked to the Camera Shake node.\n"
+ onCreate "if nuke.thisNode()\['created'].value() == False:\n    nuke.thisNode()\['created'].setValue(True)\n    \n    nodeFormat = nuke.thisNode().format()\n    nodeFormat = int(nodeFormat.pixelAspect())\n    nuke.thisNode().knob('box_pixel_aspect').setValue(nodeFormat)\n    \n    if nuke.thisNode().input(0) is not None:\n        w = nuke.thisNode().input(0).width()\n        h = nuke.thisNode().input(0).height()\n        nuke.thisNode().knob('Center_Ref').setValue((w/2, h/2))\n    \n    else:\n        rw = nuke.root().format().width()\n        rh = nuke.root().format().height()\n        nuke.thisNode().knob('Center_Ref').setValue((rw/2, rh/2))"
+ knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\n\nif knob.name() in ('splitoption', 'showPanel'):\n    mode = node\['splitoption'].value()\n    if mode == 'Same for all':\n        node\['amplitude'].setVisible(True) #\n        node\['amplitudexy'].setVisible(False)\n        node\['splitamplitude'].setVisible(False)\n        node\['scaling'].setVisible(True) #\n        node\['scalingxy'].setVisible(False)\n        node\['splitscale'].setVisible(False)\n        node\['frequencyall'].setVisible(True) #\n        node\['frequencytx'].setVisible(False)\n        node\['frequencyty'].setVisible(False)\n        node\['frequencyr'].setVisible(False)\n        node\['frequencysx'].setVisible(False)\n        node\['frequencysy'].setVisible(False)\n        node\['octavesall'].setVisible(True) #\n        node\['octavestx'].setVisible(False)\n        node\['octavesty'].setVisible(False)\n        node\['octavesr'].setVisible(False)\n        node\['octavessx'].setVisible(False)\n        node\['octavessy'].setVisible(False)\n        node\['seedall'].setVisible(True) #\n        node\['seedtx'].setVisible(False)\n        node\['seedty'].setVisible(False)\n        node\['seedr'].setVisible(False)\n        node\['seedsx'].setVisible(False)\n        node\['seedsy'].setVisible(False)\n        node\['randomize_seedall'].setVisible(True) #\n        node\['randomize_seedtx'].setVisible(False)\n        node\['randomize_seedty'].setVisible(False)\n        node\['randomize_seedr'].setVisible(False)\n        node\['randomize_seedsx'].setVisible(False)\n        node\['randomize_seedsy'].setVisible(False)\n        node\['divt'].setVisible(False)\n        node\['divr'].setVisible(False)\n        node\['divs'].setVisible(False)\n        node\['divtx'].setVisible(False)\n        node\['divty'].setVisible(False)\n        node\['divtxy'].setVisible(False)\n        node\['divtxy1'].setVisible(False)\n        node\['divsx'].setVisible(False)\n        node\['divsy'].setVisible(False)\n        node\['divsxy'].setVisible(False)\n        node\['S01'].setVisible(True) #\n        node\['S02'].setVisible(True)\n        node\['S03'].setVisible(True)\n        node\['S13'].setVisible(True)\n        node\['S11'].setVisible(False)\n        node\['S12'].setVisible(False)\n        node\['splitamplitude'].setValue(None)\n        node\['splitscale'].setValue(None)\n\n    elif mode != 'Same for all':\n        node\['amplitude'].setVisible(False) #\n        node\['amplitudexy'].setVisible(True)\n        node\['splitamplitude'].setVisible(True)\n        node\['scaling'].setVisible(False) #\n        node\['scalingxy'].setVisible(True)\n        node\['splitscale'].setVisible(True)\n        node\['frequencyall'].setVisible(False) #\n        node\['frequencytx'].setVisible(True)\n        node\['frequencyr'].setVisible(True)\n        node\['frequencysx'].setVisible(True)\n        node\['octavesall'].setVisible(False) #\n        node\['octavestx'].setVisible(True)\n        node\['octavesr'].setVisible(True)\n        node\['octavessx'].setVisible(True)\n        node\['seedall'].setVisible(False)#\n        node\['seedtx'].setVisible(True)\n        node\['seedr'].setVisible(True)\n        node\['seedsx'].setVisible(True)\n        node\['randomize_seedall'].setVisible(False)#\n        node\['randomize_seedtx'].setVisible(True)\n        node\['randomize_seedr'].setVisible(True)\n        node\['randomize_seedsx'].setVisible(True)\n        node\['divt'].setVisible(True)\n        node\['divtxy'].setVisible(True)\n        node\['divtxy1'].setVisible(True)\n        node\['divr'].setVisible(True)\n        node\['divs'].setVisible(True)\n        node\['divsxy'].setVisible(True)\n        node\['S01'].setVisible(False) #\n        node\['S02'].setVisible(False)\n        node\['S03'].setVisible(False)\n        node\['S13'].setVisible(False)\n        node\['S11'].setVisible(True)\n        node\['S12'].setVisible(True)\n\nif knob.name() in ('splitamplitude', 'showPanel'):\n            mode = node\['splitamplitude'].value()\n            if mode == 'None':\n                node\['divtx'].setVisible(False)\n                node\['divty'].setVisible(False)\n                node\['frequencyty'].setVisible(False)\n                node\['octavesty'].setVisible(False)\n                node\['seedty'].setVisible(False)\n                node\['randomize_seedty'].setVisible(False)\n            elif mode != 'None':\n                node\['divtx'].setVisible(True)\n                node\['divty'].setVisible(True)\n                node\['frequencyty'].setVisible(True)\n                node\['octavesty'].setVisible(True)\n                node\['seedty'].setVisible(True)\n                node\['randomize_seedty'].setVisible(True)\n\nif knob.name() in ('splitscale', 'showPanel'):\n            mode = node\['splitscale'].value()\n            if mode == 'None':\n                node\['divsx'].setVisible(False)\n                node\['divsy'].setVisible(False)\n                node\['frequencysy'].setVisible(False)\n                node\['octavessy'].setVisible(False)\n                node\['seedsy'].setVisible(False)\n                node\['randomize_seedsy'].setVisible(False)\n            elif mode != 'None':\n                node\['divsx'].setVisible(True)\n                node\['divsy'].setVisible(True)\n                node\['frequencysy'].setVisible(True)\n                node\['octavessy'].setVisible(True)\n                node\['seedsy'].setVisible(True)\n                node\['randomize_seedsy'].setVisible(True)\n\nif knob.name() == 'preview':\n    if knob.value():\n        node\['box_pixel_aspect'].setEnabled(True)\n    else:\n        node\['box_pixel_aspect'].setEnabled(False)"
+ tile_color 0x9c0000ff
+ note_font Verdana
+ selected true
+ addUserKnob {20 CameraShake l "Camera Shake"}
+ addUserKnob {6 same l INVISIBLE +INVISIBLE +STARTLINE}
+ same {{"!\[value name].splitoption"}}
+ addUserKnob {6 created l INVISIBLE +INVISIBLE +STARTLINE}
+ addUserKnob {14 amplitude l "<font color=\"lightgrey\">Amplitude" t "Maximum size of the shake, in pixels." R 0 100}
+ amplitude 10
+ addUserKnob {14 amplitudexy l "<font color=\"lightgrey\">Amplitude" t "Maximum size of the shake, in pixels." +HIDDEN R 0 100}
+ addUserKnob {7 amplitudex l "Amplitude X" t "Maximum size of the shake, in pixels." +HIDDEN R 0 100}
+ addUserKnob {26 divtx l "@b; X" +HIDDEN}
+ addUserKnob {7 frequencytx l "<font color=\"grey\">Frequency" t "Lowest frequency of the shake, in cycles per frame." +HIDDEN}
+ frequencytx 0.5
+ addUserKnob {3 octavestx l "<font color=\"grey\">Octaves" t "Add higher frequency shaking to the basic shake (make it more like Brownian motion)." +HIDDEN}
+ octavestx 1
+ addUserKnob {3 seedtx l "<font color=\"grey\">Offset" t "Choose a different offset value to produce a different sequence for the camera shake transform." +HIDDEN}
+ addUserKnob {22 randomize_seedtx l " Random Offset " t "Press this button to set a random offset value." -STARTLINE +HIDDEN T "import random\nnuke.thisNode().knob('seedtx').setValue( random.randint(1,16384) )"}
+ addUserKnob {26 divty l "@b; Y" +HIDDEN}
+ addUserKnob {7 amplitudey l "Amplitude Y" t "Maximum size of the shake, in pixels." +HIDDEN R 0 100}
+ addUserKnob {7 frequencyty l "<font color=\"grey\">Frequency" t "Lowest frequency of the shake, in cycles per frame." +HIDDEN}
+ frequencyty 0.5
+ addUserKnob {3 octavesty l "<font color=\"grey\">Octaves" t "Add higher frequency shaking to the basic shake (make it more like Brownian motion)." +HIDDEN}
+ octavesty 1
+ addUserKnob {3 seedty l "<font color=\"grey\">Offset" t "Choose a different offset value to produce a different sequence for the camera shake transform." +HIDDEN}
+ addUserKnob {22 randomize_seedty l " Random Offset " t "Press this button to set a random offset value." -STARTLINE +HIDDEN T "import random\nnuke.thisNode().knob('seedty').setValue( random.randint(1,16384) )"}
+ addUserKnob {26 divtxy l " " +HIDDEN}
+ addUserKnob {26 divtxy1 l " " +HIDDEN T " "}
+ addUserKnob {4 splitamplitude l "<font color=\"grey\">Split XY (Frequency, Octave, Seed)" t "None: \nFrequency, Octaves and Offset get the same value for X and Y amplitude curve.\n\nSplit XY:\nGive a different value of Frequency, Octaves and Offset for X and Y amplitude curve." -STARTLINE +HIDDEN M {None "Split XY" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {6 sameamp l INVISIBLE +INVISIBLE +STARTLINE}
+ sameamp {{"!\[value name].splitamplitude"}}
+ addUserKnob {26 divt l "" +STARTLINE +HIDDEN}
+ addUserKnob {26 S12 l "" +STARTLINE +HIDDEN T " "}
+ addUserKnob {7 rotation l "<font color=\"lightgrey\">Rotation" t "Maximum rotation about the center, in degrees." R 0 15}
+ addUserKnob {7 frequencyr l "<font color=\"grey\">Frequency" t "Lowest frequency of the shake, in cycles per frame." +HIDDEN}
+ frequencyr 0.5
+ addUserKnob {3 octavesr l "<font color=\"grey\">Octaves" t "Add higher frequency shaking to the basic shake (make it more like Brownian motion)." +HIDDEN}
+ octavesr 1
+ addUserKnob {3 seedr l "<font color=\"grey\">Offset" t "Choose a different offset value to produce a different sequence for the camera shake transform." +HIDDEN}
+ addUserKnob {22 randomize_seedr l " Random Offset " t "Press this button to set a random offset value." -STARTLINE +HIDDEN T "import random\nnuke.thisNode().knob('seedr').setValue( random.randint(1,16384) )"}
+ addUserKnob {26 S11 l " " +HIDDEN T " "}
+ addUserKnob {26 divr l "" +STARTLINE +HIDDEN}
+ addUserKnob {26 S13 l " " T "  "}
+ addUserKnob {14 scaling l "<font color=\"lightgrey\">Scaling" t "Size of the scale of the shake, in pixels." R 0 100}
+ addUserKnob {14 scalingxy l "<font color=\"lightgrey\">Scaling" t "Size of the scale of the shake, in pixels." +HIDDEN R 0 100}
+ addUserKnob {26 divsx l "@b; X" +HIDDEN}
+ addUserKnob {7 frequencysx l "<font color=\"grey\">Frequency" t "Lowest frequency of the shake, in cycles per frame." +HIDDEN}
+ frequencysx 0.5
+ addUserKnob {3 octavessx l "<font color=\"grey\">Octaves" t "Add higher frequency shaking to the basic shake (make it more like Brownian motion)." +HIDDEN}
+ octavessx 1
+ addUserKnob {3 seedsx l "<font color=\"grey\">Offset" t "Choose a different offset value to produce a different sequence for the camera shake transform." +HIDDEN}
+ addUserKnob {22 randomize_seedsx l " Random Offset " t "Press this button to set a random offset value." -STARTLINE +HIDDEN T "import random\nnuke.thisNode().knob('seedsx').setValue( random.randint(1,16384) )"}
+ addUserKnob {26 divsy l "@b; Y" +HIDDEN}
+ addUserKnob {7 frequencysy l "<font color=\"grey\">Frequency" t "Lowest frequency of the shake, in cycles per frame." +HIDDEN}
+ frequencysy 0.5
+ addUserKnob {3 octavessy l "<font color=\"grey\">Octaves" t "Add higher frequency shaking to the basic shake (make it more like Brownian motion)." +HIDDEN}
+ octavessy 1
+ addUserKnob {3 seedsy l "<font color=\"grey\">Offset" t "Choose a different offset value to produce a different sequence for the camera shake transform." +HIDDEN}
+ addUserKnob {22 randomize_seedsy l " Random Offset " t "Press this button to set a random offset value." -STARTLINE +HIDDEN T "import random\nnuke.thisNode().knob('seedsy').setValue( random.randint(1,16384) )"}
+ addUserKnob {26 divsxy l " " +HIDDEN}
+ addUserKnob {26 divsxy1 l " " T ""}
+ addUserKnob {4 splitscale l "<font color=\"grey\">Split XY (Frequency, Octave, Seed)" t "None: \nFrequency, Octaves and Offset get the same value for X and Y scaling curve.\n\nSplit XY:\nGive a different value of Frequency, Octaves and Offset for X and Y scaling curve." -STARTLINE +HIDDEN M {None "Split XY" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {6 samescale l INVISIBLE +INVISIBLE +STARTLINE}
+ samescale {{"!\[value name].splitscale"}}
+ addUserKnob {26 divs l "" +STARTLINE +HIDDEN}
+ addUserKnob {26 S03 l " " T " "}
+ addUserKnob {12 Center_Ref l "<font color=\"lightgrey\">Center" t "Center of rotation and scaling."}
+ Center_Ref {914 778}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {7 frequencyall l "<font color=\"grey\">Frequency" t "Lowest frequency of the shake, in cycles per frame."}
+ frequencyall 0.5
+ addUserKnob {3 octavesall l "<font color=\"grey\">Octaves" t "Add higher frequency shaking to the basic shake (make it more like Brownian motion)."}
+ octavesall 2
+ addUserKnob {3 seedall l "<font color=\"grey\">Offset" t "Choose a different offset value to produce a different sequence for the camera shake transform."}
+ addUserKnob {22 randomize_seedall l " Random Offset " t "Press this button to set a random offset value." -STARTLINE T "import random\nnuke.thisNode().knob('seedall').setValue( random.randint(1,16384) )"}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {7 mix l Mix t "Mix all animation curve. (Multiply curves with this value)\n"}
+ mix 1
+ addUserKnob {26 ""}
+ addUserKnob {7 scale l "       Global Scale" t "Extra scale to prevent the edges of the image from entering frame." R 1 1.2}
+ scale 1
+ addUserKnob {26 ""}
+ addUserKnob {20 options l Options n 1}
+ addUserKnob {4 splitoption l "@b;<font color=\"green\">Frequency" t "Same for all: \nFrequency, Octaves and Offset get the same value for each curve (Amplitude, Rotation, Scaling)\n\nSplit for each:\nGive a different value of Frequency, Octaves and Offset for each curve." M {"Same for all" "Split for each" "" "" "" ""}}
+ addUserKnob {26 exp l "     " -STARTLINE T "<font color=\"grey\">(Amplitude, Rotation, Scaling)"}
+ addUserKnob {26 S00 l " " T " "}
+ addUserKnob {6 preview l "<font color = \"black\">_<font color = \"lightgrey\"> Replace Input <font color = \"grey\">(CheckerBoard)" t "Replace Input by a CheckerBoard.\nUsefull to preview the animation mostly if the Input is a heavy process." -STARTLINE}
+ addUserKnob {3 box_pixel_aspect l "   Pixel Aspect" -STARTLINE +DISABLED}
+ box_pixel_aspect 2
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 S4 l " " T " "}
+ addUserKnob {20 tresult l "Result (Transform)" n 1}
+ tresult 0
+ addUserKnob {26 S5 l " " T " "}
+ addUserKnob {41 translate l Translate T Transform.translate}
+ addUserKnob {41 rotate l Rotate T Transform.rotate}
+ addUserKnob {41 scale_1 l Scale T Transform.scale}
+ addUserKnob {41 center l Center T Transform.center}
+ addUserKnob {41 invert_matrix l invert T Transform.invert_matrix}
+ addUserKnob {26 S15 l " "}
+ addUserKnob {41 filter l Filter T Transform.filter}
+ addUserKnob {41 clamp l Clamp -STARTLINE T Transform.clamp}
+ addUserKnob {41 black_outside l "Black Outside" t "Crop the image to have black outside of the frame." -STARTLINE T Transform.black_outside}
+ addUserKnob {41 motionblur l MotionBlur T Transform.motionblur}
+ addUserKnob {41 shutter l Shutter T Transform.shutter}
+ addUserKnob {41 shutteroffset l Shutteroffset T Transform.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Transform.shuttercustomoffset}
+ addUserKnob {26 S16 l " "}
+ addUserKnob {22 createt l "<font color = \"lightgrey\"> Create Transform -<font color = \"springGreen\"> Linked" t "Create a Transform node that have all knobs linked to the Camera Shake node." T "groupNode = nuke.thisNode()\nname = groupNode.name()\ncolornode = groupNode.knob('tile_color').value()\n\nNT = nuke.createNode(\"Transform\", inpanel=False )\nNT\['translate'].setExpression(name + \".translate\")\nNT\['rotate'].setExpression(name + \".rotate\")\nNT\['scale'].setExpression(name + \".scale_1\")\nNT\['center'].setExpression(name + \".center\")\nNT\['invert_matrix'].setExpression(name + \".invert_matrix\")\nNT\['filter'].setExpression(name + \".filter\")\nNT\['clamp'].setExpression(name + \".clamp\")\nNT\['black_outside'].setExpression(name + \".black_outside\")\nNT\['motionblur'].setExpression(name + \".motionblur\")\nNT\['shutter'].setExpression(name + \".shutter\")\nNT\['shutteroffset'].setExpression(name + \".shutteroffset\")\nNT\['shuttercustomoffset'].setExpression(name + \".shuttercustomoffset\")\nNT\['label'].setValue(\"(\" +name + \")\")\nNT\['tile_color'].setValue(colornode)\nNT.setSelected(True)\n\nnuke.nodeCopy('%clipboard%')\n\nn = nuke.selectedNode()\nnuke.delete(n)\n\nnuke.selectAll() \nnuke.invertSelection()\n\nnodePos = ( nuke.thisNode().xpos(), nuke.thisNode().ypos()) \n\ngroupNode.end()\n\nfor node in nuke.allNodes():\n    node.setSelected(False)\n\nnuke.nodePaste('%clipboard%')\n\ngroupNode.setSelected(False)\n\nnodesToPlace = sorted( nuke.selectedNodes(), key=lambda node: node.ypos())\n\nfor index,node in enumerate(nodesToPlace):\n    node.setXYpos(nodePos\[0]+100, nodePos\[1])" +STARTLINE}
+ addUserKnob {22 createb l "<font color = \"lightgrey\"> Create Transform -<font color = \"CornflowerBlue\"> Baked" t "Create a Transform node with the same curves as the Camera Shake node." -STARTLINE T "groupNode = nuke.thisNode()\nname = groupNode.name()\n\nNT = nuke.createNode(\"Transform\", inpanel=False )\nNT\['translate'].setExpression(name + \".translate\")\nNT\['rotate'].setExpression(name + \".rotate\")\nNT\['scale'].setExpression(name + \".scale_1\")\nNT\['center'].setExpression(name + \".center\")\nNT\['invert_matrix'].setExpression(name + \".invert_matrix\")\nNT\['filter'].setExpression(name + \".filter\")\nNT\['clamp'].setExpression(name + \".clamp\")\nNT\['black_outside'].setExpression(name + \".black_outside\")\nNT\['motionblur'].setExpression(name + \".motionblur\")\nNT\['shutter'].setExpression(name + \".shutter\")\nNT\['shutteroffset'].setExpression(name + \".shutteroffset\")\nNT\['shuttercustomoffset'].setExpression(name + \".shuttercustomoffset\")\nNT\['label'].setValue(\"(\" +name + \")\")\nNT\['tile_color'].setValue(0x9c0000ff)\nNT.setSelected(True)\n\nnuke.nodeCopy('%clipboard%')\n\nn = nuke.selectedNode()\nnuke.delete(n)\n\nnuke.selectAll() \nnuke.invertSelection()\n\nnodePos = ( nuke.thisNode().xpos(), nuke.thisNode().ypos()) \n\ngroupNode.end()\n\nfor node in nuke.allNodes():\n    node.setSelected(False)\n\nnuke.nodePaste('%clipboard%')\n\ngroupNode.setSelected(False)\n\nnodesToPlace = sorted( nuke.selectedNodes(), key=lambda node: node.ypos())\n\nfor index,node in enumerate(nodesToPlace):\n    node.setXYpos(nodePos\[0]+100, nodePos\[1])\n\ndef bakeExpressions(nodes=None, start=None, end=None, views=None):\n\n    if nodes is None:\n        nodes = nuke.selectedNodes()\n    if not nodes:\n        nuke.message('No nodes to bake')\n        return\n\n    scriptRange = nuke.root().frameRange()\n    if start is None:\n        start = scriptRange.first()\n    if end is None:\n        end = scriptRange.last()\n\n    if views is None:\n        views = nuke.views()\n    elif not views:\n        nuke.message('No views to bake')\n        return\n    elif not set(views).issubset(nuke.views()):\n        nuke.message('Not all views in %s exist in script' % views)\n        return\n\n    for node in nodes:\n        for knob in node.knobs().itervalues():\n            if isinstance(knob, nuke.Array_Knob):\n                for view in views:\n                    if knob.isAnimated(view=view):\n                        aSize = 1 if knob.singleValue(view) else knob.arraySize()\n                        for index in range(aSize):\n                            anim = knob.animation(index, view=view)\n                            if anim is None or anim.noExpression():\n                                continue\n                            for f in range(start, end + 1):\n                                anim.setKey(f, anim.evaluate(f))\n                            knob.setExpression('curve', channel=index, view=view)\n                            if anim.constant():\n                                knob.clearAnimated(index, view=view)\n\n\ndef promptAndBake():\n    nodes = nuke.selectedNodes()\n    if not nodes:\n        nuke.message('No nodes selected')\n        return\n    fr = nuke.getFramesAndViews(\"Range to Bake\", str(nuke.root().frameRange()))\n    if fr is None:\n        nuke.delete(nuke.selectedNode())\n        return\n    fr, v = fr\n    try:\n        fr = nuke.FrameRange(fr)\n    except ValueError as e:\n        nuke.message(str(e))\n        return\n    bakeExpressions(nodes=nodes, start=fr.first(), end=fr.last(), views=v)\n    \npromptAndBake()\n"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 FT1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FT3 l " " -STARTLINE T "<font color=\"#1C1C1C\">Franklin - 2016"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[if \{\[value preview]==\"false\"\} \{return \"\[knob this.name2 \"2D\"]\"\} \{return \"\[knob this.name2 \"On Checker\"]\"\}]\[value name2]"
+ addUserKnob {1 name2 l INVISIBLE +INVISIBLE}
+ name2 2D
+}
+ CheckerBoard2 {
+  inputs 0
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  name CheckerBoard1
+  xpos -223
+  ypos -255
+  postage_stamp false
+ }
+ Dot {
+  name Dot2
+  xpos -189
+  ypos -129
+ }
+set N5713d800 [stack 0]
+ Reformat {
+  name Reformat2
+  xpos -223
+  ypos -17
+ }
+ Crop {
+  box {0 0 {input.width} {input.height}}
+  crop false
+  name Crop
+  xpos -223
+  ypos 9
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 90
+  ypos -310
+ }
+set N433c2400 [stack 0]
+ Dot {
+  name Dot1
+  xpos 124
+  ypos -226
+ }
+set N5713c800 [stack 0]
+push $N5713d800
+ Reformat {
+  type "to box"
+  box_width {{parent.Format.format.w}}
+  box_height {{parent.Format.format.h}}
+  box_fixed true
+  box_pixel_aspect {{parent.box_pixel_aspect}}
+  pbb true
+  name Reformat1
+  selected true
+  xpos -143
+  ypos -133
+ }
+push $N5713c800
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name Preview
+  xpos -3
+  ypos -133
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 90
+  ypos -44
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name NoInput
+  xpos 90
+  ypos 9
+  disable {{"\[exists parent.input]"}}
+ }
+ Transform {
+  translate {{"same==1 ? ((fBm((seedall+frame)*frequencyall,2.5,3.5,octavesall,2,.5)*amplitude.w)*parent.mix) : (sameamp==1 ? ((fBm((seedtx+frame)*frequencytx,2.5,3.5,octavestx,2,.5)*amplitudexy)*parent.mix) : ((fBm((seedtx+frame)*frequencytx,2.5,3.5,octavestx,2,.5)*amplitudexy)*parent.mix))"} {"same==1 ? ((fBm((seedall+frame)*frequencyall+100,2.5,3.5,octavesall,2,.5)*amplitude.h)*parent.mix) :  (sameamp==1 ? ((fBm((seedtx+frame)*frequencytx+100,2.5,3.5,octavestx,2,.5)*amplitudexy)*parent.mix) : ((fBm((seedty+frame)*frequencyty+100,2.5,3.5,octavesty,2,.5)*amplitudexy)*parent.mix))"}}
+  rotate {{"same==1 ? ((fBm((seedall+frame)*frequencyall,20.5,21.5,octavesall,2,.5)*rotation)*parent.mix) : ((fBm((seedr+frame)*frequencyr,20.5,21.5,octavesr,2,.5)*rotation)*parent.mix)"}}
+  scale {{"same==1 ? ((fBm((seedall+frame)*frequencyall,30.5,31.5,octavesall,2,.5)*scaling.w)*parent.mix+parent.scale) : (samescale==1 ? ((fBm((seedsx+frame)*frequencysx,30.5,31.5,octavessx,2,.5)*scalingxy)*parent.mix+parent.scale) : ((fBm((seedsx+frame)*frequencysx,30.5,31.5,octavessx,2,.5)*scalingxy)*parent.mix+parent.scale))"} {"same==1 ? ((fBm((seedall+frame)*frequencyall,30.5,31.5,octavesall,2,.5)*scaling.h)*parent.mix+parent.scale) : (samescale==1 ? ((fBm((seedsy+frame)*frequencysy,30.5,31.5,octavessy,2,.5)*scalingxy)*parent.mix+parent.scale) : ((fBm((seedsy+frame)*frequencysy,30.5,31.5,octavessy,2,.5)*scalingxy)*parent.mix+parent.scale))"}}
+  center {{parent.Center_Ref} {parent.Center_Ref}}
+  shutteroffset centred
+  name Transform
+  label "\[python nuke.thisNode().input(0).name()]"
+  xpos 90
+  ypos 60
+ }
+ Output {
+  name FranklinVFX
+  xpos 90
+  ypos 150
+ }
+push $N433c2400
+ NoOp {
+  name Format
+  xpos -223
+  ypos -310
+  hide_input true
+  addUserKnob {20 User}
+  addUserKnob {14 format R 0 100}
+  format {{format.h} {format.w}}
+ }
+end_group

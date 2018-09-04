@@ -1,0 +1,146 @@
+Group {
+ name Black_Lift
+ help "Black Lift\n\nChange quickly the color of the black level.\n"
+ knobChanged "c = nuke.toNode('Copy3')\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(1) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')"
+ tile_color 0x7aa9ffff
+ selected true
+ icon F_iconrgb.png
+ addUserKnob {20 Franklin l "Black Lift"}
+ addUserKnob {41 lift l "<font color=\"green\">@b;Color" t "Choose the color you want for the black level." T LIFT.lift}
+ addUserKnob {26 S1 l "" +STARTLINE T " "}
+ addUserKnob {16 size l Limit t "This slider determine the limit of black range."}
+ size 0.5
+ addUserKnob {26 FT1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
+ addUserKnob {26 S02 l " "}
+ addUserKnob {41 from0 l Mask T Copy3.from0}
+ addUserKnob {6 invert_mask l Invert -STARTLINE}
+ addUserKnob {41 alpha l "(Un)Premult by" T Unpremult1.alpha}
+ addUserKnob {41 invert l Invert -STARTLINE T Unpremult1.invert}
+ addUserKnob {7 mix l Mix}
+ mix 1
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -288
+  ypos 511
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {6 in +STARTLINE}
+  in {{"\[exists input1]"}}
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels3
+  xpos -288
+  ypos 561
+ }
+set N26a5800 [stack 0]
+push $N26a5800
+ Copy {
+  inputs 2
+  to0 rgba.alpha
+  name Copy3
+  xpos -288
+  ypos 587
+  disable {{!parent.mask.in}}
+ }
+ Invert {
+  name Invert1
+  xpos -288
+  ypos 623
+  disable {{parent.invert_mask i}}
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -516
+  ypos 265
+ }
+ Dot {
+  name Dot2
+  xpos -482
+  ypos 336
+ }
+set N4df5c00 [stack 0]
+ Dot {
+  name Dot1
+  xpos -836
+  ypos 336
+ }
+ Dot {
+  name Dot3
+  tile_color 0xffffffff
+  xpos -836
+  ypos 632
+ }
+set N53bd800 [stack 0]
+push $N4df5c00
+ Unpremult {
+  alpha none
+  name Unpremult1
+  xpos -516
+  ypos 429
+ }
+ Expression {
+  expr0 (r<pivot.r)?r+(lift.r*(pow((1-(r/pivot.r)),((((pivot.r/lift.r)-1)*soft.r)+1)))):r
+  expr1 (g<pivot.g)?g+(lift.g*(pow((1-(g/pivot.g)),((((pivot.g/lift.g)-1)*soft.g)+1)))):g
+  expr2 (b<pivot.b)?b+(lift.b*(pow((1-(b/pivot.b)),((((pivot.b/lift.b)-1)*soft.b)+1)))):b
+  name LIFT
+  xpos -516
+  ypos 477
+  addUserKnob {20 User}
+  addUserKnob {18 lift}
+  lift {0 0 0}
+  addUserKnob {6 lift_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 pivot l Limit}
+  pivot {{parent.size/5}}
+  addUserKnob {6 pivot_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 soft}
+  soft {0 0 0}
+  addUserKnob {6 soft_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Premult {
+  alpha {{{parent.Unpremult1.alpha}}}
+  name Premult1
+  xpos -516
+  ypos 534
+ }
+set N53bc800 [stack 0]
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix1
+  xpos -639
+  ypos 623
+  disable {{!parent.mask.in}}
+ }
+push $N53bc800
+ Switch {
+  inputs 2
+  which {{Copy3.from0}}
+  name Switch1
+  xpos -516
+  ypos 723
+ }
+push $N53bd800
+ Dot {
+  name Dot4
+  xpos -836
+  ypos 818
+ }
+ Dissolve {
+  inputs 2
+  which {{parent.mix}}
+  name Dissolve1
+  xpos -516
+  ypos 808
+ }
+ Output {
+  name FranklinVFX
+  xpos -516
+  ypos 878
+ }
+end_group

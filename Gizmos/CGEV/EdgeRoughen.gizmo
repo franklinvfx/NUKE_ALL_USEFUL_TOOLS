@@ -1,0 +1,260 @@
+Group {
+ inputs 2
+ name EdgeRoughen_C
+ help "Takes the alpha and distorts it using a random noise pattern. If you have a solid rotoshape which looks too smooth, this will give it a rough edge."
+ tile_color 0xcc804eff
+ selected true
+ addUserKnob {20 User l "Edge Roughen"}
+ addUserKnob {41 noiseSize l "Noise size" t "Smaller number gives a fine, grainy edge. Large number gives blobbier edges." T Noise3.size}
+ addUserKnob {41 distortAmount l "Distort Amount" t "Low number barely effects the image, higher numbers increase the 'reach' of the effect, spreading the shape out further." T IDistort2.uv_scale}
+ addUserKnob {41 coreMix l "Core Mix back" t "To stop the effect eating into the shape too much, you can bring back the core." T Merge4.mix}
+ addUserKnob {7 eroder l "Pre Erode/Dilate" t "If the roughened edge spreads too far out of your intended area, this will erode the shape a little before the roughening is applied." R -5 5}
+ addUserKnob {41 blurSize l "Extra Blur" t "Adds a blur on the end." T Blur2.size}
+ addUserKnob {26 "" l mask}
+ addUserKnob {4 MaskMode l "Mask mode" M {Classic IMask}}
+ MaskMode IMask
+ addUserKnob {41 maskChannelMask l "" -STARTLINE T Merge1.maskChannelMask}
+ addUserKnob {6 invertMask l invert -STARTLINE}
+ addUserKnob {20 NoiseTransform l "Noise Transform"}
+ addUserKnob {41 transform T Noise3.transform}
+ addUserKnob {41 translate T Noise3.translate}
+ addUserKnob {41 rotate T Noise3.rotate}
+ addUserKnob {41 scale T Noise3.scale}
+ addUserKnob {41 skewX l "skew X" T Noise3.skewX}
+ addUserKnob {41 skewY l "skew Y" T Noise3.skewY}
+ addUserKnob {41 skew_order l "skew order" T Noise3.skew_order}
+ addUserKnob {41 center T Noise3.center}
+ addUserKnob {41 xrotate T Noise3.xrotate}
+ addUserKnob {41 yrotate T Noise3.yrotate}
+}
+ Input {
+  inputs 0
+  name InputMask
+  xpos 657
+  ypos 310
+  number 1
+ }
+set N38560eb0 [stack 0]
+push $N38560eb0
+ Input {
+  inputs 0
+  name Input
+  xpos 429
+  ypos -323
+ }
+set N23ade1f0 [stack 0]
+ Dilate {
+  inputs 1+1
+  channels alpha
+  size {{parent.eroder}}
+  invert_mask {{parent.Merge1.invert_mask}}
+  name Dilate2
+  xpos 429
+  ypos -283
+ }
+ Dot {
+  name Dot2
+  xpos 463
+  ypos -226
+ }
+set N23ade8d0 [stack 0]
+ Dot {
+  name Dot1
+  xpos 627
+  ypos -108
+ }
+ Dilate {
+  channels alpha
+  size -2.6
+  name Dilate1
+  xpos 592
+  ypos -74
+ }
+ Blur {
+  channels alpha
+  size 5
+  name Blur1
+  label "\[value size]"
+  xpos 593
+  ypos -1
+ }
+set N23adf320 [stack 0]
+ AdjBBox {
+  numpixels {{parent.IDistort2.uv_scale}}
+  name AdjBBox1
+  xpos 584
+  ypos 120
+ }
+push $N23adf320
+push $N38560eb0
+ Dot {
+  name Dot6
+  tile_color 0xd11700ff
+  label "Link to: <font size = 3 color=\"green\"> \[value input.name]"
+  xpos 353
+  ypos 22
+  hide_input true
+ }
+push $N23ade8d0
+ Dot {
+  name Dot7
+  tile_color 0x8ce08ff
+  xpos 353
+  ypos -226
+ }
+set N3859e590 [stack 0]
+ Ramp {
+  output alpha
+  replace true
+  p0 {-1 -1}
+  p1 {-1 -1}
+  color 0.3
+  name Ramp1
+  xpos 318
+  ypos -199
+ }
+set N3859e220 [stack 0]
+push $N3859e590
+ Dot {
+  name Dot4
+  tile_color 0x8ce08ff
+  xpos 240
+  ypos -226
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos 205
+  ypos -150
+ }
+ Noise {
+  size 3
+  octaves 1
+  lacunarity 6.7
+  gain 0.96
+  center {960 540}
+  name Noise3
+  selected true
+  xpos 205
+  ypos -125
+ }
+ Keymix {
+  inputs 3
+  channels alpha
+  invertMask {{"Merge1.invert_mask ? 0 : 1"}}
+  bbox B
+  name Keymix1
+  xpos 318
+  ypos -131
+ }
+push $N23ade8d0
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 forward.u
+  from1 rgba.alpha
+  to1 forward.v
+  name Copy3
+  xpos 428
+  ypos -137
+ }
+ IDistort {
+  channels alpha
+  uv {forward.u -forward.v}
+  uv_offset 0.28
+  uv_scale {{parent.IDistort2.uv_scale}}
+  name IDistort1
+  xpos 428
+  ypos -77
+ }
+ IDistort {
+  channels alpha
+  uv {-forward.u forward.v}
+  uv_offset 0.0105
+  uv_scale 20
+  name IDistort2
+  xpos 429
+  ypos -16
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  mix 0
+  name Merge4
+  xpos 429
+  ypos 70
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 429
+  ypos 120
+ }
+ Blur {
+  inputs 1+1
+  channels alpha
+  invert_mask {{parent.Merge1.invert_mask}}
+  name Blur2
+  label "\[value size]"
+  xpos 429
+  ypos 171
+ }
+set N2395b440 [stack 0]
+push $N38560eb0
+push $N2395b440
+push $N23ade1f0
+ Dot {
+  name Dot5
+  tile_color 0x8ce08ff
+  xpos 145
+  ypos -319
+ }
+ Dot {
+  name Dot3
+  tile_color 0x8ce08ff
+  xpos 145
+  ypos 314
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  bbox A
+  invert_mask {{"invertMask ? 0 : 1"}}
+  name Merge1
+  label "mix :\[value mix]"
+  xpos 528
+  ypos 304
+  disable {{MaskMode}}
+ }
+set N38854e70 [stack 0]
+ Switch {
+  inputs 2
+  which {{MaskMode}}
+  name Switch1
+  label "\[value which]"
+  xpos 429
+  ypos 360
+ }
+ Output {
+  name Output1
+  xpos 429
+  ypos 434
+ }
+push $N38854e70
+push $N3859e220
+ Viewer {
+  inputs 2
+  frame 734
+  masking_ratio 2.35
+  colour_sample_bbox {-0.951171875 -0.5341796875 -0.9501953125 -0.533203125}
+  input_process false
+  translate {0.5910000205 0.1150000095}
+  rotate 90
+  name Viewer1
+  xpos -8
+  ypos 94
+ }
+end_group

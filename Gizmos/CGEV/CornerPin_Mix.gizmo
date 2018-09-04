@@ -1,0 +1,148 @@
+Group {
+ name CornerPin_Mix
+ help "CornerPin Mix\n\nCreate a CornerPin by dissolving two CornerPin nodes.\n\nDissolve curve: \n\"0\" is the C1 value and \"1\" is the C2 value.\n"
+ tile_color 0xa57aaaff
+ selected true
+ addUserKnob {20 User l "CornerPin Mix"}
+ addUserKnob {41 mixer l Dissolve t "\"0\" is the C1 value and \"1\" is the C2 value." T Maths.mixer}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {26 T01 l " "}
+ addUserKnob {20 togroup l To n 1}
+ addUserKnob {41 to1 T CornerPin2D1.to1}
+ addUserKnob {41 to2 T CornerPin2D1.to2}
+ addUserKnob {41 to3 T CornerPin2D1.to3}
+ addUserKnob {41 to4 T CornerPin2D1.to4}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 fromgroup l From n 1}
+ fromgroup 0
+ addUserKnob {41 from1 T CornerPin2D1.from1}
+ addUserKnob {41 from2 T CornerPin2D1.from2}
+ addUserKnob {41 from3 T CornerPin2D1.from3}
+ addUserKnob {41 from4 T CornerPin2D1.from4}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {41 filter l Filter T CornerPin2D1.filter}
+ addUserKnob {41 clamp l Clamp -STARTLINE T CornerPin2D1.clamp}
+ addUserKnob {41 black_outside l "Black Outside" -STARTLINE T CornerPin2D1.black_outside}
+ addUserKnob {41 motionblur l MotionBlur T CornerPin2D1.motionblur}
+ addUserKnob {41 shutter l Shutter T CornerPin2D1.shutter}
+ addUserKnob {41 shutteroffset l "Shutter Offset" T CornerPin2D1.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T CornerPin2D1.shuttercustomoffset}
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {22 create_cornerpin l "<font color = \"CornflowerBlue\"> Create CornerPin2D (Linked)" t "Create a CornerPin2D node that have all knobs linked to this node." T "groupNode = nuke.thisNode()\nname = groupNode.name()\n\nNT = nuke.createNode(\"CornerPin2D\", inpanel=False )\nNT\['to1'].setExpression(name + \".to1\")\nNT\['to2'].setExpression(name + \".to2\")\nNT\['to3'].setExpression(name + \".to3\")\nNT\['to4'].setExpression(name + \".to4\")\nNT\['from1'].setExpression(name + \".from1\")\nNT\['from2'].setExpression(name + \".from2\")\nNT\['from3'].setExpression(name + \".from3\")\nNT\['from4'].setExpression(name + \".from4\")\nNT\['filter'].setExpression(name + \".filter\")\nNT\['clamp'].setExpression(name + \".clamp\")\nNT\['black_outside'].setExpression(name + \".black_outside\")\nNT\['motionblur'].setExpression(name + \".motionblur\")\nNT\['shutter'].setExpression(name + \".shutter\")\nNT\['shutteroffset'].setExpression(name + \".shutteroffset\")\nNT\['shuttercustomoffset'].setExpression(name + \".shuttercustomoffset\")\nNT\['label'].setValue(\"(\" +name + \")\")\nNT.setSelected(True)\n\nnuke.nodeCopy('%clipboard%')\n\nn = nuke.selectedNode()\nnuke.delete(n)\n\nnuke.selectAll() \nnuke.invertSelection()\n\nnodePos = ( nuke.thisNode().xpos(), nuke.thisNode().ypos()) \n\ngroupNode.end()\n\nfor node in nuke.allNodes():\n    node.setSelected(False)\n\nnuke.nodePaste('%clipboard%')\n\ngroupNode.setSelected(False)\n\nnodesToPlace = sorted( nuke.selectedNodes(), key=lambda node: node.ypos())\n\nfor index,node in enumerate(nodesToPlace):\n    node.setXYpos(nodePos\[0]+100, nodePos\[1])" +STARTLINE}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output 2D
+}
+ NoOp {
+  inputs 0
+  name Maths
+  xpos 222
+  ypos 333
+  hide_input true
+  addUserKnob {20 User}
+  addUserKnob {7 mixer l mix}
+  addUserKnob {12 to1}
+  to1 {{(C1.to1.x*(1-mixer))+(C2.to1.x*mixer) i} {(C1.to1.y*(1-mixer))+(C2.to1.y*mixer) i}}
+  addUserKnob {12 to2}
+  to2 {{(C1.to2.x*(1-mixer))+(C2.to2.x*mixer) i} {(C1.to2.y*(1-mixer))+(C2.to2.y*mixer) i}}
+  addUserKnob {12 to3}
+  to3 {{(C1.to3.x*(1-mixer))+(C2.to3.x*mixer) i} {(C1.to3.y*(1-mixer))+(C2.to3.y*mixer) i}}
+  addUserKnob {12 to4}
+  to4 {{(C1.to4.x*(1-mixer))+(C2.to4.x*mixer) i} {(C1.to4.y*(1-mixer))+(C2.to4.y*mixer) i}}
+  addUserKnob {12 from1}
+  from1 {{(C1.from1.x*(1-mixer))+(C2.from1.x*mixer) i} {(C1.from1.y*(1-mixer))+(C2.from1.y*mixer) i}}
+  addUserKnob {12 from2}
+  from2 {{(C1.from2.x*(1-mixer))+(C2.from2.x*mixer) i} {(C1.from2.y*(1-mixer))+(C2.from2.y*mixer) i}}
+  addUserKnob {12 from3}
+  from3 {{(C1.from3.x*(1-mixer))+(C2.from3.x*mixer) i} {(C1.from3.y*(1-mixer))+(C2.from3.y*mixer) i}}
+  addUserKnob {12 from4}
+  from4 {{(C1.from4.x*(1-mixer))+(C2.from4.x*mixer) i} {(C1.from4.y*(1-mixer))+(C2.from4.y*mixer) i}}
+ }
+ Input {
+  inputs 0
+  name C2
+  label "\[value number]"
+  xpos 697
+  ypos 327
+  number 2
+  addUserKnob {20 User}
+  addUserKnob {12 to1}
+  to1 {{"\[exists input1] ? parent.input2.to1.x : 0" i} {"\[exists input1] ? parent.input2.to1.y : 0" i}}
+  addUserKnob {12 to2}
+  to2 {{"\[exists input1] ? parent.input2.to2.x : 0" i} {"\[exists input1] ? parent.input2.to2.y : 0" i}}
+  addUserKnob {12 to3}
+  to3 {{"\[exists input1] ? parent.input2.to3.x : 0" i} {"\[exists input1] ? parent.input2.to3.y : 0" i}}
+  addUserKnob {12 to4}
+  to4 {{"\[exists input1] ? parent.input2.to4.x : 0" i} {"\[exists input1] ? parent.input2.to4.y : 0" i}}
+  addUserKnob {12 from1}
+  from1 {{"\[exists input1] ? parent.input2.from1.x : 0" i} {"\[exists input1] ? parent.input2.from1.y : 0" i}}
+  addUserKnob {12 from2}
+  from2 {{"\[exists input1] ? parent.input2.from2.x : 0" i} {"\[exists input1] ? parent.input2.from2.y : 0" i}}
+  addUserKnob {12 from3}
+  from3 {{"\[exists input1] ? parent.input2.from3.x : 0" i} {"\[exists input1] ? parent.input2.from3.y : 0" i}}
+  addUserKnob {12 from4}
+  from4 {{"\[exists input1] ? parent.input2.from4.x : 0" i} {"\[exists input1] ? parent.input2.from4.y : 0" i}}
+ }
+ Input {
+  inputs 0
+  name Image
+  label "\[value number]"
+  xpos 399
+  ypos 327
+ }
+set N24a8dc00 [stack 0]
+push $N24a8dc00
+ CornerPin2D {
+  to1 {{parent.Maths.to1.x} {parent.Maths.to1.y}}
+  to2 {{parent.Maths.to2} {parent.Maths.to2}}
+  to3 {{parent.Maths.to3} {parent.Maths.to3}}
+  to4 {{parent.Maths.to4} {parent.Maths.to4}}
+  invert false
+  shutteroffset centred
+  from1 {{parent.Maths.from1} {parent.Maths.from1}}
+  from2 {{parent.Maths.from2} {parent.Maths.from2}}
+  from3 {{parent.Maths.from3} {parent.Maths.from3}}
+  from4 {{parent.Maths.from4} {parent.Maths.from4}}
+  name CornerPin2D1
+  xpos 291
+  ypos 418
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists input1] == true && \[exists input2] == true ? 0 : 1" i}}
+  name Switch1
+  xpos 399
+  ypos 498
+ }
+ Output {
+  name FranklinVFX
+  xpos 399
+  ypos 566
+ }
+ Input {
+  inputs 0
+  name C1
+  label "\[value number]"
+  xpos 543
+  ypos 327
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {12 to1}
+  to1 {{"\[exists input2] ? parent.input1.to1.x : 0" i} {"\[exists input2] ? parent.input1.to1.y : 0" i}}
+  addUserKnob {12 to2}
+  to2 {{"\[exists input2] ? parent.input1.to2.x : 0" i} {"\[exists input2] ? parent.input1.to2.y : 0" i}}
+  addUserKnob {12 to3}
+  to3 {{"\[exists input2] ? parent.input1.to3.x :0" i} {"\[exists input2] ? parent.input1.to3.y : 0" i}}
+  addUserKnob {12 to4}
+  to4 {{"\[exists input2] ? parent.input1.to4.x : 0" i} {"\[exists input2] ? parent.input1.to4.y : 0" i}}
+  addUserKnob {12 from1}
+  from1 {{"\[exists input2] ? parent.input1.from1.x : 0" i} {"\[exists input2] ? parent.input1.from1.y : 0" i}}
+  addUserKnob {12 from2}
+  from2 {{"\[exists input2] ? parent.input1.from2.x : 0" i} {"\[exists input2] ? parent.input1.from2.y : 0" i}}
+  addUserKnob {12 from3}
+  from3 {{"\[exists input2] ? parent.input1.from3.x : 0" i} {"\[exists input2] ? parent.input1.from3.y : 0" i}}
+  addUserKnob {12 from4}
+  from4 {{"\[exists input2] ? parent.input1.from4.x : 0" i} {"\[exists input2] ? parent.input1.from4.y : 0" i}}
+ }
+end_group

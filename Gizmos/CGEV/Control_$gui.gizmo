@@ -1,0 +1,26 @@
+set cut_paste_input [stack 0]
+version 6.0 v5
+push $cut_paste_input
+NoOp {
+ name Ctrl_gui3
+ tile_color 0xffff00ff
+ note_font "Verdana Italic Italic Italic Italic"
+ note_font_size 10
+ note_font_color 0x474747ff
+ selected true
+ icon F_onnode.png
+ hide_input true
+ addUserKnob {20 Handler l Controller}
+ addUserKnob {1 list l INVISIBLE +INVISIBLE}
+ list "Blur1\nRoto2\nSTMap_Plus\n"
+ addUserKnob {26 select l "            " T "Node with \$gui expression:\n"}
+ addUserKnob {22 auto2 l "<font color='#2EFE2E'>Select All" T "list = ''\n\nfor node in nuke.allNodes():\n    for knob in node.knobs():\n        if node\[knob].hasExpression():\n            if '\$gui' in node\[knob].toScript():\n\n                list = list + node.name() + '\\n'\n\nnuke.thisNode()\['list'].setValue(list)\n\nfor n in nuke.allNodes():\n    if n.name() in nuke.thisNode()\['list'].value():\n        n.setSelected(True)\n    else:\n        n.setSelected(False)" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 text l INVISIBLE +INVISIBLE T "Remove all \$gui expressions in selected Nodes\n"}
+ addUserKnob {22 label_1 l "<center><font color='#2EFE2E'>Mark Label" -STARTLINE T "for n in nuke.allNodes():\n    if n.name() in nuke.thisNode()\['list'].value():\n        n\['label'].setValue('<top><font color=\"#53D253\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\$gui_exp!')"}
+ addUserKnob {22 clearlabel l "<font color='Black'>Clear Label" -STARTLINE T "for n in nuke.allNodes():\n    if n.name() in nuke.thisNode()\['list'].value():\n        n\['label'].setValue('')"}
+ addUserKnob {26 d l "" -STARTLINE T "      "}
+ addUserKnob {22 color l "<font color='#5882FA'>Change Node Color" -STARTLINE T "for n in nuke.allNodes():\n    if n.name() in nuke.thisNode()\['list'].value():\n        n.setSelected(True)\n    else:\n        n.setSelected(False)        \nnukescripts.color_nodes()"}
+ addUserKnob {26 s l " " T " "}
+ addUserKnob {22 remove l "<font color='#FE642E'>Remove all \$gui" t "Remove all \$gui expressions in selected Nodes!" T "list = nuke.thisNode()\['list'].value()\nfor node in nuke.allNodes():\n    if node.name() in list:\n        for knob in node.knobs():\n            if node\[knob].hasExpression():\n                if '\$gui' in node\[knob].toScript():\n                    node\[knob].clearAnimated()\n\n" +STARTLINE}
+}

@@ -1,0 +1,34 @@
+set cut_paste_input [stack 0]
+version 10.0 v1
+push $cut_paste_input
+NoOp {
+ name Exp_Value1
+ selected true
+ xpos -51
+ ypos 670
+ addUserKnob {20 User l "Expression Value"}
+ addUserKnob {1 exprtext1 l expr1}
+ exprtext1 width
+ addUserKnob {7 expr1 l " " -STARTLINE}
+ expr1 {{"\[value exprtext1]"}}
+ addUserKnob {1 exprtext2 l expr2}
+ exprtext2 height
+ addUserKnob {7 expr2 l " " -STARTLINE}
+ expr2 {{"\[value exprtext2]"}}
+ addUserKnob {1 exprtext3 l expr3}
+ addUserKnob {7 expr3 l " " -STARTLINE}
+ expr3 {{"\[value exprtext3]"}}
+ addUserKnob {1 exprtext4 l expr4}
+ addUserKnob {7 expr4 l " " -STARTLINE}
+ expr4 {{"\[value exprtext4]"}}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {1 expr l "     Global"}
+ expr expr1/expr2
+ addUserKnob {7 result l Result}
+ result {{"\[value expr]"}}
+ addUserKnob {26 by1 l "" +STARTLINE T " "}
+ addUserKnob {26 by2 l "" +STARTLINE T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter votre superviseur\n" -STARTLINE T "<font color=\"#1C1C1C\"> v01 - CGEV - 2017"}
+}

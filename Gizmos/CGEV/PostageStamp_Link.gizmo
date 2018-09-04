@@ -1,0 +1,18 @@
+set cut_paste_input [stack 0]
+version 6.0 v5
+push $cut_paste_input
+PostageStamp {
+name Stamp_Link
+help "Postage stamp avec connection automatique.\n\nLe node passe en rouge quand le input est masqué \"hide input\".\n\n\nRapel de raccourci Nuke:\n\nHide input: alt + H\nPostage Stamp: alt +P"
+tile_color 0x8ce08ff
+gl_color 0xff00ff
+label " : \[python \{nuke.thisNode().input(0).name().replace('.render_main','').replace('_'+nuke.thisNode().input(0).name().split('_')\[-1],'') if nuke.thisNode().inputs() else \" ---- \"\}]\n         \[python \{nuke.thisNode().input(0).name().split('_')\[-1] if nuke.thisNode().inputs() and len(nuke.thisNode().input(0).name().split('_')) >1   else \"\"\}]"
+note_font_color 0x60606ff
+selected true
+icon F_onnode.png
+addUserKnob {20 User l Custom}
+addUserKnob {1 input_node_1 l "Input name"}
+addUserKnob {22 python l "Input / Reload" -STARTLINE T "def getNode(nodeName):\n nodeToConnect = None\n for node in nuke.allNodes(): \n  if node.name() == nodeName: \n   return node \n\nnuke.thisNode().setInput(0,getNode(nuke.thisNode()\['input_node_1'].value()  ))"}
+addUserKnob {41 hide_input_1 l "hide input" T hide_input}
+addUserKnob {41 postage_stamp_1 l "postage stamp" T postage_stamp}
+}

@@ -1,0 +1,1594 @@
+add_layer {position position.red pos.green pos.blue pos.alpha position.green position.blue}
+add_layer {normals normals.red normals.green normals.blue}
+Group {
+ name ScanlineRender
+ knobChanged "if nuke.thisKnob().name() == 'deep_output':\n    deep = nuke.toNode('DeepRecolor')\n    normal = nuke.toNode('ShuffleNorm')\n    out = nuke.toNode('FranklinVFX')\n    if  nuke.thisNode().knob('deep_output').value() == True:\n        out.setInput(0,deep)\n        nuke.thisNode().knob('tile_color').setValue(24831)\n    else:\n        out.setInput(0,normal)\n        nuke.thisNode().knob('tile_color').setValue(2734686463)"
+ tile_color 0xa30000ff
+ gl_color 0xccccccff
+ selected true
+ addUserKnob {20 fade l "Near Fade"}
+ addUserKnob {4 quality l Quality M {Low Med High ""}}
+ addUserKnob {26 ""}
+ addUserKnob {7 distance l "          Z Scale" R 0.5 100}
+ distance 20
+ addUserKnob {7 offset l "Z Offset" R 0 10}
+ offset 1
+ addUserKnob {26 FT1 l " " T " "}
+ addUserKnob {26 FT2 l " " T " "}
+ addUserKnob {26 FT3 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
+ addUserKnob {20 scanlinerender l ScanlineRender}
+ addUserKnob {41 transparency T ScanlineMaster.transparency}
+ addUserKnob {41 ztest_enabled l Z-buffer -STARTLINE T ScanlineMaster.ztest_enabled}
+ addUserKnob {41 filter T ScanlineMaster.filter}
+ addUserKnob {41 antialiasing T ScanlineMaster.antialiasing}
+ addUserKnob {41 zblend_mode l "Z-blend mode" T ScanlineMaster.zblend_mode}
+ addUserKnob {41 zblend_range l "Z-blend range" T ScanlineMaster.zblend_range}
+ addUserKnob {41 max_tessellation l "tessellation max" T ScanlineMaster.max_tessellation}
+ addUserKnob {41 overscan T ScanlineMaster.overscan}
+ addUserKnob {26 ""}
+ addUserKnob {41 ambient T ScanlineMaster.ambient}
+ addUserKnob {20 multisample l MultiSample}
+ addUserKnob {41 samples T ScanlineMaster.samples}
+ addUserKnob {41 shutter T ScanlineMaster.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T ScanlineMaster.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T ScanlineMaster.shuttercustomoffset}
+ addUserKnob {41 temporal_jitter l "randomize time" T ScanlineMaster.temporal_jitter}
+ addUserKnob {41 spatial_jitter l "sample diameter" T ScanlineMaster.spatial_jitter}
+ addUserKnob {41 focal_jitter l "focus diameter" T ScanlineMaster.focal_jitter}
+ addUserKnob {41 stochastic_samples l "stochastic samples" T ScanlineMaster.stochastic_samples}
+ addUserKnob {41 uniform_distribution l "uniform distribution" -STARTLINE T ScanlineMaster.uniform_distribution}
+ addUserKnob {20 shader l Shader}
+ addUserKnob {41 motion_vectors_type l "motion vectors" T ScanlineMaster.motion_vectors_type}
+ addUserKnob {41 MB_channel l "motion vector channels" T ScanlineMaster.MB_channel}
+ addUserKnob {26 ""}
+ addUserKnob {41 output_shader_vectors l "output vectors" T ScanlineMaster.output_shader_vectors}
+ addUserKnob {41 out l "surface point" T ShufflePos.out}
+ addUserKnob {41 out_1 l "surface normal" T ShuffleNorm.out}
+ addUserKnob {20 "" l Deep}
+ addUserKnob {6 deep_output l "Output Deep" +STARTLINE}
+ addUserKnob {41 drop_zero_alpha_samples l "drop zero alpha samples" T ScanlineMaster.drop_zero_alpha_samples}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "Near Fade"
+}
+ NoOp {
+  inputs 0
+  name CT
+  xpos -1213
+  addUserKnob {20 User}
+  addUserKnob {7 near R 1 10}
+  near {{parent.distance}}
+  addUserKnob {7 nearoffset}
+  nearoffset {{offset}}
+ }
+ Input {
+  inputs 0
+  name Cam
+  xpos -1210
+  ypos -246
+  number 2
+  addUserKnob {20 User}
+  addUserKnob {13 translate}
+  translate {{"\[value \[topnode this.parent.input2].translate.x]"} {"\[value \[topnode this.parent.input2].translate.y]"} {"\[value \[topnode this.parent.input2].translate.z]"}}
+  addUserKnob {13 rotate}
+  rotate {{"\[value \[topnode this.parent.input2].rotate.x]"} {"\[value \[topnode this.parent.input2].rotate.y]"} {"\[value \[topnode this.parent.input2].rotate.z]"}}
+  addUserKnob {13 scale}
+  scale {{"\[value \[topnode this.parent.input2].scaling.x]"} {"\[value \[topnode this.parent.input2].scaling.y]"} {"\[value \[topnode this.parent.input2].scaling.z]"}}
+  addUserKnob {7 uniscale l uni_scale}
+  uniscale {{"\[value \[topnode this.parent.input2].uniform_scale]"}}
+  addUserKnob {13 skew}
+  skew {{"\[value \[topnode this.parent.input2].skew.x]"} {"\[value \[topnode this.parent.input2].skew.y]"} {"\[value \[topnode this.parent.input2].skew.z]"}}
+  addUserKnob {13 pivot}
+  pivot {{"\[value \[topnode this.parent.input2].pivot.x]"} {"\[value \[topnode this.parent.input2].pivot.y]"} {"\[value \[topnode this.parent.input2].pivot.z]"}}
+  addUserKnob {7 focale}
+  focale {{"\[value \[topnode this.parent.input2].focal]"}}
+  addUserKnob {7 haperture}
+  haperture {{"\[value \[topnode this.parent.input2].haperture]"}}
+  addUserKnob {7 vaperture}
+  vaperture {{"\[value \[topnode this.parent.input2].vaperture]"}}
+ }
+ Camera2 {
+  display off
+  selectable false
+  translate {{Cam.translate} {Cam.translate} {Cam.translate C x16 2.135999918 x43 0.83599992}}
+  rotate {{Cam.rotate} {Cam.rotate} {Cam.rotate}}
+  scaling {{Cam.scale} {Cam.scale} {Cam.scale}}
+  uniform_scale {{Cam.uniscale}}
+  skew {{Cam.skew} {Cam.skew} {Cam.skew}}
+  pivot {{Cam.pivot} {Cam.pivot} {Cam.pivot}}
+  projection_mode {{parent.projection x65 1 x85 1}}
+  focal {{parent.Cam.focale}}
+  haperture {{parent.Cam.haperture}}
+  vaperture {{parent.Cam.vaperture}}
+  near 0.01
+  name Camera_Master
+  gl_color 0xffff
+  xpos -1200
+  ypos -204
+ }
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*0.5)+CT.nearoffset-0.03}}
+  name Camera2
+  gl_color 0x930000ff
+  xpos -2580
+  ypos 265
+ }
+ Card2 {
+  inputs 0
+  display solid+wireframe
+  selectable false
+  render_mode off
+  cast_shadow false
+  receive_shadow false
+  rows 1
+  columns 1
+  z {{parent.Camera2.near}}
+  lens_in_focal {{parent.Camera2.focal}}
+  lens_in_haperture {{parent.Camera2.haperture}}
+  translate {{parent.Camera2.translate} {parent.Camera2.translate} {parent.Camera2.translate}}
+  rotate {{parent.Camera2.rotate} {parent.Camera2.rotate} {parent.Camera2.rotate}}
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name End_Fade
+  tile_color 0xff3232ff
+  gl_color 0xff3232ff
+  xpos -2860
+  ypos 287
+ }
+ Card2 {
+  inputs 0
+  display solid+wireframe
+  selectable false
+  render_mode off
+  cast_shadow false
+  receive_shadow false
+  rows 1
+  columns 1
+  z {{parent.Camera24.near}}
+  lens_in_focal {{parent.Camera24.focal}}
+  lens_in_haperture {{parent.Camera24.haperture}}
+  translate {{parent.Camera24.translate} {parent.Camera24.translate} {parent.Camera24.translate}}
+  rotate {{parent.Camera24.rotate} {parent.Camera24.rotate} {parent.Camera24.rotate}}
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Start_Fade
+  tile_color 0x42ff42ff
+  gl_color 0x42ff42ff
+  xpos -2752
+  ypos 285
+ }
+ Input {
+  inputs 0
+  name Scn
+  xpos -2967
+  ypos 399
+ }
+ Scene {
+  inputs 3
+  selectable false
+  name Scene1
+  xpos -2742
+  ypos 379
+ }
+set N5c231800 [stack 0]
+ Input {
+  inputs 0
+  name Bg
+  selected true
+  xpos 321
+  ypos 399
+  number 1
+ }
+set N5c231400 [stack 0]
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  projection_mode perspective
+  shutteroffset centred
+  motion_vectors_type distance
+  P_channel position
+  N_channel normals
+  name ScanlineMaster
+  xpos -2590
+  ypos 399
+ }
+set N5c231000 [stack 0]
+ Dot {
+  name Dot2
+  xpos -2556
+  ypos 912
+ }
+set N5c230c00 [stack 0]
+ Dot {
+  name Dot1
+  xpos -2556
+  ypos 989
+ }
+ Shuffle {
+  in normals
+  alpha blue
+  name Normal
+  xpos -2429
+  ypos 985
+ }
+push $N5c230c00
+ Shuffle {
+  in position
+  name Pos
+  xpos -2429
+  ypos 908
+ }
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*22)+CT.nearoffset}}
+  name Camera12
+  xpos -1300
+  ypos 264
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender33
+  xpos -1310
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5c265800 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*20)+CT.nearoffset}}
+  name Camera11
+  xpos -1424
+  ypos 262
+  disable {{!(parent.quality)}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender32
+  xpos -1434
+  ypos 399
+  disable {{!(parent.quality)}}
+ }
+set N5c265000 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*18)+CT.nearoffset}}
+  name Camera10
+  xpos -1553
+  ypos 262
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender31
+  xpos -1563
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5c264800 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*16)+CT.nearoffset}}
+  name Camera9
+  xpos -1669
+  ypos 266
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender30
+  xpos -1679
+  ypos 399
+ }
+set N5c264000 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*14)+CT.nearoffset}}
+  name Camera8
+  xpos -1786
+  ypos 263
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender29
+  xpos -1796
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5d2c3800 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*12)+CT.nearoffset}}
+  name Camera7
+  xpos -1910
+  ypos 261
+  disable {{!(parent.quality)}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender28
+  xpos -1920
+  ypos 399
+  disable {{!(parent.quality)}}
+ }
+set N5d2c3000 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*10)+CT.nearoffset}}
+  name Camera6
+  xpos -2020
+  ypos 257
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender27
+  xpos -2030
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5d2c2800 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*8)+CT.nearoffset}}
+  name Camera1
+  xpos -2130
+  ypos 261
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender26
+  xpos -2140
+  ypos 399
+ }
+set N5d2c2000 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*6)+CT.nearoffset}}
+  name Camera5
+  xpos -2240
+  ypos 261
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender2
+  xpos -2250
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5d34d800 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*4)+CT.nearoffset}}
+  name Camera4
+  xpos -2350
+  ypos 261
+  disable {{!(parent.quality)}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender1
+  xpos -2360
+  ypos 399
+  disable {{!(parent.quality)}}
+ }
+set N5d34d000 [stack 0]
+push 0
+push $N5c231000
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*2)+CT.nearoffset}}
+  name Camera3
+  xpos -2460
+  ypos 261
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender25
+  xpos -2470
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5d34c800 [stack 0]
+ Blend {
+  inputs 12+1
+  name Blend1
+  xpos -860
+  ypos 743
+ }
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*46)+CT.nearoffset}}
+  name Camera24
+  xpos 150
+  ypos 261
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender35
+  xpos 140
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5d3c5c00 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*44)+CT.nearoffset}}
+  name Camera23
+  xpos 34
+  ypos 263
+  disable {{!(parent.quality)}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender34
+  xpos 24
+  ypos 399
+  disable {{!(parent.quality)}}
+ }
+set N5d3c5400 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*42)+CT.nearoffset}}
+  name Camera22
+  xpos -83
+  ypos 260
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender12
+  xpos -93
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5d3c4c00 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*40)+CT.nearoffset}}
+  name Camera21
+  xpos -207
+  ypos 264
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender11
+  xpos -217
+  ypos 399
+ }
+set N5d3c4400 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*38)+CT.nearoffset}}
+  name Camera19
+  xpos -336
+  ypos 266
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender10
+  xpos -346
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5d44dc00 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*36)+CT.nearoffset}}
+  name Camera17
+  xpos -446
+  ypos 267
+  disable {{!(parent.quality)}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender9
+  xpos -456
+  ypos 399
+  disable {{!(parent.quality)}}
+ }
+set N5d44d400 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*34)+CT.nearoffset}}
+  name Camera18
+  xpos -562
+  ypos 271
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender8
+  xpos -572
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5d44cc00 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*32)+CT.nearoffset}}
+  name Camera20
+  xpos -679
+  ypos 268
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender7
+  xpos -689
+  ypos 399
+ }
+set N5d44c400 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*30)+CT.nearoffset}}
+  name Camera16
+  xpos -803
+  ypos 266
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender6
+  xpos -813
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5d4dbc00 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*28)+CT.nearoffset}}
+  name Camera15
+  xpos -932
+  ypos 266
+  disable {{!(parent.quality)}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender5
+  xpos -942
+  ypos 399
+  disable {{!(parent.quality)}}
+ }
+set N5d4db400 [stack 0]
+push 0
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*24)+CT.nearoffset}}
+  name Camera13
+  xpos -1183
+  ypos 267
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender3
+  xpos -1193
+  ypos 399
+ }
+set N5d4dac00 [stack 0]
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{parent.Camera_Master.translate} {parent.Camera_Master.translate} {parent.Camera_Master.translate}}
+  rotate {{parent.Camera_Master.rotate} {parent.Camera_Master.rotate} {parent.Camera_Master.rotate}}
+  scaling {{parent.Camera_Master.scaling} {parent.Camera_Master.scaling} {parent.Camera_Master.scaling}}
+  uniform_scale {{parent.Camera_Master.uniform_scale}}
+  skew {{parent.Camera_Master.skew} {parent.Camera_Master.skew} {parent.Camera_Master.skew}}
+  pivot {{parent.Camera_Master.pivot} {parent.Camera_Master.pivot} {parent.Camera_Master.pivot}}
+  focal {{parent.Camera_Master.focal}}
+  haperture {{parent.Camera_Master.haperture}}
+  vaperture {{parent.Camera_Master.vaperture}}
+  near {{Camera_Master.near*(CT.near*26)+CT.nearoffset}}
+  name Camera14
+  xpos -1067
+  ypos 263
+  disable {{(parent.quality)-2}}
+ }
+push $N5c231800
+push $N5c231400
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.ScanlineMaster.transparency}}
+  ztest_enabled {{parent.ScanlineMaster.ztest_enabled}}
+  filter {{parent.ScanlineMaster.filter}}
+  antialiasing {{parent.ScanlineMaster.antialiasing}}
+  zblend_mode {{parent.ScanlineMaster.zblend_mode}}
+  projection_mode {{parent.ScanlineMaster.projection_mode}}
+  max_tessellation {{parent.ScanlineMaster.max_tessellation}}
+  overscan {{parent.ScanlineMaster.overscan}}
+  ambient {{parent.ScanlineMaster.ambient}}
+  samples {{parent.ScanlineMaster.samples}}
+  shutter {{parent.ScanlineMaster.shutter}}
+  shutteroffset {{parent.ScanlineMaster.shutteroffset}}
+  shuttercustomoffset {{parent.ScanlineMaster.shuttercustomoffset}}
+  temporal_jitter {{parent.ScanlineMaster.temporal_jitter}}
+  spatial_jitter {{parent.ScanlineMaster.spatial_jitter}}
+  focal_jitter {{parent.ScanlineMaster.focal_jitter}}
+  stochastic_samples {{parent.ScanlineMaster.stochastic_samples}}
+  uniform_distribution {{parent.ScanlineMaster.uniform_distribution}}
+  motion_vectors_type {{parent.ScanlineMaster.motion_vectors_type}}
+  MB_channel none
+  drop_zero_alpha_samples {{parent.ScanlineMaster.drop_zero_alpha_samples}}
+  name ScanlineRender4
+  xpos -1077
+  ypos 399
+  disable {{(parent.quality)-2}}
+ }
+set N5d4da400 [stack 0]
+ Blend {
+  inputs 12+1
+  name Blend2
+  xpos -743
+  ypos 744
+ }
+ Blend {
+  inputs 2
+  name Blend3
+  xpos -801
+  ypos 797
+ }
+push $N5d3c5400
+push $N5d3c4400
+push $N5d44d400
+push $N5d44c400
+push $N5d4db400
+push $N5d4dac00
+push $N5c265000
+push $N5c264000
+push $N5d2c3000
+push $N5d2c2000
+push 0
+push $N5d34d000
+push $N5c231000
+ Blend {
+  inputs 12+1
+  name Med
+  xpos -1159
+  ypos 750
+ }
+push $N5d3c4400
+push $N5d44c400
+push $N5d4dac00
+push $N5c264000
+push 0
+push $N5d2c2000
+push $N5c231000
+ Blend {
+  inputs 6+1
+  name Low
+  xpos -1397
+  ypos 797
+ }
+ Switch {
+  inputs 3
+  which {{quality}}
+  name Switch1
+  xpos -1159
+  ypos 803
+ }
+ Remove {
+  channels none
+  name Remove1
+  xpos -1159
+  ypos 829
+ }
+ ShuffleCopy {
+  inputs 2
+  in rgb
+  in2 none
+  red red
+  green green
+  blue blue
+  alpha white
+  out position
+  name ShufflePos
+  xpos -1159
+  ypos 908
+  disable {{!output_shader_vectors}}
+ }
+ ShuffleCopy {
+  inputs 2
+  in rgb
+  red red
+  green green
+  blue blue
+  out normals
+  name ShuffleNorm
+  xpos -1159
+  ypos 985
+  disable {{!output_shader_vectors}}
+ }
+set N5d55e400 [stack 0]
+ Output {
+  name FranklinVFX
+  xpos -1159
+  ypos 1345
+ }
+push $N5d55e400
+push $N5d3c5c00
+push $N5d3c5400
+push $N5d3c4c00
+push $N5d3c4400
+push $N5d44dc00
+push $N5d44d400
+push $N5d44cc00
+push $N5d44c400
+push $N5d4dbc00
+push $N5d4db400
+push $N5d4da400
+push $N5d4dac00
+push $N5c265800
+push $N5c265000
+push $N5c264800
+push $N5c264000
+push $N5d2c3800
+push $N5d2c3000
+push $N5d2c2800
+push $N5d2c2000
+push $N5d34d800
+push $N5d34d000
+push $N5d34c800
+push $N5c231000
+ DeepMerge {
+  inputs 24
+  name DeepMerge3
+  xpos 140
+  ypos 722
+ }
+push $N5d3c5400
+push $N5d3c4400
+push $N5d44d400
+push $N5d44c400
+push $N5d4db400
+push $N5d4dac00
+push $N5c265000
+push $N5c264000
+push $N5d2c3000
+push $N5d2c2000
+push $N5d34d000
+push $N5c231000
+ DeepMerge {
+  inputs 12
+  name DeepMerge2
+  xpos -76
+  ypos 728
+ }
+push $N5d3c4400
+push $N5d44c400
+push $N5d4dac00
+push $N5c264000
+push $N5d2c2000
+push $N5c231000
+ DeepMerge {
+  inputs 6
+  name DeepMerge1
+  xpos -292
+  ypos 728
+ }
+ Switch {
+  inputs 3
+  which {{quality}}
+  name Switch3
+  xpos -76
+  ypos 874
+ }
+ Dot {
+  name Dot3
+  xpos -42
+  ypos 1075
+ }
+ DeepRecolor {
+  inputs 2
+  channels all
+  targetInputAlpha true
+  name DeepRecolor
+  xpos -1011
+  ypos 1065
+  disable {{!parent.deep_output}}
+ }
+end_group

@@ -1,0 +1,72 @@
+Group {
+ name UV_Ramp
+ help "UV Ramp\n\nRed and Green gradient usefull for STMap Tools...\n"
+ knobChanged "if nuke.thisKnob().name() == 'inputChange':\n    inputexist = nuke.toNode('Check')\n    inputexist = inputexist\['check'].value()\n\n    if inputexist:\n        nuke.thisNode()\['format'].setEnabled(False)\n    else:\n        nuke.thisNode()\['format'].setEnabled(True)"
+ tile_color 0x1e88a8ff
+ selected true
+ icon F_iconrgb.png
+ addUserKnob {20 FT l "UV Ramp"}
+ addUserKnob {41 format l "<font color=\"green\">@b;Format" t "Choose the output format of the Ramp." T Constant1.format}
+ addUserKnob {3 overscan l "          Overscan" t "Add overscan pixel. \nThe ramp continue in this part of the image."}
+ overscan 50
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[value overscan]px OScan"
+ addUserKnob {26 FT1 l " " T " \n\n\n"}
+ addUserKnob {26 FT2 l "" +STARTLINE T "                                                                                                                   "}
+ addUserKnob {26 FT3 l " " -STARTLINE T "<font color=\"#1C1C1C\">Franklin VFX - 2016"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -373
+  ypos -47
+ }
+ NoOp {
+  name Check
+  xpos -373
+  ypos -3
+  addUserKnob {20 User}
+  addUserKnob {6 check +STARTLINE}
+  check {{"\[python \"len(\\\[n for n in nuke.channels(nuke.thisNode().input(0)) if n.find(\\\".r\\\") != -1])>0\"]"}}
+ }
+ Remove {
+  name Remove1
+  selected true
+  xpos -373
+  ypos 51
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos -228
+  ypos -51
+  postage_stamp false
+ }
+ Switch {
+  inputs 2
+  which {{Check.check}}
+  name Switch1
+  xpos -228
+  ypos 57
+ }
+ AdjBBox {
+  numpixels {{parent.overscan}}
+  name AdjBBox1
+  xpos -228
+  ypos 133
+ }
+ Expression {
+  expr0 (x/width)*width/width
+  expr1 (y/height)*height/height
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  name Expression1
+  xpos -228
+  ypos 157
+ }
+ Output {
+  name FranklinVFX
+  xpos -228
+  ypos 233
+ }
+end_group

@@ -1,0 +1,521 @@
+set cut_paste_input [stack 0]
+version 10.0 v1
+push 0
+push $cut_paste_input
+add_layer {normals normals.X normals.Y normals.Z}
+Group {
+ inputs 2
+ name Env_Mapping
+ help "Fake Env reflections using a normals pass only.\n\n\nFeed it with a normals pass through the \"image\" input, and select the right channel for it.\n\n- Antialias normals to get rid of flickering\n\n- Use Env Preview to preview the Envball with transformations\n(works better with cameraSpace Normals)\n\n\n\nHave fun !\n\nby bflat (Bastien Brenot)\nmail@bastienbrenot.com"
+ tile_color 0xffffff
+ selected true
+ xpos 11362
+ ypos -186
+ addUserKnob {20 User}
+ addUserKnob {41 inNormals l normals T Shuffle24.in}
+ addUserKnob {41 input l "Env Input Type" T SphericalTransform3.input}
+ addUserKnob {26 ""}
+ addUserKnob {6 envBlur l "IBL blur :" +STARTLINE}
+ addUserKnob {7 envBlurSize l " " -STARTLINE R 0 500}
+ envBlurSize 250
+ addUserKnob {26 ""}
+ addUserKnob {20 rotateEnv l "rotate Env" n 1}
+ addUserKnob {41 out_rx l rx T SphericalTransform3.out_rx}
+ addUserKnob {41 out_ry l ry T SphericalTransform3.out_ry}
+ addUserKnob {41 out_rz l rz T SphericalTransform3.out_rz}
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Env
+  xpos -447
+  ypos 270
+  number 1
+ }
+ SphericalTransform {
+  output "Mirror Ball"
+  out_ry -5
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  fix true
+  name SphericalTransform3
+  xpos -447
+  ypos 336
+ }
+ SphericalTransform {
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  fix true
+  name SphericalTransform1
+  xpos -447
+  ypos 374
+ }
+ Blur {
+  channels rgb
+  size {{parent.envBlurSize}}
+  name Blur1
+  label "\[value size]"
+  xpos -447
+  ypos 461
+  disable {{!parent.envBlur}}
+ }
+set N8910a400 [stack 0]
+ Input {
+  inputs 0
+  name Normals
+  xpos -605
+  ypos 425
+ }
+ Shuffle {
+  in normals
+  name Shuffle24
+  label "\[value in]"
+  xpos -605
+  ypos 466
+ }
+ Clamp {
+  channels rgba
+  minimum -1
+  minimum_enable false
+  MinClampTo -1
+  name Clamp3
+  xpos -605
+  ypos 502
+ }
+ Expression {
+  expr0 (r+1)/2
+  expr1 (g+1)/2
+  expr2 (b+1)/2
+  name Expression9
+  label "\[value expr0]"
+  xpos -605
+  ypos 526
+ }
+set N84794c00 [stack 0]
+ Group {
+  inputs 2
+  name STMap_C
+  help "STMove\n\nSTMap with the possibility to ajust the position and the scale of the texture (Move UV tab).\n"
+  knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\ninputT = nuke.exists(\"Alpha\") \n\nif knob.name() in ('matte', 'showPanel'):\n    mode = node\['matte'].value()\n    if mode == 'UV Input':\n        if str(inputT)==\"True\":\n             n = nuke.toNode('Alpha')\n             nuke.delete(n)\n    elif mode == 'Alpha (New Input)':\n        if str(inputT)==\"False\":\n            nuke.message(\"Add New Input in Node\")\n            i = nuke.createNode('Input', inpanel=False )\n            i\['name'].setValue('Alpha')\n            n = nuke.toNode('Switch2')\n            n.setInput(0,i)\n\nif knob.name() in ('methode', 'showPanel'):\n    mode = node\['methode'].value()\n    if mode == 'Quick':\n        node\['translate'].setVisible(True)\n        node\['Right'].setVisible(True)\n        node\['Left'].setVisible(True)\n        node\['S02'].setVisible(True)\n        node\['scale'].setVisible(True)\n        node\['S06'].setVisible(True)\n\n        node\['pivot'].setVisible(False)\n        node\['pick_switch'].setVisible(False)\n        node\['pick_switch'].setValue(0)\n        node\['name2'].setValue('')\n        node\['S05'].setVisible(False)\n        node\['rot_order'].setVisible(False)\n        node\['translatexyz'].setVisible(False)\n        node\['rotatexyz'].setVisible(False)\n        node\['scalexyz'].setVisible(False)\n        node\['uni_scale'].setVisible(False)\n        node\['scew'].setVisible(False)\n\n    elif mode != 'Quick':\n        node\['translate'].setVisible(False)\n        node\['Right'].setVisible(False)\n        node\['Left'].setVisible(False)\n        node\['S02'].setVisible(False)\n        node\['scale'].setVisible(False)\n        node\['S06'].setVisible(False)\n\n        node\['pivot'].setVisible(True)\n        node\['pick_switch'].setValue(0)\n        node\['pick_switch'].setVisible(True)\n        node\['S05'].setVisible(True)\n        node\['rot_order'].setVisible(True)\n        node\['translatexyz'].setVisible(True)\n        node\['rotatexyz'].setVisible(True)\n        node\['scalexyz'].setVisible(True)\n        node\['uni_scale'].setVisible(True)\n        node\['scew'].setVisible(True)\n\n"
+  tile_color 0x1e88a8ff
+  note_font Verdana
+  xpos -312
+  ypos 504
+  addUserKnob {20 FT l STMap}
+  addUserKnob {26 S00 l " " T " "}
+  addUserKnob {41 channels l "Channels to Map (Src)" t "The effect is applied only to these channels." T STMap1.channels}
+  addUserKnob {41 in l "   UV Channels" t "The values in these channels are added to the pixel coordinate to get the source pixel." T Shuffle3.in}
+  addUserKnob {6 premult l "(Un)Premult by     -->  " t "The UV Pass is divide by the Alpha channel before being processed, and multiplied again afterwards. This can improve the texturing of anti-aliased edges." +STARTLINE}
+  addUserKnob {4 matte l " Alpha from " t "Choose the Alpha channel.\nAlpha is usefull for a better result with clean edge (UnPremult / Premult).\n\nUV Input: \nAutomatic pick the .a from the Input.\n\nAlpha (New Input):\nPick the .a from an other Input." -STARTLINE M {"UV Input" "Alpha (New Input)" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+  addUserKnob {26 S01 l " " T " "}
+  addUserKnob {41 filter l Filter t "Impulse no filtering - each outputpixel equalse some input pixel\nCubic smooth interpolation between pixels\nKeys cubic a=.50, approximates sync (*)\nSimon cubic a=.75,continuous 2nd derivative (*)\nRifman cubic a=1.0, lots of sharpening (*)\nMitchell mix of sharpening and smoothing (*+)\nParzen approximating B-spline (+)\nNotch hides moiré patterns (+)\n(*) has negative lobes, can produce value that are outside the range of the input pixels.\n(+) not interpolary, changes pixels even when no movement" T STMap1.filter}
+  addUserKnob {26 S10 l " " T " "}
+  addUserKnob {26 ""}
+  addUserKnob {41 blur l "Blur channel" t "Values in this channel are added to the size of the area to sample, to add extra blur or diffusion to the distortion." T STMap1.blur}
+  addUserKnob {41 blur_scale l "Blur scale" t "Multiply the blur value by this." T STMap1.blur_scale}
+  addUserKnob {26 by1 l " " T " \n\n"}
+  addUserKnob {26 by2 l " " T "                                                                                               "}
+  addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+  addUserKnob {20 Franklin2 l "Transform UV"}
+  addUserKnob {4 methode l "              Methode " t "Choose between these two methodes.  to transform UV.\n\nQuick: Tweak to change the UV position.\nReel World: Transform the world position." M {Quick "Reel World" "" "" "" ""}}
+  methode "Reel World"
+  addUserKnob {26 ""}
+  addUserKnob {26 translate l Translate +HIDDEN T " "}
+  addUserKnob {7 Right l x t "Offset the texture." +HIDDEN R -1 1}
+  addUserKnob {7 Left l y t "Offset the texture." +HIDDEN R -1 1}
+  addUserKnob {26 S02 l " " +HIDDEN T " "}
+  addUserKnob {7 scale l Scale t "Adust the scale of the texture." +HIDDEN R 0 2}
+  scale 1
+  addUserKnob {26 S06 l " " +HIDDEN T " \n\n\n"}
+  addUserKnob {4 pick_switch l "Pick Center" M {None "UV Pass" "" "" "" "" "" "" "" "" "" ""}}
+  addUserKnob {18 pivot l Center}
+  pivot {0.8128077984 0.5200160742 0}
+  addUserKnob {6 pivot_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {26 S05 l "" +STARTLINE}
+  addUserKnob {41 rot_order l INVISIBLE +INVISIBLE T Reel_World.rot_order}
+  addUserKnob {13 translatexyz l Translate}
+  addUserKnob {13 rotatexyz l Rotate}
+  rotatexyz {0 9 0}
+  addUserKnob {13 scalexyz l Scale}
+  scalexyz {1 1 1}
+  addUserKnob {7 uni_scale l "Uniform Scale" R 0 10}
+  uni_scale 1
+  addUserKnob {13 scew l Scew}
+  addUserKnob {26 ""}
+  addUserKnob {26 T01 l "@b;<font color=\"red\">Output" T ""}
+  addUserKnob {6 uv_modified l "UV modified" -STARTLINE}
+  addUserKnob {1 output l INVISIBLE +INVISIBLE}
+  output "\[if \{\[value methode] ==\"Quick\"\} \{return \"\[knob this.name3 \"Quick\"]\"\}  \{return \"\[knob this.name3 \"\[if \{\[value pick_switch] !=\"UV Pass\"\} \{return \"\[knob this.name3 \"Reel World\"]\[knob this.name2 \"\"]\"\}  \{return \"\[knob this.name2 \"UV Output\"]\[knob this.name3 \" \"]\"\}]\"]\"\}]\[if \{\[value pick_switch] !=\"UV Pass\"\} \{return \"\[knob this.tile_color 0x1e88a8ff]\"\}  \{return \"\[knob this.tile_color 0xaa1812ff]\"\}]\[if \{\[value uv_modified] ==\"true\"\} \{return \"\[knob this.name4 \"Out UV Transform\"]\[knob this.name2 \"\"]\[knob this.name3 \"\"]\"\} \{return \"\[knob this.name4 \"\"]\"\}]\[value name3]\[value name2]\[value name4]"
+  addUserKnob {1 name2 l INVISIBLE +INVISIBLE}
+  addUserKnob {1 name3 l INVISIBLE +INVISIBLE}
+  name3 "Reel World"
+  addUserKnob {1 name4 l INVISIBLE +INVISIBLE}
+ }
+  Input {
+   inputs 0
+   name UV
+   xpos 16
+   ypos -555
+  }
+  Dot {
+   name Dot2
+   xpos 50
+   ypos -420
+  }
+set N29787c00 [stack 0]
+  Shuffle {
+   in rgb
+   in2 rgba
+   blue black
+   alpha black
+   name Shuffle3
+   xpos 334
+   ypos -424
+  }
+set N8ed4c000 [stack 0]
+  Dot {
+   name Dot4
+   xpos 1006
+   ypos -420
+  }
+  Dot {
+   name Dot5
+   xpos 1006
+   ypos 935
+  }
+push $N29787c00
+push 0
+  Switch {
+   inputs 2
+   which {{!matte}}
+   name Switch2
+   xpos 16
+   ypos -355
+  }
+  NoOp {
+   name AlphaCheck
+   xpos 16
+   ypos -288
+   addUserKnob {20 User}
+   addUserKnob {6 alpha +STARTLINE}
+   alpha {{"\[python \"len(\\\[n for n in nuke.channels(nuke.thisNode().input(0)) if n.find(\\\".a\\\") != -1])>0\"]" i}}
+  }
+  AddChannels {
+   channels rgba
+   name AddAlpha
+   xpos 16
+   ypos -213
+  }
+  Dot {
+   name Dot7
+   xpos 50
+   ypos -130
+  }
+set N58429000 [stack 0]
+  Dot {
+   name Dot9
+   xpos 50
+   ypos 757
+  }
+push $N58429000
+push $N8ed4c000
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   xpos 334
+   ypos -140
+  }
+set N58428000 [stack 0]
+  Unpremult {
+   name Unpremult2
+   xpos 240
+   ypos -45
+   disable {{!AlphaCheck.alpha i}}
+  }
+push $N58428000
+  Switch {
+   inputs 2
+   which {{parent.premult}}
+   name Switch4
+   xpos 334
+   ypos 38
+  }
+set Ne26c0880 [stack 0]
+  Dot {
+   name Dot8
+   xpos 606
+   ypos 42
+  }
+  Group {
+   name Reel_World
+   help "This gizmo modifies World Position coordinate. Also may be useful in work with Object Position, World Normals and similar data passes. Feed it as input.\nUses with Mask3D_ik and Mask3DSpherical_ik or any another WorldPosition based nodes and gizmos. Strongly recomend to pick pivot point before starting your tweaking!\n------\nv002\nIvan Kokov. Pixomondo Shanghai. 2012\nbutafor@inbox.ru\nivan.kokov@sha.pixomondo.com"
+   tile_color 0xdfff00ff
+   label Transform
+   xpos 572
+   ypos 271
+   addUserKnob {20 FT l Transform}
+   addUserKnob {41 Pivot T Control.Pivot}
+   addUserKnob {26 ""}
+   addUserKnob {41 rot_order l "Rotation order" T Axis1.rot_order}
+   addUserKnob {41 Translate T Control.Translate}
+   addUserKnob {41 Rotate T Control.Rotate}
+   addUserKnob {41 Scale T Control.Scale}
+   addUserKnob {41 UniformScale T Control.UniformScale}
+   addUserKnob {41 Scew T Control.Scew}
+  }
+   Input {
+    inputs 0
+    name Input
+    xpos 137
+    ypos -539
+   }
+   Add {
+    value {{-parent.Control.Pivot} {-parent.Control.Pivot} {-parent.Control.Pivot} 0}
+    name Add1
+    label "Move Pivot"
+    xpos 137
+    ypos -481
+   }
+   ColorMatrix {
+    matrix {
+        {{parent.Axis1.world_matrix.0} {parent.Axis1.world_matrix.1} {parent.Axis1.world_matrix.2}}
+        {{parent.Axis1.world_matrix.4} {parent.Axis1.world_matrix.5} {parent.Axis1.world_matrix.6}}
+        {{parent.Axis1.world_matrix.8} {parent.Axis1.world_matrix.9} {parent.Axis1.world_matrix.10}}
+      }
+    name ColorMatrix1
+    label "Rotation\nScale \nScew"
+    xpos 137
+    ypos -414
+   }
+   Add {
+    value {{parent.Control.Pivot} {parent.Control.Pivot} {parent.Control.Pivot} 0}
+    name Add2
+    label "Move Pivot\nBack"
+    xpos 137
+    ypos -337
+   }
+   Add {
+    value {{parent.Control.Translate} {parent.Control.Translate} {parent.Control.Translate} {curve}}
+    name Add3
+    label Translate
+    xpos 137
+    ypos -258
+   }
+   Output {
+    name Output1
+    xpos 141
+    ypos -179
+   }
+   Axis2 {
+    inputs 0
+    rotate {{parent.Control.Rotate.x} {parent.Control.Rotate.y} {parent.Control.Rotate.z}}
+    scaling {{parent.Control.Scale.x} {parent.Control.Scale.y} {parent.Control.Scale.z}}
+    uniform_scale {{parent.Control.UniformScale}}
+    skew {{parent.Control.Scew.x} {parent.Control.Scew.y} {parent.Control.Scew.z}}
+    name Axis1
+    xpos 379
+    ypos -415
+   }
+   NoOp {
+    inputs 0
+    name Control
+    selected true
+    xpos 366
+    ypos -468
+    hide_input true
+    addUserKnob {20 User}
+    addUserKnob {18 Pivot}
+    Pivot {{parent.parent.pivot} {parent.parent.pivot} {parent.parent.pivot}}
+    addUserKnob {6 Pivot_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+    addUserKnob {26 ""}
+    addUserKnob {13 Translate}
+    Translate {{parent.parent.translatexyz} {parent.parent.translatexyz} {parent.parent.translatexyz}}
+    addUserKnob {13 Rotate}
+    Rotate {{parent.parent.rotatexyz} {parent.parent.rotatexyz} {parent.parent.rotatexyz}}
+    addUserKnob {13 Scale}
+    Scale {{parent.parent.scalexyz} {parent.parent.scalexyz} {parent.parent.scalexyz}}
+    addUserKnob {7 UniformScale R 0 10}
+    UniformScale {{parent.parent.uni_scale}}
+    addUserKnob {13 Scew}
+    Scew {{parent.parent.scewxyz} {parent.parent.scewxyz} {parent.parent.scewxyz}}
+   }
+  end_group
+  Dot {
+   name Dot3
+   xpos 606
+   ypos 473
+  }
+push $Ne26c0880
+  Grade {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   add {{parent.Right i}}
+   black_clamp false
+   name x
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 334
+   ypos 134
+   icon -
+  }
+  Grade {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   add {{parent.Left i}}
+   black_clamp false
+   name y
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 334
+   ypos 204
+   icon -
+  }
+set N90e3d800 [stack 0]
+  Grade {
+   channels {rgba.red rgba.green -rgba.blue none}
+   white 0.03
+   add {{-Grade5.white*0.5 i x75 -0}}
+   black_clamp false
+   name Grade5
+   tile_color 0x55ff7fff
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 427
+   ypos 275
+   icon -
+  }
+push 0
+push $N90e3d800
+push $N90e3d800
+  Grade {
+   channels {rgba.red rgba.green -rgba.blue none}
+   white 20
+   add {{-Grade6.white*0.5 x75 -0}}
+   black_clamp false
+   name Grade6
+   tile_color 0x55ff7fff
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 237
+   ypos 275
+   icon -
+  }
+  Dissolve {
+   inputs 3+1
+   which {{parent.scale i}}
+   name Dissolve1
+   tile_color 0x55ff7fff
+   xpos 334
+   ypos 351
+  }
+  Switch {
+   inputs 2
+   which {{parent.methode}}
+   name Switch1
+   xpos 334
+   ypos 469
+  }
+  Dot {
+   name Dot1
+   xpos 368
+   ypos 570
+  }
+set N9b2d4400 [stack 0]
+  Input {
+   inputs 0
+   name Src
+   xpos 754
+   ypos 359
+   number 1
+  }
+  Log2Lin {
+   operation lin2log
+   name Log2Lin1
+   label "\[if \{\[value operation]==\"lin2log\"\} \{return \"\[knob this.icon F_iconstart.png]\"\} \{return \"\[knob this.icon F_iconend.png]\"\}]"
+   xpos 754
+   ypos 462
+   icon F_iconstart.png
+  }
+  STMap {
+   inputs 2
+   channels rgba
+   uv rgb
+   blur_scale 0
+   maskChannel -rgba.alpha
+   name STMap1
+   xpos 754
+   ypos 566
+  }
+  Log2Lin {
+   name Log2Lin2
+   label "\[if \{\[value operation]==\"lin2log\"\} \{return \"\[knob this.icon F_iconstart.png]\"\} \{return \"\[knob this.icon F_iconend.png]\"\}]"
+   xpos 754
+   ypos 667
+   icon F_iconend.png
+  }
+push $N9b2d4400
+  Switch {
+   inputs 2
+   which {{!parent.uv_modified}}
+   name Switch3
+   xpos 334
+   ypos 667
+  }
+set Nea599a80 [stack 0]
+  Multiply {
+   inputs 1+1
+   value 0
+   invert_mask true
+   name Multiply2
+   xpos 241
+   ypos 747
+   disable {{!AlphaCheck.alpha i}}
+  }
+push $Nea599a80
+  Switch {
+   inputs 2
+   which {{parent.premult}}
+   name Switch5
+   xpos 334
+   ypos 830
+  }
+set Nec5bb600 [stack 0]
+  Switch {
+   inputs 2
+   which {{parent.pick_switch}}
+   name Switch10
+   xpos 443
+   ypos 931
+  }
+push $Nec5bb600
+  Switch {
+   inputs 2
+   which {{!parent.uv_modified}}
+   name Switch6
+   xpos 334
+   ypos 1017
+  }
+  Output {
+   name FranklinVFX
+   xpos 334
+   ypos 1089
+  }
+ end_group
+ Multiply {
+  value 0
+  mix {{parent.previewEnv==1?parent.previewOnly:0}}
+  name Multiply1
+  label "\[value value]"
+  xpos -447
+  ypos 615
+ }
+ Output {
+  name Output1
+  xpos -447
+  ypos 797
+ }
+push $N84794c00
+push $N8910a400
+ STMap {
+  inputs 2
+  channels rgb
+  uv rgb
+  name STMap3
+  xpos -447
+  ypos 532
+ }
+end_group

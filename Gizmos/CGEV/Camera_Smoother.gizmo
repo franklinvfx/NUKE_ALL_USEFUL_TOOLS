@@ -1,0 +1,106 @@
+set cut_paste_input [stack 0]
+version 9.0 v6
+push $cut_paste_input
+Group {
+name CameraSmoother
+knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\nif knob.name() in ('SmoothMode', 'showPanel'):\n    mode = node\['SmoothMode'].value()\n    if mode == 'Global':\n        node\['SmtAll'].setVisible(True)\n        node\['Translate'].setVisible(False)\n        node\['TrX'].setVisible(False)\n        node\['SmtTrX'].setVisible(False)\n        node\['TrY'].setVisible(False)\n        node\['SmtTrY'].setVisible(False)\n        node\['TrZ'].setVisible(False)\n        node\['SmtTrZ'].setVisible(False)\n        node\['Smooth_rotate'].setVisible(False)\n        node\['RtX'].setVisible(False)\n        node\['SmtRtX'].setVisible(False)\n        node\['RtY'].setVisible(False)\n        node\['SmtRtY'].setVisible(False)\n        node\['RtZ'].setVisible(False)\n        node\['SmtRtZ'].setVisible(False)\n    elif mode == 'Fine tuning':\n        node\['SmtAll'].setVisible(False)\n        node\['Translate'].setVisible(True)\n        node\['TrY'].setVisible(True)\n        node\['SmtTrY'].setVisible(True)\n        node\['TrZ'].setVisible(True)\n        node\['SmtTrZ'].setVisible(True)\n        node\['TrX'].setVisible(True)\n        node\['Smooth_rotate'].setVisible(True)\n        node\['RtX'].setVisible(True)\n        node\['SmtRtX'].setVisible(True)\n        node\['RtY'].setVisible(True)\n        node\['SmtRtY'].setVisible(True)\n        node\['RtZ'].setVisible(True)\n        node\['SmtRtZ'].setVisible(True)\n        node\['SmtTrX'].setVisible(True)"
+tile_color 0x970f0fff
+selected true
+addUserKnob {20 CameraSmoother}
+addUserKnob {4 SmoothMode l "Smooth mode" M {Global "Fine tuning"}}
+addUserKnob {3 refFrame l "Reference Frame"}
+addUserKnob {22 SetFrame l "Set to this Frame" -STARTLINE T nuke.thisNode().knob('refFrame').setValue(nuke.frame())}
+addUserKnob {26 "" +STARTLINE}
+addUserKnob {7 SmtAll l "Smooth global" R 0 10}
+addUserKnob {26 Translate l "Smooth Translate" +HIDDEN}
+addUserKnob {6 TrX l "" -STARTLINE +HIDDEN}
+TrX true
+addUserKnob {7 SmtTrX l "  translate X " -STARTLINE +HIDDEN R 0 10}
+addUserKnob {6 TrY l "" +STARTLINE +HIDDEN +STARTLINE}
+TrY true
+addUserKnob {7 SmtTrY l "  translate Y " -STARTLINE +HIDDEN R 0 10}
+addUserKnob {6 TrZ l "" +STARTLINE +HIDDEN +STARTLINE}
+TrZ true
+addUserKnob {7 SmtTrZ l "  translate Z " -STARTLINE +HIDDEN R 0 10}
+addUserKnob {26 Smooth_rotate l "Smooth Rotate" +HIDDEN}
+addUserKnob {6 RtX l "" -STARTLINE +HIDDEN}
+RtX true
+addUserKnob {7 SmtRtX l "      rotate X " -STARTLINE +HIDDEN R 0 10}
+addUserKnob {6 RtY l "" +STARTLINE +HIDDEN +STARTLINE}
+RtY true
+addUserKnob {7 SmtRtY l "      rotate Y " -STARTLINE +HIDDEN R 0 10}
+addUserKnob {6 RtZ l "" +STARTLINE +HIDDEN +STARTLINE}
+RtZ true
+addUserKnob {7 SmtRtZ l "      rotate Z " -STARTLINE +HIDDEN R 0 10}
+addUserKnob {20 Camera}
+addUserKnob {41 translate T CameraSmooth.translate}
+addUserKnob {41 rotate T CameraSmooth.rotate}
+addUserKnob {20 "" l "Local matrix" n 2}
+addUserKnob {41 useMatrix l "specify matrix" T CameraSmooth.useMatrix}
+addUserKnob {41 matrix l "" -STARTLINE T CameraSmooth.matrix}
+addUserKnob {20 "" n -1}
+addUserKnob {20 "" l "World matrix" n 2}
+addUserKnob {41 world_matrix l "" -STARTLINE T CameraSmooth.world_matrix}
+addUserKnob {20 "" n -1}
+addUserKnob {20 endGroup n -1}
+}
+Input {
+inputs 0
+name Input
+xpos 376
+ypos -11
+}
+Camera2 {
+inputs 0
+read_from_file {{parent.input0.read_from_file_link}}
+display {{parent.input0.display}}
+selectable {{parent.input0.selectable}}
+xform_order {{parent.input0.xform_order}}
+rot_order {{parent.input0.rot_order}}
+translate {{trSmooth.x-(trSmooth.x(refFrame)-parent.input0.translate.x(refFrame))} {trSmooth.y-(trSmooth.y(refFrame)-parent.input0.translate.y(refFrame))} {trSmooth.z-(trSmooth.z(refFrame)-parent.input0.translate.z(refFrame))}}
+rotate {{rtSmooth.x-(rtSmooth.x(refFrame)-parent.input0.rotate.x(refFrame))} {rtSmooth.y-(rtSmooth.y(refFrame)-parent.input0.rotate.y(refFrame))} {rtSmooth.z-(rtSmooth.z(refFrame)-parent.input0.rotate.z(refFrame))}}
+scaling {{parent.input0.scaling} {parent.input0.scaling} {parent.input0.scaling}}
+uniform_scale {{parent.input0.uniform_scale}}
+skew {{parent.input0.skew} {parent.input0.skew} {parent.input0.skew}}
+pivot {{parent.input0.pivot} {parent.input0.pivot} {parent.input0.pivot}}
+useMatrix {{parent.input0.useMatrix}}
+matrix {
+    {{parent.input0.matrix} {parent.input0.matrix} {parent.input0.matrix} {parent.input0.matrix}}
+    {{parent.input0.matrix} {parent.input0.matrix} {parent.input0.matrix} {parent.input0.matrix}}
+    {{parent.input0.matrix} {parent.input0.matrix} {parent.input0.matrix} {parent.input0.matrix}}
+    {{parent.input0.matrix} {parent.input0.matrix} {parent.input0.matrix} {parent.input0.matrix}}
+  }
+projection_mode {{parent.input0.projection_mode}}
+focal {{(parent.input0.focal.integrate(frame-(SmtAll+1),frame+(SmtAll+1))/(2*(SmtAll+1)))}}
+haperture {{(parent.input0.haperture.integrate(frame-(SmtAll+1),frame+(SmtAll+1))/(2*(SmtAll+1)))}}
+vaperture {{(parent.input0.vaperture.integrate(frame-(SmtAll+1),frame+(SmtAll+1))/(2*(SmtAll+1)))}}
+near {{parent.input0.near}}
+far {{parent.input0.far}}
+win_translate {{parent.input0.win_translate} {parent.input0.win_translate}}
+win_scale {{parent.input0.win_scale} {parent.input0.win_scale}}
+winroll {{parent.input0.winroll}}
+focal_point {{parent.input0.focal_point}}
+fstop {{parent.input0.fstop}}
+version {{parent.input0.version}}
+fbx_take_name {{{"\"\"parent.input0.fbx_take_name i\"\""}} "-------          "}
+fbx_node_name {{{"\"\"parent.input0.fbx_node_name i\"\""}} "-------          "}
+fbx_load_take_node_names {{parent.input0.fbx_load_take_node_names x54 0 x63 0 x1230 0}}
+frame_rate {{parent.input0.frame_rate}}
+use_frame_rate {{parent.input0.use_frame_rate}}
+compute_rotation {{parent.input0.compute_rotation}}
+name CameraSmooth
+selected true
+xpos 384
+ypos 77
+addUserKnob {20 customop}
+addUserKnob {13 trSmooth}
+trSmooth {{"SmoothMode ? (TrX ? parent.input0.translate.x.integrate(frame-(SmtTrX+1),frame+(SmtTrX+1))/(2*(SmtTrX+1)) : parent.input0.translate.x) : (parent.input0.translate.x.integrate(frame-(SmtAll+1),frame+(SmtAll+1))/(2*(SmtAll+1)))"} {"SmoothMode ? (TrY ? parent.input0.translate.y.integrate(frame-(SmtTrY+1),frame+(SmtTrY+1))/(2*(SmtTrY+1)) : parent.input0.translate.y) : (parent.input0.translate.y.integrate(frame-(SmtAll+1),frame+(SmtAll+1))/(2*(SmtAll+1)))"} {"SmoothMode ? (TrZ ? parent.input0.translate.z.integrate(frame-(SmtTrZ+1),frame+(SmtTrZ+1))/(2*(SmtTrZ+1)) : parent.input0.translate.z) : (parent.input0.translate.z.integrate(frame-(SmtAll+1),frame+(SmtAll+1))/(2*(SmtAll+1)))"}}
+addUserKnob {13 rtSmooth}
+rtSmooth {{"SmoothMode ? (RtX ? parent.input0.rotate.x.integrate(frame-(SmtRtX+1),frame+(SmtRtX+1))/(2*(SmtRtX+1)) : parent.input0.rotate.x) : (parent.input0.rotate.x.integrate(frame-(SmtAll+1),frame+(SmtAll+1))/(2*(SmtAll+1)))"} {"SmoothMode ? (RtY ? parent.input0.rotate.y.integrate(frame-(SmtRtY+1),frame+(SmtRtY+1))/(2*(SmtRtY+1)) : parent.input0.rotate.y) : (parent.input0.rotate.y.integrate(frame-(SmtAll+1),frame+(SmtAll+1))/(2*(SmtAll+1)))"} {"SmoothMode ? (RtZ ? parent.input0.rotate.z.integrate(frame-(SmtRtZ+1),frame+(SmtRtZ+1))/(2*(SmtRtZ+1)) : parent.input0.rotate.z) : (parent.input0.rotate.z.integrate(frame-(SmtAll+1),frame+(SmtAll+1))/(2*(SmtAll+1)))"}}
+}
+Output {
+name Output
+xpos 374
+ypos 151
+}
+end_group

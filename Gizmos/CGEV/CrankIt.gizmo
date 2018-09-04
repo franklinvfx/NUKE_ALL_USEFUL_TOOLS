@@ -1,0 +1,822 @@
+Group {
+ name CrankIt
+ help "Crank It\n\nOriginally designed to help discover keyable channels for trickier shots, this gizmo creates a colorspace contact sheet.\n\nClick on View \"Adjust region of Interest\" to crop the input to only the desired area.\nSwitch to \"All Setup\" to jump back.\n\nIf you find something usable, pick out the corresponding colorspace and channel and then click \"Create Setup!\" for a quick node setup.\n"
+ knobChanged "node = nuke.thisNode()\nnode = nuke.thisNode()\nknob = nuke.thisKnob()\ncrop = nuke.toNode('Region_of_Interest')\n\nif knob.name() in ('view_mode', 'showPanel'):\n    mode = node\['view_mode'].value()\n    if mode == 'All Setup':\n        #node\['Frm'].setVisible(True)\n        crop\['disable'].setValue(0)\n        crop\['box'].setVisible(False)\n        crop\['reformat'].setValue(1)\n\n    elif mode != 'All Setup':\n        crop\['box'].setVisible(True)\n        crop\['disable'].setValue(0)\n        crop\['reformat'].setValue(0)"
+ tile_color 0x7aa9ffff
+ label "\[value Colorspace]\n"
+ selected true
+ addUserKnob {20 CrankIt l "Crank It"}
+ addUserKnob {26 S00 l " " T " "}
+ addUserKnob {4 view_mode l View t "Switches the view back to the channel contact sheet and applies the region of interest crop if any." M {"All Setup" "Adjust region of Interest" ""}}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {41 box l "       Crop" t "This will crop the input to only the selected bounding box" T Region_of_Interest.box}
+ addUserKnob {41 reset l "Set to Input" -STARTLINE T Region_of_Interest.reset}
+ addUserKnob {6 res l "Low Resolution" +STARTLINE}
+ res true
+ addUserKnob {26 ""}
+ addUserKnob {26 g l "" +STARTLINE T " "}
+ addUserKnob {4 Colorspace l Mode M {Magnitude Power Max "Inverse Min" "Max Range" "Inverse Max Range" "Min Range" "" "" "" "" "" ""}}
+ addUserKnob {4 Channel l "" -STARTLINE M {R G B RGB "" "" ""}}
+ Channel RGB
+ addUserKnob {26 S01 l " " -STARTLINE T "              "}
+ addUserKnob {22 create l "<font color=\"green\">Create Setup!" t "Creates a small node setup for the chosen mode and channel. " -STARTLINE T "groupNode = nuke.thisNode()\nmode = nuke.thisNode()\['Colorspace'].value().replace(' ','_').upper()\nchannel = nuke.thisNode()\['Channel'].value().upper()\n\nfor node in nuke.allNodes():\n    node.setSelected(False)\n    \nnuke.toNode(mode).setSelected(True)\nif channel != 'RGB':\n    nuke.toNode(mode+'_'+channel).setSelected(True)\n\nnuke.nodeCopy('%clipboard%')\n\nnodePos = ( nuke.thisNode().xpos(), nuke.thisNode().ypos()) \n\ngroupNode.end()\n\nfor node in nuke.allNodes():\n    node.setSelected(False)\n\ngroupNode.setSelected(True)\n\nnuke.nodePaste('%clipboard%')\n\ngroupNode.setSelected(False)\n\nnodesToPlace = sorted( nuke.selectedNodes(), key=lambda node: node.ypos())\n\nfor index,node in enumerate(nodesToPlace):\n    node.setXYpos(100+nodePos\[0],(index)*30+nodePos\[1])\n\nnodesToPlace\[0].setInput(0,None)\n\n#groupNode\['disable'].setValue(True)"}
+ addUserKnob {26 s l "" +STARTLINE T " "}
+ addUserKnob {26 by2 l "                     " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -2427
+  ypos -1773
+ }
+ Crop {
+  box {0 0 2048 1152}
+  reformat true
+  name Region_of_Interest
+  xpos -2427
+  ypos -1653
+ }
+set N82e9000 [stack 0]
+ Dot {
+  name Dot10
+  xpos -2038
+  ypos -1649
+ }
+ Dot {
+  name Dot2
+  note_font_size 35
+  xpos -2038
+  ypos -427
+ }
+ Text2 {
+  inputs 0
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message MAGNITUDE
+  old_message {{77 65 71 78 73 84 85 68 69}
+    }
+  box {4.5 2832.5 724.5 3324.5}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81 5 81 6 81 7 81 8 81}
+    }
+  cursor_position 9
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text15
+  xpos -3204
+  ypos -831
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message POWER
+  old_message {{80 79 87 69 82}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81}
+    }
+  cursor_position 5
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text16
+  xpos -3204
+  ypos -807
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message MAX
+  old_message {{77 65 88}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81}
+    }
+  cursor_position 3
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -545}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -545 1 1 0 0 0 0}
+    }
+  name Text17
+  xpos -3204
+  ypos -783
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "INVERSE MIN"
+  old_message {{73 78 86 69 82 83 69 32 77 73 78}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81 5 81 6 81 7 81 8 81 9 81 10 81}
+    }
+  cursor_position 11
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -1100}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -1100 1 1 0 0 0 0}
+    }
+  name Text18
+  xpos -3204
+  ypos -759
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "MAX RANGE"
+  old_message {{77 65 88 32 82 65 78 71 69}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81 5 81 6 81 7 81 8 81}
+    }
+  cursor_position 9
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -1650}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -1650 1 1 0 0 0 0}
+    }
+  name Text19
+  xpos -3204
+  ypos -735
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "INVERSE MAX RANGE"
+  old_message {{73 78 86 69 82 83 69 32 77 65 88 32 82 65 78 71 69}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81 5 81 6 81 7 81 8 81 9 81 10 81 11 81 12 81 13 81 14 81 15 81 16 81}
+    }
+  cursor_position 17
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -2205}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -2205 1 1 0 0 0 0}
+    }
+  name Text20
+  xpos -3204
+  ypos -711
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "MIN RANGE"
+  old_message {{77 73 78 32 82 65 78 71 69}
+    }
+  box {5 2247 725 2739}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81 3 81 4 81 5 81 6 81 7 81 8 81}
+    }
+  cursor_position 9
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  translate {0 -2725}
+  scale {1 1}
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 960 540 0 -2725 1 1 0 0 0 0}
+    }
+  name Text21
+  xpos -3204
+  ypos -687
+ }
+ Text2 {
+  inputs 0
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  cliptype none
+  message R
+  old_message {{82}
+    }
+  box {713.8000488 3173 1338 3665}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text25
+  xpos -3090
+  ypos -821
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  output {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  cliptype none
+  message G
+  old_message {{71}
+    }
+  box {1422 3173 2052 3665}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text26
+  xpos -3090
+  ypos -785
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  output {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  cliptype none
+  message B
+  old_message {{66}
+    }
+  box {2144 3173 2762 3665}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text27
+  xpos -3090
+  ypos -753
+ }
+ Text2 {
+  font_size_toolbar 81
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message RGB
+  old_message {{82 71 66}
+    }
+  box {2856 3173 3525 3665}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 81 1 81 2 81}
+    }
+  cursor_position 3
+  font {{ Arial : Regular : Arial.ttf : 0 }}
+  font_size 81
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name Text28
+  xpos -3090
+  ypos -717
+ }
+ Transform {
+  translate {0 -70}
+  center {1024 778}
+  shutteroffset centred
+  name Transform3
+  xpos -3090
+  ypos -693
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos -3140
+  ypos -628
+ }
+ Transform {
+  translate {-40 525}
+  center {1075 1950}
+  shutteroffset centred
+  name Transform2
+  xpos -3140
+  ypos -588
+ }
+push $N82e9000
+ Reformat {
+  type scale
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  scale 0.31
+  name Proxy_Scale
+  xpos -2427
+  ypos -1564
+  disable {{!res}}
+ }
+ Dot {
+  name Dot45
+  tile_color 0x8ce08ff
+  xpos -2393
+  ypos -1448
+ }
+set Nd22dc800 [stack 0]
+ Expression {
+  temp_name0 expMax
+  temp_expr0 max(max(r,g),b)
+  temp_name1 expMin
+  temp_expr1 min(min(r,g),b)
+  temp_name2 range
+  temp_expr2 expMax-expMin
+  expr0 (r/expMin)*(range)
+  expr1 (g/expMin)*(range)
+  expr2 (b/expMin)*(range)
+  expr3 (expMin)*(range)
+  name MIN_RANGE
+  xpos -1113
+  ypos -1300
+ }
+set Nadb0dc00 [stack 0]
+ Dot {
+  name Dot9
+  tile_color 0x8ce08ff
+  xpos -1079
+  ypos -1131
+ }
+push $Nadb0dc00
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name MIN_RANGE_B
+  xpos -1205
+  ypos -1138
+ }
+push $Nadb0dc00
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name MIN_RANGE_G
+  xpos -1317
+  ypos -1140
+ }
+push $Nadb0dc00
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name MIN_RANGE_R
+  xpos -1441
+  ypos -1140
+ }
+push $Nd22dc800
+ Expression {
+  temp_name0 expMax
+  temp_expr0 max(max(r,g),b)
+  temp_name1 expMin
+  temp_expr1 min(min(r,g),b)
+  temp_name2 range
+  temp_expr2 expMax-expMin
+  expr0 1-(range/(r/expMax))
+  expr1 1-(range/(g/expMax))
+  expr2 1-(range/(b/expMax))
+  expr3 1-(range/expMax)
+  name INVERSE_MAX_RANGE
+  xpos -1548
+  ypos -1297
+ }
+set N7b46400 [stack 0]
+ Dot {
+  name Dot8
+  tile_color 0x8ce08ff
+  xpos -1514
+  ypos -1136
+ }
+push $N7b46400
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name INVERSE_MAX_RANGE_B
+  xpos -1640
+  ypos -1145
+ }
+push $N7b46400
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name INVERSE_MAX_RANGE_G
+  xpos -1752
+  ypos -1145
+ }
+push $N7b46400
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name INVERSE_MAX_RANGE_R
+  xpos -1876
+  ypos -1145
+ }
+push $Nd22dc800
+ Expression {
+  temp_name0 expMax
+  temp_expr0 max(max(r,g),b)
+  temp_name1 expMin
+  temp_expr1 min(min(r,g),b)
+  temp_name2 range
+  temp_expr2 expMax-expMin
+  expr0 (r/expMax)*(1-range)
+  expr1 (g/expMax)*(1-range)
+  expr2 (b/expMax)*(1-range)
+  expr3 (expMax)*(1-range)
+  name MAX_RANGE
+  xpos -1976
+  ypos -1305
+ }
+set N4c592800 [stack 0]
+ Dot {
+  name Dot7
+  tile_color 0x8ce08ff
+  xpos -1942
+  ypos -1141
+ }
+push $N4c592800
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name MAX_RANGE_B
+  xpos -2070
+  ypos -1144
+ }
+push $N4c592800
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name MAX_RANGE_G
+  xpos -2186
+  ypos -1146
+ }
+push $N4c592800
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name MAX_RANGE_R
+  xpos -2306
+  ypos -1146
+ }
+push $Nd22dc800
+ Expression {
+  temp_name0 expMin
+  temp_expr0 min(min(r,g),b)
+  expr0 1-(1/(r/expMin))
+  expr1 1-(1/(g/expMin))
+  expr2 1-(1/(b/expMin))
+  expr3 expMin
+  name INVERSE_MIN
+  xpos -2427
+  ypos -1303
+ }
+set Nad0aa400 [stack 0]
+push $Nad0aa400
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name INVERSE_MIN_B
+  xpos -2528
+  ypos -1146
+ }
+push $Nad0aa400
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name INVERSE_MIN_G
+  xpos -2640
+  ypos -1148
+ }
+push $Nad0aa400
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name INVERSE_MIN_R
+  xpos -2764
+  ypos -1148
+ }
+push $Nd22dc800
+ Expression {
+  temp_name0 expMax
+  temp_expr0 max(max(r,g),b)
+  expr0 r/expMax
+  expr1 g/expMax
+  expr2 b/expMax
+  expr3 expMax
+  name MAX
+  xpos -2900
+  ypos -1301
+ }
+set N60580800 [stack 0]
+ Dot {
+  name Dot5
+  tile_color 0x8ce08ff
+  xpos -2866
+  ypos -1140
+ }
+push $N60580800
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name MAX_B
+  xpos -2987
+  ypos -1141
+ }
+push $N60580800
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name MAX_G
+  xpos -3099
+  ypos -1143
+ }
+push $N60580800
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name MAX_R
+  xpos -3223
+  ypos -1143
+ }
+push $Nd22dc800
+ Expression {
+  temp_name0 expMin
+  temp_expr0 min(min(r,g),b)
+  expr0 pow(1/expMin,r)-1
+  expr1 pow(1/expMin,g)-1
+  expr2 pow(1/expMin,b)-1
+  expr3 pow(1/expMin,0.1)-1
+  name POWER
+  xpos -3353
+  ypos -1297
+ }
+set N4e9f6400 [stack 0]
+ Dot {
+  name Dot4
+  tile_color 0x8ce08ff
+  xpos -3319
+  ypos -1140
+ }
+push $N4e9f6400
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name POWER_B
+  xpos -3454
+  ypos -1146
+ }
+push $N4e9f6400
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name POWER_G
+  xpos -3564
+  ypos -1149
+ }
+push $N4e9f6400
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name POWER_R
+  xpos -3690
+  ypos -1150
+ }
+push $Nd22dc800
+ Expression {
+  temp_name0 expMag
+  temp_expr0 r+g+b
+  expr0 r/expMag
+  expr1 g/expMag
+  expr2 b/expMag
+  expr3 expMag
+  name MAGNITUDE
+  selected true
+  xpos -3855
+  ypos -1294
+ }
+set N4cfb7800 [stack 0]
+ Dot {
+  name Dot1
+  tile_color 0x8ce08ff
+  xpos -3821
+  ypos -1151
+ }
+push $N4cfb7800
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name MAGNITUDE_B
+  xpos -3948
+  ypos -1155
+ }
+push $N4cfb7800
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name MAGNITUDE_G
+  xpos -4068
+  ypos -1152
+ }
+push $N4cfb7800
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name MAGNITUDE_R
+  xpos -4192
+  ypos -1152
+ }
+ ContactSheet {
+  inputs 28
+  width 2900
+  height 5600
+  rows 10
+  gap 40
+  roworder TopBottom
+  startframe 1
+  endframe 1
+  name ChannelContactSheet
+  xpos -2427
+  ypos -886
+ }
+ Transform {
+  translate {625 -1624}
+  center {1024 778}
+  shutteroffset centred
+  name Transform1
+  xpos -2427
+  ypos -732
+ }
+ Reformat {
+  type "to box"
+  box_width 3600
+  box_height 3950
+  box_fixed true
+  resize none
+  center false
+  name Reformat1
+  xpos -2427
+  ypos -708
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  label "'Text Overlays'"
+  xpos -2427
+  ypos -594
+ }
+ Crop {
+  box {0 0 {parent.Reformat1.box_width} {parent.Reformat1.box_height}}
+  name Crop2
+  xpos -2427
+  ypos -558
+ }
+ Switch {
+  inputs 2
+  which {{view_mode}}
+  name Output_View_Toggle
+  xpos -2427
+  ypos -431
+ }
+ Output {
+  name Output1
+  xpos -2427
+  ypos -70
+ }
+end_group

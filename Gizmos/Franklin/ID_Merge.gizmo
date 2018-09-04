@@ -1,0 +1,82 @@
+Group {
+ name ID_Merge
+ help "Channel ID\n\nKeep in the Channel you want the color you want (r g b and a). \nBring all them in the channel Alpha (by default) or in all rgba.\nIf you select many color you have the choise to merge them using two differents operations \"Plus\" or \"Screen\".\n"
+ knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\n        \nknobs_to_check = \['red', 'green', 'blue', 'alpha', 'out', 'operation']\n\nred = node.knob('red').value()\ngreen = node.knob('green').value()\nblue = node.knob('blue').value()\nredgreen = node.knob('red').value() and node.knob('green').value()\nredblue = node.knob('red').value() and node.knob('blue').value()\ngreenblue = node.knob('green').value() and node.knob('blue').value()\nalpha = node.knob('alpha').value()\nredalpha = node.knob('red').value() and node.knob('alpha').value()\ngreenalpha = node.knob('green').value() and node.knob('alpha').value()\nbluealpha = node.knob('blue').value() and node.knob('alpha').value()\n\ndef replace_all(text, dic):\n    for i, j in dic.iteritems():\n        text = text.replace(i, j)\n    return text\n    \nif nuke.thisKnob().name() in knobs_to_check:\n    val = nuke.toNode('Exp_ctrl').knob('expr0').value()\n    \n    if node.knob('operation').value() == 'max':\n        \n        node.knob('clamp').setEnabled(False)\n    else:\n        node.knob('clamp').setEnabled(True)\n        \n    if red == True: # R\n        reps = \{'r':'', '+':''\}\n        val = replace_all(val, reps)\n        val = str('r') + str(val)\n    else:\n        reps = \{'+r':'', 'r+':'', 'r':''\}\n        val = replace_all(val, reps)\n        \n    if green == True: # G\n        reps = \{'g':'', '+':''\}\n        val = replace_all(val, reps)\n        val = str('g') + str(val)\n    else:\n        reps = \{'+g':'', 'g+':'', 'g':''\}\n        val = replace_all(val, reps)\n\n    if blue == True: # B\n        reps = \{'b':'', '+':''\}\n        val = replace_all(val, reps)\n        val = str('b') + str(val)\n    else:\n        reps = \{'+b':'', 'b+':'', 'b':''\}\n        val = replace_all(val, reps)\n\n    if alpha == True: # A\n        reps = \{'a':'', '+':''\}\n        val = replace_all(val, reps)\n        val = str('a') + str(val)\n    else:\n        reps = \{'+a':'', 'a+':'', 'a':''\}\n        val = replace_all(val, reps)\n        \n    val = '+'.join(val\[i:i+1] for i in range(0, len(val), 1)) # add +\n        \n    if val\[0] != '0': # Add 0 before\n        val = val.replace(str('+0'),str(''))\n        val = '0+' + val\n        \n    if node.knob('operation').value() == 'max': # Max mode\n        valmax = val.replace(str('+'),str(','))\n        valmax = 'max(' + valmax + ')'\n        nuke.toNode('Exp_ctrl_max').knob('expr0').setValue(valmax)\n\n    if node.knob('out').value() == str('rgba'): # Output channel\n        nuke.toNode('Exp_ctrl').knob('channel0').setValue('rgba')\n    else:\n        nuke.toNode('Exp_ctrl').knob('channel0').setValue('alpha')\n\n    nuke.toNode('Exp_ctrl').knob('expr0').setValue(val)\n\n    # NODE COLOR CHANGE\n    \n    if red == True and green == False and blue == False: # R\n        node.knob('tile_color').setValue(2989502719)\n\n    if red == False and green == True and blue == False: # G\n        node.knob('tile_color').setValue(715011327)\n    \n    if red == False and green == False and blue == True: # B\n        node.knob('tile_color').setValue(845462783)\n    \n    if red == True and green == True and blue == True: # RGB\n        node.knob('tile_color').setValue(2189591295)\n    \n    if red == False and green == False and blue == False: # 0\n        node.knob('tile_color').setValue(2654757887)\n    \n    if redgreen == True and blue == False: # RG\n        node.knob('tile_color').setValue(3132890879)\n    \n    if redblue == True and green == False: # RB\n        node.knob('tile_color').setValue(3158359039)\n    \n    if greenblue == True and red == False: # GB\n        node.knob('tile_color').setValue(899522303)\n    \n    if alpha == True: # A\n        node.knob('icon').setValue('F_iconalpha.png')\n    else:\n        node.knob('icon').setValue('')"
+ tile_color 0x9e3c63ff
+ note_font_color 0x40404ff
+ selected true
+ addUserKnob {20 User l "ID Merge"}
+ addUserKnob {41 in l "<font color=\"green\">@b;Channel" t "Input Channel" T Shuffle1.in}
+ addUserKnob {26 S1 l " " T " "}
+ addUserKnob {6 red l "<font size = 3 color=\"#FE2E2E\">◄" t "Select to keep the channel in render." +STARTLINE}
+ addUserKnob {6 green l "<font size = 3 color=\"green\">◄" t "Select to keep the channel in render." -STARTLINE}
+ addUserKnob {6 blue l "<font size = 3 color=\"#0080FF\">◄" t "Select to keep the channel in render." -STARTLINE}
+ addUserKnob {6 alpha l "<font size = 3 color=\"white\">◄" t "Select to keep the channel in render." -STARTLINE}
+ addUserKnob {26 S2 l " "}
+ addUserKnob {4 out l "          Output" t "Choose the output channel. \n(Alpha or rgba)" M {rgba Alpha "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {4 operation l "          Operation" t "Merge Operation:\n\nPlus   A+B\nMax   max(A+B)" -STARTLINE M {plus max "" "" "" ""}}
+ operation max
+ addUserKnob {6 clamp l Clamp t "Clamp the channel to the 0..1 range." -STARTLINE +DISABLED}
+ addUserKnob {26 FT1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2015"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[value in]"
+}
+ Input {
+  inputs 0
+  name Input
+  tile_color 0xfefefeff
+  xpos -1318
+  ypos 513
+ }
+ Shuffle {
+  name Shuffle1
+  selected true
+  xpos -1318
+  ypos 541
+ }
+set N1f16a000 [stack 0]
+ Expression {
+  channel0 rgba
+  expr0 max(0)
+  name Exp_ctrl_max
+  xpos -1215
+  ypos 602
+ }
+push $N1f16a000
+ Expression {
+  channel0 rgba
+  expr0 0
+  name Exp_ctrl
+  xpos -1318
+  ypos 602
+ }
+ Switch {
+  inputs 2
+  which {{operation}}
+  name Switch1
+  xpos -1318
+  ypos 664
+ }
+ Clamp {
+  channels rgba
+  name Clamp1
+  xpos -1318
+  ypos 715
+  disable {{!parent.clamp}}
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos -1318
+  ypos 766
+ }
+ Output {
+  name FranklinVFX
+  tile_color 0xfefefeff
+  xpos -1318
+  ypos 821
+ }
+end_group

@@ -1,0 +1,313 @@
+Group {
+ name Camera_Dissolve
+ knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\ninput3 = nuke.exists(\"InputCam3\") \ninput4 = nuke.exists(\"InputCam4\") \ninput5 = nuke.exists(\"InputCam5\")\nn3 = nuke.toNode('InputCam3')\nn4 = nuke.toNode('InputCam4')\nn5 = nuke.toNode('InputCam5')\n\nif knob.name() in ('InputCam', 'showPanel'):\n    mode = node\['InputCam'].value()\n    if mode == '2':\n             nuke.delete(n3)\n             nuke.delete(n4)\n             nuke.delete(n5)\n             node\['Mix'].setExpression(\"k2\")\n             node\['k2'].setVisible(True)\n             node\['k3'].setVisible(False)\n             node\['k4'].setVisible(False)\n             node\['k5'].setVisible(False)\n\n    elif mode == '3':\n            nuke.delete(n3)\n            i = nuke.createNode('Input', inpanel=False )\n            i\['name'].setValue('InputCam3')\n            nuke.delete(n4)\n            nuke.delete(n5)\n            node\['Mix'].setExpression(\"k3\")\n            node\['k2'].setVisible(False)\n            node\['k3'].setVisible(True)\n            node\['k4'].setVisible(False)\n            node\['k5'].setVisible(False)\n\n    elif mode == '4':\n            nuke.delete(n4)\n            i = nuke.createNode('Input', inpanel=False )\n            i\['name'].setValue('InputCam4')\n            nuke.delete(n5)\n            node\['Mix'].setExpression(\"k4\")\n            node\['k2'].setVisible(False)\n            node\['k3'].setVisible(False)\n            node\['k4'].setVisible(True)\n            node\['k5'].setVisible(False)\n\n    elif mode == '5':\n            nuke.delete(n5)\n            i = nuke.createNode('Input', inpanel=False )\n            i\['name'].setValue('InputCam5')\n            node\['Mix'].setExpression(\"k5\")\n            node\['k2'].setVisible(False)\n            node\['k3'].setVisible(False)\n            node\['k4'].setVisible(False)\n            node\['k5'].setVisible(True)\n"
+ tile_color 0x970f0fff
+ gl_color 0xff00ff
+ selected true
+ addUserKnob {20 Cameradissolve l "Camera Dissolve"}
+ addUserKnob {4 InputCam l "             Camera" t "The number of camera you want to mix together." M {2 3 4 5 "" "" "" "" "" ""}}
+ addUserKnob {26 S01 l " "}
+ addUserKnob {7 k2 l Mix t "Slide to mix the curve of the input camera." R 1 2}
+ k2 1
+ addUserKnob {7 k3 l Mix t "Slide to mix the curve of the input camera." +HIDDEN R 1 3}
+ k3 1
+ addUserKnob {7 k4 l Mix t "Slide to mix the curve of the input camera." +HIDDEN R 1 4}
+ k4 1
+ addUserKnob {7 k5 l Mix t "Slide to mix the curve of the input camera." +HIDDEN R 1 5}
+ k5 1
+ addUserKnob {7 Mix l INVISIBLE +INVISIBLE R 1 5}
+ Mix {{k2}}
+ addUserKnob {20 "" n -1}
+ addUserKnob {26 ""}
+ addUserKnob {22 CreateCam l "<font color = \"springGreen\"> Create CameraMixed (Linked)" t "Create a Camera node that have all knobs linked to the Camera Mixer node." -STARTLINE T 
+"
+groupNode = nuke.thisNode()
+name = groupNode.name()
+nodeX = groupNode['xpos'].value()
+nodeY = groupNode['ypos'].value()
+nodeX = int(nodeX)
+nodeY = int(nodeY)
+
+for node in nuke.root().begin().selectedNodes():
+	node.setSelected(False)
+
+if groupNode.input(0) is not None and groupNode.input(1) is not None:
+	nuke.thisNode().end()
+	C = nuke.createNode('Camera2', inpanel=False)
+	C.setXYpos(nodeX + 100, nodeY)
+	
+	C['tile_color'].setValue(0xb0a45dff)
+	C['label'].setValue('(' +name + ')')
+	
+	C['display'].setExpression(name + '.display')
+	C.knob('display').clearAnimated()
+	C['selectable'].setExpression(name + '.selectable')
+	C.knob('selectable').clearAnimated()
+	C['xform_order'].setExpression(name + '.xform_order')
+	C.knob('xform_order').clearAnimated()
+	C['rot_order'].setExpression(name + '.rot_order')
+	C.knob('rot_order').clearAnimated()
+	
+	C['translate'].setExpression(name + '.translate')
+	C['rotate'].setExpression(name + \".rotate\")
+	C['scaling'].setExpression(name + \".scaling\")
+	C['uniform_scale'].setExpression(name + '.uniform_scale')
+	C['skew'].setExpression(name + '.skew')
+	C['pivot'].setExpression(name + '.pivot')
+	
+	C['projection_mode'].setExpression(name + '.projection_mode')
+	C.knob('projection_mode').clearAnimated()
+	C['focal'].setExpression(name + '.focal')
+	C['haperture'].setExpression(name + '.haperture')
+	C['vaperture'].setExpression(name + '.vaperture')
+	
+	C['near'].setExpression(name + '.near')
+	C.knob('near').clearAnimated()
+
+	C['far'].setExpression(name + '.far')
+	C.knob('far').clearAnimated()
+
+	C['win_translate'].setExpression(name + '.win_translate')
+	C.knob('win_translate').clearAnimated()
+
+	C['win_scale'].setExpression(name + '.win_scale')
+	C.knob('win_scale').clearAnimated()
+
+	C['winroll'].setExpression(name + '.winroll')
+	C.knob('winroll').clearAnimated()
+
+	C['focal_point'].setExpression(name + '.focal_point')
+	C.knob('focal_point').clearAnimated()
+
+	C['fstop'].setExpression(name + '.fstop')
+	C.knob('fstop').clearAnimated()
+
+	C.setInput(0,None)
+else:
+	nuke.message('A Camera need to be link to the CameraMixer node!')
+"}
+ addUserKnob {22 CreateBakedCam l "<font color = \"CornflowerBlue\"> Create CameraMixed (Baked)" t "Create a Camera node that have all knobs beked (enter the frame range to generate keys)." -STARTLINE T 
+"
+def bakeExpressions(nodes=None, start=None, end=None, views=None):
+	if nodes is None:
+		nodes = nuke.selectedNodes()
+		if not nodes:
+			nuke.message('No nodes to bake')
+		return
+
+	scriptRange = nuke.root().frameRange()
+	if start is None:
+		start = scriptRange.first()
+	if end is None:
+		end = scriptRange.last()
+	if views is None:
+		views = nuke.views()
+	elif not views:
+		nuke.message('No views to bake')
+		return
+	elif not set(views).issubset(nuke.views()):
+		nuke.message('Not all views in %s exist in script' % views)
+		return
+
+	for node in nodes:
+		for knob in node.knobs().itervalues():
+			if isinstance(knob, nuke.Array_Knob):
+				for view in views:
+					# There's currently no way to ask a knob if it has an
+					# expression at a given view, so we have to check the
+					# AnimationCurve objects for that. However, we can still
+					# use knob.isAnimated() to partially optimize this.
+					if knob.isAnimated(view=view):
+						aSize = 1 if knob.singleValue(view) else knob.arraySize()
+						for index in range(aSize):
+							anim = knob.animation(index, view=view)
+							if anim is None or anim.noExpression():
+								continue
+							for f in range(start, end + 1):
+								#knob.setValueAt(anim.evaluate(f), f, index)
+								anim.setKey(f, anim.evaluate(f))
+							knob.setExpression('curve', channel=index, view=view)
+							# Even if the expression would have evaluated to a
+							# constant (flat) curve, we can't tell until after
+							# it has been baked and the expression is gone.
+							if anim.constant():
+								knob.clearAnimated(index, view=view)
+
+def promptAndBake(nodeToBake):
+	# Simple GUI wrapper for the ``bakeExpressions`` function that prompts for an
+	# input frame range and view list, and always operates on the selected nodes.
+	nodes = []
+	nodes.append(nodeToBake)
+
+	fr = nuke.getFramesAndViews('Range to Bake', str(nuke.root().frameRange()))
+
+	if fr is None:
+		nuke.delete(nodeToBake)
+		return
+
+	fr, v = fr
+	try:
+		fr = nuke.FrameRange(fr)
+	except ValueError as e:
+		nuke.message(str(e))
+		return
+	bakeExpressions(nodes=nodes, start=fr.first(), end=fr.last(), views=v)
+
+groupNode = nuke.thisNode()
+name = groupNode.name()
+nodeX = groupNode['xpos'].value()
+nodeY = groupNode['ypos'].value()
+nodeX = int(nodeX)
+nodeY = int(nodeY)
+
+for node in nuke.root().begin().selectedNodes():
+	node.setSelected(False)
+
+if groupNode.input(0) is not None and groupNode.input(1) is not None:
+	nuke.thisNode().end()
+	C = nuke.createNode('Camera2', inpanel=False)
+	C.setXYpos(nodeX + 100, nodeY)
+
+	C['tile_color'].setValue(0xb0a45dff)
+	C['label'].setValue('(' +name + ')')
+
+	C['display'].setExpression(name + '.display')
+	C.knob('display').clearAnimated()
+	C['selectable'].setExpression(name + '.selectable')
+	C.knob('selectable').clearAnimated()
+	C['xform_order'].setExpression(name + '.xform_order')
+	C.knob('xform_order').clearAnimated()
+	C['rot_order'].setExpression(name + '.rot_order')
+	C.knob('rot_order').clearAnimated()
+
+	C['translate'].setExpression(name + '.translate')
+	C['rotate'].setExpression(name + '.rotate')
+	C['scaling'].setExpression(name + '.scaling')
+	C['uniform_scale'].setExpression(name + '.uniform_scale')
+	C['skew'].setExpression(name + '.skew')
+	C['pivot'].setExpression(name + '.pivot')
+
+	C['projection_mode'].setExpression(name + '.projection_mode')
+	C.knob('projection_mode').clearAnimated()
+	C['focal'].setExpression(name + '.focal')
+	C['haperture'].setExpression(name + '.haperture')
+	C['vaperture'].setExpression(name + '.vaperture')
+
+	C['near'].setExpression(name + '.near')
+	C.knob('near').clearAnimated()
+
+	C['far'].setExpression(name + '.far')
+	C.knob('far').clearAnimated()
+
+	C['win_translate'].setExpression(name + '.win_translate')
+	C.knob('win_translate').clearAnimated()
+
+	C['win_scale'].setExpression(name + '.win_scale')
+	C.knob('win_scale').clearAnimated()
+
+	C['winroll'].setExpression(name + '.winroll')
+	C.knob('winroll').clearAnimated()
+
+	C['focal_point'].setExpression(name + '.focal_point')
+	C.knob('focal_point').clearAnimated()
+
+	C['fstop'].setExpression(name + '.fstop')
+	C.knob('fstop').clearAnimated()
+	C.setInput(0,None)
+
+	promptAndBake(C)
+else:
+	nuke.message('A Camera need to be link to the CameraMixer node!')
+"}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {20 CameraMixGroup l "Camera Dissolve (Result)" n 1}
+ CameraMixGroup 0
+ addUserKnob {41 display T CameraMix.display}
+ addUserKnob {41 selectable -STARTLINE T CameraMix.selectable}
+ addUserKnob {41 transform T CameraMix.transform}
+ addUserKnob {41 xform_order l "transform order" T CameraMix.xform_order}
+ addUserKnob {41 rot_order l "rotation order" T CameraMix.rot_order}
+ addUserKnob {41 translate T CameraMix.translate}
+ addUserKnob {41 rotate T CameraMix.rotate}
+ addUserKnob {41 scaling l scale T CameraMix.scaling}
+ addUserKnob {41 uniform_scale l "uniform scale" T CameraMix.uniform_scale}
+ addUserKnob {41 skew T CameraMix.skew}
+ addUserKnob {41 pivot T CameraMix.pivot}
+ addUserKnob {20 "" l "Local matrix" n 2}
+ addUserKnob {41 useMatrix l "specify matrix" T CameraMix.useMatrix}
+ addUserKnob {41 matrix l "" -STARTLINE T CameraMix.matrix}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 "" l "World matrix" n 2}
+ addUserKnob {41 world_matrix l "" -STARTLINE T CameraMix.world_matrix}
+ addUserKnob {20 "" n -1}
+ addUserKnob {26 ""}
+ addUserKnob {41 projection_mode l projection T CameraMix.projection_mode}
+ addUserKnob {41 focal l "focal length" T CameraMix.focal}
+ addUserKnob {41 haperture l "horiz aperture" T CameraMix.haperture}
+ addUserKnob {41 vaperture l "vert aperture" T CameraMix.vaperture}
+ addUserKnob {41 near T CameraMix.near}
+ addUserKnob {41 far T CameraMix.far}
+ addUserKnob {41 win_translate l "window translate" T CameraMix.win_translate}
+ addUserKnob {41 win_scale l "window scale" T CameraMix.win_scale}
+ addUserKnob {41 winroll l "window roll" T CameraMix.winroll}
+ addUserKnob {41 focal_point l "focal distance" T CameraMix.focal_point}
+ addUserKnob {41 fstop T CameraMix.fstop}
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v04 - CGEV - 2016"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "Mix \[value Mix]"
+}
+ Camera2 {
+  inputs 0
+  read_from_file {{parent.input0.read_from_file_link}}
+  translate {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].translate.x]-((\[value \[topnode this.parent.input0].translate.x]-\[value \[topnode this.parent.input1].translate.x])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].translate.x]-((\[value \[topnode this.parent.input1].translate.x]-\[value \[topnode this.parent.input2].translate.x])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].translate.x]-((\[value \[topnode this.parent.input2].translate.x]-\[value \[topnode this.parent.input3].translate.x])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].translate.x]-((\[value \[topnode this.parent.input3].translate.x]-\[value \[topnode this.parent.input4].translate.x])*(Mix-4))\"\}]\n"} {"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].translate.y]-((\[value \[topnode this.parent.input0].translate.y]-\[value \[topnode this.parent.input1].translate.y])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].translate.y]-((\[value \[topnode this.parent.input1].translate.y]-\[value \[topnode this.parent.input2].translate.y])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].translate.y]-((\[value \[topnode this.parent.input2].translate.y]-\[value \[topnode this.parent.input3].translate.y])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].translate.y]-((\[value \[topnode this.parent.input3].translate.y]-\[value \[topnode this.parent.input4].translate.y])*(Mix-4))\"\}]\n"} {"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].translate.z]-((\[value \[topnode this.parent.input0].translate.z]-\[value \[topnode this.parent.input1].translate.z])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].translate.z]-((\[value \[topnode this.parent.input1].translate.z]-\[value \[topnode this.parent.input2].translate.z])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].translate.z]-((\[value \[topnode this.parent.input2].translate.z]-\[value \[topnode this.parent.input3].translate.z])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].translate.z]-((\[value \[topnode this.parent.input3].translate.z]-\[value \[topnode this.parent.input4].translate.z])*(Mix-4))\"\}]\n"}}
+  rotate {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].rotate.x]-((\[value \[topnode this.parent.input0].rotate.x]-\[value \[topnode this.parent.input1].rotate.x])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].rotate.x]-((\[value \[topnode this.parent.input1].rotate.x]-\[value \[topnode this.parent.input2].rotate.x])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].rotate.x]-((\[value \[topnode this.parent.input2].rotate.x]-\[value \[topnode this.parent.input3].rotate.x])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].rotate.x]-((\[value \[topnode this.parent.input3].rotate.x]-\[value \[topnode this.parent.input4].rotate.x])*(Mix-4))\"\}]\n"} {"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].rotate.y]-((\[value \[topnode this.parent.input0].rotate.y]-\[value \[topnode this.parent.input1].rotate.y])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].rotate.y]-((\[value \[topnode this.parent.input1].rotate.y]-\[value \[topnode this.parent.input2].rotate.y])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].rotate.y]-((\[value \[topnode this.parent.input2].rotate.y]-\[value \[topnode this.parent.input3].rotate.y])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].rotate.y]-((\[value \[topnode this.parent.input3].rotate.y]-\[value \[topnode this.parent.input4].rotate.y])*(Mix-4))\"\}]\n"} {"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].rotate.z]-((\[value \[topnode this.parent.input0].rotate.z]-\[value \[topnode this.parent.input1].rotate.z])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].rotate.z]-((\[value \[topnode this.parent.input1].rotate.z]-\[value \[topnode this.parent.input2].rotate.z])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].rotate.z]-((\[value \[topnode this.parent.input2].rotate.z]-\[value \[topnode this.parent.input3].rotate.z])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].rotate.z]-((\[value \[topnode this.parent.input3].rotate.z]-\[value \[topnode this.parent.input4].rotate.z])*(Mix-4))\"\}]\n"}}
+  scaling {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].scaling.x]-((\[value \[topnode this.parent.input0].scaling.x]-\[value \[topnode this.parent.input1].scaling.x])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].scaling.x]-((\[value \[topnode this.parent.input1].scaling.x]-\[value \[topnode this.parent.input2].scaling.x])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].scaling.x]-((\[value \[topnode this.parent.input2].scaling.x]-\[value \[topnode this.parent.input3].scaling.x])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].scaling.x]-((\[value \[topnode this.parent.input3].scaling.x]-\[value \[topnode this.parent.input4].scaling.x])*(Mix-4))\"\}]\n"} {"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].scaling.y]-((\[value \[topnode this.parent.input0].scaling.y]-\[value \[topnode this.parent.input1].scaling.y])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].scaling.y]-((\[value \[topnode this.parent.input1].scaling.y]-\[value \[topnode this.parent.input2].scaling.y])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].scaling.y]-((\[value \[topnode this.parent.input2].scaling.y]-\[value \[topnode this.parent.input3].scaling.y])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].scaling.y]-((\[value \[topnode this.parent.input3].scaling.y]-\[value \[topnode this.parent.input4].scaling.y])*(Mix-4))\"\}]\n"} {"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].scaling.z]-((\[value \[topnode this.parent.input0].scaling.z]-\[value \[topnode this.parent.input1].scaling.z])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].scaling.z]-((\[value \[topnode this.parent.input1].scaling.z]-\[value \[topnode this.parent.input2].scaling.z])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].scaling.z]-((\[value \[topnode this.parent.input2].scaling.z]-\[value \[topnode this.parent.input3].scaling.z])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].scaling.z]-((\[value \[topnode this.parent.input3].scaling.z]-\[value \[topnode this.parent.input4].scaling.z])*(Mix-4))\"\}]\n"}}
+  uniform_scale {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].uniform_scale]-((\[value \[topnode this.parent.input0].uniform_scale]-\[value \[topnode this.parent.input1].uniform_scale])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].uniform_scale]-((\[value \[topnode this.parent.input1].uniform_scale]-\[value \[topnode this.parent.input2].uniform_scale])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].uniform_scale]-((\[value \[topnode this.parent.input2].uniform_scale]-\[value \[topnode this.parent.input3].uniform_scale])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].uniform_scale]-((\[value \[topnode this.parent.input3].uniform_scale]-\[value \[topnode this.parent.input4].uniform_scale])*(Mix-4))\"\}]\n"}}
+  skew {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].skew.x]-((\[value \[topnode this.parent.input0].skew.x]-\[value \[topnode this.parent.input1].skew.x])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].skew.x]-((\[value \[topnode this.parent.input1].skew.x]-\[value \[topnode this.parent.input2].skew.x])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].skew.x]-((\[value \[topnode this.parent.input2].skew.x]-\[value \[topnode this.parent.input3].skew.x])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].skew.x]-((\[value \[topnode this.parent.input3].skew.x]-\[value \[topnode this.parent.input4].skew.x])*(Mix-4))\"\}]\n"} {"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].skew.y]-((\[value \[topnode this.parent.input0].skew.y]-\[value \[topnode this.parent.input1].skew.y])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].skew.y]-((\[value \[topnode this.parent.input1].skew.y]-\[value \[topnode this.parent.input2].skew.y])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].skew.y]-((\[value \[topnode this.parent.input2].skew.y]-\[value \[topnode this.parent.input3].skew.y])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].skew.y]-((\[value \[topnode this.parent.input3].skew.y]-\[value \[topnode this.parent.input4].skew.y])*(Mix-4))\"\}]\n"} {"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].skew.z]-((\[value \[topnode this.parent.input0].skew.z]-\[value \[topnode this.parent.input1].skew.z])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].skew.z]-((\[value \[topnode this.parent.input1].skew.z]-\[value \[topnode this.parent.input2].skew.z])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].skew.z]-((\[value \[topnode this.parent.input2].skew.z]-\[value \[topnode this.parent.input3].skew.z])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].skew.z]-((\[value \[topnode this.parent.input3].skew.z]-\[value \[topnode this.parent.input4].skew.z])*(Mix-4))\"\}]\n"}}
+  pivot {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].pivot.x]-((\[value \[topnode this.parent.input0].pivot.x]-\[value \[topnode this.parent.input1].pivot.x])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].pivot.x]-((\[value \[topnode this.parent.input1].pivot.x]-\[value \[topnode this.parent.input2].pivot.x])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].pivot.x]-((\[value \[topnode this.parent.input2].pivot.x]-\[value \[topnode this.parent.input3].pivot.x])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].pivot.x]-((\[value \[topnode this.parent.input3].pivot.x]-\[value \[topnode this.parent.input4].pivot.x])*(Mix-4))\"\}]\n"} {"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].pivot.y]-((\[value \[topnode this.parent.input0].pivot.y]-\[value \[topnode this.parent.input1].pivot.y])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].pivot.y]-((\[value \[topnode this.parent.input1].pivot.y]-\[value \[topnode this.parent.input2].pivot.y])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].pivot.y]-((\[value \[topnode this.parent.input2].pivot.y]-\[value \[topnode this.parent.input3].pivot.y])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].pivot.y]-((\[value \[topnode this.parent.input3].pivot.y]-\[value \[topnode this.parent.input4].pivot.y])*(Mix-4))\"\}]\n"} {"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].pivot.z]-((\[value \[topnode this.parent.input0].pivot.z]-\[value \[topnode this.parent.input1].pivot.z])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].pivot.z]-((\[value \[topnode this.parent.input1].pivot.z]-\[value \[topnode this.parent.input2].pivot.z])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].pivot.z]-((\[value \[topnode this.parent.input2].pivot.z]-\[value \[topnode this.parent.input3].pivot.z])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].pivot.z]-((\[value \[topnode this.parent.input3].pivot.z]-\[value \[topnode this.parent.input4].pivot.z])*(Mix-4))\"\}]\n"}}
+  matrix {
+      {{parent.input0.matrix i} {parent.input0.matrix i} {parent.input0.matrix i} {parent.input0.matrix i}}
+      {{parent.input0.matrix i} {parent.input0.matrix i} {parent.input0.matrix i} {parent.input0.matrix i}}
+      {{parent.input0.matrix i} {parent.input0.matrix i} {parent.input0.matrix i} {parent.input0.matrix i}}
+      {{parent.input0.matrix i} {parent.input0.matrix i} {parent.input0.matrix i} {parent.input0.matrix i}}
+    }
+  focal {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].focal]-((\[value \[topnode this.parent.input0].focal]-\[value \[topnode this.parent.input1].focal])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].focal]-((\[value \[topnode this.parent.input1].focal]-\[value \[topnode this.parent.input2].focal])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].focal]-((\[value \[topnode this.parent.input2].focal]-\[value \[topnode this.parent.input3].focal])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].focal]-((\[value \[topnode this.parent.input3].focal]-\[value \[topnode this.parent.input4].focal])*(Mix-4))\"\}]\n"}}
+  haperture {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].haperture]-((\[value \[topnode this.parent.input0].haperture]-\[value \[topnode this.parent.input1].haperture])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].haperture]-((\[value \[topnode this.parent.input1].haperture]-\[value \[topnode this.parent.input2].haperture])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].haperture]-((\[value \[topnode this.parent.input2].haperture]-\[value \[topnode this.parent.input3].haperture])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].haperture]-((\[value \[topnode this.parent.input3].haperture]-\[value \[topnode this.parent.input4].haperture])*(Mix-4))\"\}]\n"}}
+  vaperture {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].vaperture]-((\[value \[topnode this.parent.input0].vaperture]-\[value \[topnode this.parent.input1].vaperture])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].vaperture]-((\[value \[topnode this.parent.input1].vaperture]-\[value \[topnode this.parent.input2].vaperture])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].vaperture]-((\[value \[topnode this.parent.input2].vaperture]-\[value \[topnode this.parent.input3].vaperture])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].vaperture]-((\[value \[topnode this.parent.input3].vaperture]-\[value \[topnode this.parent.input4].vaperture])*(Mix-4))\"\}]\n"}}
+  near {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].near]-((\[value \[topnode this.parent.input0].near]-\[value \[topnode this.parent.input1].near])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].near]-((\[value \[topnode this.parent.input1].near]-\[value \[topnode this.parent.input2].near])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].near]-((\[value \[topnode this.parent.input2].near]-\[value \[topnode this.parent.input3].near])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].near]-((\[value \[topnode this.parent.input3].near]-\[value \[topnode this.parent.input4].near])*(Mix-4))\"\}]\n"}}
+  far {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].far]-((\[value \[topnode this.parent.input0].far]-\[value \[topnode this.parent.input1].far])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].far]-((\[value \[topnode this.parent.input1].far]-\[value \[topnode this.parent.input2].far])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].far]-((\[value \[topnode this.parent.input2].far]-\[value \[topnode this.parent.input3].far])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].far]-((\[value \[topnode this.parent.input3].far]-\[value \[topnode this.parent.input4].far])*(Mix-4))\"\}]\n"}}
+  focal_point {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].focal_point]-((\[value \[topnode this.parent.input0].focal_point]-\[value \[topnode this.parent.input1].focal_point])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].focal_point]-((\[value \[topnode this.parent.input1].focal_point]-\[value \[topnode this.parent.input2].focal_point])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].focal_point]-((\[value \[topnode this.parent.input2].focal_point]-\[value \[topnode this.parent.input3].focal_point])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].focal_point]-((\[value \[topnode this.parent.input3].focal_point]-\[value \[topnode this.parent.input4].focal_point])*(Mix-4))\"\}]"}}
+  fstop {{"\[if \{\[value Mix]<=2\} \{return \"\[value \[topnode this.parent.input0].fstop]-((\[value \[topnode this.parent.input0].fstop]-\[value \[topnode this.parent.input1].fstop])*(Mix-1))\"\} elseif \{\[value Mix]>=2 & \[value Mix]<=3\} \{return \"\[value \[topnode this.parent.input1].fstop]-((\[value \[topnode this.parent.input1].focal_point]-\[value \[topnode this.parent.input2].fstop])*(Mix-2))\"\} elseif \{\[value Mix]>=3 & \[value Mix]<=4\} \{return \"\[value \[topnode this.parent.input2].fstop]-((\[value \[topnode this.parent.input2].fstop]-\[value \[topnode this.parent.input3].fstop])*(Mix-3))\"\} else \{return \"\[value \[topnode this.parent.input3].fstop]-((\[value \[topnode this.parent.input3].fstop]-\[value \[topnode this.parent.input4].fstop])*(Mix-4))\"\}]"}}
+  version {{parent.input0.version}}
+  fbx_take_name {{{"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"parent.input0.fbx_take_name i\"\"\" i\"\"\" i\"\"\"\"\"\"\"\"\"\"\"\"\"\"\""}} "-------          "}
+  fbx_node_name {{{"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"parent.input0.fbx_node_name i\"\"\" i\"\"\" i\"\"\"\"\"\"\"\"\"\"\"\"\"\"\""}} "-------          "}
+  fbx_load_take_node_names {{parent.input0.fbx_load_take_node_names x1 0 x15 0 x38 0 x90 0 x95 0 x177 0 x1500 0}}
+  frame_rate {{parent.input0.frame_rate}}
+  use_frame_rate {{parent.input0.use_frame_rate}}
+  compute_rotation {{parent.input0.compute_rotation}}
+  name CameraMix
+  xpos 384
+  ypos 44
+ }
+ Output {
+  name Output
+  xpos 374
+  ypos 151
+ }
+ Input {
+  inputs 0
+  name InputCam2
+  xpos 289
+  ypos -29
+  number 1
+ }
+ Input {
+  inputs 0
+  name InputCam1
+  xpos 139
+  ypos -28
+ }
+end_group

@@ -1,0 +1,17 @@
+set cut_paste_input [stack 0]
+version 6.0 v5
+push $cut_paste_input
+NoOp {
+ name Ruler
+ label "<font size = 3 color=\"red\">x : \[value Distance.w]px\ny : \[value Distance.h]px</font>"
+ selected true
+ icon F_onnode.png
+ hide_input true
+ addUserKnob {20 Ruler}
+ addUserKnob {12 PointA l "Point A"}
+ addUserKnob {12 PointB l "Point B"}
+ PointB {1000 0}
+ addUserKnob {26 line l "" +STARTLINE}
+ addUserKnob {14 Distance l "<font color = \"green\">Distance</font>" R 0 100}
+ Distance {{-(PointA.x-PointB.x)} {-(PointA.y-PointB.y)}}
+}

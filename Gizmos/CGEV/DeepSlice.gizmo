@@ -1,0 +1,123 @@
+Group {
+ name DeepSlice
+ help "Deep Ramp\n\nCreate a ramp with the deep pass.\n\n- Pick a value for the Min and Max to make the ramp you need. Result is in Alpha channel.\n"
+ tile_color 0x60ff
+ selected true
+ addUserKnob {20 FT l "Deep Ramp"}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {18 min l "          Min"}
+ min {0 0 0}
+ addUserKnob {6 min_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 max l Max}
+ max {50 50 50}
+ addUserKnob {6 max_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 by1 l " " T " \n\n\n"}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"} 
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output Alpha
+}
+ Input {
+  inputs 0
+  name Deep
+  xpos 496
+  ypos 257
+ }
+ Dot {
+  name Dot1
+  xpos 530
+  ypos 313
+ }
+set N6679400 [stack 0]
+ DeepExpression {
+  temp_name0 near
+  temp_expr0 "\[value near]"
+  temp_name1 far
+  temp_expr1 "\[value far]"
+  chans1 deep
+  rgba.red "((deep.front - near) / ( far - near )) * rgba.alpha"
+  name DeepExpression1
+  xpos 336
+  ypos 309
+  addUserKnob {20 User}
+  addUserKnob {7 near}
+  near {{parent.min}}
+  addUserKnob {7 far}
+  far {{parent.max}}
+ }
+ DeepToImage {
+  name DeepToImage1
+  xpos 336
+  ypos 355
+ }
+ Shuffle {
+  alpha red
+  name Shuffle3
+  xpos 336
+  ypos 546
+ }
+ Clamp {
+  name Clamp1
+  xpos 336
+  ypos 570
+ }
+push $N6679400
+ DeepToImage {
+  name DeepToImage2
+  xpos 496
+  ypos 346
+ }
+ Shuffle {
+  in deep
+  alpha red
+  name Shuffle1
+  xpos 496
+  ypos 383
+ }
+set Nd62f1800 [stack 0]
+ Expression {
+  expr0 isinf(r)
+  expr1 isinf(g)
+  expr2 isinf(b)
+  expr3 isinf(a)
+  name Expression1
+  selected true
+  xpos 396
+  ypos 449
+ }
+push $Nd62f1800
+ Multiply {
+  channels rgb
+  value 0
+  name Multiply1
+  xpos 598
+  ypos 437
+ }
+ Add {
+  channels rgb
+  value 1000
+  name Add1
+  xpos 598
+  ypos 463
+ }
+push $Nd62f1800
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 496
+  ypos 532
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 496
+  ypos 570
+ }
+ Output {
+  name FranklinVFX
+  xpos 496
+  ypos 637
+ }
+end_group

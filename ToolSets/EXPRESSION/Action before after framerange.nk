@@ -1,0 +1,11 @@
+set cut_paste_input [stack 0]
+version 10.0 v1
+push $cut_paste_input
+Shuffle {
+ name Shuffle1
+ label "\[value in]"
+ selected true
+ xpos 5744
+ ypos -230
+ disable {{"frame < input.first_frame || frame > input.last_frame || frame > frame ? 1 : 0"}}
+}

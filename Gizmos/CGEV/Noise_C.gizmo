@@ -1,0 +1,103 @@
+Group {
+ name Noise_C
+ selected true
+ addUserKnob {20 NoisePlus l "Noise Plus"}
+ addUserKnob {41 output T Noise_ctrl.output}
+ addUserKnob {41 cliptype l "clip to" T Noise_ctrl.cliptype}
+ addUserKnob {41 replace -STARTLINE T Noise_ctrl.replace}
+ addUserKnob {26 Settings}
+ addUserKnob {41 type T Noise_ctrl.type}
+ addUserKnob {41 size l x/ysize T Noise_ctrl.size}
+ addUserKnob {7 Zvalue l Z R 0 5}
+ addUserKnob {22 RandomZ l "Random Z" -STARTLINE T "import random\nnuke.thisNode().knob('Zvalue').setValue( random.randint(1,512) )"}
+ addUserKnob {7 ZSpeed l "Z speed" R 0 10}
+ addUserKnob {7 XOffset l "Offset X" R -50 50}
+ addUserKnob {7 YOffset l Y -STARTLINE R -50 50}
+ addUserKnob {7 XSpeed l "X Speed" R -5 5}
+ addUserKnob {7 YSpeed l "Y Speed" -STARTLINE R -5 5}
+ addUserKnob {41 octaves T Noise_ctrl.octaves}
+ addUserKnob {41 nyquist l "clip at Nyquist limit" -STARTLINE T Noise_ctrl.nyquist}
+ addUserKnob {41 lacunarity T Noise_ctrl.lacunarity}
+ addUserKnob {26 ColorCorrection}
+ addUserKnob {41 color T Noise_ctrl.color}
+ addUserKnob {41 contrast T ColorCorrect_etalo.contrast}
+ addUserKnob {41 gain T Noise_ctrl.gain}
+ addUserKnob {41 gamma T Noise_ctrl.gamma}
+ addUserKnob {41 opacity T Noise_ctrl.opacity}
+ addUserKnob {41 invert T Noise_ctrl.invert}
+ addUserKnob {41 BlackClamp l "Black Clamp" -STARTLINE T Clamp_result.minimum_enable}
+ addUserKnob {41 WhiteClamp l "White Clamp" -STARTLINE T Clamp_result.maximum_enable}
+ addUserKnob {26 "" l mask}
+ addUserKnob {41 maskChannelMask l "" -STARTLINE T Noise_ctrl.maskChannelMask}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Noise_ctrl.invert_mask}
+ addUserKnob {20 Transform}
+ addUserKnob {41 translate T Transform_ctrl.translate}
+ addUserKnob {41 rotate T Transform_ctrl.rotate}
+ addUserKnob {41 scale T Transform_ctrl.scale}
+ addUserKnob {41 skewX l "skew X" T Transform_ctrl.skewX}
+ addUserKnob {41 skewY l "skew Y" T Transform_ctrl.skewY}
+ addUserKnob {41 center T Transform_ctrl.center}
+ addUserKnob {41 xrotate T Noise_ctrl.xrotate}
+ addUserKnob {41 yrotate T Noise_ctrl.yrotate}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos 603
+  ypos 2
+  number 1
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 460
+  ypos -37
+ }
+ Noise {
+  inputs 1+1
+  zoffset {{Zvalue+((t*ZSpeed)/root.last_frame)}}
+  translate {{(t*XSpeed*2)+XOffset+Transform_ctrl.translate.x} {(t*YSpeed*2)+YOffset+Transform_ctrl.translate.y}}
+  rotate {{Transform_ctrl.rotate}}
+  scale {{Transform_ctrl.scale}}
+  skewX {{Transform_ctrl.skewX}}
+  skewY {{Transform_ctrl.skewY}}
+  center {{Transform_ctrl.center.x} {Transform_ctrl.center.y}}
+  p1 {2424 828}
+  p0 {1696 632}
+  name Noise_ctrl
+  xpos 460
+  ypos 2
+ }
+ ColorCorrect {
+  channels {{{Noise_ctrl.output}}}
+  gain 0.92
+  shadows 0
+  midtones 0
+  highlights 0
+  name ColorCorrect_etalo
+  xpos 460
+  ypos 53
+ }
+ Clamp {
+  channels {{{Noise_ctrl.output}}}
+  minimum_enable false
+  maximum_enable false
+  name Clamp_result
+  xpos 460
+  ypos 120
+ }
+ Output {
+  name Output1
+  xpos 460
+  ypos 165
+ }
+ Transform {
+  inputs 0
+  center {1024 778}
+  filter Simon
+  shutteroffset centred
+  name Transform_ctrl
+  xpos 625
+  ypos 82
+ }
+end_group

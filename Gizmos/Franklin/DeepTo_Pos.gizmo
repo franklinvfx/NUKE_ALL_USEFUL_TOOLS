@@ -1,0 +1,154 @@
+Group {
+ name DeepTo_Pos
+ help "Deep to position\n\nSimple convert deep data to a world position pass using the camera.\nThe result is in the rgb channels."
+ tile_color 0x60ff
+ selected true
+ icon F_iconrgb.png
+ addUserKnob {20 User l "Deep To Position"}
+ addUserKnob {41 in l "<font color=\"green\">@b;Deep Channel" T Shuffle_deep.in}
+ addUserKnob {26 S01 l "                           " T " "}
+ addUserKnob {26 FT1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2016"}
+}
+ Input {
+  inputs 0
+  name Cam
+  label "\[value number]"
+  xpos -365
+  ypos -208
+  number 1
+ }
+ Axis2 {
+  display off
+  selectable false
+  name Axis1
+  xpos -355
+  ypos 345
+ }
+ Input {
+  inputs 0
+  name Deep
+  label "\[value number]"
+  xpos -732
+  ypos -201
+ }
+ DeepToImage {
+  name DeepToImage4
+  xpos -732
+  ypos -60
+ }
+set N2454800 [stack 0]
+ Dot {
+  name Dot1
+  xpos -698
+  ypos 507
+ }
+push $N2454800
+ Dot {
+  name Dot83
+  xpos -554
+  ypos -56
+ }
+set N2454000 [stack 0]
+ Shuffle {
+  in deep
+  name Shuffle_deep
+  label "\[value in]"
+  xpos -479
+  ypos 6
+ }
+push $N2454000
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.blue
+  name Copy2
+  selected true
+  xpos -588
+  ypos 71
+ }
+ Expression {
+  expr0 cx
+  expr1 cy*(input.width/input.height)*input.pixel_aspect
+  name Expression7
+  label NDC
+  xpos -588
+  ypos 183
+ }
+ Expression {
+  temp_name0 h_tan
+  temp_expr0 (haperture/2)/focal
+  temp_name1 v_tan
+  temp_expr1 (vaperture/2)/focal
+  expr0 b*(r*h_tan)
+  expr1 b*(g*v_tan)
+  name Expression8
+  label "NDC to Pcam"
+  xpos -588
+  ypos 243
+  addUserKnob {20 User}
+  addUserKnob {7 focal}
+  focal {{"\[topnode parent.input1].focal"}}
+  addUserKnob {7 haperture}
+  haperture {{"\[topnode parent.input1].haperture"}}
+  addUserKnob {7 vaperture}
+  vaperture {{"\[topnode parent.input1].vaperture"}}
+ }
+ Multiply {
+  channels {-rgba.red -rgba.green rgba.blue none}
+  value -1
+  name Multiply10
+  xpos -588
+  ypos 308
+ }
+ ColorMatrix {
+  matrix {
+      {{Axis1.world_matrix.0} {Axis1.world_matrix.1} {Axis1.world_matrix.2}}
+      {{Axis1.world_matrix.4} {Axis1.world_matrix.5} {Axis1.world_matrix.6}}
+      {{Axis1.world_matrix.8} {Axis1.world_matrix.9} {Axis1.world_matrix.10}}
+    }
+  name ColorMatrix3
+  label "Inverse Cam rotation"
+  xpos -588
+  ypos 352
+ }
+ Add {
+  channels rgb
+  value {{Axis1.world_matrix.3} {Axis1.world_matrix.7} {Axis1.world_matrix.11} {curve}}
+  name Add3
+  label "World minus Camera pos"
+  xpos -588
+  ypos 410
+ }
+ Unpremult {
+  name Unpremult1
+  xpos -588
+  ypos 471
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -588
+  ypos 497
+ }
+ Premult {
+  name Premult1
+  xpos -588
+  ypos 535
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos -588
+  ypos 561
+ }
+ Output {
+  name FranklinVFX
+  xpos -588
+  ypos 616
+ }
+end_group

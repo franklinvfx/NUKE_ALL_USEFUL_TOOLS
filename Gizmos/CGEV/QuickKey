@@ -1,0 +1,149 @@
+#QuickKey v2.0
+#Contact cameron.a.carson@gmail.com with questions
+Gizmo {
+ help "A simple combination of 3 standard Keyer nodes utilizing the color picker for quickly grabbing keys.\n\nAny questions contact cameron.a.carson@gmail.com"
+ name QuickKey
+ knobChanged "\nn = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() == 'rgbpick' or k.name() == 'range' or k.name() == 'falloff':\n	cpick = n['rgbpick'].value()\n	range = (n['range'].value()*n['range'].value())/2\n	falloff = (n['falloff'].value()*n['falloff'].value())+range\n	import colorsys\n	hsv = colorsys.rgb_to_hsv(cpick\[0\],cpick\[1\],cpick\[2\])\n	n\['hueSld'\].setValue(hsv\[0\]-falloff,0)\n	n\['hueSld'\].setValue(hsv\[0\]-range,1)\n	n\['hueSld'\].setValue(hsv\[0\]+range,2)\n	n\['hueSld'\].setValue(hsv\[0\]+falloff,3)\n	n\['satSld'\].setValue(hsv\[1\]-falloff,0)\n	n\['satSld'\].setValue(hsv\[1\]-range,1)\n	n\['satSld'\].setValue(hsv\[1\]+range,2)\n	n\['satSld'\].setValue(hsv\[1\]+falloff,3)\n	n\['valSld'\].setValue(hsv\[2\]-falloff,0)\n	n\['valSld'\].setValue(hsv\[2\]-range,1)\n	n\['valSld'\].setValue(hsv\[2\]+range,2)\n	n\['valSld'\].setValue(hsv\[2\]+falloff,3)"
+ tile_color 0xff00ff
+ selected true
+ addUserKnob {20 main l Main}
+ addUserKnob {18 rgbpick l "Color Picker"}
+ rgbpick {0 1 0}
+ addUserKnob {6 rgbpick_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 invert l "Invert Alpha" +STARTLINE}
+ addUserKnob {6 premult l "Premult Output" +STARTLINE}
+ addUserKnob {26 "" +STARTLINE T " "}
+ addUserKnob {7 range l Range}
+ range 0.1
+ addUserKnob {7 falloff l Falloff}
+ falloff 0.1
+ addUserKnob {26 ""}
+ addUserKnob {20 tuning "Fine Tuning" n 1}
+ tuning 0
+ addUserKnob {39 hueSld Hue n 5}
+ hueSld {0.31833333 0.32833333 0.33833333 0.34833333}
+ addUserKnob {39 satSld Saturation n 4}
+ satSld {0.985 0.995 1.005 1.015}
+ addUserKnob {39 valSld Value n 4}
+ valSld {0.985 0.995 1.005 1.015}
+ addUserKnob {20 endGroup n -1}
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 100
+  ypos -50
+ }
+ Dot {
+  name Dot1
+  xpos 134
+  ypos 34
+ }
+set Nb1a5b800 [stack 0]
+ Dot {
+  name Dot2
+  xpos 274
+  ypos 34
+ }
+ Keyer {
+  operation "max keyer"
+  range {{parent.valSld.A} {parent.valSld.B} {parent.valSld.C} {parent.valSld.D}}
+  name ValKeyer
+  xpos 240
+  ypos 104
+ }
+push 0
+push $Nb1a5b800
+ Dot {
+  name Dot5
+  xpos -146
+  ypos 34
+ }
+ Expression {
+  temp_name0 max
+  temp_expr0 max(r,g,b)
+  temp_name1 min
+  temp_expr1 min(r,g,b)
+  temp_name2 range
+  temp_expr2 "(max(r,g,b) - min(r,g,b))"
+  temp_name3 hue
+  temp_expr3 "max == r ? ((max(r,g,b)-b)/6+((max(r,g,b) - min(r,g,b))/2))/(max(r,g,b) - min(r,g,b))-((max(r,g,b)-g)/6+((max(r,g,b) - min(r,g,b))/2))/(max(r,g,b) - min(r,g,b)) : max == g ? (1/3)+((max-r)/6+(range/2))/range-((max-b)/6+(range/2))/range : max == b ? (2/3)+((max-g)/6+(range/2))/range-((max-r)/6+(range/2))/range : 0"
+  expr0 r
+  expr1 g
+  expr2 b
+  expr3 "hue < 0 ? hue+1 : hue > 1 ? hue-1 : hue"
+  name Expression1
+  xpos -180
+  ypos 70
+ }
+set Nb2307800 [stack 0]
+ Keyer {
+  input alpha
+  operation "max keyer"
+  range {{parent.hueSld.A+1} {parent.hueSld.B+1} {parent.hueSld.C+1} {parent.hueSld.D+1}}
+  name Keyer3
+  xpos -40
+  ypos 104
+ }
+push 0
+push $Nb2307800
+ Keyer {
+  input alpha
+  operation "max keyer"
+  range {{parent.hueSld.A-1} {parent.hueSld.B-1} {parent.hueSld.C-1} {parent.hueSld.D-1}}
+  name Keyer2
+  xpos -320
+  ypos 104
+ }
+push $Nb2307800
+ Keyer {
+  input alpha
+  operation "max keyer"
+  range {{parent.hueSld.A} {parent.hueSld.B} {parent.hueSld.C} {parent.hueSld.D}}
+  name Keyer1
+  xpos -180
+  ypos 104
+ }
+ Merge2 {
+  inputs 3+1
+  operation max
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name Merge3
+  xpos -180
+  ypos 144
+ }
+push $Nb1a5b800
+ Keyer {
+  operation "saturation key"
+  range {{parent.satSld.A} {parent.satSld.B} {parent.satSld.C} {parent.satSld.D}}
+  name SatKeyer
+  xpos 100
+  ypos 104
+ }
+ Merge2 {
+  inputs 3+1
+  operation mask
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name Merge1
+  xpos 100
+  ypos 184
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 100
+  ypos 224
+  disable {{!parent.invert}}
+ }
+ Premult {
+  name Premult1
+  xpos 100
+  ypos 270
+  disable {{!parent.premult}}
+ }
+ Output {
+  name Output1
+  xpos 100
+  ypos 310
+ }
+end_group

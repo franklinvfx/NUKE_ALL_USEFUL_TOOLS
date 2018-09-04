@@ -1,0 +1,31 @@
+set cut_paste_input [stack 0]
+version 9.0 v6
+Group {
+ inputs 0
+ name Disable_Ctrl
+ help "Disable Nodes\n\nLink with expression the disable knob of nodes you want. \n\nThe curent node become the master of each linked nodes.\nYou can have a different value on disable knob in user interface and in batch.\n"
+ onCreate nuke.thisNode().knob('saveName').setValue(nuke.thisNode().name())
+ knobChanged "name = nuke.thisNode().name()\nall = nuke.allNodes()\n\nknobsToCheck = \['resetall', 'linkselected', 'resetselected', 'selected']\n\nif nuke.thisKnob().name() in knobsToCheck:\n    expr = \[]\n    for node in nuke.allNodes(group=nuke.root()):\n        for knob in node.allKnobs():\n            if knob.hasExpression() and name + '.' in knob.toScript():\n                expr.append(knob)\n\n    num = str(int(len(expr)))\n    if num == '0':\n        nuke.thisNode().knob('output').setValue('rgb')\n    elif num == '1':\n        nuke.thisNode().knob('output').setValue(num + ' Node')\n    else:\n        nuke.thisNode().knob('output').setValue(num + ' Nodes')\n\nelif nuke.thisKnob().name() == 'name':\n    saveName = nuke.thisNode().knob('saveName').value()\n\n    for node in nuke.allNodes(group=nuke.root()):\n        for knob in node.allKnobs():\n            if knob.hasExpression() and saveName + '.' in knob.toScript():\n                saveExpr = knob.toScript()\n                saveExpr = saveExpr.replace('\{\"\\\\', '')\n                saveExpr = saveExpr.replace('\"\}', '')\n                saveExpr = saveExpr.replace(saveName, name)\n                knob.setExpression(saveExpr)\n\n    nuke.thisNode().knob('saveName').setValue(name)\n\nelif nuke.thisKnob().name() == 'local':\n    if nuke.thisKnob().value():\n        nuke.thisNode().knob('disable').setValue(True)\n    else:\n        nuke.thisNode().knob('disable').setValue(False)\n\nelif nuke.thisKnob().name() == 'disable':\n    if nuke.thisKnob().value():\n        nuke.thisNode().knob('local').setValue(True)\n    else:\n        nuke.thisNode().knob('local').setValue(False)"
+ tile_color 0xffff00ff
+ note_font_color 0xff
+ selected true
+ xpos 191
+ ypos 383
+ hide_input true
+ addUserKnob {20 disablectrl l "Disable Control"}
+ addUserKnob {26 T01 l "                      " T " "}
+ addUserKnob {22 linkselected l "  Link Selected Nodes  " t "Link with expression the disable knob of all selected nodes.\nThe curent node become the master of each linked nodes." T "name = nuke.thisNode().name()\n\nfor s in nuke.root().begin().selectedNodes():\n    if s.Class() in \['NoOp', 'Dot']:\n        nuke.message(\"Disable Knob don't exist on this node!\")\n    else:\n        s\['disable'].setExpression('\$gui ? ' + name + '.disable  : ' + name + '.batch')\n\nnuke.toNode(name)\['disable'].clearAnimated()" +STARTLINE}
+ addUserKnob {26 SP01 l "" -STARTLINE T "                 "}
+ addUserKnob {22 resetselected l "  Unlink Selected  " t "Remove the expression in the disable knob of each selected nodes." -STARTLINE T "node = nuke.thisGroup()\ndep = node.dependent(nuke.EXPRESSIONS)\nfor i in dep:\n    if i\['selected'].value():\n        i\['disable'].clearAnimated()\n        i\['disable'].setValue(False)"}
+ addUserKnob {26 SP00 l " " T "                                                     "}
+ addUserKnob {22 resetall l "  Unlink All  " t "Remove the expression in the disable knob of all linked nodes." -STARTLINE T "node = nuke.thisGroup()\ndep = node.dependent(nuke.EXPRESSIONS)\nfor i in dep:\n    i\['disable'].clearAnimated()\n    i\['disable'].setValue(False)\n\nwith nuke.root():\n    for node in nuke.selectedNodes():\n        node.setSelected(False)"}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {6 local l Disable t "Disable all linked nodes on working interface. They stay enable on renderfarm." +STARTLINE}
+ addUserKnob {6 batch l "< font color='black'>.  < font color='grey'> Disable ( Batch )" t "Disable all linked nodes during a batch." +STARTLINE}
+ addUserKnob {26 by2 l "                     " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter votre superviseur\n" -STARTLINE T "<font color=\"#1C1C1C\"> v03 - CGEV - 2017"}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output rgb
+ addUserKnob {26 saveName l INVISIBLE +INVISIBLE T Disable_Ctrl}
+}
+end_group

@@ -1,0 +1,559 @@
+Group {
+ name Despill_F
+ knobChanged "listenedKnobs = \['color', 'light']\n\nif nuke.thisKnob().name() in listenedKnobs:\n    with nuke.thisNode():\n        node = nuke.toNode('Saturation1')\n        r = node.sample('red', 1, 1)\n        g = node.sample('green', 1, 1)\n        b = node.sample('blue', 1, 1)\n        print r, g, b\n        node = nuke.toNode('Keylight1')\n        node.knob('screenColour').setValue(\[r,g,b])"
+ tile_color 0x767676ff
+ selected true
+ addUserKnob {20 User l Despill}
+ addUserKnob {18 color l "Screen Color"}
+ color {0.25 0.25 0.25}
+ addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 color_1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {26 T01 l "Spill Color :" T " "}
+ addUserKnob {18 tint l Tint}
+ tint 1
+ addUserKnob {6 tint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 light l Gain R 0 10}
+ light 1
+ addUserKnob {6 clamp l Clamp -STARTLINE}
+ addUserKnob {6 alpha_spill l "Output spill matte in alpha" +STARTLINE}
+ addUserKnob {26 FT1 l " " +DISABLED +HIDDEN}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVfx.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin Vfx - 2017"}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix T Dissolve1.which}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 347
+  ypos 58
+ }
+ Dot {
+  name Dot2
+  xpos 382
+  ypos 135
+ }
+set N8b287c00 [stack 0]
+push $N8b287c00
+push $N8b287c00
+push $N8b287c00
+ OFXuk.co.thefoundry.keylight.keylight_v201 {
+  inputs 4
+  show "Final Result"
+  unPreMultiply false
+  screenColour {0.25 0.25 0.25}
+  screenGain 1
+  screenBalance 1
+  alphaBias {0.5 0.5 0.5}
+  despillBias {0.5 0.5 0.5}
+  gangBiases true
+  preBlur 0
+  "Screen Matte" 0
+  screenClipMin 0
+  screenClipMax 1
+  screenClipRollback 0
+  screenGrowShrink 0
+  screenSoftness 0
+  screenDespotBlack 0
+  screenDespotWhite 0
+  screenReplaceMethod "Soft Colour"
+  screenReplaceColour {0.5 0.5 0.5}
+  Tuning 0
+  midPoint 0.5
+  lowGain 1
+  midGain 1
+  highGain 1
+  "Inside Mask" 0
+  sourceAlphaHandling Ignore
+  insideReplaceMethod "Soft Colour"
+  insideReplaceColour {0.5 0.5 0.5}
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  balanceSet true
+  insideComponent None
+  outsideComponent None
+  cacheBreaker true
+  name Keylight1
+  xpos 533
+  ypos 255
+ }
+set N84f82400 [stack 0]
+ Dot {
+  name Dot4
+  xpos 750
+  ypos 259
+ }
+ Dot {
+  name Dot5
+  xpos 750
+  ypos 434
+ }
+set Ne7c51800 [stack 0]
+ Dot {
+  name Dot3
+  xpos 750
+  ypos 547
+ }
+set N6ee7b800 [stack 0]
+ Invert {
+  name Invert1
+  xpos 716
+  ypos 899
+ }
+push $N8b287c00
+ Dot {
+  name Dot1
+  xpos 242
+  ypos 135
+ }
+ AddChannels {
+  channels alpha
+  name AddChannels1
+  xpos 208
+  ypos 793
+ }
+push $N6ee7b800
+push $Ne7c51800
+push $N84f82400
+ Saturation {
+  saturation 0
+  mode Maximum
+  name Saturation2
+  xpos 456
+  ypos 317
+ }
+ Grade {
+  multiply {{parent.tint} {parent.tint} {parent.tint} {parent.tint}}
+  name Grade3
+  xpos 456
+  ypos 343
+ }
+push $N84f82400
+ Group {
+  inputs 3
+  name ColorMerge
+  help "Color Merge\n\nMerge the color from the Input \"Color\" to the footage in Input \"Lum\".\n\nIf the \"Mix Color\" slider is on 0, the color is keep from the Input \"Lum\".\nIt's possible to adjust the grading directly in this node before mix.\n"
+  knobChanged "c = nuke.toNode('Copy3')\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(2) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')"
+  tile_color 0x7aa9ffff
+  xpos 533
+  ypos 430
+  icon F_iconrgb.png
+  addUserKnob {20 User l "Color Merge"}
+  addUserKnob {41 which l "             Mix Color" T Dissolve1.which}
+  addUserKnob {26 S01 l " " T " "}
+  addUserKnob {26 by1 l " " T " "}
+  addUserKnob {26 by2 l " " T "                                                                                               "}
+  addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+  addUserKnob {26 ""}
+  addUserKnob {41 from0 l mask T Copy3.from0}
+  addUserKnob {41 disable_1 l invert -STARTLINE T Invert1.disable}
+  addUserKnob {41 alpha l "(un)premult by" T Unpremult1.alpha}
+  addUserKnob {41 invert -STARTLINE T Unpremult1.invert}
+ }
+  Input {
+   inputs 0
+   name Src
+   xpos -89
+   ypos -750
+  }
+set N84f82800 [stack 0]
+  Dot {
+   name Dot5
+   xpos -199
+   ypos -747
+  }
+  Dot {
+   name Dot16
+   xpos -199
+   ypos 265
+  }
+set Na642d400 [stack 0]
+  Dot {
+   name Dot6
+   xpos -199
+   ypos 460
+  }
+set N8604c000 [stack 0]
+  Dot {
+   name Dot3
+   tile_color 0xffffffff
+   xpos -199
+   ypos 576
+  }
+set N8561f800 [stack 0]
+  Dot {
+   name Dot7
+   xpos -199
+   ypos 749
+  }
+  Input {
+   inputs 0
+   name mask
+   xpos 349
+   ypos 479
+   number 2
+   addUserKnob {20 User}
+   addUserKnob {6 in +STARTLINE}
+   in {{"\[exists input2]"}}
+  }
+  AddChannels {
+   channels rgba
+   name AddChannels3
+   xpos 349
+   ypos 505
+  }
+set N8c9e6c00 [stack 0]
+push $N8c9e6c00
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy3
+   xpos 349
+   ypos 531
+   disable {{!parent.mask.in}}
+  }
+  Invert {
+   name Invert1
+   xpos 349
+   ypos 567
+   disable true
+  }
+push $N8561f800
+push $Na642d400
+  AddChannels {
+   channels alpha
+   name AddChannels1
+   xpos -71
+   ypos 255
+  }
+push $N84f82800
+  Unpremult {
+   alpha none
+   name Unpremult1
+   xpos -89
+   ypos -552
+  }
+set N84f82c00 [stack 0]
+  Dot {
+   name Dot4
+   xpos 61
+   ypos -548
+  }
+set N9333c400 [stack 0]
+  Input {
+   inputs 0
+   name Color
+   xpos 207
+   ypos -755
+   number 1
+  }
+  NoOp {
+   name ChannelCheck
+   xpos 207
+   ypos -578
+   addUserKnob {20 User}
+   addUserKnob {6 alpha +STARTLINE}
+   alpha {{"\[python \"len(\\\[n for n in nuke.channels(nuke.thisNode().input(0)) if n.find(\\\".r\\\") != -1])>0\"]"}}
+  }
+  Switch {
+   inputs 2
+   which {{!ChannelCheck.alpha}}
+   name Switch2
+   xpos 207
+   ypos -552
+  }
+  Clamp {
+   minimum 0.0001
+   maximum_enable false
+   name Clamp1
+   xpos 207
+   ypos -526
+  }
+  Dot {
+   name Dot8
+   xpos 241
+   ypos -457
+  }
+set N8561fc00 [stack 0]
+  Dot {
+   name Dot15
+   xpos 351
+   ypos -457
+  }
+set N9333c800 [stack 0]
+  Dot {
+   name Dot14
+   xpos 482
+   ypos -457
+  }
+set Na642dc00 [stack 0]
+  Dot {
+   name Dot13
+   xpos 592
+   ypos -457
+  }
+set N84d4f400 [stack 0]
+  Dot {
+   name Dot12
+   xpos 727
+   ypos -457
+  }
+set N35caac00 [stack 0]
+push $N35caac00
+  Dot {
+   name Dot11
+   xpos 837
+   ypos -457
+  }
+  ColorMatrix {
+   matrix {
+       {0 0 0}
+       {0 0 0}
+       {1 1 1}
+     }
+   name ColorMatrix4
+   xpos 803
+   ypos -376
+  }
+  Merge2 {
+   inputs 2
+   operation divide
+   name Merge1
+   xpos 693
+   ypos -376
+  }
+  Dot {
+   name Dot9
+   xpos 727
+   ypos -197
+  }
+push $Na642dc00
+push $N84d4f400
+  ColorMatrix {
+   matrix {
+       {0 0 0}
+       {1 1 1}
+       {0 0 0}
+     }
+   name ColorMatrix3
+   xpos 558
+   ypos -378
+  }
+  Merge2 {
+   inputs 2
+   operation divide
+   name Merge3
+   xpos 448
+   ypos -378
+  }
+  Dot {
+   name Dot10
+   xpos 482
+   ypos -297
+  }
+push $N8561fc00
+push $N9333c800
+  ColorMatrix {
+   matrix {
+       {1 1 1}
+       {0 0 0}
+       {0 0 0}
+     }
+   name ColorMatrix2
+   xpos 317
+   ypos -379
+  }
+  Merge2 {
+   inputs 2
+   operation divide
+   name Merge2
+   xpos 207
+   ypos -379
+  }
+  Copy {
+   inputs 2
+   from0 rgba.green
+   to0 rgba.green
+   name Copy1
+   xpos 207
+   ypos -306
+  }
+  Copy {
+   inputs 2
+   from0 rgba.blue
+   to0 rgba.blue
+   name Copy2
+   xpos 207
+   ypos -206
+  }
+  Dot {
+   name Dot2
+   xpos 241
+   ypos -73
+  }
+push $N9333c400
+  ColorMatrix {
+   matrix {
+       {1 1 1}
+       {1 1 1}
+       {1 1 1}
+     }
+   name ColorMatrix1
+   xpos 27
+   ypos -378
+  }
+  Dot {
+   name Dot1
+   xpos 61
+   ypos -74
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge4
+   xpos 121
+   ypos -77
+  }
+push $N84f82c00
+  Dot {
+   name Dot17
+   xpos -55
+   ypos 92
+  }
+  MergeExpression {
+   inputs 2
+   temp_name0 BY
+   temp_expr0 "( 0.213*(Br<= 0.0031308 ? 12.92*Br : ( 1.055*pow(Br,1.0 / 2.4)) - 0.055)) + ( 0.715*(Bg<= 0.0031308 ? 12.92*Bg : ( 1.055*pow(Bg,1.0 / 2.4)) - 0.055)) + ( 0.072*(Bb<= 0.0031308 ? 12.92*Bb : ( 1.055*pow(Bb,1.0 / 2.4)) - 0.055))"
+   temp_name1 APb
+   temp_expr1 "(-0.115*(Ar<= 0.0031308 ? 12.92*Ar : ( 1.055*pow(Ar,1.0 / 2.4)) - 0.055)) + (-0.385*(Ag<= 0.0031308 ? 12.92*Ag : ( 1.055*pow(Ag,1.0 / 2.4)) - 0.055)) + ( 0.500*(Ab<= 0.0031308 ? 12.92*Ab : ( 1.055*pow(Ab,1.0 / 2.4)) - 0.055))"
+   temp_name2 APr
+   temp_expr2 "( 0.500*(Ar<= 0.0031308 ? 12.92*Ar : ( 1.055*pow(Ar,1.0 / 2.4)) - 0.055)) + (-0.454*(Ag<= 0.0031308 ? 12.92*Ag : ( 1.055*pow(Ag,1.0 / 2.4)) - 0.055)) + (-0.046*(Ab<= 0.0031308 ? 12.92*Ab : ( 1.055*pow(Ab,1.0 / 2.4)) - 0.055))"
+   expr0 "(( 1.000*BY) + ( 0.000*APb) + ( 1.575*APr))<.04045 ? (( 1.000*BY) + ( 0.000*APb) + ( 1.575*APr))/12.92 : pow(((( 1.000*BY) + ( 0.000*APb) + ( 1.575*APr))+.055)/1.055, 2.4)"
+   expr1 "(( 1.000*BY) + (-0.187*APb) + (-0.468*APr))<.04045 ? (( 1.000*BY) + (-0.187*APb) + (-0.468*APr))/12.92 : pow(((( 1.000*BY) + (-0.187*APb) + (-0.468*APr))+.055)/1.055, 2.4)"
+   expr2 "(( 1.000*BY) + ( 1.856*APb) + ( 0.000*APr))<.04045 ? (( 1.000*BY) + ( 1.856*APb) + ( 0.000*APr))/12.92 : pow(((( 1.000*BY) + ( 1.856*APb) + ( 0.000*APr))+.055)/1.055, 2.4)"
+   name WasherMerge1
+   xpos 121
+   ypos 88
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy4
+   xpos 121
+   ypos 255
+  }
+  Premult {
+   alpha {{{parent.Unpremult1.alpha}}}
+   invert {{parent.Unpremult1.invert}}
+   name Premult1
+   xpos 121
+   ypos 348
+  }
+push $N8604c000
+  Dissolve {
+   inputs 2
+   which 1
+   name Dissolve1
+   xpos 121
+   ypos 451
+  }
+set Nabdf3c00 [stack 0]
+  Keymix {
+   inputs 3
+   name Keymix1
+   xpos -2
+   ypos 567
+   disable {{!parent.mask.in i}}
+  }
+push $Nabdf3c00
+  Switch {
+   inputs 2
+   which {{Copy3.from0}}
+   name Switch1
+   xpos 121
+   ypos 667
+  }
+  CopyBBox {
+   inputs 2
+   name CopyBBox1
+   xpos 121
+   ypos 745
+  }
+  Output {
+   name FranklinVFX
+   xpos 121
+   ypos 866
+  }
+ end_group
+ Grade {
+  inputs 1+1
+  white {{"clamp(parent.light-4, 1, 10)"}}
+  black_clamp false
+  invert_mask true
+  name Grade2
+  xpos 533
+  ypos 543
+ }
+ Clamp {
+  minimum_enable false
+  name Clamp1
+  selected true
+  xpos 533
+  ypos 661
+  disable {{!parent.clamp}}
+ }
+push $N8b287c00
+ Dissolve {
+  inputs 2
+  which 1
+  name Dissolve1
+  xpos 348
+  ypos 661
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 348
+  ypos 793
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 348
+  ypos 899
+  disable {{!parent.alpha_spill}}
+ }
+ Output {
+  name Output1
+  xpos 348
+  ypos 1005
+ }
+push $N8b287c00
+ Grade {
+  white 0
+  add {{parent.color} {parent.color} {parent.color} {parent.color}}
+  name Grade1
+  xpos 532
+  ypos 131
+ }
+ Saturation {
+  saturation {{parent.light+0.94}}
+  mode Maximum
+  name Saturation1
+  xpos 532
+  ypos 157
+ }
+end_group

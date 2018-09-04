@@ -1,0 +1,511 @@
+Group {
+ name Push_Pixel
+ help "Push Pixel\n\nPush or Pull RGB pixels using the Alpha channel as mask (or the Alpha channel from a new Input).\n"
+ knobChanged "\nnode = nuke.thisNode()\nknob = nuke.thisKnob()\ninputT = nuke.exists('Alpha')\nc = nuke.toNode('Copy2')\nif knob.name() in ('aoption', 'showPanel'):\n\tmode = node\['aoption'].value()\n\tif mode == 'Adjust (Erode - Blur)':\n\t\tnode\['erode_1'].setVisible(True)\n\t\tnode\['blur'].setVisible(True)\n\t\tnode\['Show_alpha'].setVisible(True)\n\t\tnode\['S4'].setVisible(True)\n\telif mode == 'No change':\n\t\tnode\['erode_1'].setVisible(False)\n\t\tnode\['erode_1'].setValue(0)\n\t\tnode\['blur'].setVisible(False)\n\t\tnode\['blur'].setValue(0)\n\t\tnode\['Show_alpha'].setVisible(False)\n\t\tnode\['Show_alpha'].setValue(0)\n\t\tnode\['S4'].setVisible(False)\n\t\t\nif knob.name() in ('matte', 'showPanel'):\n\tmode = node\['matte'].value()\n\tif mode == 'From Source':\n\t\tif str(inputT)=='True':\n\t\t\tn = nuke.toNode('Alpha')\n\t\t\tnuke.delete(n)\n\telif mode == 'Create New Input':\n\t\tif str(inputT)=='False':\n\t\t\ti = nuke.createNode('Input', inpanel=False )\n\t\t\ti\['name'].setValue('Alpha')\n\t\t\tn = nuke.toNode('Switch2')\n\t\t\tn.setInput(0,i)\n\t\t\nif nuke.thisKnob().name() == 'inputChange':\n\tif nuke.thisNode().input(1) != None:\n\t\tc\['from0'].setValue('rgba.alpha')\n\telse:\n\t\tc\['from0'].setValue('none')\n\t\nn = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name()=='gang2':\n\tsize_uv_size = n\['size_uv_size'].value()\n\tsize_edge_size = n\['size_edge_size'].value()\n\tsize_soft_select = n\['size_soft_select'].value()\nelif n\['gang2'].value() == True and k.name() in \['size_uv_size','size_edge_size','size_soft_select']:\n\tif k.name() == 'size_uv_size':\n\t\tincrement = k.value() - size_uv_size\n\t\tn\['size_edge_size'].setValue(n\['size_edge_size'].value() + increment )\n\t\tn\['size_soft_select'].setValue(n\['size_soft_select'].value() + increment )\n\tif k.name() == 'size_edge_size':\n\t\tincrement = k.value() - size_edge_size\n\t\tn\['size_uv_size'].setValue(n\['size_uv_size'].value() + increment )\n\t\tn\['size_soft_select'].setValue(n\['size_soft_select'].value() + increment )\n\tif k.name() == 'size_soft_select':\n\t\tincrement = k.value() - size_soft_select\n\t\tn\['size_uv_size'].setValue(n\['size_uv_size'].value() + increment )\n\t\tn\['size_edge_size'].setValue(n\['size_edge_size'].value() + increment )\n\t\t\n\tsize_uv_size = n\['size_uv_size'].value()\n\tsize_edge_size = n\['size_edge_size'].value()\n\tsize_soft_select = n\['size_soft_select'].value()\n"
+ tile_color 0xcc804eff
+ label "\[value label2]"
+ note_font Verdana
+ note_font_size 10
+ note_font_color 0x10000ff
+ selected true
+ icon //stora/diska/global/templatesProd/Other_images/F_iconrgba.png
+ mapsize {0.15 0.15}
+ addUserKnob {20 FT l "Push Pixel"}
+ addUserKnob {4 matte l "<font color=\"grey\">Input <font color=\"white\"> Alpha" t "Choose the Alpha channel you want to use (Alpha is use to select the edges affected by the tool).\n\nFrom Source: \nAutomatic pick the .a from the rgb.\n\nCreate New Input:\nPick the .a from an other Input." M {"From Source" "Create New Input" "" "" "" "" ""}}
+ addUserKnob {26 T1 l "" -STARTLINE T "           "}
+ addUserKnob {4 aoption l "<font color=\"grey\">Alpha (Erode - Blur)" t "Adjust inside the tool the input Alpha (Erode and Blur)." -STARTLINE M {"No change" "Adjust (Erode - Blur)" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {6 Show_alpha l "<font color=\"red\">_Visualise Alpha" t "Overlay the Alpha." +HIDDEN +STARTLINE}
+ addUserKnob {14 erode_1 l "<font color=\"grey\">Erode" t "Erode Alpha" +HIDDEN R -10 10}
+ addUserKnob {14 blur l "<font color=\"grey\">Blur" t "Blur Alpha" +HIDDEN R 0 100}
+ addUserKnob {26 ""}
+ addUserKnob {4 reverse l " " t "Choose the direction of the warp." -STARTLINE M {Push Pull "" "" "" "" ""}}
+ addUserKnob {6 gang2 l Gang -STARTLINE}
+ addUserKnob {26 S1 l " " T " "}
+ addUserKnob {14 size_uv_size l "<font color=\"white\">Value" t "Warp size" R 0 100}
+ size_uv_size 5
+ addUserKnob {14 size_edge_size l "<font color=\"white\">Edge Size" R 0 100}
+ size_edge_size 5
+ addUserKnob {14 size_soft_select l "<font color=\"white\">Soft Select" R 0 100}
+ size_soft_select 5
+ addUserKnob {26 S3 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {4 aout l "<font color=\"grey\">Output<font color=\"white\"> Alpha" t "Choose the Alpha you want to output this node.\n\nInput: Same as Input\n\nExtend: Modified by this tool like the rgb\n\nDifference: The difference between the Input and the Extend Alpha (In normal use it give you an edge)" M {Input Extend Difference "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {26 by2 l " " T "                                                                                                     "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v03 - CGEV - 2017"}
+ addUserKnob {26 ""}
+ addUserKnob {41 from0 l "                mask" T Copy2.from0}
+ addUserKnob {41 invertMask l invert -STARTLINE T Keymix1.invertMask}
+ addUserKnob {1 label2 l INVISIBLE +INVISIBLE}
+ label2 "\[if \{\[value Show_alpha]==\"true\"\} \{return \"\[knob this.tile_color 0xb23030ff]\"\} \{return \"\[knob this.tile_color 0xcc804eff]\"\}]\[if \{\[value Show_alpha]==\"true\"\} \{return \"\[knob this.name_1 \"Check A\"]\"\} \{return \"\[knob this.name_1 \"\"]\"\}]\[value name_1]"
+ addUserKnob {1 name_1 l INVISIBLE +INVISIBLE}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -867
+  ypos 315
+ }
+ Dot {
+  name Dot7
+  xpos -833
+  ypos 426
+ }
+set N6832d800 [stack 0]
+push 0
+ Switch {
+  inputs 2
+  which {{!matte i}}
+  name Switch2
+  xpos -1050
+  ypos 423
+ }
+ AddChannels {
+  channels rgba
+  name AddAlpha
+  xpos -1050
+  ypos 533
+ }
+push $N6832d800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos -867
+  ypos 527
+ }
+set N9c867c00 [stack 0]
+ Dot {
+  name Dot5
+  xpos -833
+  ypos 619
+ }
+set N9c866c00 [stack 0]
+ Dot {
+  name Dot8
+  xpos -1176
+  ypos 619
+ }
+ Dot {
+  name Dot12
+  xpos -1175
+  ypos 2321
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -479
+  ypos 2030
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {6 in +STARTLINE}
+  in {{"\[exists input1]"}}
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels3
+  xpos -479
+  ypos 2054
+ }
+set Nc2bdc800 [stack 0]
+push $Nc2bdc800
+ Copy {
+  inputs 2
+  to0 rgba.alpha
+  name Copy2
+  xpos -479
+  ypos 2078
+  disable {{!parent.mask.in i}}
+ }
+ Invert {
+  name Invert1
+  xpos -479
+  ypos 2114
+ }
+push $N9c866c00
+ Dot {
+  name Dot10
+  xpos -833
+  ypos 715
+ }
+set Nc2bdd000 [stack 0]
+ Dot {
+  name Dot13
+  xpos -1069
+  ypos 715
+ }
+ Dot {
+  name Dot11
+  tile_color 0xffffffff
+  xpos -1068
+  ypos 2123
+ }
+push $N9c867c00
+ AddChannels {
+  channels alpha
+  name AddChannels2
+  xpos -375
+  ypos 527
+ }
+set Nffb5bc00 [stack 0]
+ Remove {
+  operation keep
+  channels alpha
+  name Remove1
+  xpos -375
+  ypos 597
+ }
+ FilterErode {
+  channels alpha
+  size {{-parent.erode_1.w}}
+  name FilterErode1
+  xpos -375
+  ypos 633
+ }
+ Clamp {
+  channels alpha
+  name Clamp_alpha
+  xpos -375
+  ypos 669
+ }
+ Blur {
+  channels alpha
+  size {{parent.blur i}}
+  name Blur2
+  xpos -375
+  ypos 705
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name a_to_rgb1
+  xpos -375
+  ypos 785
+ }
+set N42215800 [stack 0]
+ Dot {
+  name Dot9
+  xpos -670
+  ypos 788
+ }
+set N6832c400 [stack 0]
+ Dot {
+  name Dot19
+  xpos -958
+  ypos 788
+ }
+ Dot {
+  name Dot20
+  xpos -958
+  ypos 2013
+ }
+push $Nffb5bc00
+ Dot {
+  name Dot4
+  xpos 190
+  ypos 536
+ }
+ Dot {
+  name Dot6
+  xpos 191
+  ypos 1782
+ }
+set N4ce42400 [stack 0]
+push $N42215800
+ Dot {
+  name Dot30
+  xpos 113
+  ypos 788
+ }
+ Dot {
+  name Dot25
+  tile_color 0xffffffff
+  xpos 113
+  ypos 1052
+ }
+set N1618ec00 [stack 0]
+ Dot {
+  name Dot28
+  tile_color 0xffffffff
+  xpos 113
+  ypos 1159
+ }
+set N1618e800 [stack 0]
+ Dot {
+  name Dot27
+  xpos 113
+  ypos 1329
+ }
+ ColorCorrect {
+  gain 0.5
+  name ColorCorrect1
+  xpos -145
+  ypos 1325
+ }
+push $N1618e800
+ Transform {
+  translate {{(parent.Trans_value1.translate.x)*(-1)} 0}
+  center {960 540}
+  black_outside false
+  name Transform1
+  xpos -145
+  ypos 1155
+ }
+ ColorCorrect {
+  gain 0
+  name ColorCorrect6
+  xpos -145
+  ypos 1181
+ }
+push $N1618ec00
+ Transform {
+  translate {{parent.Trans_value1.translate.x} 0}
+  center {960 540}
+  black_outside false
+  name Transform6
+  xpos -145
+  ypos 1048
+ }
+push $N6832c400
+ Grade {
+  white 0
+  add 0.5
+  name Grade1
+  xpos -704
+  ypos 874
+ }
+set N6832c800 [stack 0]
+ Dot {
+  name Dot31
+  xpos -670
+  ypos 952
+ }
+set N3b86f400 [stack 0]
+ Dot {
+  name Dot23
+  xpos -220
+  ypos 952
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -255
+  ypos 1048
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  xpos -255
+  ypos 1181
+ }
+ Merge2 {
+  inputs 2
+  name Merge9
+  xpos -255
+  ypos 1325
+ }
+ Dot {
+  name Dot1
+  xpos -221
+  ypos 1435
+ }
+push $N42215800
+ Dot {
+  name Dot2
+  tile_color 0xffffffff
+  xpos -341
+  ypos 1045
+ }
+set N152a3800 [stack 0]
+ Dot {
+  name Dot33
+  tile_color 0xffffffff
+  xpos -341
+  ypos 1161
+ }
+set N152a3000 [stack 0]
+ Dot {
+  name Dot35
+  xpos -341
+  ypos 1334
+ }
+ ColorCorrect {
+  gain 0.5
+  name ColorCorrect7
+  xpos -595
+  ypos 1331
+ }
+push $N152a3000
+ Transform {
+  translate {0 {parent.Trans_value1.translate.y*-1}}
+  center {960 540}
+  black_outside false
+  name Transform7
+  xpos -595
+  ypos 1157
+ }
+ ColorCorrect {
+  gain 0
+  name ColorCorrect8
+  xpos -595
+  ypos 1183
+ }
+push $N152a3800
+ Transform {
+  translate {0 {parent.Trans_value1.translate.y}}
+  center {960 540}
+  black_outside false
+  name Transform8
+  xpos -595
+  ypos 1042
+ }
+push $N3b86f400
+ Merge2 {
+  inputs 2
+  name Merge10
+  xpos -705
+  ypos 1042
+ }
+ Merge2 {
+  inputs 2
+  name Merge11
+  xpos -705
+  ypos 1183
+ }
+ Merge2 {
+  inputs 2
+  name Merge12
+  xpos -705
+  ypos 1331
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  blue black
+  alpha white
+  name ShuffleCopy1
+  xpos -705
+  ypos 1432
+ }
+ Blur {
+  size {{parent.size_soft_select}}
+  name Blur1
+  tile_color 0xffffffff
+  xpos -704
+  ypos 1522
+ }
+set N849db000 [stack 0]
+push $N849db000
+ Invert {
+  name Invert2
+  xpos -577
+  ypos 1599
+ }
+ Switch {
+  inputs 2
+  which {{parent.reverse i}}
+  name Switch5
+  xpos -704
+  ypos 1672
+ }
+push $Nc2bdd000
+add_layer {push push.x push.y}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 push.x
+  from1 rgba.green
+  to1 push.y
+  name Copy1
+  xpos -866
+  ypos 1659
+ }
+ IDistort {
+  uv push
+  uv_offset 0.5
+  uv_scale {{parent.size_uv_size} {parent.size_uv_size}}
+  blur_scale 0
+  name IDistort1
+  xpos -866
+  ypos 1772
+ }
+set N849db800 [stack 0]
+ ChannelMerge {
+  inputs 2
+  operation stencil
+  bbox B
+  name ChannelMerge1
+  xpos -695
+  ypos 1767
+ }
+push $N849db800
+push $N4ce42400
+ Dot {
+  name Dot3
+  xpos 191
+  ypos 1914
+ }
+ Switch {
+  inputs 3
+  which {{parent.aout i}}
+  name Switch_Alpha
+  label "\[value which]"
+  xpos -695
+  ypos 1905
+ }
+push $N849db800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos -866
+  ypos 1904
+ }
+ Multiply {
+  inputs 1+1
+  channels rgb
+  value {2 0 0 1}
+  name Multiply1
+  xpos -866
+  ypos 2009
+  disable {{(parent.Show_alpha)-1 i x88 1}}
+ }
+set N3065d400 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -987
+  ypos 2114
+  disable {{!parent.mask.in i}}
+ }
+push $N3065d400
+ Switch {
+  inputs 2
+  which {{Copy2.from0 i}}
+  name Switch1
+  xpos -866
+  ypos 2213
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos -866
+  ypos 2318
+ }
+ Output {
+  name FranklinVFX
+  xpos -866
+  ypos 2399
+ }
+push $N6832c800
+ Transform {
+  translate {{parent.size_edge_size} {parent.size_edge_size}}
+  center {960 540}
+  name Trans_value1
+  xpos -594
+  ypos 874
+  hide_input true
+ }
+end_group

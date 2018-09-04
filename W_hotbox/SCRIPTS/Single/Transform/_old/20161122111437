@@ -1,0 +1,16 @@
+#----------------------------------------------------------------------------------------------------------
+#
+# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+#
+# NAME: Test Message
+#
+#----------------------------------------------------------------------------------------------------------
+
+def again():
+	print('This is my message again !')
+
+def printMyMessage():
+	print('This is my message !')
+	again()
+
+printMyMessage()

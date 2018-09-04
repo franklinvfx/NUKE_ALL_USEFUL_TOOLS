@@ -1,0 +1,99 @@
+set cut_paste_input [stack 0]
+version 10.0 v1
+push $cut_paste_input
+Camera2 {
+ translate {-43.47232056 13.24710751 66.99837494}
+ rotate {-13.36362711 -47.81261851 0}
+ name Camera1
+ selected true
+ xpos -838
+ ypos 1473
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "40 40 0 0 40 40 1 tiny"
+ name Constant2
+ selected true
+ xpos -728
+ ypos 1107
+ postage_stamp false
+}
+Radial {
+ area {1.799999952 1.799999952 39.20000076 38.40000153}
+ plinear true
+ color {0.005199994892 0.08418796957 0.2599999905 1}
+ name Radial1
+ selected true
+ xpos -728
+ ypos 1133
+}
+BlendMat {
+ operation plus
+ surfaceblend modulate
+ name BlendMat4
+ selected true
+ xpos -728
+ ypos 1212
+}
+push 0
+push 0
+ParticleEmitter {
+ inputs 3
+ emit_from faces
+ emit_order "in order"
+ rate 60
+ lifetime 20
+ velocity 0
+ size 1
+ start_frame_animation current
+ frame_advance constant
+ region sphere
+ translate {{curve x14 0.6999999881 x39 -6.039999962 x60 -20.20000076 x76 -20.20000076} {curve x14 1.212435603 x39 1.212435603 x60 1.212435603 x76 1.212435603} {curve x14 10.26000023 s0 x39 23.93260002 s0.2049999982 x60 23.93260002 s-0.09000000358 x76 21.07999992 s0}}
+ name ParticleEmitter1
+ selected true
+ xpos -728
+ ypos 1277
+}
+ParticleSettings {
+ steps_per_frame 20
+ name ParticleSettings3
+ selected true
+ xpos -728
+ ypos 1316
+}
+ParticleCurve {
+ curves {r {}
+   g {}
+   b {}
+   a {curve l 1 x0.2635964453 0.1880597472 s-0.6999999881 x1 0.02661693096}
+   size {curve 1 0.05124378204}
+   mass {}}
+ affect_size true
+ name ParticleCurve3
+ selected true
+ xpos -728
+ ypos 1348
+}
+Scene {
+ name Scene1
+ selected true
+ xpos -718
+ ypos 1402
+}
+Constant {
+ inputs 0
+ channels rgb
+ name Constant1
+ selected true
+ xpos -598
+ ypos 1470
+}
+ScanlineRender {
+ inputs 3
+ motion_vectors_type velocity
+ name ScanlineRender1
+ selected true
+ xpos -728
+ ypos 1490
+}

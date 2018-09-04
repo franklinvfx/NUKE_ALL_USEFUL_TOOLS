@@ -1,0 +1,15 @@
+set cut_paste_input [stack 0]
+version 6.0 v5
+push $cut_paste_input
+Dot {
+name Dot_Range
+help "Affichage du frame range automatiquement. \n\nBug de rafraichissement:\nPour actualiser il faut changer de frame."
+label "<font size = 3 color=\"green\">\[python nuke.thisNode().firstFrame()]-\[python nuke.thisNode().lastFrame() ]"
+note_font "Verdana Bold Bold Bold"
+note_font_size 20
+note_font_color 0xff
+selected true
+icon F_ondot.png
+addUserKnob {20 exp l Info}
+addUserKnob {26 note l "" +STARTLINE T "Affichage du frame range automatiquement. \n"}
+}

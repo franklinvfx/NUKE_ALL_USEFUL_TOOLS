@@ -1,0 +1,178 @@
+set cut_paste_input [stack 0]
+version 10.0 v1
+BackdropNode {
+ inputs 0
+ name BackdropNode13
+ tile_color 0xaaaaaa00
+ label "particles // raindrops matte"
+ note_font_size 42
+ selected true
+ xpos -1479
+ ypos -1071
+ bdwidth 657
+ bdheight 1054
+ z_order -1
+}
+Camera2 {
+ inputs 0
+ translate {-0.02649710514 0.3144679964 1.20280671}
+ rotate {-7.602885056 -1.068686829 1.07452504}
+ name Camera5
+ selected true
+ xpos -1030
+ ypos -352
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "40 40 0 0 40 40 1 40x40"
+ name Constant5
+ selected true
+ xpos -1298
+ ypos -901
+}
+Radial {
+ area {0.3999996185 0.3999996185 39.60000038 39.60000038}
+ name Radial2
+ selected true
+ xpos -1298
+ ypos -829
+}
+BlendMat {
+ surfaceblend modulate
+ name BlendMat3
+ selected true
+ xpos -1298
+ ypos -803
+}
+Card2 {
+ inputs 0
+ rows 1
+ columns 1
+ scaling {1 -1.743089318 1}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card5
+ selected true
+ xpos -1154
+ ypos -897
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ start_frame -50
+ emit_from faces
+ rate 1
+ rate_variation 1
+ lifetime 300
+ velocity 0
+ size 0.005
+ size_variation 1
+ name ParticleEmitter4
+ selected true
+ xpos -1154
+ ypos -803
+}
+ParticleGravity {
+ to {0 -0.0004 0}
+ channels {a}
+ name ParticleGravity3
+ selected true
+ xpos -1154
+ ypos -751
+}
+ParticleDrag {
+ drag 0.05
+ channels {a}
+ name ParticleDrag3
+ selected true
+ xpos -1154
+ ypos -691
+}
+ParticleTurbulence {
+ strength {0.00012 0 0}
+ scale {5 40 0}
+ channels {a}
+ name ParticleTurbulence1
+ selected true
+ xpos -1154
+ ypos -636
+}
+ParticleSpawn {
+ rate 3
+ rate_variation 1
+ lifetime 200
+ lifetime_variation 0.52
+ velocity 0
+ size 0.002
+ size_variation 0.815
+ mass 0.0005
+ transfer_velocity 0
+ color {1 0.150965 0 1}
+ inherit_color true
+ name ParticleSpawn1
+ selected true
+ xpos -1154
+ ypos -569
+}
+ParticleSettings {
+ steps_per_frame 14
+ name ParticleSettings2
+ selected true
+ xpos -1154
+ ypos -511
+}
+ParticleCurve {
+ curves {r {}
+   g {}
+   b {}
+   a {}
+   size {curve 0.005 s0 t-0.0120000001 x0.3762814701 0.0006343284622 x1.007367849 0 s0}
+   mass {}}
+ affect_rgb false
+ affect_alpha false
+ affect_size true
+ name ParticleCurve2
+ selected true
+ xpos -1154
+ ypos -466
+}
+ParticleExpression {
+ opacityexpr 1-(age*0.02)
+ name ParticleExpression1
+ selected true
+ xpos -1154
+ ypos -413
+}
+push $cut_paste_input
+Reformat {
+ format "2048 2048 0 0 2048 2048 1 square_2K"
+ name Reformat8
+ selected true
+ xpos -1313
+ ypos -338
+}
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ name ScanlineRender8
+ selected true
+ xpos -1154
+ ypos -332
+}
+Dot {
+ name Dot28
+ selected true
+ xpos -1120
+ ypos -149
+}

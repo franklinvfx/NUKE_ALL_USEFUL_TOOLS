@@ -1,0 +1,27 @@
+set cut_paste_input [stack 0]
+version 6.0 v6
+push $cut_paste_input
+NoOp {
+ name Curve_Converter
+ help "If you have a curve which you need to normalize to values between 0 and 1, or to two other numbers, drag the curve into this tool, analyze and it will scale that animation to your new min and max values. Useful for curves generated from the CurveTool that you wish to use to drive animated grades or mixes."
+ selected true
+ icon F_onnode.png
+ hide_input true
+ addUserKnob {20 User l "Curve Convertor"}
+ addUserKnob {26 text2 l "" +STARTLINE T "Ctrl-drag an animation curve from another node into here:"}
+ addUserKnob {7 inputVal l "Original curve"}
+ addUserKnob {22 analyzeCurve l "Bake and analyze curve" T "def bakeCurve(curve):\n    first = int(nuke.root().knob('first_frame').value())\n    last = int(nuke.root().knob('last_frame').value())\n\n    for f in xrange( first, last, 1):\n        curve.setKey( f, curve.evaluate( f ) )\n    curve.setExpression( 'curve' )\n\nnode = nuke.thisNode()\nk = node\['inputVal']\n\nanimCurve = k.animation( 0 )\nif animCurve:\n    bakeCurve(animCurve)\n\n    i=1\n    for key in animCurve.keys():\n        curveValue = key.y\n\n        if i==1:\n            minV = curveValue\n            maxV = curveValue\n        else:\n            if curveValue < minV:\n                minV = curveValue\n\n            if curveValue > maxV:\n                maxV = curveValue\n\n        i +=1\n\n    node\['origMinVal'].setValue(minV)\n    node\['origMaxVal'].setValue(maxV)\n\n    nuke.message('Original curve baked and min and max values within project range calculated. Type in your new min and max values and link to the resulting curve')\n" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 origMinVal l "Original min value"}
+ addUserKnob {7 origMaxVal l "Original max value"}
+ addUserKnob {26 ""}
+ addUserKnob {7 minVal l "New min value" R 0 10}
+ addUserKnob {7 maxVal l "New max value" R 0 10}
+ maxVal 1
+ addUserKnob {26 ""}
+ addUserKnob {26 text l "" +STARTLINE T "Link to this value:"}
+ addUserKnob {7 outputVal l "New curve" R 0 10}
+ outputVal {{"min(max(( (inputVal - origMinVal) / (origMaxVal - origMinVal) ) * (maxVal - minVal) + minVal,minVal),maxVal)"}}
+ addUserKnob {26 ""}
+ addUserKnob {26 text3 l "" +STARTLINE T "<font size=8\">David Emeny 2013</font>"}
+}

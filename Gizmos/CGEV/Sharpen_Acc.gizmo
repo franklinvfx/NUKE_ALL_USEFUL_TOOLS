@@ -1,0 +1,283 @@
+Group {
+ name Sharpen_More
+ help "Sharpen Accurate\n\nMore options than in the original Nuke node (Sharpen).\n"
+ knobChanged "c = nuke.toNode('Copy1')\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(1) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')"
+ tile_color 0xcf7e4aff
+ selected true
+ icon F_iconrgb.png
+ addUserKnob {20 FT l "Sharpen More"}
+ addUserKnob {7 intensity l Amount R 0 20}
+ intensity 3
+ addUserKnob {7 size l Size R 0 10}
+ size 2
+ addUserKnob {26 S2 l " " T " "}
+ addUserKnob {7 WhiteInt l "<font color=\"grey\">White"}
+ WhiteInt 1
+ addUserKnob {41 white_clamp l Clamp -STARTLINE T Grade_Bandpass.white_clamp}
+ addUserKnob {7 BlackInt l "<font color=\"grey\">Black"}
+ BlackInt 1
+ addUserKnob {41 black_clamp l Clamp -STARTLINE T Grade_Bandpass.black_clamp}
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {41 from0 l "          mask" T Copy1.from0}
+ addUserKnob {41 invertMask l invert -STARTLINE T Keymix1.invertMask}
+ addUserKnob {41 mix T Keymix1.mix}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -51
+  ypos -300
+ }
+ Dot {
+  name Dot3
+  xpos -17
+  ypos -231
+ }
+set N1114d800 [stack 0]
+ Dot {
+  name Dot4
+  xpos 120
+  ypos -231
+ }
+set N1114d400 [stack 0]
+ Dot {
+  name Dot5
+  xpos 307
+  ypos -231
+ }
+set N1114d000 [stack 0]
+ Dot {
+  name Dot2
+  xpos 541
+  ypos -231
+ }
+ Dot {
+  name Dot9
+  selected true
+  xpos 541
+  ypos 205
+ }
+set N1114c800 [stack 0]
+ Dot {
+  name Dot10
+  xpos 541
+  ypos 270
+ }
+set N1114c400 [stack 0]
+ Dot {
+  name Dot12
+  tile_color 0xffffffff
+  xpos 541
+  ypos 609
+ }
+set N1114c000 [stack 0]
+ Dot {
+  name Dot8
+  xpos 541
+  ypos 748
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -312
+  ypos 516
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {6 in +STARTLINE}
+  in {{"\[exists input1]" i}}
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos -312
+  ypos 540
+ }
+set N11167400 [stack 0]
+push $N11167400
+ Copy {
+  inputs 2
+  to0 rgba.alpha
+  name Copy1
+  xpos -312
+  ypos 564
+  disable {{!parent.mask.in i}}
+ }
+ Invert {
+  name Invert1
+  xpos -312
+  ypos 600
+ }
+push $N1114c000
+push $N1114c400
+ Clamp {
+  minimum 1
+  maximum 1500
+  name Clamp_POS
+  xpos 383
+  ypos 261
+ }
+ Grade {
+  add -1
+  black_clamp false
+  name Grade_Offset
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 383
+  ypos 297
+  icon -
+ }
+push $N1114c800
+ Clamp {
+  minimum -150
+  maximum 0
+  name Clamp_NEG
+  xpos 383
+  ypos 195
+ }
+push $N1114d400
+ Log2Lin {
+  operation lin2log
+  name Log2Lin1
+  label "\[if \{\[value operation]==\"lin2log\"\} \{return \"\[knob this.icon F_iconstart.png]\"\} \{return \"\[knob this.icon F_iconend.png]\"\}]"
+  xpos 86
+  ypos -173
+  icon F_iconstart.png
+ }
+ Dot {
+  name Dot13
+  xpos 120
+  ypos -94
+ }
+set N111a5800 [stack 0]
+push $N111a5800
+ Blur {
+  size {{parent.size i}}
+  name Blur2
+  xpos 183
+  ypos -59
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos 86
+  ypos -2
+ }
+ Grade {
+  white {{intensity i}}
+  add 0.5
+  white_clamp true
+  name Grade_Bandpass
+  label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+  xpos 86
+  ypos 43
+  icon -
+ }
+ Saturation {
+  saturation 0
+  name Saturation1
+  xpos 86
+  ypos 79
+ }
+ Dot {
+  name Dot1
+  xpos 120
+  ypos 144
+ }
+push $N1114d000
+ Merge2 {
+  inputs 2
+  operation overlay
+  bbox B
+  maskChannelMask none
+  name MergeMask
+  label "mix :\[value mix]"
+  xpos 273
+  ypos 135
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  name Merge_Negative_Value
+  label "mix :\[value mix]"
+  xpos 273
+  ypos 195
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  name Merge_Positive_Value
+  label "mix :\[value mix]"
+  xpos 273
+  ypos 297
+ }
+ Dot {
+  name Dot11
+  xpos 307
+  ypos 380
+ }
+set N111e3400 [stack 0]
+ Dot {
+  name Dot7
+  xpos 307
+  ypos 460
+ }
+push $N111e3400
+push $N1114d800
+ Merge2 {
+  inputs 2
+  operation min
+  bbox B
+  maskChannelMask rgba.red
+  mix {{parent.BlackInt i}}
+  name Merge_Black
+  label "mix :\[value mix]"
+  xpos -51
+  ypos 371
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  bbox B
+  maskChannelMask none
+  mix {{parent.WhiteInt i}}
+  name Merge_White
+  label "mix :\[value mix]"
+  xpos -51
+  ypos 451
+ }
+ Dot {
+  name Dot6
+  xpos -17
+  ypos 548
+ }
+set N111e2400 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -172
+  ypos 600
+  disable {{!parent.mask.in i}}
+ }
+push $N111e2400
+ Switch {
+  inputs 2
+  which {{Copy1.from0 i}}
+  name Switch1
+  xpos -51
+  ypos 699
+ }
+ ShuffleCopy {
+  inputs 2
+  name Alpha_copy1
+  xpos -51
+  ypos 745
+ }
+ Output {
+  name FranklinVFX
+  xpos -51
+  ypos 801
+ }
+end_group

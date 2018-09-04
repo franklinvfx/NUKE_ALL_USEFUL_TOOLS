@@ -1,0 +1,1263 @@
+Group {
+ inputs 2
+ name Position_Object
+ tile_color 0xffffffff
+ label Conversion
+ selected true
+ addUserKnob {20 User l "Position Object"}
+ addUserKnob {41 first_frame l "Frame (to bake)" T FrameHold1.first_frame}
+ addUserKnob {6 stich l "Fill Stich-edge" -STARTLINE}
+ stich true
+ addUserKnob {4 res l Quality M {Low Normal High ""}}
+ addUserKnob {41 disable_1 l "Keep Input Texture" T ApplyMaterial2.disable}
+ addUserKnob {26 ""}
+ addUserKnob {41 antialiasing l Antialiasing T ScanlineUV.antialiasing}
+ addUserKnob {41 filter l "          Filter" -STARTLINE T ScanlineUV.filter}
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+}
+ Input {
+  inputs 0
+  name Cam
+  xpos -580
+  ypos -764
+  number 1
+ }
+ Dot {
+  name Dot26
+  xpos -546
+  ypos -552
+ }
+ Constant {
+  inputs 0
+  color 0.5
+  format "256 256 0 0 256 256 1 square_256"
+  name Constant1
+  xpos -987
+  ypos -754
+  postage_stamp false
+ }
+ Input {
+  inputs 0
+  name Object_3D
+  tile_color 0xffffffff
+  label "\n"
+  xpos -686
+  ypos -766
+ }
+ Dot {
+  name Dot23
+  xpos -652
+  ypos -668
+ }
+set N6b91400 [stack 0]
+ ApplyMaterial {
+  inputs 2
+  name ApplyMaterial2
+  label "\[value \[topnode this.parent.input0].cast_shadow]!=\"true\" ? \[knob this.disable true] : \[knob this.disable false] "
+  xpos -987
+  ypos -678
+  disable true
+  addUserKnob {20 User}
+  addUserKnob {1 ex}
+  addUserKnob {6 ex1 +STARTLINE}
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{"\[python -execlocal col\\ =\\ nuke.thisGroup().knob('res').value()\\n\\nif\\ col\\ ==\\ \\\"Low\\\":\\n\\ ret\\ =\\ 250\\nif\\ col\\ ==\\ \\\"Normal\\\":\\n\\ ret\\ =\\ 1000\\nif\\ col\\ ==\\ \\\"High\\\":\\n\\ ret\\ =\\ 4000]"}}
+  name UV
+  xpos -1179
+  ypos -556
+  hide_input true
+ }
+add_layer {pos pos.red pos.green pos.blue none}
+add_layer {normals normals.red normals.green normals.blue none}
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency false
+  filter Simon
+  projection_mode uv
+  shutteroffset centred
+  motion_vectors_type distance
+  output_shader_vectors true
+  P_channel pos
+  N_channel normals
+  name ScanlineUV
+  xpos -987
+  ypos -556
+ }
+ Dot {
+  name Dot7
+  xpos -953
+  ypos -386
+ }
+set N6b91c00 [stack 0]
+ AddChannels {
+  channels alpha
+  name AddChannels1
+  xpos -827
+  ypos -396
+ }
+ FilterErode {
+  channels rgba
+  size 2
+  name FilterErode1
+  xpos -827
+  ypos -286
+  disable {{!stich}}
+ }
+push $N6b91c00
+ Group {
+  inputs 2
+  name Push_Blur
+  help "Push Blur\n\nPush RGB pixels using the Alpha channel as mask.\n"
+  knobChanged "c = nuke.toNode('Copy2')\n\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(1) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')"
+  tile_color 0xcc804eff
+  xpos -987
+  ypos -292
+  disable {{!stich}}
+  addUserKnob {20 FT l "Push Blur"}
+  addUserKnob {41 channels l Channels T Premult8.channels}
+  addUserKnob {26 S00 l " " T " "}
+  addUserKnob {7 edge l "     Edge Select" R 0.1 20}
+  edge 1
+  addUserKnob {26 ""}
+  addUserKnob {7 ExtendSize l Spacing R 0 60}
+  ExtendSize 10
+  addUserKnob {7 Smooth l "Soft Edge" R 0 5}
+  Smooth 4
+  addUserKnob {7 SmoothProgressif_Multiplier l "Distance Blur"}
+  SmoothProgressif_Multiplier 0.3
+  addUserKnob {26 S01 l " " T " "}
+  addUserKnob {26 by2 l " " T "                                                                                               "}
+  addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
+  addUserKnob {26 ""}
+  addUserKnob {41 from0 l mask T Copy2.from0}
+  addUserKnob {41 invertMask l invert -STARTLINE T Keymix1.invertMask}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 1600
+   ypos -1502
+  }
+  AddChannels {
+   channels rgba
+   name AddChannels2
+   xpos 1600
+   ypos -1427
+  }
+set N4bb66800 [stack 0]
+  Dot {
+   name Dot7
+   xpos 1634
+   ypos -1306
+  }
+set N4bb66400 [stack 0]
+  Dot {
+   name Dot19
+   xpos 1490
+   ypos -1306
+  }
+set N4bb66000 [stack 0]
+  Dot {
+   name Dot20
+   xpos 1284
+   ypos -1305
+  }
+  Dot {
+   name Dot21
+   xpos 1284
+   ypos -739
+  }
+push $N4bb66400
+  Dot {
+   name Dot22
+   xpos 1634
+   ypos -1066
+  }
+set N4bb91400 [stack 0]
+push $N4bb66400
+  Dot {
+   name Dot23
+   xpos 1832
+   ypos -1306
+  }
+set N4bb91000 [stack 0]
+  Shuffle {
+   red alpha
+   green alpha
+   blue alpha
+   name Shuffle1
+   xpos 1908
+   ypos -1309
+  }
+  Dot {
+   name Dot24
+   xpos 1942
+   ypos -1164
+  }
+push $N4bb91000
+  Unpremult {
+   name Unpremult1
+   xpos 1798
+   ypos -1213
+  }
+  Multiply {
+   inputs 1+1
+   value 0
+   invert_mask true
+   name Multiply1
+   xpos 1798
+   ypos -1174
+  }
+  Merge2 {
+   inputs 2
+   operation difference
+   name Merge3
+   xpos 1798
+   ypos -1070
+  }
+set N4bbb1c00 [stack 0]
+push $N4bbb1c00
+  Dot {
+   name Dot25
+   xpos 1942
+   ypos -1066
+  }
+  Blur {
+   size 900
+   name Blur8
+   xpos 1908
+   ypos -1022
+  }
+  Merge2 {
+   inputs 2
+   operation max
+   name Merge4
+   xpos 1798
+   ypos -1016
+  }
+  Shuffle {
+   alpha white
+   name Shuffle3
+   xpos 1798
+   ypos -913
+  }
+  Expression {
+   expr0 "r <= 0.001 ? r : 1"
+   expr1 "g <= 0.001 ? g : 1"
+   expr2 "b <= 0.001 ? b : 1"
+   name Expression2
+   xpos 1798
+   ypos -889
+  }
+  Shuffle {
+   green red
+   blue red
+   alpha red
+   name Shuffle4
+   xpos 1798
+   ypos -865
+  }
+  Grade {
+   blackpoint 0.001
+   white_clamp true
+   name Grade1
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1798
+   ypos -841
+   icon -
+  }
+set N4db5fc00 [stack 0]
+push $N4bb66000
+  Premult {
+   channels rgba
+   name Premult1
+   xpos 1347
+   ypos -1110
+  }
+push $N4bb66000
+  Premult {
+   channels {{{parent.Premult8.channels}}}
+   name Premult3
+   xpos 1456
+   ypos -1115
+  }
+  Switch {
+   inputs 2
+   which {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['rgb','rgba'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ ret\\ =\\ 1]"}}
+   name Switch3
+   xpos 1456
+   ypos -923
+  }
+  Dot {
+   name Dot26
+   xpos 1490
+   ypos -832
+  }
+push $N4bb91400
+  Keymix {
+   inputs 3
+   maskChannel rgba.red
+   name Keymix2
+   xpos 1600
+   ypos -841
+  }
+  CopyBBox {
+   inputs 2
+   name CopyBBox2
+   xpos 1600
+   ypos -743
+  }
+  Dot {
+   name Dot27
+   xpos 1634
+   ypos -608
+  }
+set N4db5e000 [stack 0]
+  Dot {
+   name Dot6
+   xpos 1634
+   ypos -407
+  }
+set N4db8bc00 [stack 0]
+  AddChannels {
+   channels rgba
+   name AddChannels1
+   xpos 1600
+   ypos 1454
+  }
+  Dot {
+   name Dot2
+   xpos -241
+   ypos 1458
+  }
+set N4db8b400 [stack 0]
+  Dot {
+   name Dot35
+   xpos -241
+   ypos 1710
+  }
+set N4db8b000 [stack 0]
+  Dot {
+   name Dot1
+   xpos -241
+   ypos 1802
+  }
+set N4db8ac00 [stack 0]
+  Dot {
+   name Dot34
+   xpos -241
+   ypos 2380
+  }
+set N4db8a800 [stack 0]
+  Dot {
+   name Dot3
+   xpos -241
+   ypos 2546
+  }
+  Input {
+   inputs 0
+   name mask
+   xpos -1138
+   ypos 1268
+   number 1
+   addUserKnob {20 User}
+   addUserKnob {6 in +STARTLINE}
+   in {{"\[exists input1]"}}
+  }
+  AddChannels {
+   channels rgba
+   name AddChannels3
+   xpos -1138
+   ypos 1389
+  }
+set N4dba9c00 [stack 0]
+push $N4dba9c00
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy2
+   xpos -1138
+   ypos 1413
+   disable {{!parent.mask.in i}}
+  }
+  Invert {
+   name Invert1
+   xpos -1138
+   ypos 1449
+  }
+push $N4db8b400
+push $N4db5e000
+  Dot {
+   name Dot4
+   xpos -842
+   ypos -608
+  }
+  Dot {
+   name Dot5
+   xpos -842
+   ypos 976
+  }
+set N4dba8c00 [stack 0]
+push $N4db8bc00
+  Dot {
+   name Dot100
+   xpos 1446
+   ypos -407
+  }
+set N4dba8800 [stack 0]
+  Dot {
+   name Dot101
+   xpos 484
+   ypos -407
+  }
+set N4dba8400 [stack 0]
+  Erode {
+   channels alpha
+   size {{parent.edge}}
+   name Erode4
+   xpos 450
+   ypos -351
+  }
+  Premult {
+   channels {{{parent.Premult8.channels}}}
+   name Premult2
+   xpos 450
+   ypos -313
+  }
+  Dot {
+   name Dot33
+   xpos 484
+   ypos -242
+  }
+set N4dbd5800 [stack 0]
+  Dot {
+   name Dot9
+   xpos -431
+   ypos -66
+  }
+  Unpremult {
+   channels {{{parent.Premult8.channels}}}
+   name Unpremult9
+   xpos -465
+   ypos 247
+  }
+  Keyer {
+   input alpha
+   operation "luminance key"
+   range {0 0 1 1}
+   name Keyer12
+   xpos -465
+   ypos 285
+  }
+  Premult {
+   channels {{{parent.Premult8.channels}}}
+   name Premult32
+   xpos -465
+   ypos 438
+  }
+  EdgeBlur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"0.1+parent.EdgeBlur_MASTER.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur10
+   xpos -465
+   ypos 476
+  }
+  EdgeBlur {
+   channels alpha
+   size {{"0.1+parent.EdgeBlur_MASTER1.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur16
+   xpos -465
+   ypos 514
+   disable {{parent.EdgeBlur_MASTER1.disable}}
+  }
+push $N4dbd5800
+  Dot {
+   name Dot10
+   xpos -210
+   ypos -78
+  }
+set N4dc07c00 [stack 0]
+  Blur {
+   channels alpha
+   size {{"(parent.BlurMASTER.size /8)"}}
+   name Blur1
+   xpos -201
+   ypos -17
+  }
+push $N4dc07c00
+  Blur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"(parent.BlurMASTER.size /8)"}}
+   name Blur38
+   xpos -304
+   ypos -19
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   xpos -247
+   ypos 85
+  }
+  Unpremult {
+   channels {{{parent.Premult8.channels}}}
+   name Unpremult2
+   xpos -247
+   ypos 250
+  }
+  Keyer {
+   input alpha
+   operation "luminance key"
+   range {0 0 1 1}
+   name Keyer1
+   xpos -247
+   ypos 288
+  }
+  Premult {
+   channels {{{parent.Premult8.channels}}}
+   name Premult20
+   xpos -247
+   ypos 437
+  }
+  EdgeBlur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"0.1+parent.EdgeBlur10.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur4
+   xpos -247
+   ypos 475
+  }
+  EdgeBlur {
+   channels alpha
+   size {{"0.1+parent.EdgeBlur16.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur14
+   xpos -247
+   ypos 513
+   disable {{parent.EdgeBlur_MASTER1.disable}}
+  }
+push $N4dbd5800
+  Dot {
+   name Dot11
+   xpos 11
+   ypos -79
+  }
+set N4dc3f800 [stack 0]
+  Blur {
+   channels alpha
+   size {{"(parent.BlurMASTER.size /8) *2"}}
+   name Blur2
+   xpos 31
+   ypos -18
+  }
+push $N4dc3f800
+  Blur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"(parent.BlurMASTER.size /8) *2"}}
+   name Blur41
+   xpos -75
+   ypos -15
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy3
+   xpos -21
+   ypos 84
+  }
+  Unpremult {
+   channels {{{parent.Premult8.channels}}}
+   name Unpremult4
+   xpos -21
+   ypos 248
+  }
+  Keyer {
+   input alpha
+   operation "luminance key"
+   range {0 0 1 1}
+   name Keyer2
+   xpos -21
+   ypos 286
+  }
+  Premult {
+   channels {{{parent.Premult8.channels}}}
+   name Premult22
+   xpos -21
+   ypos 439
+  }
+  EdgeBlur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"0.1+parent.EdgeBlur4.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur5
+   xpos -21
+   ypos 477
+  }
+  EdgeBlur {
+   channels alpha
+   size {{"0.1+parent.EdgeBlur14.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur13
+   xpos -21
+   ypos 515
+   disable {{parent.EdgeBlur_MASTER1.disable}}
+  }
+push $N4dbd5800
+  Dot {
+   name Dot12
+   xpos 253
+   ypos -83
+  }
+set N4dc77400 [stack 0]
+  Blur {
+   channels alpha
+   size {{"(parent.BlurMASTER.size /8) *3"}}
+   name Blur3
+   xpos 263
+   ypos -19
+  }
+push $N4dc77400
+  Blur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"(parent.BlurMASTER.size /8) *3"}}
+   name Blur42
+   xpos 164
+   ypos -19
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy5
+   xpos 221
+   ypos 80
+  }
+  Unpremult {
+   channels {{{parent.Premult8.channels}}}
+   name Unpremult5
+   xpos 221
+   ypos 248
+  }
+  Keyer {
+   input alpha
+   operation "luminance key"
+   range {0 0 1 1}
+   name Keyer8
+   xpos 221
+   ypos 286
+  }
+  Premult {
+   channels {{{parent.Premult8.channels}}}
+   name Premult24
+   xpos 221
+   ypos 437
+  }
+  EdgeBlur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"0.1+parent.EdgeBlur5.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur6
+   xpos 221
+   ypos 475
+  }
+  EdgeBlur {
+   channels alpha
+   size {{"0.1+parent.EdgeBlur13.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur12
+   xpos 221
+   ypos 513
+   disable {{parent.EdgeBlur_MASTER1.disable}}
+  }
+push $N4dbd5800
+  Dot {
+   name Dot13
+   xpos 484
+   ypos -94
+  }
+set N4dcbd000 [stack 0]
+  Blur {
+   channels alpha
+   size {{"(parent.BlurMASTER.size /8) *4"}}
+   name Blur4
+   xpos 490
+   ypos -25
+  }
+push $N4dcbd000
+  Blur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"(parent.BlurMASTER.size /8) *4"}}
+   name Blur44
+   xpos 390
+   ypos -17
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy6
+   xpos 440
+   ypos 81
+  }
+  Unpremult {
+   channels {{{parent.Premult8.channels}}}
+   name Unpremult6
+   xpos 440
+   ypos 250
+  }
+  Keyer {
+   input alpha
+   operation "luminance key"
+   range {0 0 1 1}
+   name Keyer9
+   xpos 440
+   ypos 288
+  }
+  Premult {
+   channels {{{parent.Premult8.channels}}}
+   name Premult26
+   xpos 440
+   ypos 439
+  }
+  EdgeBlur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"0.1+parent.EdgeBlur6.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur7
+   xpos 440
+   ypos 477
+  }
+  EdgeBlur {
+   channels alpha
+   size {{"0.1+parent.EdgeBlur12.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur3
+   xpos 440
+   ypos 517
+   disable {{parent.EdgeBlur_MASTER1.disable}}
+  }
+push $N4dbd5800
+  Dot {
+   name Dot14
+   xpos 710
+   ypos -89
+  }
+set N4dcf6c00 [stack 0]
+  Blur {
+   channels alpha
+   size {{"(parent.BlurMASTER.size /8) *5"}}
+   name Blur5
+   xpos 729
+   ypos -25
+  }
+push $N4dcf6c00
+  Blur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"(parent.BlurMASTER.size /8) *5"}}
+   name Blur43
+   xpos 620
+   ypos -17
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy7
+   xpos 681
+   ypos 77
+  }
+  Unpremult {
+   channels {{{parent.Premult8.channels}}}
+   name Unpremult7
+   xpos 681
+   ypos 250
+  }
+  Keyer {
+   input alpha
+   operation "luminance key"
+   range {0 0 1 1}
+   name Keyer10
+   xpos 681
+   ypos 288
+  }
+  Premult {
+   channels {{{parent.Premult8.channels}}}
+   name Premult28
+   xpos 681
+   ypos 439
+  }
+  EdgeBlur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"0.1+parent.EdgeBlur7.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur8
+   xpos 681
+   ypos 477
+  }
+  EdgeBlur {
+   channels alpha
+   size {{"0.1+parent.EdgeBlur3.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur2
+   xpos 681
+   ypos 515
+   disable {{parent.EdgeBlur_MASTER1.disable}}
+  }
+push $N4dbd5800
+  Dot {
+   name Dot15
+   xpos 945
+   ypos -78
+  }
+set N4dd2e800 [stack 0]
+  Blur {
+   channels alpha
+   size {{"(parent.BlurMASTER.size /8) *6"}}
+   name Blur6
+   xpos 958
+   ypos -18
+  }
+push $N4dd2e800
+  Blur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"(parent.BlurMASTER.size /8) *6"}}
+   name Blur47
+   xpos 846
+   ypos -16
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy8
+   xpos 899
+   ypos 78
+  }
+  Unpremult {
+   channels {{{parent.Premult8.channels}}}
+   name Unpremult8
+   xpos 899
+   ypos 249
+  }
+  Keyer {
+   input alpha
+   operation "luminance key"
+   range {0 0 1 1}
+   name Keyer11
+   xpos 899
+   ypos 287
+  }
+  Premult {
+   channels {{{parent.Premult8.channels}}}
+   name Premult30
+   xpos 899
+   ypos 436
+  }
+  EdgeBlur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"0.1+parent.EdgeBlur8.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur9
+   xpos 899
+   ypos 474
+  }
+  EdgeBlur {
+   channels alpha
+   size {{"0.1+parent.EdgeBlur2.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur1
+   xpos 899
+   ypos 512
+   disable {{parent.EdgeBlur_MASTER1.disable}}
+  }
+push $N4dbd5800
+  Dot {
+   name Dot16
+   xpos 1203
+   ypos -98
+  }
+set N4dd6e400 [stack 0]
+  Blur {
+   channels alpha
+   size {{"(parent.BlurMASTER.size /8) *7"}}
+   name Blur7
+   xpos 1234
+   ypos -16
+  }
+push $N4dd6e400
+  Blur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"(parent.BlurMASTER.size /8) *7"}}
+   name Blur45
+   xpos 1115
+   ypos -14
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy9
+   xpos 1192
+   ypos 78
+  }
+  Unpremult {
+   channels {{{parent.Premult8.channels}}}
+   name Unpremult10
+   xpos 1192
+   ypos 250
+  }
+  Keyer {
+   input alpha
+   operation "luminance key"
+   range {0 0 1 1}
+   name Keyer13
+   xpos 1192
+   ypos 288
+  }
+  Premult {
+   channels {{{parent.Premult8.channels}}}
+   name Premult34
+   xpos 1192
+   ypos 439
+  }
+  EdgeBlur {
+   channels {{{parent.Premult8.channels}}}
+   size {{"0.1+parent.EdgeBlur9.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur11
+   xpos 1192
+   ypos 477
+  }
+  EdgeBlur {
+   channels alpha
+   size {{"0.1+parent.EdgeBlur1.size * (SmoothProgressif_Multiplier+1)"}}
+   name EdgeBlur15
+   xpos 1192
+   ypos 515
+   disable {{parent.EdgeBlur_MASTER1.disable}}
+  }
+push 0
+push $N4dba8800
+  Dot {
+   name Dot17
+   xpos 1444
+   ypos -97
+  }
+set N4dda8000 [stack 0]
+  Blur {
+   channels alpha
+   size {{parent.ExtendSize}}
+   name BlurMASTER1
+   note_font_color 0x30303ff
+   xpos 1466
+   ypos -17
+  }
+push $N4dda8000
+  Blur {
+   channels {{{parent.Premult8.channels}}}
+   size {{parent.ExtendSize}}
+   name BlurMASTER
+   note_font_color 0x30303ff
+   xpos 1346
+   ypos -18
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy10
+   xpos 1412
+   ypos 69
+  }
+  Dot {
+   name Dot18
+   xpos 1446
+   ypos 839
+  }
+push 0
+  Merge2 {
+   inputs 10+1
+   also_merge {{{parent.Premult8.channels}}}
+   name Merge2
+   xpos 440
+   ypos 835
+  }
+push $N4dba8400
+  Dot {
+   name Dot109
+   xpos -626
+   ypos -407
+  }
+  EdgeBlur {
+   channels {{{parent.Premult8.channels}}}
+   size {{parent.Smooth}}
+   name EdgeBlur_MASTER
+   note_font_color 0x10101ff
+   xpos -660
+   ypos 478
+  }
+  EdgeBlur {
+   channels alpha
+   size {{parent.Smooth}}
+   name EdgeBlur_MASTER1
+   note_font_color 0x10101ff
+   xpos -660
+   ypos 516
+   disable {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['all','alpha','rgba'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ ret\\ =\\ 0]"}}
+  }
+  Merge2 {
+   inputs 2
+   also_merge {{{parent.Premult8.channels}}}
+   name Merge17
+   xpos -660
+   ypos 835
+  }
+set N4de1fc00 [stack 0]
+  Dot {
+   name Dot28
+   xpos -474
+   ypos 981
+  }
+push $N4de1fc00
+push $N4dba8c00
+  Merge2 {
+   inputs 2
+   also_merge all
+   name Merge1
+   xpos -660
+   ypos 972
+   disable {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['none'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ ret\\ =\\ 0]"}}
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy13
+   xpos -660
+   ypos 1070
+   disable {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['alpha'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ ret\\ =\\ 1]"}}
+  }
+  Copy {
+   inputs 2
+   channels rgb
+   name Copy11
+   xpos -660
+   ypos 1170
+   disable {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['all',\\ 'rgb',\\ 'rgba',\\ 'red',\\ 'blue',\\ 'green',\\ 'red\\ alpha',\\ 'green\\ alpha',\\ 'blue\\ alpha',\\ 'red\\ green',\\ 'red\\ blue',\\ 'green\\ blue',\\ 'red\\ green\\ alpha',\\ 'red\\ blue\\ alpha',\\ 'green\\ blue\\ alpha'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ ret\\ =\\ 0]"}}
+  }
+  Dot {
+   name Dot29
+   xpos -626
+   ypos 1319
+  }
+set N4de1e800 [stack 0]
+  Keymix {
+   inputs 3
+   invertMask true
+   name Keymix1
+   xpos -819
+   ypos 1449
+   disable {{!parent.mask.in i}}
+  }
+push $N4de1e800
+  Switch {
+   inputs 2
+   which {{Copy2.from0 i}}
+   name Switch2
+   xpos -660
+   ypos 1586
+  }
+set N4de1e000 [stack 0]
+push $N4db8b000
+  Switch {
+   inputs 2
+   which {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['all',\\ 'rgba','rgb',\\ 'alpha',\\ 'red',\\ 'blue',\\ 'green',\\ 'red\\ alpha',\\ 'green\\ alpha',\\ 'blue\\ alpha',\\ 'red\\ green',\\ 'red\\ blue',\\ 'green\\ blue',\\ 'red\\ green\\ alpha',\\ 'red\\ blue\\ alpha',\\ 'green\\ blue\\ alpha'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ ret\\ =\\ 0]"}}
+   name Switch1
+   note_font_size -17
+   xpos -854
+   ypos 1705
+  }
+set N4de5bc00 [stack 0]
+  Dot {
+   name Dot8
+   xpos -820
+   ypos 2270
+  }
+push $N4db5fc00
+  Dot {
+   name Dot32
+   xpos 1832
+   ypos 2190
+  }
+push $N4db8ac00
+push $N4de1e000
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy12
+   xpos -390
+   ypos 1792
+  }
+push $N4de5bc00
+push $N4de1e000
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy4
+   xpos -660
+   ypos 1784
+  }
+set N4de5ac00 [stack 0]
+  Switch {
+   inputs 2
+   which {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['alpha'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ ret\\ =\\ 0]"}}
+   name Switch5
+   note_font_size -17
+   xpos -506
+   ypos 1921
+  }
+push $N4bb66800
+  Dot {
+   name Dot30
+   xpos 2120
+   ypos -1423
+  }
+  Dot {
+   name Dot31
+   xpos 2120
+   ypos 1995
+  }
+  Merge2 {
+   inputs 2
+   bbox B
+   also_merge all
+   name Merge5
+   xpos -506
+   ypos 1991
+  }
+push $N4de5ac00
+  Keymix {
+   inputs 3
+   maskChannel rgba.red
+   name Keymix3
+   xpos -660
+   ypos 2180
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy14
+   xpos -660
+   ypos 2260
+  }
+set N4de83400 [stack 0]
+push $N4db8a800
+  Switch {
+   inputs 2
+   which {{"\[python -execlocal premult\\ =\\ nuke.toNode('Premult8')\\nnode\\ =\\ nuke.thisNode()\\nvalueToCheck\\ =\\ \\\['alpha',\\ 'rgba',\\ 'all'\\]\\n\\nif\\ premult.knob('channels').value()\\ in\\ valueToCheck:\\n\\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ ret\\ =\\ 0]"}}
+   name Switch4
+   note_font_size -17
+   xpos -475
+   ypos 2375
+  }
+push $N4de83400
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy16
+   xpos -660
+   ypos 2370
+  }
+  CopyBBox {
+   inputs 2
+   name CopyBBox1
+   xpos -660
+   ypos 2542
+  }
+  Output {
+   name FranklinVFX
+   xpos -660
+   ypos 2634
+  }
+  Premult {
+   inputs 0
+   channels all
+   name Premult8
+   xpos 1450
+   ypos -1514
+  }
+ end_group
+set N6b80900 [stack 0]
+ Dot {
+  name Dot1
+  xpos -1117
+  ypos -282
+ }
+ FrameHold {
+  first_frame 1
+  name FrameHold1
+  xpos -1151
+  ypos -198
+ }
+set N6b80480 [stack 0]
+ Dot {
+  name Dot3
+  xpos -1117
+  ypos -128
+ }
+push $N6b80480
+push $N6b80900
+add_layer {normals_ref normals_ref.red normals_ref.green normals_ref.blue}
+ ShuffleCopy {
+  inputs 2
+  in normals
+  red red
+  green green
+  blue blue
+  alpha black
+  out normals_ref
+  name ShuffleCopy1
+  xpos -987
+  ypos -192
+ }
+add_layer {position_ref position_ref.red position_ref.green position_ref.blue}
+ ShuffleCopy {
+  inputs 2
+  in pos
+  red red
+  green green
+  blue blue
+  alpha black
+  out position_ref
+  name ShuffleCopy2
+  xpos -987
+  ypos -132
+ }
+ Remove {
+  operation keep
+  channels rgba
+  channels2 normals_ref
+  channels3 position_ref
+  name Remove1
+  xpos -987
+  ypos -106
+ }
+push $N6b91400
+ Dot {
+  name Dot24
+  xpos -652
+  ypos -15
+ }
+ ApplyMaterial {
+  inputs 2
+  render_mode textured
+  name ApplyMaterial1
+  xpos -987
+  ypos -19
+ }
+ Output {
+  name FranklinVFX
+  xpos -987
+  ypos 76
+ }
+end_group

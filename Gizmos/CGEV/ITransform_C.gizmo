@@ -1,0 +1,242 @@
+set cut_paste_input [stack 0]
+version 6.0 v5
+push $cut_paste_input
+Group {
+ name ITransform_Plus
+ help "Déforme (IDistort) l'image \"src\" a l'aide  d'outils de transformations 2D et d'un mask \"warp_mask\".\nCelui-ci sert à déterminer la partie affectée de l'image et sa quantité de blur adoucit la déformation dans ses contours.\n\nL'autre entrée \"mask\" permet de contraindre l'effet dans une partie précise."
+ tile_color 0xa57aaaff
+ label "\[value filter] "
+ selected true
+ icon F_onnode.png
+ addUserKnob {20 "" l Transform}
+ addUserKnob {41 matrix T Transform1.matrix}
+ addUserKnob {41 translate T Transform1.translate}
+ addUserKnob {41 rotate T Transform1.rotate}
+ addUserKnob {41 scale T Transform1.scale}
+ addUserKnob {41 skew +INVISIBLE T Transform1.skew}
+ addUserKnob {41 skewY l "skew Y" T Transform1.skewY}
+ addUserKnob {41 skewX l "skew X" T Transform1.skewX}
+ addUserKnob {41 center T Transform1.center}
+ addUserKnob {26 s l " " T " "}
+ addUserKnob {41 filter T IDistort2.filter}
+ addUserKnob {6 linear l Linear -STARTLINE}
+ linear true
+ addUserKnob {26 d l " " T " "}
+ addUserKnob {7 Amp l Amplitude}
+ Amp 1
+ addUserKnob {26 ""}
+ addUserKnob {20 add l INVISIBLE +INVISIBLE n 1}
+ add 0
+ addUserKnob {14 AdjBBox1_numpixels l INVISIBLE +INVISIBLE R 0 100}
+ AdjBBox1_numpixels 1024
+ addUserKnob {20 endGroup l INVISIBLE +INVISIBLE n -1}
+ addUserKnob {41 maskChannel l mask T Keymix1.maskChannel}
+ addUserKnob {41 invertMask l invert -STARTLINE T Keymix1.invertMask}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 169
+  ypos -417
+  number 2
+ }
+ Crop {
+  box {0 0 {Crop1.width} {Dot5.height}}
+  crop false
+  name Crop2
+  xpos 169
+  ypos -262
+ }
+ Dot {
+  name Dot7
+  xpos 203
+  ypos 462
+ }
+ Input {
+  inputs 0
+  name src
+  xpos -525
+  ypos -418
+ }
+ Dot {
+  name Dot5
+  xpos -491
+  ypos -260
+ }
+set N2eb16b10 [stack 0]
+ Dot {
+  name Dot4
+  xpos -491
+  ypos 101
+ }
+set N2eb16e80 [stack 0]
+ Dot {
+  name Dot6
+  xpos -491
+  ypos 462
+ }
+push $N2eb16b10
+ Remove {
+  name Remove1
+  xpos -210
+  ypos -269
+ }
+ AdjBBox {
+  numpixels {{parent.AdjBBox1_numpixels.w} {parent.AdjBBox1_numpixels.h}}
+  name AdjBBox1
+  xpos -210
+  ypos -197
+ }
+ Expression {
+  expr0 x
+  expr1 y
+  name Expression1
+  xpos -210
+  ypos -140
+ }
+set N2eb17c40 [stack 0]
+ Dot {
+  name Dot2
+  xpos -342
+  ypos -137
+ }
+ Transform {
+  translate {{parent.Transform1.translate.main} {parent.Transform1.translate.main}}
+  rotate {{parent.Transform1.rotate.main}}
+  scale {{parent.Transform1.scale.main} {parent.Transform1.scale.main}}
+  skewX {{parent.Transform1.skewX.main}}
+  skewY {{parent.Transform1.skewY.main}}
+  center {{parent.Transform1.center.main} {parent.Transform1.center.main}}
+  filter {{Transform1.filter}}
+  clamp {{parent.Transform1.clamp.main}}
+  black_outside {{parent.Transform1.black_outside.main}}
+  motionblur {{parent.Transform1.motionblur.main}}
+  shutter {{parent.Transform1.shutter.main}}
+  shutteroffset {{Transform1.shutteroffset}}
+  shuttercustomoffset {{parent.Transform1.shuttercustomoffset.main}}
+  name Transform2
+  xpos -376
+  ypos -93
+ }
+push $N2eb17c40
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos -210
+  ypos -93
+ }
+ Input {
+  inputs 0
+  name warp_mask
+  xpos -18
+  ypos -420
+  number 1
+ }
+ Crop {
+  box {0 0 {Crop1.width} {Dot5.height}}
+  crop false
+  name Crop14
+  xpos -18
+  ypos -265
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  selected true
+  xpos -18
+  ypos -241
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  alpha black
+  name Shuffle1
+  xpos -18
+  ypos -46
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos -210
+  ypos -46
+ }
+ Multiply {
+  value {{parent.Amp}}
+  name Multiply1
+  xpos -210
+  ypos -22
+ }
+ AddChannels {
+  channels forward
+  name AddChannels1
+  xpos -210
+  ypos 14
+ }
+push $N2eb16e80
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy1
+  xpos -210
+  ypos 86
+ }
+ Log2Lin {
+  operation lin2log
+  name Log2Lin1
+  xpos -210
+  ypos 187
+  disable {{!parent.linear}}
+ }
+ IDistort {
+  uv forward
+  uv_scale {{parent.Multiply1.value}}
+  blur_scale 0
+  filter Simon
+  name IDistort2
+  xpos -210
+  ypos 232
+ }
+ Log2Lin {
+  name Log2Lin2
+  xpos -210
+  ypos 297
+  disable {{!parent.linear}}
+ }
+ Keymix {
+  inputs 3
+  maskChannel none
+  name Keymix1
+  xpos -210
+  ypos 453
+ }
+ Crop {
+  box {0 0 {input.width} {input.height}}
+  name Crop1
+  xpos -210
+  ypos 572
+ }
+ Output {
+  name Output1
+  xpos -210
+  ypos 652
+ }
+ Transform {
+  inputs 0
+  scale {1 1}
+  center {1024 576}
+  filter Simon
+  black_outside false
+  name Transform1
+  tile_color 0xff0000ff
+  label "expresison link this\nto avoid st map overlay"
+  xpos 62
+  ypos 200
+  hide_input true
+ }
+end_group

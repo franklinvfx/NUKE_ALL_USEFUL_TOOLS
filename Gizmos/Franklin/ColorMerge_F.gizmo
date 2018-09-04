@@ -1,0 +1,345 @@
+Group {
+ name ColorMerge_F
+ help "Color Merge\n\nMerge the color from the Input \"Color\" to the footage in \"Src\".\n\nIf the \"Mix Color\" slider is on 0, the color is keep from the \"Src\".\n"
+ knobChanged "c = nuke.toNode('Copy3')\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(2) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')"
+ tile_color 0x7aa9ffff
+ selected true
+ icon F_iconrgb.png
+ addUserKnob {20 CM l "Color Merge"}
+ addUserKnob {7 mix l "<font color=\"green\">@b;Mix Color" t "Slider on \"0\" keep the color from the Input \"Src\"."}
+ mix 1
+ addUserKnob {26 S01 l "                  " T " "}
+ addUserKnob {26 FT1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
+ addUserKnob {26 ""}
+ addUserKnob {41 from0 l Mask t "Use this channel from the original input to mix the output with the original input." T Copy3.from0}
+ addUserKnob {41 disable_1 l Invert t "Invert the use of the mask channel." -STARTLINE T Invert1.disable}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[if \{\[value mix] !=\"1\"\} \{return \"\[knob this.name_1 \"\[value mix] %\"]\"\}  \{return \"\[knob this.name_1 \"rgb\"]\"\}]\[value name_1]"
+ addUserKnob {1 name_1 l INVISIBLE +INVISIBLE}
+ name_1 rgb
+}
+ Input {
+  inputs 0
+  name Src
+  xpos -89
+  ypos -776
+ }
+ Dot {
+  name in
+  xpos -55
+  ypos -548
+ }
+set N3844f400 [stack 0]
+ Dot {
+  name Dot5
+  xpos -409
+  ypos -548
+ }
+ Dot {
+  name Dot16
+  xpos -409
+  ypos -105
+ }
+set N3844ec00 [stack 0]
+ Dot {
+  name Dot6
+  xpos -409
+  ypos -38
+ }
+set N3844e800 [stack 0]
+ Dot {
+  name Dot3
+  xpos -409
+  ypos 78
+ }
+set N3844e400 [stack 0]
+ Dot {
+  name Dot7
+  xpos -409
+  ypos 251
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos 1032
+  ypos -771
+  number 2
+  addUserKnob {20 User}
+  addUserKnob {6 in +STARTLINE}
+  in {{"\[exists input2]"}}
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels3
+  xpos 1032
+  ypos -629
+ }
+set N3af1800 [stack 0]
+push $N3af1800
+ Copy {
+  inputs 2
+  to0 rgba.alpha
+  name Copy3
+  xpos 1032
+  ypos -603
+  disable {{!parent.mask.in}}
+ }
+ Invert {
+  name Invert1
+  xpos 1032
+  ypos -565
+ }
+ Dot {
+  name Dot1
+  xpos 1066
+  ypos 78
+ }
+push $N3844e400
+push $N3844ec00
+ AddChannels {
+  channels alpha
+  name AddChannels1
+  xpos -281
+  ypos -115
+ }
+push $N3844f400
+ Dot {
+  name Dot4
+  xpos 97
+  ypos -548
+ }
+set N3af0400 [stack 0]
+ Input {
+  inputs 0
+  name Color
+  xpos 207
+  ypos -781
+  number 1
+ }
+ NoOp {
+  name ChannelCheck
+  xpos 207
+  ypos -646
+  addUserKnob {20 User}
+  addUserKnob {6 alpha +STARTLINE}
+  alpha {{"\[python \"len(\\\[n for n in nuke.channels(nuke.thisNode().input(0)) if n.find(\\\".r\\\") != -1])>0\"]"}}
+ }
+ Switch {
+  inputs 2
+  which {{!ChannelCheck.alpha}}
+  name Switch2
+  xpos 207
+  ypos -552
+ }
+ Clamp {
+  channels rgb
+  minimum 0.0001
+  maximum_enable false
+  name Clamp1
+  xpos 207
+  ypos -526
+ }
+ Dot {
+  name Dot8
+  xpos 241
+  ypos -428
+ }
+set N383a1400 [stack 0]
+ Dot {
+  name Dot15
+  xpos 351
+  ypos -428
+ }
+set N383a1000 [stack 0]
+ Dot {
+  name Dot14
+  xpos 482
+  ypos -428
+ }
+set N383a0c00 [stack 0]
+ Dot {
+  name Dot13
+  xpos 592
+  ypos -428
+ }
+set N383a0800 [stack 0]
+ Dot {
+  name Dot12
+  xpos 727
+  ypos -428
+ }
+set N383a0400 [stack 0]
+push $N383a0400
+ Dot {
+  name Dot11
+  xpos 837
+  ypos -428
+ }
+ ColorMatrix {
+  matrix {
+      {0 0 0}
+      {0 0 0}
+      {1 1 1}
+    }
+  name ColorMatrix4
+  tile_color 0xffff
+  xpos 803
+  ypos -347
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge1
+  tile_color 0xffff
+  xpos 693
+  ypos -347
+ }
+ Dot {
+  name Dot9
+  xpos 727
+  ypos -182
+ }
+push $N383a0c00
+push $N383a0800
+ ColorMatrix {
+  matrix {
+      {0 0 0}
+      {1 1 1}
+      {0 0 0}
+    }
+  name ColorMatrix3
+  tile_color 0xff00ff
+  xpos 558
+  ypos -349
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge3
+  tile_color 0xff00ff
+  xpos 448
+  ypos -349
+ }
+ Dot {
+  name Dot10
+  xpos 482
+  ypos -268
+ }
+push $N383a1400
+push $N383a1000
+ ColorMatrix {
+  matrix {
+      {1 1 1}
+      {0 0 0}
+      {0 0 0}
+    }
+  name ColorMatrix2
+  tile_color 0xff0000ff
+  xpos 317
+  ypos -350
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge2
+  tile_color 0xff0000ff
+  xpos 207
+  ypos -350
+ }
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.green
+  name Copy1
+  xpos 207
+  ypos -277
+ }
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.blue
+  name Copy2
+  xpos 207
+  ypos -192
+ }
+push $N3af0400
+ ColorMatrix {
+  matrix {
+      {1 1 1}
+      {1 1 1}
+      {1 1 1}
+    }
+  name ColorMatrix1
+  tile_color 0xfefefeff
+  xpos 63
+  ypos -349
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge4
+  xpos 63
+  ypos -185
+ }
+push $N3844f400
+ MergeExpression {
+  inputs 2
+  temp_name0 BY
+  temp_expr0 "( 0.213*(Br<= 0.0031308 ? 12.92*Br : ( 1.055*pow(Br,1.0 / 2.4)) - 0.055)) + ( 0.715*(Bg<= 0.0031308 ? 12.92*Bg : ( 1.055*pow(Bg,1.0 / 2.4)) - 0.055)) + ( 0.072*(Bb<= 0.0031308 ? 12.92*Bb : ( 1.055*pow(Bb,1.0 / 2.4)) - 0.055))"
+  temp_name1 APb
+  temp_expr1 "(-0.115*(Ar<= 0.0031308 ? 12.92*Ar : ( 1.055*pow(Ar,1.0 / 2.4)) - 0.055)) + (-0.385*(Ag<= 0.0031308 ? 12.92*Ag : ( 1.055*pow(Ag,1.0 / 2.4)) - 0.055)) + ( 0.500*(Ab<= 0.0031308 ? 12.92*Ab : ( 1.055*pow(Ab,1.0 / 2.4)) - 0.055))"
+  temp_name2 APr
+  temp_expr2 "( 0.500*(Ar<= 0.0031308 ? 12.92*Ar : ( 1.055*pow(Ar,1.0 / 2.4)) - 0.055)) + (-0.454*(Ag<= 0.0031308 ? 12.92*Ag : ( 1.055*pow(Ag,1.0 / 2.4)) - 0.055)) + (-0.046*(Ab<= 0.0031308 ? 12.92*Ab : ( 1.055*pow(Ab,1.0 / 2.4)) - 0.055))"
+  expr0 "(( 1.000*BY) + ( 0.000*APb) + ( 1.575*APr))<.04045 ? (( 1.000*BY) + ( 0.000*APb) + ( 1.575*APr))/12.92 : pow(((( 1.000*BY) + ( 0.000*APb) + ( 1.575*APr))+.055)/1.055, 2.4)"
+  expr1 "(( 1.000*BY) + (-0.187*APb) + (-0.468*APr))<.04045 ? (( 1.000*BY) + (-0.187*APb) + (-0.468*APr))/12.92 : pow(((( 1.000*BY) + (-0.187*APb) + (-0.468*APr))+.055)/1.055, 2.4)"
+  expr2 "(( 1.000*BY) + ( 1.856*APb) + ( 0.000*APr))<.04045 ? (( 1.000*BY) + ( 1.856*APb) + ( 0.000*APr))/12.92 : pow(((( 1.000*BY) + ( 1.856*APb) + ( 0.000*APr))+.055)/1.055, 2.4)"
+  name WasherMerge1
+  xpos -89
+  ypos -185
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos -89
+  ypos -115
+ }
+push $N3844e800
+ Dissolve {
+  inputs 2
+  which {{parent.mix}}
+  name Dissolve1
+  xpos -89
+  ypos -48
+ }
+set N382fc000 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -211
+  ypos 68
+  disable {{!parent.mask.in}}
+ }
+push $N382fc000
+ Switch {
+  inputs 2
+  which {{Copy3.from0}}
+  name Switch1
+  xpos -89
+  ypos 168
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos -89
+  ypos 247
+ }
+ Output {
+  name FranklinVFX
+  xpos -89
+  ypos 368
+ }
+end_group

@@ -1,0 +1,37 @@
+Group {
+ inputs 0
+ name Knob_Ctrl
+ help "Knob Control\n"
+ onCreate nuke.thisNode().knob('saveName').setValue(nuke.thisNode().name())
+ onDestroy "'''try:\n    this = nuke.thisNode()\n    dknob = this.knob('selknob').value()\n    nodes = nuke.root().begin().selectedNodes()\n    nodename = this.name()\n\n    nuke.root().begin()\n\n    dep = this.dependent(nuke.EXPRESSIONS)\n\n    for i in dep:\n        i\[dknob].clearAnimated()\n        i\['icon'].setValue('')\nexcept:\n    pass'''"
+ knobChanged "knobsToListen = \['local', 'batch', 'onlylocal', 'onlybatch']\n\nif nuke.thisKnob().name() in knobsToListen:\n    if nuke.thisKnob().name() == 'local' or nuke.thisKnob().name() == 'onlylocal':\n        type = 'local'\n        otherType = 'batch'\n    else:\n        type = 'batch'\n        otherType = 'local'\n\n    if nuke.thisKnob().name() in \['local', 'batch']:\n        value = nuke.thisKnob().value()\n        otherValue = nuke.thisNode().knob(otherType).value()\n\n        if nuke.thisNode().knob('only' + type).value() == True:\n            nuke.thisNode().knob('save' + type).setValue(value)\n            nuke.thisNode().knob(otherType).setValue(value)\n        else:\n            nuke.thisNode().knob('save' + type).setValue(value)\n            nuke.thisNode().knob('save' + otherType).setValue(otherValue)\n\n    elif nuke.thisKnob().name() in \['onlylocal', 'onlybatch']:\n        saveValue = nuke.thisNode().knob('save' + type).value()\n        saveOtherValue = nuke.thisNode().knob('save' + otherType).value()\n    \n        nuke.thisNode().knob(type).setValue(saveValue)\n        nuke.thisNode().knob(otherType).setValue(saveValue)\n        nuke.thisNode().knob(type).setEnabled(True)\n        nuke.thisNode().knob(otherType).setEnabled(False)\n        nuke.thisNode().knob('only' + otherType).setValue(False)\n    \n        if nuke.thisNode().knob('onlylocal').value() == False and nuke.thisNode().knob('onlybatch').value() == False:\n            nuke.thisNode().knob(otherType).setEnabled(True)\n            nuke.thisNode().knob(otherType).setValue(saveOtherValue)\n\n            if nuke.thisNode().knob('selknob').value() == '':\n                nuke.thisNode().knob('output').setValue('rgb')\n            else:\n                nuke.thisNode().knob('output').setValue('\[value local] / \[value batch])\\n(\[value selknob]')\n        else:\n            if nuke.thisNode().knob('selknob').value() == '':\n                nuke.thisNode().knob('output').setValue('rgb')\n            else:\n                nuke.thisNode().knob('output').setValue('\[value selknob] \[value '+type+']')\n\nelif nuke.thisKnob().name() == 'name':\n    name = nuke.thisNode().name()\n    saveName = nuke.thisNode().knob('saveName').value()\n\n    for node in nuke.allNodes(group=nuke.root()):\n        for knob in node.allKnobs():\n            if knob.hasExpression() and saveName + '.' in knob.toScript():\n                saveExpr = knob.toScript()\n                saveExpr = saveExpr.replace('\{\"\\\\', '')\n                saveExpr = saveExpr.replace('\"\}', '')\n                saveExpr = saveExpr.replace(saveName, name)\n                knob.setExpression(saveExpr)\n\n    nuke.thisNode().knob('saveName').setValue(name)\n\nelif nuke.thisKnob().name() == 'selknob':\n    if nuke.thisNode().knob('onlylocal').value() == False and nuke.thisNode().knob('onlybatch').value() == False:\n        if nuke.thisNode().knob('selknob').value() == '':\n            nuke.thisNode().knob('output').setValue('rgb')\n        else:\n            nuke.thisNode().knob('output').setValue('\[value local] / \[value batch])\\n(\[value selknob]')\n    else:\n        if nuke.thisNode().knob('selknob').value() == '':\n            nuke.thisNode().knob('output').setValue('rgb')\n        else:\n            nuke.thisNode().knob('output').setValue('\[value selknob] \[value '+type+']')"
+ tile_color 0xffff00ff
+ note_font_color 0xff
+ selected true
+ hide_input true
+ addUserKnob {20 knobctrl l "Knob Control"}
+ addUserKnob {26 saveName l INVISIBLE +INVISIBLE T Knob_Ctrl}
+ addUserKnob {16 savelocal l INVISIBLE +INVISIBLE}
+ savelocal 1
+ addUserKnob {7 savebatch l INVISIBLE +INVISIBLE}
+ savebatch 1
+ addUserKnob {1 selknob l "<font color=\"green\">@b;Knob Name" t "Write the name of the knob you want to control."}
+ addUserKnob {22 linkselect l "  Link Selected Nodes (knob)  " t "Link with expression the choosen knob of all selected nodes.\nThe curent node become the master of each linked nodes." T "this = nuke.thisNode()\nknobval = this.knob('selknob').value()\nnodename = this.name()\n\nthis.knob('selected').setValue(False)\n\nnodes = nuke.root().begin().selectedNodes()\n\nif nodes == \[]:\n    nuke.message('You need to select a node')\nelse:\n    if knobval == '':\n        nuke.message('need a knob name')\n    else:\n        for node in nodes:\n            node\[knobval].setExpression(  '\$gui ? ' + nodename + '.local   : ' + nodename + '.batch ')\n        this\['selknob'].setEnabled(False)" +STARTLINE}
+ addUserKnob {22 unlinkselect l "  Unlink Selected  " t "Remove the expression of the choosen knob of all selected nodes." -STARTLINE T "dknob = nuke.thisNode().knob('selknob').value()\n\nthis.knob('selected').setValue(False)\n\nnodes = nuke.root().begin().selectedNodes()\n\nif nodes == \[]:\n    nuke.message('You need to select a node')\nelse:\n    if dknob == '':\n        nuke.message('need a knob name')\n    else:\n        for node in nodes:\n            node\[dknob].clearAnimated()"}
+ addUserKnob {26 S00 l " " -STARTLINE T "              "}
+ addUserKnob {22 reset l "  Reset  " t "Remove all expressions for all linked nodes.\nGive back the possibility to link another knob (Knob Name)." -STARTLINE T "this = nuke.thisNode()\ndknob = this.knob('selknob').value()\nnodes = nuke.root().begin().selectedNodes()\nnodename = this.name()\n\nnuke.root().begin()\n\ndep = this.dependent(nuke.EXPRESSIONS)\n\nfor i in dep:\n    i\[dknob].clearAnimated()\n\nthis\['selknob'].setEnabled(True)\nfor node in nuke.selectedNodes():\n    node.setSelected(False)"}
+ addUserKnob {26 S01 l "                      "}
+ addUserKnob {7 local l Local t "This value is use only in working interface but not in Batch!" R -20 20}
+ local 1
+ addUserKnob {6 onlylocal l Only t "If it's selected all linked nodes use the \"Local\" value also on renderfarm." -STARTLINE}
+ onlylocal true
+ addUserKnob {7 batch l Batch t "This value is use only during a batch but not in working interface!" +DISABLED R -20 20}
+ batch 1
+ addUserKnob {6 onlybatch l Only t "If it's selected all linked nodes use the \"Batch\" value also on working interface." -STARTLINE}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output rgb
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 by2 l "                     " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter votre superviseur\n" -STARTLINE T "<font color=\"#1C1C1C\"> v01 - CGEV - 2017"}
+}
+end_group

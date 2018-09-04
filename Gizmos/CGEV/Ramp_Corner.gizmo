@@ -1,0 +1,99 @@
+Group {
+ name Ramp_Corner
+ help "Ramp Corner\n\nAdd one color to each corner. \nIf there is no input image, you can change the output format, else it keep the input format. \n"
+ knobChanged "inputexist = nuke.toNode('Check')\ninputexist = inputexist\['check'].value()\n\nknobsToCheck = \['inputChange']\n\nif nuke.thisKnob().name() in knobsToCheck:\n    if inputexist:\n        nuke.thisNode()\['format'].setEnabled(False)\n    else:\n        nuke.thisNode()\['format'].setEnabled(True)"
+ selected true
+ icon F_iconrgba.png
+ addUserKnob {20 User l "Ramp Corner"}
+ addUserKnob {41 format l "        Format" T Constant2.format}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {26 T01 l "@b; Top"}
+ addUserKnob {41 ULColor l Left T Expression2.ULColor}
+ addUserKnob {41 URColor l Right T Expression2.URColor}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {26 T02 l "@b; Bottom"}
+ addUserKnob {41 LLColor l Left T Expression2.LLColor}
+ addUserKnob {41 LRColor l Right T Expression2.LRColor}
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter votre superviseur\n" -STARTLINE T "<font color=\"#1C1C1C\"> v03 - CGEV - 2017"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -331
+  ypos -329
+ }
+ NoOp {
+  name Check
+  selected true
+  xpos -331
+  ypos -260
+  addUserKnob {20 User}
+  addUserKnob {6 check +STARTLINE}
+  check {{"\[python \"len(\\\[n for n in nuke.channels(nuke.thisNode().input(0)) if n.find(\\\".r\\\") != -1])>0\"]"}}
+ }
+ Constant {
+  inputs 0
+  color {0 0 0 0}
+  name Constant2
+  xpos -171
+  ypos -263
+  postage_stamp false
+ }
+ Switch {
+  inputs 2
+  which {{Check.check}}
+  name Switch1
+  xpos -263
+  ypos -167
+ }
+set N73f92400 [stack 0]
+ Remove {
+  name Remove1
+  xpos -401
+  ypos -173
+ }
+ Expression {
+  temp_name0 LLCorner
+  temp_expr0 (1-x/width)*(1-y/height)
+  temp_name1 LRCorner
+  temp_expr1 (x/width)*(1-y/height)
+  temp_name2 URCorner
+  temp_expr2 (x/width)*(y/height)
+  temp_name3 ULCorner
+  temp_expr3 (1-x/width)*(y/height)
+  expr0 LLColor.r*LLCorner+LRColor.r*LRCorner+URColor.r*URCorner+ULColor.r*ULCorner
+  expr1 LLColor.g*LLCorner+LRColor.g*LRCorner+URColor.g*URCorner+ULColor.g*ULCorner
+  expr2 LLColor.b*LLCorner+LRColor.b*LRCorner+URColor.b*URCorner+ULColor.b*ULCorner
+  expr3 LLColor.a*LLCorner+LRColor.a*LRCorner+URColor.a*URCorner+ULColor.a*ULCorner
+  name Expression2
+  xpos -401
+  ypos -77
+  addUserKnob {20 User}
+  addUserKnob {19 LLColor}
+  LLColor {1 0 0 0}
+  addUserKnob {6 LLColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 LRColor}
+  LRColor {1 1 0 0}
+  addUserKnob {6 LRColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 URColor}
+  URColor {0 1 0 0}
+  addUserKnob {6 URColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 ULColor}
+  ULColor {0 0 1 0}
+  addUserKnob {6 ULColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+push $N73f92400
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -263
+  ypos -77
+ }
+ Output {
+  name FranklinVFX
+  xpos -263
+  ypos -14
+ }
+end_group

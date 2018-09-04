@@ -1,0 +1,219 @@
+set cut_paste_input [stack 0]
+version 6.0 v5
+push $cut_paste_input
+Group {
+ name RSMB_plus
+ help "UnRSMB avec des options supplémentaire.\n\nLes ajouts sont :\n\n-Choix des channels : Rgba, alpha, ou All\n\n-Possibilité de l'activé uniquement sur la farm\n\n-Un crop et un remove inclus, permettant d'eviter certain bug du RSMB.\n\n-Une entrée mask.\n"
+ tile_color 0xff8029ff
+ label "(\[value Channel])"
+ selected true
+ icon F_onnode.png
+ addUserKnob {20 User l "RSMB +"}
+ addUserKnob {4 Channel M {Alpha rgba All ""}}
+ Channel rgba
+ addUserKnob {26 d l " " T " "}
+ addUserKnob {41 menuTrackFrame l Track T RSMB_plus.menuTrackFrame}
+ addUserKnob {41 menuDisplay l Display T RSMB_plus.menuDisplay}
+ addUserKnob {41 MBAmount l "Main_BG: Blur Amt" T RSMB_plus.MBAmount}
+ addUserKnob {41 MBSensitivity l "Main_BG: Sens" T RSMB_plus.MBSensitivity}
+ addUserKnob {41 valMBAmountFG1 l "FG: Blur Amt" T RSMB_plus.valMBAmountFG1}
+ addUserKnob {41 valMBSensitivityFG1 l "FG: Sens" T RSMB_plus.valMBSensitivityFG1}
+ addUserKnob {41 menuFG1MatteChannel l "MAT: Use Ch." T RSMB_plus.menuFG1MatteChannel}
+ addUserKnob {41 valFG1InvMatteShrink l "FG Inv.Matte Shrink" T RSMB_plus.valFG1InvMatteShrink}
+ addUserKnob {20 ContrastSource l INVISIBLE +INVISIBLE n 1}
+ ContrastSource 0
+ addUserKnob {41 white l INVISIBLE +INVISIBLE T Grade_Contrast.white}
+ addUserKnob {41 gamma l INVISIBLE +INVISIBLE T Grade_Contrast.gamma}
+ addUserKnob {20 endGroup l INVISIBLE +INVISIBLE n -1}
+ addUserKnob {26 s l " " T " "}
+ addUserKnob {6 Render l "< font color='#2EFE2E'>_render only in Batch!" +STARTLINE}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 deb l "Debug options:" T " "}
+ addUserKnob {6 keep l "Output Rgba only" +STARTLINE}
+ keep true
+ addUserKnob {6 Crop -STARTLINE}
+ Crop true
+ addUserKnob {26 g l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannel l mask T Keymix1.maskChannel}
+ addUserKnob {41 invertMask l invert -STARTLINE T Keymix1.invertMask}
+ addUserKnob {41 Mix l mix T Dissolve1.which}
+ addUserKnob {20 Info}
+ addUserKnob {26 Principe l "" +STARTLINE T "Principe :\n\nUn RSMB avec des options supplémentaire\n"}
+ addUserKnob {26 ""}
+ addUserKnob {26 Use l "" +STARTLINE T "Utilisation :\n\nles réglages supplémentaire sont :\n\n-Choix des channels : Rgba, alpha, ou All\n\n-Possibilité de l'activé uniquement sur la farm\n\n-Un crop et un remove inclus, permettant d'eviter certain bug du RSMB.\n\n-Une entrée mask.\n\n"}
+ addUserKnob {26 ""}
+ addUserKnob {26 enjoy l "" +STARTLINE T "Enjoy ! Gat"}
+}
+ Input {
+  inputs 0
+  name Source
+  xpos 413
+  ypos 245
+ }
+ Dot {
+  name Dot2
+  xpos 448
+  ypos 366
+ }
+set N3494a9b0 [stack 0]
+ Dot {
+  name Dot5
+  xpos 210
+  ypos 366
+ }
+ Dot {
+  name Dot3
+  xpos 210
+  ypos 471
+ }
+set N3494b090 [stack 0]
+ Dot {
+  name Dot6
+  xpos 210
+  ypos 735
+ }
+set N3494b400 [stack 0]
+ Dot {
+  name Dot8
+  xpos 210
+  ypos 897
+ }
+set N3494b770 [stack 0]
+ Dot {
+  name Dot9
+  xpos 210
+  ypos 1002
+ }
+set N3494bae0 [stack 0]
+ Input {
+  inputs 0
+  name Mask
+  xpos 680
+  ypos 654
+  number 1
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos 680
+  ypos 732
+ }
+push $N3494b400
+push $N3494b090
+push $N3494a9b0
+ Remove {
+  operation keep
+  channels rgba
+  name Remove_keep
+  xpos 414
+  ypos 411
+ }
+set N47b4eb20 [stack 0]
+push $N47b4eb20
+ Switch {
+  inputs 3
+  which {{parent.Switch_channel.which}}
+  name Switch_channel1
+  label "\[value which]"
+  xpos 413
+  ypos 461
+ }
+ Crop {
+  box {0 0 {input.format.w} {input.format.h}}
+  name Crop1
+  xpos 412
+  ypos 515
+  disable {{parent.Crop}}
+ }
+ OFXcom.revisionfx.rsmb_v3 {
+  menuTrackFrame "Previous Frame"
+  menuDisplay "Source Blurred"
+  MBAmount 0.5
+  MBSensitivity 70
+  valMBAmountFG1 0.5
+  valMBSensitivityFG1 70
+  menuFG1MatteChannel Alpha
+  valFG1InvMatteShrink 0
+  CustomData_DoNotEdit aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  name RSMB_plus
+  selected true
+  xpos 413
+  ypos 624
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 413
+  ypos 726
+ }
+ Dot {
+  name Dot1
+  tile_color 0x8ce08ff
+  xpos 447
+  ypos 789
+ }
+set N47b4ffc0 [stack 0]
+push $N47b4ffc0
+ Dot {
+  name Dot7
+  xpos 587
+  ypos 789
+ }
+ Shuffle {
+  name RGBA
+  xpos 552
+  ypos 893
+ }
+push $N47b4ffc0
+ Shuffle {
+  in alpha
+  name Alpha
+  xpos 298
+  ypos 785
+ }
+push $N3494b770
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  bbox B
+  name Copy1
+  xpos 298
+  ypos 887
+ }
+ Switch {
+  inputs 3
+  which {{Channel}}
+  name Switch_channel
+  label "\[value which]"
+  xpos 413
+  ypos 887
+ }
+ Switch {
+  inputs 2
+  which {{"\$gui"}}
+  name Switch_gui
+  xpos 413
+  ypos 998
+  disable {{(parent.Render)-1}}
+ }
+push $N3494bae0
+ Dot {
+  name Dot10
+  xpos 210
+  ypos 1096
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  name Dissolve1
+  xpos 413
+  ypos 1086
+ }
+ Output {
+  name Output1
+  xpos 413
+  ypos 1186
+ }
+end_group

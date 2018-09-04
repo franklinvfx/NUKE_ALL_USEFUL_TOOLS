@@ -1,0 +1,98 @@
+Group {
+ name MatchIntensity
+ onCreate "if nuke.thisNode()\['created'].value() == False:\n    if nuke.thisNode().input(0) is not None:\n        w = nuke.thisNode().input(0).width()\n        ww = int(w/10)\n        h = nuke.thisNode().input(0).height()\n        hh = int(h/10)\n        nuke.thisNode().knob('ROI').setValue((ww, hh, w-ww, h-hh))\n    else:\n        rw = nuke.root().format().width()\n        rww = int(rw/10)\n        rh = nuke.root().format().height()\n        rhh = int(rh/10)\n        nuke.thisNode().knob('ROI').setValue((rww, rhh, rw-rww, rh-rhh))\n        \n    nuke.thisNode()\['intensitydata'].clearAnimated()\n    nuke.thisNode()\['intensitydata'].setValue(0)\n    nuke.thisNode()\['created'].setValue(True)"
+ tile_color 0x85ade5ff
+ selected true
+ icon //stora/diska/global/templatesProd/Other_images/F_iconrgb.png
+ addUserKnob {20 MatchIntensiy}
+ addUserKnob {6 created l INVISIBLE +INVISIBLE +STARTLINE}
+ addUserKnob {41 channels l Channels T CurveTool_Intensity.channels}
+ addUserKnob {26 ""}
+ addUserKnob {41 go_1 l Analyse T CurveTool_Intensity.go}
+ addUserKnob {4 Mode l " Mode " -STARTLINE M {"Add intensity Value ( match )" "Remove intensity Value ( compensate )" "Analyse View" "" ""}}
+ Mode "Analyse View"
+ addUserKnob {3 RefFrame l "Reference Frame"}
+ addUserKnob {22 SetFrame l "Set to this frame" -STARTLINE T nuke.thisNode().knob('RefFrame').setValue(nuke.frame())}
+ addUserKnob {26 ""}
+ addUserKnob {15 ROI}
+ ROI {1300 1070 1456 1181.5}
+ addUserKnob {41 avgframes l "# frames for base average" T CurveTool_Intensity.avgframes}
+ addUserKnob {26 S01 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {6 CT_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {41 intensitydata l "Intensity Data" T CurveTool_Intensity.intensitydata}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {22 CrtLnkGrd l "<font color = \"springGreen\"> Create Grade (Linked)" T "groupNode = nuke.thisNode()\nname = groupNode.name()\n\nC = nuke.createNode(\"Grade\", inpanel=False )\n\nC\['tile_color'].setValue(0x82e3ffff)\nC\['label'].setValue(\"(\" +name + \")\")\n\nt= nuke.Tab_Knob ('CtrlTab', 'Ctrl')\nj= nuke.Int_Knob ('Ref' , 'Reference Frame')\nk= nuke.Enumeration_Knob ( 'mode' , 'Mode' , \['Add intensity ( match )','Remove intensity ( compensate )' ] )\nl = nuke.PyScript_Knob(\"SetRef\", \"Set to this frame\" , \"nuke.thisNode().knob('Ref').setValue(nuke.frame())\")\nC.addKnob(t)\nC.addKnob(k)\nC.addKnob(j)\nC.addKnob(l)\n\nC\['white'].setSingleValue(False)\nC\['white'].setExpression(\"((\"+name+\".intensitydata)==(-0) || (\"+name+\".intensitydata)==0?0.00001:(\"+name+\".intensitydata))/((\"+name+\".intensitydata(Ref))==0?1:(\"+name+\".intensitydata(Ref)))\")\nC\['reverse'].setExpression(\"mode\")\nC\['Ref'].setExpression(name + \".RefFrame\")\n\nC.knob('Ref').clearAnimated()\n\nC.setSelected(True)\n\nnuke.nodeCopy('%clipboard%')\n\nn = nuke.selectedNode()\nnuke.delete(n)\n\nnuke.selectAll() \nnuke.invertSelection()\n\nnodePos = ( nuke.thisNode().xpos(), nuke.thisNode().ypos()) \n\ngroupNode.end()\n\nfor node in nuke.allNodes():\n        node.setSelected(False)\n\nnuke.nodePaste('%clipboard%')\n\ngroupNode.setSelected(False)\n\nnodesToPlace = sorted( nuke.selectedNodes(), key=lambda node: node.ypos())\n\nfor index,node in enumerate(nodesToPlace):\n        node.setXYpos(nodePos\[0]+100, nodePos\[1])\n" +STARTLINE}
+ addUserKnob {26 S04 l " "}
+ addUserKnob {41 maskChannelMask l mask -STARTLINE T GradeMatchIntensity.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T GradeMatchIntensity.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T GradeMatchIntensity.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T GradeMatchIntensity.fringe}
+ addUserKnob {41 mix T GradeMatchIntensity.mix}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "RefFrame \[value RefFrame]"
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -648
+  ypos 413
+ }
+ Dot {
+  name Dot1
+  xpos -614
+  ypos 473
+ }
+set Nc3e7cc00 [stack 0]
+ Dot {
+  name Dot3
+  xpos -780
+  ypos 473
+ }
+ CurveTool {
+  ROI {{parent.ROI} {parent.ROI} {parent.ROI} {parent.ROI}}
+  autocropdata {512 389 1746 1406}
+  intensitydata {{curve x1001 0.1298230916 0.1304575751 0.1307603893 0.1310209904 0.1309602929 0.1312108694 0.1313674103 0.1314941227 0.1315234501 0.1315456418 0.1311707032 0.130744572 0.1304499017 0.1309348077 0.1315600056 0.1320573228 0.1326162626 0.1331515966 0.133926487 0.1336715872 0.132738717 0.1317704083 0.127797625 0.1276571036 0.1303347219 0.1308502641 0.1313739274 0.133552696 0.1341308831 0.1339960281 0.1333105529 0.1324222339 0.1318401505 0.1250680623 0.1196953444 0.1156940059 0.1139937736 0.1097439051 0.107872809 0.1044084605 0.1031241715 0.09601157455 0.09393052355 0.09303099807 0.08426929128 0.08012848553 0.07829015258 0.07240433031 0.06930752781 0.06536881161 0.06245687191 0.06054431209 0.06152597007 0.06476388654 0.06641020503 0.0664156949 0.06661059337 0.06678059495 0.06832917089 0.06828197688 0.06842158183 0.07375593921 0.07103958226 0.0698203346 0.07411584147 0.07181453457 0.07160904874 0.07152235345} {curve x1001 0.1625909142 0.1634010677 0.1641341017 0.1645145629 0.1644893175 0.1645100495 0.1648455517 0.1651341608 0.165436577 0.1653776741 0.1648614725 0.16430235 0.1640778601 0.1646521592 0.1653381087 0.1661419502 0.1670105196 0.1682910239 0.1697670671 0.170165172 0.1695010391 0.1685884975 0.1641572062 0.1639830753 0.1671907519 0.1671443114 0.1670734895 0.1690037788 0.1691595314 0.1684535725 0.1672196263 0.1663413543 0.1657659493 0.1582227435 0.1519353667 0.1476322093 0.1459443907 0.1410928758 0.1387757284 0.1356255474 0.1344374486 0.1271668619 0.1252136511 0.1244537399 0.1171505942 0.1127951542 0.1117808149 0.1066521733 0.1031641795 0.09988802461 0.09724451633 0.09474546116 0.09625847288 0.1006242777 0.1033848714 0.1035163258 0.1038148259 0.1045983507 0.1081133689 0.1075252735 0.1073516024 0.1130817424 0.1094501752 0.1074711122 0.1107279727 0.1075545898 0.1071371241 0.1070753518} {curve x1001 0.2464653259 0.247630034 0.2495051965 0.2498370437 0.2499178646 0.2491436198 0.250332756 0.2511420907 0.2518349143 0.2517527131 0.250816932 0.2500195336 0.2493355053 0.2497119105 0.2502390083 0.2518329063 0.2535916603 0.2566897147 0.2601515954 0.2625706202 0.2634731897 0.2632849669 0.259045971 0.2588172614 0.2617403038 0.2588269187 0.2562257857 0.2556115738 0.2539342712 0.2511153971 0.2482563859 0.2480099163 0.2478685608 0.2421529256 0.2384462857 0.237097531 0.2365676344 0.2345655771 0.2336049803 0.2315991735 0.22993484 0.2230766427 0.2225024354 0.2223316395 0.2178527394 0.2122902195 0.2152231856 0.214047099 0.2113561924 0.2114155612 0.2115498644 0.2147055488 0.2190704424 0.2264050707 0.2279873218 0.2266616811 0.2251514006 0.2250099861 0.2216519341 0.222279573 0.2233640068 0.2335381947 0.2297975268 0.2256218759 0.2327811638 0.2289231045 0.2292176962 0.23054282} {curve x1001 0.1298230916}}
+  name CurveTool_Intensity
+  onCreate "nuke.thisNode().knob('autocropdata').setVisible(False)\nnuke.thisNode().knob('ROI').setEnabled(False)\nnuke.thisNode().knob('maxlumapixdata').setVisible(False)\nnuke.thisNode().knob('maxlumapixvalue').setVisible(False)\nnuke.thisNode().knob('minlumapixdata').setVisible(False)\nnuke.thisNode().knob('minlumapixvalue').setVisible(False)"
+  xpos -814
+  ypos 532
+ }
+ Dot {
+  name Dot2
+  xpos -780
+  ypos 605
+ }
+ Input {
+  inputs 0
+  name InputMask
+  xpos -508
+  ypos 533
+  number 1
+ }
+push $Nc3e7cc00
+ Grade {
+  inputs 1+1
+  white {{"((CurveTool_Intensity.intensitydata)==(-0) || (CurveTool_Intensity.intensitydata)==0?0.00001:(CurveTool_Intensity.intensitydata))/((CurveTool_Intensity.intensitydata(RefFrame))==0?1:(CurveTool_Intensity.intensitydata(RefFrame)))"} {"((CurveTool_Intensity.intensitydata)==(-0) || (CurveTool_Intensity.intensitydata)==0?0.00001:(CurveTool_Intensity.intensitydata))/((CurveTool_Intensity.intensitydata(RefFrame))==0?1:(CurveTool_Intensity.intensitydata(RefFrame)))"} {"((CurveTool_Intensity.intensitydata)==(-0) || (CurveTool_Intensity.intensitydata)==0?0.00001:(CurveTool_Intensity.intensitydata))/((CurveTool_Intensity.intensitydata(RefFrame))==0?1:(CurveTool_Intensity.intensitydata(RefFrame)))"} {"((CurveTool_Intensity.intensitydata)==(-0) || (CurveTool_Intensity.intensitydata)==0?0.00001:(CurveTool_Intensity.intensitydata))/((CurveTool_Intensity.intensitydata(RefFrame))==0?1:(CurveTool_Intensity.intensitydata(RefFrame)))"}}
+  reverse {{Mode}}
+  black_clamp false
+  maskChannelMask none
+  name GradeMatchIntensity
+  xpos -648
+  ypos 533
+ }
+set N5289f800 [stack 0]
+push $N5289f800
+ Switch {
+  inputs 3
+  which {{Mode}}
+  name Switch_mode
+  xpos -648
+  ypos 601
+ }
+ Output {
+  name Output1
+  xpos -648
+  ypos 658
+ }
+end_group

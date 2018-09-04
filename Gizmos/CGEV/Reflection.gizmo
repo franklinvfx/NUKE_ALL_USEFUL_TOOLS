@@ -1,0 +1,1137 @@
+Group {
+ inputs 3
+ name Reflections
+ knobChanged "\n \nnode = nuke.thisNode()\nknob = nuke.thisKnob()\nif knob.name() in ('isFresnel', 'showPanel'):\n\tmode = node\['isFresnel'].value()\n\tif mode == 'None':\n\t\tnode\['fresnel_curve'].setVisible(False)\n\t\tnode\['out_fresnel'].setVisible(False)\n\telse:\n\t\tnode\['fresnel_curve'].setVisible(True)\n\t\tnode\['out_fresnel'].setVisible(True)\n \n"
+ tile_color 0xfefefeff
+ selected true
+ addUserKnob {20 reflect l Reflections}
+ addUserKnob {41 in_1 l "        Position" T pos.in}
+ addUserKnob {41 in l Normals T norm.in}
+ addUserKnob {26 S00 l " " T " "}
+ addUserKnob {7 rot_y l "Rotate x" R -180 180}
+ addUserKnob {7 rot_x l y R -180 180}
+ addUserKnob {26 S01 l " "}
+ addUserKnob {41 blur_size l Blur T Blur1.size}
+ addUserKnob {26 ""}
+ addUserKnob {41 refl_filter l Filter t "switch to the \"Notch\" if tehre is a banding looking occurred " T STMap.filter}
+ addUserKnob {6 aliasing l Antialiasing -STARTLINE}
+ aliasing true
+ addUserKnob {26 ""}
+ addUserKnob {4 isFresnel l Fresnel M {None Active}}
+ addUserKnob {7 fresnel_curve l "   Range" -STARTLINE +HIDDEN}
+ fresnel_curve 0.5
+ addUserKnob {4 out_fresnel l "Out Channel" +HIDDEN M {None Alpha "Fresnel (New Channel)" "" "" "" "" "" "" ""}}
+ addUserKnob {26 by2 l " " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v01 - CGEV - 2016"}
+}
+ Input {
+  inputs 0
+  name Image
+  xpos -756
+  ypos -153
+ }
+ Dot {
+  name Dot9
+  xpos -722
+  ypos -74
+ }
+set N656af400 [stack 0]
+ Dot {
+  name Dot7
+  xpos -923
+  ypos -74
+ }
+ Dot {
+  name Dot8
+  xpos -923
+  ypos 757
+ }
+set N40711000 [stack 0]
+ Dot {
+  name Dot14
+  xpos -923
+  ypos 1007
+ }
+set N40710c00 [stack 0]
+ Dot {
+  name Dot13
+  xpos -923
+  ypos 1277
+ }
+push $N656af400
+ Shuffle {
+  in position
+  name pos
+  xpos -756
+  ypos 31
+ }
+ Expression {
+  temp_name0 v_length
+  temp_expr0 "sqrt( r*r + g*g + b*b )"
+  expr0 "r/ v_length"
+  expr1 "g/ v_length"
+  expr2 "b/ v_length"
+  name nomailze1
+  xpos -756
+  ypos 98
+ }
+ Dot {
+  name Dot11
+  xpos -722
+  ypos 235
+ }
+set N656ae400 [stack 0]
+ Dot {
+  name Dot1
+  xpos -722
+  ypos 320
+ }
+push $N656af400
+ Dot {
+  name Dot10
+  xpos -435
+  ypos -74
+ }
+ Shuffle {
+  in normals
+  name norm
+  xpos -469
+  ypos 30
+ }
+set N656db800 [stack 0]
+ ColorMatrix {
+  matrix {
+      {{Camera1.world_matrix.0} {Camera1.world_matrix.1} {Camera1.world_matrix.2}}
+      {{Camera1.world_matrix.4} {Camera1.world_matrix.5} {Camera1.world_matrix.6}}
+      {{Camera1.world_matrix.8} {Camera1.world_matrix.9} {Camera1.world_matrix.10}}
+    }
+  invert true
+  name ColorMatrix2
+  xpos -469
+  ypos 90
+ }
+ Expression {
+  temp_name0 v_length
+  temp_expr0 "sqrt( r*r + g*g + b*b )"
+  expr0 "r/ v_length"
+  expr1 "g/ v_length"
+  expr2 "b/ v_length"
+  name nomailze
+  xpos -468
+  ypos 160
+ }
+ Dot {
+  name Dot12
+  xpos -434
+  ypos 235
+ }
+push $N656ae400
+ MergeExpression {
+  inputs 2
+  temp_name0 dot_VN
+  temp_expr0 "B.r * A.r + B.g * A.g + B.b * A.b"
+  expr0 "2 * dot_VN * Ar"
+  expr1 "2 * dot_VN * Ag"
+  expr2 "2 * dot_VN * Ab"
+  name _2xdot_VN
+  xpos -613
+  ypos 231
+ }
+ MergeExpression {
+  inputs 2
+  expr0 "A.r - B.r"
+  expr1 "A.g - B.g"
+  expr2 "A.b - B.b"
+  expr3 0
+  name vec_Rref
+  xpos -613
+  ypos 316
+ }
+ Expression {
+  expr0 "isnan(r) ? 0 : r"
+  expr1 "isnan(g) ? 0 : g"
+  expr2 "isnan(b) ? 0 : b"
+  name remove_NaN
+  xpos -613
+  ypos 527
+ }
+ Expression {
+  temp_name0 u
+  temp_expr0 "( atan(r,b) + pi )/ (2*pi)"
+  temp_name1 v
+  temp_expr1 "( asin(g) + 0.5*pi )/ pi"
+  expr0 u
+  expr1 v
+  expr2 0
+  expr3 0
+  name Expression1
+  xpos -613
+  ypos 553
+ }
+ Expression {
+  temp_name0 rot_x
+  temp_expr0 "(parent.rot_x + 360)/ 360.0"
+  temp_name1 rot_y
+  temp_expr1 "(parent.rot_y + 360)/ 360.0"
+  expr0 "abs( (rot_y + r ) % 1.0 )"
+  expr1 "abs( (rot_x + g) % 1.0 )"
+  expr2 0
+  name Expression3
+  tile_color 0xfefefeff
+  xpos -613
+  ypos 579
+ }
+set N65704400 [stack 0]
+ Group {
+  name EdgeDetect_C
+  help "Edge Detect C\n\nMore options than in the original Nuke node (Edge Detect Wrapper).\n"
+  knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\n\nif knob.name() in ('pulldownden', 'showPanel'):\n    mode = node\['pulldownden'].value()\n    if mode == 'None':\n        node\['noise'].setVisible(False)\n    elif mode != 'None':\n        node\['noise'].setVisible(True)\n\nif knob.name() in ('Darkness', 'showPanel'):\n    mode = node\['Darkness'].value()\n    if mode == 'None':\n        node\['darkval'].setVisible(False)\n        node\['darkthreshold'].setVisible(False)\n    elif mode == 'Active':\n        node\['darkval'].setVisible(True)\n        node\['darkthreshold'].setVisible(True)"
+  tile_color 0xcc804eff
+  xpos -613
+  ypos 1145
+  icon //stora/diska/global/templatesProd/Other_images/F_iconrgb.png
+  addUserKnob {20 FT l "Edge Detect C"}
+  addUserKnob {7 size l "                Size" t "Size of the edges." R 0 10}
+  size 1
+  addUserKnob {41 gain l Gain t "Gain of the edges." T ctrl.gain}
+  addUserKnob {26 ""}
+  addUserKnob {20 Edge l Edges n 1}
+  addUserKnob {41 maximum_enable l "White Clamp     " T Clamp1.maximum_enable}
+  addUserKnob {41 softer l "Soften White Edges" t "White edges more soft." -STARTLINE T ctrl.softer}
+  addUserKnob {41 minimum_enable l "Black Clamp     " T Clamp1.minimum_enable}
+  addUserKnob {6 black l "Correct on Black" t "Disable edges arround Black area and Alpha." -STARTLINE}
+  black true
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {26 ""}
+  addUserKnob {4 pulldownden l Denoise M {None Active "" ""}}
+  addUserKnob {7 noise l "   Value " -STARTLINE +HIDDEN R 0 4}
+  noise 1
+  addUserKnob {26 S01 l " " T " "}
+  addUserKnob {4 Darkness l Darken M {None Active ""}}
+  Darkness Active
+  addUserKnob {7 darkval l Value t "Density of the dark." R 0 100}
+  darkval 100
+  addUserKnob {7 darkthreshold l Threshold t "Area affected by the dark." R 0 4}
+  addUserKnob {1 output l INVISIBLE +INVISIBLE}
+  output "\[regsub -all \"None\" \[regsub -all \"Active\" \[value pulldownden] \"Nuke X\"] \"rgba\"]"
+  addUserKnob {26 by1 l " " T " "}
+  addUserKnob {26 by2 l " " T "                                                                                               "}
+  addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+ }
+  Input {
+   inputs 0
+   name Input
+   note_font_color 0x545454ff
+   xpos 1452
+   ypos 508
+  }
+  Dot {
+   name Dot1
+   xpos 1486
+   ypos 576
+  }
+set N77b02000 [stack 0]
+  Crop {
+   box {0 0 {input.width} {input.height}}
+   crop false
+   name Crop14
+   xpos 1452
+   ypos 632
+  }
+set N8dbd5000 [stack 0]
+  NoOp {
+   name ctrl
+   tile_color 0xffffffff
+   label .
+   xpos 1342
+   ypos 626
+   addUserKnob {20 User}
+   addUserKnob {7 soft l INVISIBLE +INVISIBLE R 0 0.3}
+   soft 0.3
+   addUserKnob {7 key l INVISIBLE +INVISIBLE}
+   key 0.12
+   addUserKnob {7 gain R -1 1}
+   addUserKnob {7 noise l Noise R 0 4}
+   noise 1
+   addUserKnob {26 OffsetDark l "Offset Dark"}
+   addUserKnob {7 mult l Value +HIDDEN R 0 100}
+   mult 100
+   addUserKnob {7 sec l Size +HIDDEN R 0 10}
+   sec 10
+   addUserKnob {6 softer +STARTLINE}
+   softer true
+   addUserKnob {7 er l erodecrop}
+   er {{parent.size/4 i}}
+  }
+push $N77b02000
+  Dot {
+   name Dot3
+   xpos 1754
+   ypos 576
+  }
+  Dot {
+   name Dot9
+   xpos 1754
+   ypos 1536
+  }
+set N4239e400 [stack 0]
+  Dot {
+   name Dot2
+   xpos 1754
+   ypos 1791
+  }
+push $N4239e400
+  Keyer {
+   operation "luminance key"
+   range {0 0.007 1 1}
+   name Keyer1
+   xpos 1604
+   ypos 1527
+  }
+  Erode {
+   name Erode1
+   xpos 1604
+   ypos 1563
+  }
+  FilterErode {
+   size 4
+   name FilterErode1
+   xpos 1604
+   ypos 1599
+  }
+push $N8dbd5000
+  Colorspace {
+   colorspace_out YPbPr
+   name Colorspace1
+   label "Out (\[if \{\[value colorspace_in]==\"RGB\"\} \{return \"\[knob this.icon F_iconstart]\"\} \{return \"\[knob this.icon F_iconend]\"\}]\[value colorspace_out])"
+   xpos 1452
+   ypos 702
+   icon F_iconstart
+  }
+  DegrainSimple {
+   rVal 0
+   gVal 25
+   bVal 25
+   name DegrainSimple1
+   xpos 1452
+   ypos 738
+  }
+  Colorspace {
+   colorspace_in YPbPr
+   name Colorspace2
+   label "Out (\[if \{\[value colorspace_in]==\"RGB\"\} \{return \"\[knob this.icon F_iconstart]\"\} \{return \"\[knob this.icon F_iconend]\"\}]\[value colorspace_out])"
+   xpos 1452
+   ypos 774
+   icon F_iconend
+  }
+  OFXuk.co.thefoundry.noisetools.denoise_v100 {
+   type Film
+   model Modulated
+   profile Constant
+   output Result
+   amount 1
+   rolloff 2
+   smoothness 1
+   sharpen 0
+   lumablend 0.7
+   chromablend 1
+   "Noise Analysis" 0
+   mode "Pen Up"
+   analysisfile ""
+   regionBL {811.6001081 622.1999002}
+   regionTR {1130.399923 913.800078}
+   analysisframe 1
+   profileframe 1
+   plotProfile false
+   "Tune Profile" 0
+   tuneProfile false
+   lowGain 1
+   midGain 1
+   highGain 1
+   "Tune Frequencies" 0
+   processHigh true
+   highAmount 1
+   processMedium true
+   mediumAmount 1
+   processLow true
+   lowAmount 1
+   processVeryLow true
+   verylowAmount 1
+   "Tune Channels" 0
+   lumaAmount 1
+   chromaAmount 5
+   hasBeenAnalyzed true
+   inputHasChanged false
+   hasBeenProfiled false
+   frameOutsideRange false
+   profileExists true
+   writeFailed false
+   readFailed false
+   fileIsEmpty false
+   threshold0HHY 0.001234246767
+   threshold0LHY 0.002607665258
+   threshold0HLY 0.001234246767
+   threshold0LLY 0.5641650558
+   threshold0HHCb 0.0004131956375
+   threshold0LHCb 0.0008889776072
+   threshold0HLCb 0.0004131956375
+   threshold0LLCb 0.673561275
+   threshold0HHCr 0.0002240218309
+   threshold0LHCr 0.0004832903214
+   threshold0HLCr 0.0002240218309
+   threshold0LLCr 0.3680107594
+   threshold1HHY 0.0008805379039
+   threshold1LHY 0.002449578606
+   threshold1HLY 0.0008805379039
+   threshold1LLY 0
+   threshold1HHCb 0.0003050114319
+   threshold1LHCb 0.0008103403961
+   threshold1HLCb 0.0003050114319
+   threshold1LLCb 0
+   threshold1HHCr 0.000165457197
+   threshold1LHCr 0.0004434779985
+   threshold1HLCr 0.000165457197
+   threshold1LLCr 0
+   threshold2HHY 0.0007041588542
+   threshold2LHY 0.001413235441
+   threshold2HLY 0.0007041588542
+   threshold2LLY 0
+   threshold2HHCb 0.0003506572684
+   threshold2LHCb 0.0007371711545
+   threshold2HLCb 0.0003506572684
+   threshold2LLCb 0
+   threshold2HHCr 0.0001689090132
+   threshold2LHCr 0.0003102622868
+   threshold2HLCr 0.0001689090132
+   threshold2LLCr 0
+   threshold3HHY 0.0001276963158
+   threshold3LHY 0.0001048069244
+   threshold3HLY 0.0001276963158
+   threshold3LLY 0
+   threshold3HHCb 0.0002031970798
+   threshold3LHCb 0.0001981165551
+   threshold3HLCb 0.0002031970798
+   threshold3LLCb 0
+   threshold3HHCr 7.182861737e-005
+   threshold3LHCr 6.672689778e-005
+   threshold3HLCr 7.182861737e-005
+   threshold3LLCr 0
+   profile0 0
+   profile1 0
+   profile2 0
+   profile3 0
+   profile4 0
+   profile5 0
+   profile6 0
+   profile7 0
+   profile8 0
+   cacheBreaker false
+   name Denoise2
+   xpos 1452
+   ypos 867
+   disable {{!parent.pulldownden i}}
+  }
+  Log2Lin {
+   operation lin2log
+   name Log2Lin1
+   label "\[if \{\[value operation]==\"lin2log\"\} \{return \"\[knob this.icon F_iconstart.png]\"\} \{return \"\[knob this.icon F_iconend.png]\"\}]"
+   xpos 1452
+   ypos 936
+   icon F_iconstart.png
+  }
+  Dot {
+   name Dot6
+   xpos 1486
+   ypos 1018
+  }
+set N8dbda400 [stack 0]
+  Dot {
+   name Dot7
+   xpos 1267
+   ypos 1018
+  }
+  Dot {
+   name Dot11
+   xpos 1267
+   ypos 1103
+  }
+set N8dbe0800 [stack 0]
+  EdgeDetectWrapper {
+   threshold {{0+darkthreshold i}}
+   name EdgeDetect2
+   xpos 1233
+   ypos 1266
+  }
+push $N8dbda400
+push $N8dbe0800
+  Blur {
+   size {{parent.size/2+1 i}}
+   name Size
+   xpos 1343
+   ypos 1094
+  }
+  Merge2 {
+   inputs 2
+   operation minus
+   name Merge8
+   xpos 1452
+   ypos 1100
+  }
+  Grade {
+   channels rgba
+   white {{ctrl.gain*50+50}}
+   black_clamp false
+   name Gain
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1452
+   ypos 1180
+   icon -
+  }
+  Multiply {
+   inputs 1+1
+   value {{-parent.darkval/100+1 i}}
+   invert_mask true
+   name Darken
+   xpos 1452
+   ypos 1266
+   disable {{!parent.Darkness i}}
+  }
+  Dot {
+   name Dot5
+   xpos 1486
+   ypos 1371
+  }
+set N75013800 [stack 0]
+  Invert {
+   name Invert1
+   xpos 1238
+   ypos 1362
+  }
+  Group {
+   name soften
+   help "EdgeDetect amélioré\nPermet de choisir le mode d'erode et de regler indépendamment l'interieur et l'exterieur du EdgeDetect\n\nL'entrée mask permet de restreindre le resultat dans la zone convenue"
+   tile_color 0xffffffff
+   label "\n"
+   note_font_color 0xff
+   xpos 1238
+   ypos 1457
+   addUserKnob {20 User l "Ctrl Edge"}
+   addUserKnob {7 ErodeIn l Erode R -1 1}
+   ErodeIn 1
+   addUserKnob {41 BlurIn l Blur T Blur_IN.size}
+   addUserKnob {26 ""}
+   addUserKnob {7 ErodeOut l Erode R -100 100}
+   ErodeOut 5
+   addUserKnob {41 BlurOut l Blur T Blur_OUT.size}
+  }
+   Input {
+    inputs 0
+    name Input
+    xpos 585
+    ypos 580
+   }
+set N73382000 [stack 0]
+   Erode {
+    size {{parent.ErodeIn}}
+    name Erode_IN
+    xpos 738
+    ypos 671
+   }
+   Blur {
+    channels alpha
+    size 6.2
+    name Blur_IN
+    xpos 738
+    ypos 707
+   }
+push $N73382000
+   Erode {
+    size {{-parent.ErodeOut}}
+    name Erode_OUT
+    xpos 448
+    ypos 674
+   }
+   Blur {
+    channels alpha
+    size {{parent.parent.size/2}}
+    name Blur_OUT
+    xpos 448
+    ypos 710
+   }
+   ChannelMerge {
+    inputs 2
+    operation stencil
+    name ChannelMerge_Stencil
+    xpos 585
+    ypos 793
+   }
+   Output {
+    name FranklinVFX
+    xpos 585
+    ypos 856
+   }
+  end_group
+push $N75013800
+  Multiply {
+   inputs 1+1
+   value 0
+   name Softer
+   note_font_color 0x10101ff
+   xpos 1452
+   ypos 1451
+   disable {{!ctrl.softer}}
+  }
+  Multiply {
+   inputs 1+1
+   value 0
+   invert_mask true
+   name Black_Correct
+   xpos 1452
+   ypos 1599
+   disable {{!parent.black}}
+  }
+  Clamp {
+   name Clamp1
+   xpos 1452
+   ypos 1690
+  }
+  CopyBBox {
+   inputs 2
+   name CopyBBox1
+   xpos 1452
+   ypos 1788
+  }
+  Output {
+   name FranklinVFX
+   note_font_color 0xff
+   xpos 1452
+   ypos 1884
+  }
+ end_group
+ Group {
+  name Channel_ID
+  help "Channel ID\n\nKeep in the Channel you want the color you want (r g b and a). \nBring all them in the channel Alpha (by default) or in all rgba.\nIf you select many color you have the choise to merge them using two differents operations \"Plus\" or \"Screen\".\n"
+  knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\nif knob.name() in ('merge', 'showPanel'):\n    mode = node\['merge'].value()\n    if mode == 'Plus':\n        node\['clamp'].setVisible(True)\n    elif mode == 'Screen':\n        node\['clamp'].setVisible(False)"
+  tile_color 0x9e3c63ff
+  note_font_color 0x40404ff
+  xpos -613
+  ypos 1171
+  icon //stora/diska/global/templatesProd/Other_images/F_iconalpha.png
+  cached true
+  addUserKnob {20 User l "Channel ID"}
+  addUserKnob {41 in l Channel t "Input Channel" -STARTLINE T Shuffle1.in}
+  addUserKnob {26 S1 l " " T " "}
+  addUserKnob {26 S3 l " " T " "}
+  addUserKnob {6 red l "<font size = 3 color=\"#FE2E2E\">_Red" t "Select to keep the channel in render." -STARTLINE}
+  red true
+  addUserKnob {6 green l "<font size = 3 color=\"green\">_Green" t "Select to keep the channel in render." -STARTLINE}
+  green true
+  addUserKnob {6 blue l "<font size = 3 color=\"#0080FF\">_Blue" t "Select to keep the channel in render." -STARTLINE}
+  blue true
+  addUserKnob {6 alpha l "<font size = 3 color=\"#D8D8D8\">_Alpha      " t "Select to keep the channel in render." -STARTLINE}
+  alpha true
+  addUserKnob {26 arr l "       <img src=\":qrc/images/arrow_right.png\">" t "Merge all them to the selected channel behind." -STARTLINE T " "}
+  addUserKnob {4 out l "   " t "Choose the output channel. \n(Alpha or rgba)" -STARTLINE M {rgba Alpha "" "" "" "" "" "" "" "" "" "" ""}}
+  out Alpha
+  addUserKnob {26 S2 l " " T " "}
+  addUserKnob {4 merge l "     Merge" t "Operation:\n\nPlus A+B\nScreen A+B-AB if A and B between 0-1, else A if A>B else B" M {"" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" Plus Screen "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+  merge Plus
+  addUserKnob {26 S4 l " " -STARTLINE T "   "}
+  addUserKnob {6 clamp l Clamp t "Clamp the channel to the 0..1 range." -STARTLINE}
+  clamp true
+  addUserKnob {26 by1 l " " T " "}
+  addUserKnob {26 by2 l " " T "                                                                                                     "}
+  addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+  addUserKnob {1 output l INVISIBLE +INVISIBLE}
+  output "\[value in]\[if \{\[value out]==\"rgba\"\} \{return \"\[knob this.icon //stora/diska/global/templatesProd/Other_images/F_iconrgba.png]\"\} \{return \"\[knob this.icon //stora/diska/global/templatesProd/Other_images/F_iconalpha.png]\"\}]\[string map \{\"true\" \" R\" \"false\" \"\"\} \"\[value red]\" ]\[string map \{\"true\" \" G\" \"false\" \"\"\} \"\[value green]\" ]\[string map \{\"true\" \" B\" \"false\" \"\"\} \"\[value blue]\" ]\[string map \{\"true\" \" A\" \"false\" \"\"\} \"\[value alpha]\" ]"
+ }
+  Input {
+   inputs 0
+   name Input
+   tile_color 0x222222ff
+   note_font_size -9
+   xpos -1093
+   ypos 527
+  }
+  Shuffle {
+   name Shuffle1
+   tile_color 0x222222ff
+   xpos -1093
+   ypos 590
+  }
+set N8dbd9800 [stack 0]
+  Dot {
+   name Dot2
+   xpos -852
+   ypos 593
+   icon F_ondot.png
+  }
+set N8dbd4800 [stack 0]
+  Shuffle {
+   red alpha
+   green alpha
+   blue alpha
+   name Shuffle5
+   tile_color 0xffffffff
+   xpos -667
+   ypos 655
+   disable {{!parent.alpha i}}
+  }
+  Remove {
+   name Remove1
+   tile_color 0xffffffff
+   xpos -667
+   ypos 679
+   disable {{parent.alpha i}}
+  }
+push $N8dbd4800
+  Shuffle {
+   red blue
+   green blue
+   alpha blue
+   name Shuffle4
+   tile_color 0xff00
+   xpos -777
+   ypos 655
+   disable {{!parent.blue i}}
+  }
+  Remove {
+   name Remove2
+   tile_color 0xff00
+   xpos -777
+   ypos 679
+   disable {{parent.blue i}}
+  }
+push 0
+push $N8dbd4800
+  Shuffle {
+   green red
+   blue red
+   alpha red
+   name Shuffle2
+   tile_color 0xff000000
+   xpos -997
+   ypos 658
+   disable {{!parent.red i}}
+  }
+  Remove {
+   name Remove4
+   tile_color 0xff000000
+   xpos -997
+   ypos 682
+   disable {{parent.red i}}
+  }
+push $N8dbd4800
+  Shuffle {
+   red green
+   blue green
+   alpha green
+   name Shuffle3
+   tile_color 0xff0000
+   xpos -886
+   ypos 655
+   disable {{!parent.green i}}
+  }
+  Remove {
+   name Remove3
+   tile_color 0xff0000
+   xpos -886
+   ypos 679
+   disable {{parent.green i}}
+  }
+  Merge2 {
+   inputs 4+1
+   operation {{parent.merge i}}
+   name Merge
+   tile_color 0xffffffff
+   xpos -886
+   ypos 763
+  }
+  Shuffle {
+   red alpha
+   green alpha
+   blue alpha
+   name Shuffle6
+   tile_color 0xffffffff
+   xpos -886
+   ypos 787
+  }
+  Clamp {
+   channels rgba
+   name Clamp1
+   tile_color 0x222222ff
+   xpos -886
+   ypos 854
+   disable {{!parent.clamp}}
+  }
+set N8dbde800 [stack 0]
+  AddChannels {
+   channels rgba
+   name AddChannels1
+   tile_color 0x222222ff
+   xpos -983
+   ypos 854
+  }
+push $N8dbd9800
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   tile_color 0x222222ff
+   xpos -1093
+   ypos 848
+  }
+push $N8dbde800
+  Switch {
+   inputs 2
+   which {{parent.out i}}
+   name Switch2
+   tile_color 0x222222ff
+   xpos -986
+   ypos 911
+  }
+  Output {
+   name FranklinVFX
+   tile_color 0x222222ff
+   label "\n\n\n\n\n\n\n\n\n\n."
+   xpos -986
+   ypos 885
+   icon F_greyg.png
+  }
+ end_group
+ FilterErode {
+  channels rgba
+  size -1
+  name FilterErode1
+  xpos -613
+  ypos 1221
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  invert_mask true
+  name Multiply4
+  xpos -613
+  ypos 1267
+ }
+push $N40710c00
+ Input {
+  inputs 0
+  name Cam
+  xpos -216
+  ypos -157
+  number 2
+ }
+ Camera2 {
+  focal {{"\[topnode parent.input2].focal"}}
+  haperture {{"\[topnode parent.input2].haperture"}}
+  vaperture {{"\[topnode parent.input2].vaperture"}}
+  name Camera1
+  xpos -206
+  ypos -74
+ }
+ Sphere {
+  inputs 0
+  display off
+  rows 180
+  columns 180
+  translate {{parent.Camera1.world_matrix.3} {parent.Camera1.world_matrix.7} {parent.Camera1.world_matrix.11}}
+  uniform_scale 100
+  name Sphere2
+  xpos 98
+  ypos -58
+ }
+push $N656db800
+ Dot {
+  name Dot2
+  xpos -12
+  ypos 34
+ }
+set N40745c00 [stack 0]
+ ScanlineRender {
+  inputs 3
+  projection_mode perspective
+  motion_vectors_type distance
+  output_shader_vectors true
+  N_channel normals
+  name ScanlineRender2
+  xpos 98
+  ypos 30
+ }
+ Shuffle {
+  in normals
+  name Shuffle3
+  xpos 98
+  ypos 56
+ }
+ Multiply {
+  channels rgb
+  value -1
+  name Multiply3
+  xpos 98
+  ypos 82
+ }
+push $N40745c00
+ MergeExpression {
+  inputs 2
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 0
+  channel1 {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  expr1 0
+  channel2 {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  expr2 Ar*Br+Ag*Bg+Ab*Bb
+  name MergeExpression6
+  xpos 98
+  ypos 161
+ }
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle4
+  label (Blue)
+  xpos 98
+  ypos 187
+ }
+ Shuffle {
+  alpha blue
+  name Shuffle2
+  xpos 98
+  ypos 839
+  disable {{!parent.isFresnel}}
+ }
+ Grade {
+  channels rgba
+  white {{clamp(1-add+(fresnel_curve/25))}}
+  multiply {{clamp(fresnel_curve+0.9)}}
+  add {{clamp(parent.fresnel_curve)}}
+  gamma {{fresnel_curve*3+0.}}
+  white_clamp true
+  name Grade5
+  xpos 98
+  ypos 865
+  disable {{!parent.isFresnel}}
+ }
+set N40781c00 [stack 0]
+push $N65704400
+ Input {
+  inputs 0
+  name Env
+  xpos 423
+  ypos -155
+  number 1
+ }
+ Reformat {
+  type scale
+  scale 5
+  filter Simon
+  name Reformat1
+  xpos 423
+  ypos 42
+ }
+ Dot {
+  name boxinfo
+  xpos 457
+  ypos 131
+ }
+ Reformat {
+  type scale
+  scale 3
+  filter Simon
+  name Reformat2
+  xpos 423
+  ypos 224
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Mirror2 {
+  flip true
+  name Mirror2_1
+  xpos 423
+  ypos 250
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Tile {
+  rows 3
+  mirrorRows true
+  columns 3
+  filter Simon
+  name Tile1
+  xpos 423
+  ypos 276
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Transform {
+  translate {0.5 {translate.x}}
+  center {2790 1395}
+  invert_matrix true
+  filter Simon
+  shutteroffset centred
+  name Transform2
+  xpos 423
+  ypos 302
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Blur {
+  channels rgba
+  crop false
+  name Blur1
+  xpos 423
+  ypos 377
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ Crop {
+  box {{boxinfo.bbox.x+boxinfo.bbox.r} {boxinfo.bbox.y+boxinfo.bbox.t} {boxinfo.bbox.r+boxinfo.bbox.r} {boxinfo.bbox.t+boxinfo.bbox.t}}
+  reformat true
+  crop false
+  name Crop3
+  xpos 423
+  ypos 457
+  disable {{parent.Blur1.size==0?1:0}}
+ }
+ STMap {
+  inputs 2
+  channels rgba
+  uv rgb
+  blur_scale 0.01
+  name STMap
+  xpos 423
+  ypos 579
+ }
+ Dot {
+  name Dot5
+  xpos 457
+  ypos 689
+ }
+set N36d50800 [stack 0]
+ Dot {
+  name Dot15
+  xpos 331
+  ypos 689
+ }
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos 297
+  ypos 839
+  disable {{!parent.isFresnel}}
+ }
+ Grade {
+  inputs 1+1
+  channels rgba
+  multiply 0
+  maskChannelMask rgba.red
+  name Grade1
+  xpos 297
+  ypos 865
+  disable {{!parent.isFresnel}}
+ }
+ Dot {
+  name Dot4
+  xpos 331
+  ypos 933
+ }
+set N36d87800 [stack 0]
+push $N40781c00
+push $N36d50800
+ Dot {
+  name Dot6
+  xpos 585
+  ypos 689
+ }
+ Grade {
+  inputs 1+1
+  multiply 0
+  maskChannelMask rgba.red
+  name Grade4
+  xpos 551
+  ypos 865
+  disable {{parent.Copy1.disable}}
+ }
+add_layer {Fresnel Fresnel.alpha}
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 Fresnel.alpha
+  name Copy1
+  xpos 551
+  ypos 923
+  disable {{!isFresnel}}
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  invert_mask true
+  name Multiply2
+  xpos 551
+  ypos 997
+  disable {{!parent.isFresnel}}
+ }
+ Dot {
+  name Dot16
+  xpos 585
+  ypos 1103
+ }
+push $N40710c00
+push $N36d87800
+ Multiply {
+  inputs 1+1
+  value 0
+  invert_mask true
+  name Multiply1
+  xpos 297
+  ypos 997
+  disable {{!parent.isFresnel}}
+ }
+ Dot {
+  name Dot17
+  xpos 331
+  ypos 1103
+ }
+push $N40781c00
+push $N40711000
+push $N36d50800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 423
+  ypos 747
+ }
+ Premult {
+  name Premult1
+  xpos 423
+  ypos 785
+ }
+ Grade {
+  inputs 1+1
+  multiply 0
+  maskChannelMask rgba.red
+  name Grade3
+  xpos 423
+  ypos 865
+  disable {{parent.Copy1.disable}}
+ }
+ Switch {
+  inputs 3
+  which {{out_fresnel}}
+  name Switch1
+  xpos 424
+  ypos 1099
+  disable {{!isFresnel}}
+ }
+ Blur {
+  inputs 1+1
+  size 2
+  name Blur2
+  xpos 424
+  ypos 1267
+  disable {{!aliasing}}
+ }
+ Output {
+  name Output1
+  xpos 424
+  ypos 1337
+ }
+end_group

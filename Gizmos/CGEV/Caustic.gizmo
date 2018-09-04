@@ -1,0 +1,432 @@
+set cut_paste_input [stack 0]
+version 6.0 v5
+push $cut_paste_input
+Group {
+ name Caustic_Maker
+ tile_color 0x212121ff
+ note_font "DejaVu Sans"
+ note_font_size 12
+ note_font_color 0xaaffffff
+ selected true
+ icon F_onnode.png
+ addUserKnob {20 Parms l "Caustic Parameters"}
+ addUserKnob {6 clr_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 mspeed l Speed R 0 10}
+ mspeed 10
+ addUserKnob {26 ""}
+ addUserKnob {41 format l Format T Constant1.format}
+ addUserKnob {7 both l Scale R 1 10}
+ both 8
+ addUserKnob {7 aspect l Aspect R 1 4}
+ aspect 1
+ addUserKnob {7 xsize l INVISIBLE +INVISIBLE R 0.1 1000}
+ xsize {{both*10}}
+ addUserKnob {7 ysize l INVISIBLE +INVISIBLE R 0.1 1000}
+ ysize {{xsize*aspect}}
+ addUserKnob {7 offsetz l INVISIBLE +INVISIBLE R 0 1000}
+ offsetz 630
+ addUserKnob {7 lunac l Lacunarity R 1.1 10}
+ lunac 2.3
+ addUserKnob {41 octaves_1 l INVISIBLE +INVISIBLE T NoiseB.octaves_1}
+ addUserKnob {41 nyquist_1 l INVISIBLE +INVISIBLE T NoiseB.nyquist_1}
+ addUserKnob {41 gain_1 l INVISIBLE +INVISIBLE T NoiseB.gain_1}
+ addUserKnob {41 gamma_1 l INVISIBLE +INVISIBLE T NoiseB.gamma_1}
+ addUserKnob {26 ""}
+ addUserKnob {18 clr l Color}
+ clr {0.3 0.8 1}
+ addUserKnob {6 clr_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 causticontrols l "" +STARTLINE T "\nCaustics by Jason Bidwell\nVersion 1.0"}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos 368
+  ypos 348
+  postage_stamp false
+ }
+set N23c23260 [stack 0]
+ Crop {
+  box {0 0 {parent.get_size.scale.0} {parent.get_size.scale.1}}
+  reformat true
+  crop false
+  name Crop2
+  xpos 368
+  ypos 379
+ }
+set N23c235d0 [stack 0]
+ Noise {
+  type turbulence
+  size {{parent.xsize*both} {parent.ysize*both}}
+  zoffset {{curve*(mult+.001) R x1 0 x100 1}}
+  octaves 2
+  nyquist {{parent.NoiseB.nyquist}}
+  lacunarity {{parent.lunac}}
+  gain {{parent.NoiseB.gain}}
+  gamma {{parent.NoiseB.gamma}}
+  translate {0 10}
+  center {1280 675}
+  name NoiseA
+  selected true
+  xpos 418
+  ypos 424
+  addUserKnob {20 User l "Noise Speed"}
+  addUserKnob {7 mult l Speed}
+  mult {{parent.mspeed}}
+  addUserKnob {26 ""}
+  addUserKnob {41 type_1 l type T NoiseA.type}
+  addUserKnob {41 size_1 l x/ysize T NoiseA.size}
+  addUserKnob {41 octaves_1 l octaves T NoiseA.octaves}
+  addUserKnob {41 nyquist_1 l "clip at Nyquist limit" T NoiseA.nyquist}
+  addUserKnob {41 lacunarity_1 l lacunarity T NoiseA.lacunarity}
+  addUserKnob {41 gain_1 l gain T NoiseA.gain}
+  addUserKnob {41 gamma_1 l gamma T NoiseA.gamma}
+ }
+set N23c23cb0 [stack 0]
+ Grade {
+  whitepoint 1.6
+  gamma 22
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Grade1
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 418
+  ypos 450
+ }
+ Invert {
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Invert1
+  xpos 418
+  ypos 476
+ }
+ Clamp {
+  minimum 0.0001
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Clamp1
+  xpos 418
+  ypos 514
+ }
+ ColorCorrect {
+  contrast 5.85
+  gamma 1.8
+  midtones.gamma 1.4
+  highlights.gain 0.14
+  lookup {shadow {}
+    midtone {}
+    highlight {curve x0.1236841977 0 s0 x1 1 s0}}
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name ColorCorrect1
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 418
+  ypos 552
+ }
+ ColorCorrect {
+  contrast 0.92
+  gamma 0.78
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name ColorCorrect3
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 418
+  ypos 578
+ }
+ Grade {
+  blackpoint -0.14
+  whitepoint 1.6
+  multiply {{parent.colorize.multiply} {parent.colorize.multiply} {parent.colorize.multiply} {parent.colorize.multiply}}
+  black_clamp false
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name clr2
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 418
+  ypos 604
+ }
+ ColorCorrect {
+  contrast 1.16
+  gamma 0.7
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name ColorCorrect4
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 418
+  ypos 630
+ }
+push $N23c235d0
+ Noise {
+  type turbulence
+  size {{parent.xsize*both} {parent.ysize*both}}
+  zoffset {{curve*(mult+.001)+offsetz R x1 0 x100 1}}
+  octaves 2
+  lacunarity {{parent.lunac}}
+  gain 1.3
+  gamma 0.55
+  translate {-326 130}
+  center {1280 675}
+  name NoiseB
+  label "offset z"
+  xpos 310
+  ypos 418
+  addUserKnob {20 User l "Noise Speed"}
+  addUserKnob {7 mult l Speed}
+  mult {{parent.mspeed}}
+  addUserKnob {26 ""}
+  addUserKnob {41 type_1 l type T NoiseB.type}
+  addUserKnob {41 size_1 l x/ysize T NoiseB.size}
+  addUserKnob {41 octaves_1 l octaves T NoiseB.octaves}
+  addUserKnob {41 nyquist_1 l "clip at Nyquist limit" T NoiseB.nyquist}
+  addUserKnob {41 lacunarity_1 l lacunarity T NoiseB.lacunarity}
+  addUserKnob {41 gain_1 l gain T NoiseB.gain}
+  addUserKnob {41 gamma_1 l gamma T NoiseB.gamma}
+ }
+ Grade {
+  whitepoint 1.6
+  gamma 22
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Grade2
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 310
+  ypos 456
+ }
+ Invert {
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Invert2
+  xpos 310
+  ypos 482
+ }
+ Clamp {
+  minimum 0.0001
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Clamp2
+  xpos 310
+  ypos 520
+ }
+ ColorCorrect {
+  contrast 5.85
+  gamma 1.8
+  gain 0.88
+  midtones.gamma 1.4
+  highlights.gain 0.42
+  lookup {shadow {}
+    midtone {}
+    highlight {curve x0.1236841977 0 s0 x1 1 s0}}
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name ColorCorrect2
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 310
+  ypos 558
+ }
+ ColorCorrect {
+  contrast 0.92
+  gamma 0.78
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name ColorCorrect5
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 310
+  ypos 584
+ }
+ Grade {
+  blackpoint -0.14
+  whitepoint 1.6
+  multiply {{parent.clr} {parent.clr} {parent.clr} 1}
+  black_clamp false
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name colorize
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 310
+  ypos 610
+ }
+ ColorCorrect {
+  contrast 1.16
+  gamma 0.7
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name ColorCorrect6
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 310
+  ypos 636
+ }
+ Dot {
+  name Dot1
+  xpos 344
+  ypos 679
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  maskChannelInput -rgba.alpha
+  name Merge5
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 418
+  ypos 675
+ }
+ Colorspace {
+  colorspace_out SLog
+  name Colorspace1
+  xpos 418
+  ypos 727
+ }
+ SoftClip {
+  conversion "logarithmic compress"
+  softclip_min 0.055
+  name SoftClip1
+  xpos 418
+  ypos 753
+ }
+ Colorspace {
+  colorspace_in SLog
+  name Colorspace2
+  xpos 418
+  ypos 779
+ }
+ ColorCorrect {
+  contrast 1.45
+  gamma 0.86
+  gain 1.12
+  highlights.gain 0.32
+  lookup {shadow {curve 1 s0 x0.05648200214 0 s0}
+    midtone {1-shadow-highlight}
+    highlight {curve x0.06883655488 0 s0 x1 1 s0}}
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name ColorCorrect8
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 418
+  ypos 805
+ }
+ Grade {
+  white 1.6
+  gamma 0.86
+  black_clamp false
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Grade3
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 418
+  ypos 831
+ }
+ Crop {
+  box {0 0 {parent.get_size.scale.0} {parent.get_size.scale.1}}
+  name Crop1
+  xpos 418
+  ypos 857
+ }
+ Shuffle {
+  alpha black
+  name Shuffle1
+  xpos 418
+  ypos 883
+ }
+set N23dd2f10 [stack 0]
+ Dot {
+  name Dot206
+  xpos 238
+  ypos 887
+ }
+set N23dd3280 [stack 0]
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  xpos 58
+  ypos 931
+ }
+push $N23dd3280
+ Shuffle {
+  green black
+  blue black
+  alpha red
+  name ShuffleRed
+  tile_color 0x7c201fff
+  note_font_color 0xffffffff
+  xpos 152
+  ypos 931
+ }
+push 0
+push $N23dd3280
+ Shuffle {
+  red black
+  blue black
+  alpha green
+  name ShuffleGreen
+  tile_color 0x257c1fff
+  note_font_color 0xffffffff
+  xpos 246
+  ypos 929
+ }
+push $N23dd3280
+ Shuffle {
+  red black
+  green black
+  alpha blue
+  name ShuffleBlue
+  tile_color 0x1f377cff
+  note_font_color 0xffffffff
+  xpos 335
+  ypos 928
+ }
+ Merge2 {
+  inputs 4+1
+  operation plus
+  maskChannelInput -rgba.alpha
+  name Merge1
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 199
+  ypos 969
+ }
+push $N23dd2f10
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  maskChannelInput -rgba.alpha
+  name Copy1
+  xpos 418
+  ypos 963
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 620
+  ypos 363
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  maskChannelInput -rgba.alpha
+  name Merge2
+  label "\[if \{ \[value mix] != 1 \} \{ return \"mix: \[value mix]\" \} else \{ return \" \"\}]"
+  xpos 620
+  ypos 969
+ }
+ Output {
+  name Output1
+  xpos 620
+  ypos 1031
+ }
+push $N23c23260
+ Reformat {
+  type scale
+  scale {{width} {height}}
+  name get_size
+  xpos 418
+  ypos 321
+ }
+push $N23c23cb0
+ Viewer {
+  frame_range 1-100
+  frame_range_lock true
+  input_process false
+  name Viewer1
+  xpos 426
+  ypos 1163
+ }
+end_group

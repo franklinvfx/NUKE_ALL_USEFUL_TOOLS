@@ -1,0 +1,2657 @@
+Group {
+ inputs 0
+ name UV_Grid
+ help "UV Grid\n\nUsefull tool to help to identify the position after using the STMap node.\n"
+ tile_color 0x1e88a8ff
+ selected true
+ icon F_iconrgb.png
+ addUserKnob {20 FT l "UV Grid"}
+ addUserKnob {41 format l "         Format" t "Choose the resolution of the output image.\nAlways square for this tool." T Ctrl.format}
+ addUserKnob {41 format_1 l "" -STARTLINE T Ctrl.format}
+ addUserKnob {26 S2 l " " T " "}
+ addUserKnob {6 text l "Text   " t "Same letter for every line.\nSame number for every column.\n\nGet some more Text options below." +STARTLINE}
+ text true
+ addUserKnob {6 Grid l "Grid   " -STARTLINE}
+ Grid true
+ addUserKnob {26 S5 l " " T " "}
+ addUserKnob {20 moregroup l "More Options" n 1}
+ moregroup 0
+ addUserKnob {26 T02 l "@b; Text"}
+ addUserKnob {41 opacity l Opacity t "Adjust the opacity of the text." T Textctrl.opacity}
+ addUserKnob {6 textshadow l "Cast Shadow" +STARTLINE}
+ addUserKnob {41 font l INVISIBLE +INVISIBLE T Textctrl.font}
+ addUserKnob {26 S1 l " " T " "}
+ addUserKnob {26 T03 l "@b; Grid"}
+ addUserKnob {41 gridnumber l Number t "Change the number of the visible line on the grid." T Ctrl.gridnumber}
+ addUserKnob {41 size l Size t "Change the size of each line of the grid." T Grid1.size}
+ addUserKnob {26 S3 l " " T " "}
+ addUserKnob {26 T01 l "@b; Color"}
+ addUserKnob {41 multiplyhue l Hue T Ctrl.multiplyhue}
+ addUserKnob {7 gain l Gain R 0 4}
+ gain 1
+ addUserKnob {7 sat l Saturation R 0 4}
+ sat 1
+ addUserKnob {26 T5 l "@b; More"}
+ addUserKnob {6 Ramp l "Color Ramp   " t "Add Ramp in each square." +STARTLINE}
+ addUserKnob {6 Checker l "Checker   " t "Add checker in each square." -STARTLINE}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[regsub -all \"false\" \[regsub -all \"true\" \[value text] \"Text\"] \"\"]\[regsub -all \"false\" \[regsub -all \"true\" \[value Grid] \" Grid\"] \"\"]\[regsub -all \"false\" \[regsub -all \"true\" \[value Ramp] \" Ramp\"] \"\"] \[regsub -all \"false\" \[regsub -all \"true\" \[value Checker] \"Checker\"] \"\"]"
+ addUserKnob {26 by1 l " " T " "}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
+}
+ Constant {
+  inputs 0
+  color 1
+  format "256 256 0 0 256 256 1 square_256"
+  name Constant1
+  xpos 547
+  ypos 319
+  postage_stamp false
+ }
+set N87a2e400 [stack 0]
+ NoOp {
+  name Ctrl
+  xpos 547
+  ypos 295
+  addUserKnob {20 User}
+  addUserKnob {7 rotation}
+  rotation {{3.33333*(multiplyhue*13+1) i}}
+  addUserKnob {7 multiplyhue}
+  multiplyhue 1
+  addUserKnob {3 format}
+  format 800
+  addUserKnob {3 gridnumber}
+  gridnumber 1
+ }
+ CheckerBoard2 {
+  inputs 0
+  format {{{parent.Constant1.format}}}
+  boxsize {{128/Ctrl.gridnumber i}}
+  color0 {0.3700000048 0.3700000048 0.3700000048 0}
+  color1 {1 1 1 0}
+  color2 {{color0 i} {color0 i} {color0 i} 0}
+  color3 {1 1 1 0}
+  centerlinecolor {0 0 0 1}
+  centerlinewidth 0
+  name CheckerBoard1
+  xpos 707
+  ypos 323
+  postage_stamp false
+ }
+set N87a37400 [stack 0]
+ Multiply {
+  channels rgb
+  value {-0.5249999762 1.049999952 -0.5249999762 1}
+  name Multiply1
+  xpos 707
+  ypos 347
+ }
+push $N87a2e400
+ Multiply {
+  channels rgb
+  value {-0.5249999762 1.049999952 -0.5249999762 1}
+  name Multiply10
+  xpos 547
+  ypos 353
+ }
+ Switch {
+  inputs 2
+  which {{parent.Checker i}}
+  name Switch1
+  xpos 621
+  ypos 410
+ }
+ Multiply {
+  channels rgb
+  value {{1*parent.gain i}}
+  name Multiply2
+  xpos 621
+  ypos 444
+ }
+ Ramp {
+  output rgb
+  p0 {{input.width i} 0}
+  p1 {0 {input.height i}}
+  type smooth0
+  color 0
+  name Ramp21
+  xpos 621
+  ypos 482
+  disable {{!parent.Ramp i}}
+ }
+ Grid {
+  output rgb
+  number {{1*Ctrl.gridnumber i}}
+  size 3
+  color 0
+  name Grid1
+  xpos 621
+  ypos 543
+  disable {{!parent.Grid i}}
+ }
+ Shuffle {
+  alpha white
+  name Shuffle2
+  xpos 621
+  ypos 567
+ }
+ Dot {
+  name Dot1
+  xpos 655
+  ypos 642
+ }
+set N87a3f400 [stack 0]
+ Dot {
+  name Dot3
+  xpos 1798
+  ypos 642
+ }
+set N87a38400 [stack 0]
+ Dot {
+  name Dot6
+  xpos 2925
+  ypos 642
+ }
+set N87a41000 [stack 0]
+ Dot {
+  name Dot5
+  xpos 4055
+  ypos 642
+ }
+set N87a3c400 [stack 0]
+ Dot {
+  name Dot8
+  xpos 5203
+  ypos 642
+ }
+set N87a43400 [stack 0]
+ Dot {
+  name Dot11
+  xpos 6332
+  ypos 642
+ }
+set N87a3a400 [stack 0]
+ Dot {
+  name Dot13
+  xpos 7470
+  ypos 642
+ }
+set N87a10000 [stack 0]
+ Dot {
+  name Dot15
+  xpos 8595
+  ypos 642
+ }
+set N87a47400 [stack 0]
+ Dot {
+  name Dot17
+  xpos 9765
+  ypos 642
+ }
+set N87a49400 [stack 0]
+ Dot {
+  name Dot19
+  xpos 10886
+  ypos 642
+ }
+ Dot {
+  name Dot20
+  xpos 10886
+  ypos 815
+ }
+set N87a17000 [stack 0]
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift101
+  xpos 11842
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message 10J
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _100
+  xpos 11842
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a17000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift100
+  xpos 11732
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_9\" \"\"\} \"\[lrange \[value name] 0 2]\" ]J"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _99
+  xpos 11732
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a17000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift99
+  xpos 11622
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_9\" \"\"\} \"\[lrange \[value name] 0 2]\" ]J"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _98
+  xpos 11622
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a17000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift98
+  xpos 11512
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_9\" \"\"\} \"\[lrange \[value name] 0 2]\" ]J"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _97
+  xpos 11512
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a17000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift97
+  xpos 11402
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_9\" \"\"\} \"\[lrange \[value name] 0 2]\" ]J"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _96
+  xpos 11402
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a17000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift96
+  xpos 11292
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_9\" \"\"\} \"\[lrange \[value name] 0 2]\" ]J"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _95
+  xpos 11292
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a17000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift95
+  xpos 11182
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_9\" \"\"\} \"\[lrange \[value name] 0 2]\" ]J"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _94
+  xpos 11182
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a17000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift94
+  xpos 11072
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_9\" \"\"\} \"\[lrange \[value name] 0 2]\" ]J"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _93
+  xpos 11072
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a17000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift93
+  xpos 10962
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_9\" \"\"\} \"\[lrange \[value name] 0 2]\" ]J"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _92
+  xpos 10962
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a17000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift92
+  xpos 10852
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_9\" \"\"\} \"\[lrange \[value name] 0 2]\" ]J"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _91
+  xpos 10852
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a49400
+ Dot {
+  name Dot18
+  xpos 9765
+  ypos 817
+ }
+set N1a7ff000 [stack 0]
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift91
+  xpos 10721
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message 10I
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _90
+  xpos 10721
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N1a7ff000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift90
+  xpos 10611
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_8\" \"\"\} \"\[lrange \[value name] 0 2]\" ]I"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _89
+  xpos 10611
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N1a7ff000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift89
+  xpos 10501
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_8\" \"\"\} \"\[lrange \[value name] 0 2]\" ]I"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _88
+  xpos 10501
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N1a7ff000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift88
+  xpos 10391
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_8\" \"\"\} \"\[lrange \[value name] 0 2]\" ]I"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _87
+  xpos 10391
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N1a7ff000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift87
+  xpos 10281
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_8\" \"\"\} \"\[lrange \[value name] 0 2]\" ]I"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _86
+  xpos 10281
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N1a7ff000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift86
+  xpos 10171
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_8\" \"\"\} \"\[lrange \[value name] 0 2]\" ]I"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _85
+  xpos 10171
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N1a7ff000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift85
+  xpos 10061
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_8\" \"\"\} \"\[lrange \[value name] 0 2]\" ]I"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _84
+  xpos 10061
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N1a7ff000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift84
+  xpos 9951
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_8\" \"\"\} \"\[lrange \[value name] 0 2]\" ]I"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _83
+  xpos 9951
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N1a7ff000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift83
+  xpos 9841
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_8\" \"\"\} \"\[lrange \[value name] 0 2]\" ]I"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _82
+  xpos 9841
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N1a7ff000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift82
+  xpos 9731
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_8\" \"\"\} \"\[lrange \[value name] 0 2]\" ]I"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _81
+  xpos 9731
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a47400
+ Dot {
+  name Dot16
+  xpos 8595
+  ypos 801
+ }
+set N86b86800 [stack 0]
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift80
+  xpos 9551
+  ypos 953
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message 10H
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _80
+  xpos 9551
+  ypos 977
+  disable {{Textctrl.disable}}
+ }
+push $N86b86800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift79
+  xpos 9441
+  ypos 953
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_7\" \"\"\} \"\[lrange \[value name] 0 2]\" ]H"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _79
+  xpos 9441
+  ypos 977
+  disable {{Textctrl.disable}}
+ }
+push $N86b86800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift78
+  xpos 9331
+  ypos 953
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_7\" \"\"\} \"\[lrange \[value name] 0 2]\" ]H"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _78
+  xpos 9331
+  ypos 977
+  disable {{Textctrl.disable}}
+ }
+push $N86b86800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift77
+  xpos 9221
+  ypos 953
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_7\" \"\"\} \"\[lrange \[value name] 0 2]\" ]H"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _77
+  xpos 9221
+  ypos 977
+  disable {{Textctrl.disable}}
+ }
+push $N86b86800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift76
+  xpos 9111
+  ypos 953
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_7\" \"\"\} \"\[lrange \[value name] 0 2]\" ]H"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _76
+  xpos 9111
+  ypos 977
+  disable {{Textctrl.disable}}
+ }
+push $N86b86800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift75
+  xpos 9001
+  ypos 953
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_7\" \"\"\} \"\[lrange \[value name] 0 2]\" ]H"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _75
+  xpos 9001
+  ypos 977
+  disable {{Textctrl.disable}}
+ }
+push $N86b86800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift74
+  xpos 8891
+  ypos 953
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_7\" \"\"\} \"\[lrange \[value name] 0 2]\" ]H"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _74
+  xpos 8891
+  ypos 977
+  disable {{Textctrl.disable}}
+ }
+push $N86b86800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift73
+  xpos 8781
+  ypos 953
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_7\" \"\"\} \"\[lrange \[value name] 0 2]\" ]H"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _73
+  xpos 8781
+  ypos 977
+  disable {{Textctrl.disable}}
+ }
+push $N86b86800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift72
+  xpos 8671
+  ypos 953
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_7\" \"\"\} \"\[lrange \[value name] 0 2]\" ]H"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _72
+  xpos 8671
+  ypos 977
+  disable {{Textctrl.disable}}
+ }
+push $N86b86800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift71
+  xpos 8561
+  ypos 953
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_7\" \"\"\} \"\[lrange \[value name] 0 2]\" ]H"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _71
+  xpos 8561
+  ypos 977
+  disable {{Textctrl.disable}}
+ }
+push $N87a10000
+ Dot {
+  name Dot14
+  xpos 7470
+  ypos 776
+ }
+set N39c07000 [stack 0]
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift70
+  xpos 8426
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message 10G
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _70
+  xpos 8426
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N39c07000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift69
+  xpos 7436
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_6\" \"\"\} \"\[lrange \[value name] 0 2]\" ]G"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _69
+  xpos 7436
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N39c07000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift68
+  xpos 7546
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_6\" \"\"\} \"\[lrange \[value name] 0 2]\" ]G"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _68
+  xpos 7546
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N39c07000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift67
+  xpos 7656
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_6\" \"\"\} \"\[lrange \[value name] 0 2]\" ]G"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _67
+  xpos 7656
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N39c07000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift66
+  xpos 7766
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_6\" \"\"\} \"\[lrange \[value name] 0 2]\" ]G"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _66
+  xpos 7766
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N39c07000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift65
+  xpos 7876
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_6\" \"\"\} \"\[lrange \[value name] 0 2]\" ]G"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _65
+  xpos 7876
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N39c07000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift64
+  xpos 7986
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_6\" \"\"\} \"\[lrange \[value name] 0 2]\" ]G"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _64
+  xpos 7986
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N39c07000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift63
+  xpos 8096
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_6\" \"\"\} \"\[lrange \[value name] 0 2]\" ]G"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _63
+  xpos 8096
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N39c07000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift62
+  xpos 8206
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_6\" \"\"\} \"\[lrange \[value name] 0 2]\" ]G"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _62
+  xpos 8206
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N39c07000
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift61
+  xpos 8316
+  ypos 954
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_6\" \"\"\} \"\[lrange \[value name] 0 2]\" ]G"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _61
+  xpos 8316
+  ypos 978
+  disable {{Textctrl.disable}}
+ }
+push $N87a3a400
+ Dot {
+  name Dot12
+  xpos 6332
+  ypos 810
+ }
+set N7eb17c00 [stack 0]
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift60
+  xpos 7288
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message 10F
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _60
+  xpos 7288
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7eb17c00
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift59
+  xpos 7178
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_5\" \"\"\} \"\[lrange \[value name] 0 2]\" ]F"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _59
+  xpos 7178
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7eb17c00
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift58
+  xpos 7068
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_5\" \"\"\} \"\[lrange \[value name] 0 2]\" ]F"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _58
+  xpos 7068
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7eb17c00
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift57
+  xpos 6958
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_5\" \"\"\} \"\[lrange \[value name] 0 2]\" ]F"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _57
+  xpos 6958
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7eb17c00
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift56
+  xpos 6848
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_5\" \"\"\} \"\[lrange \[value name] 0 2]\" ]F"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _56
+  xpos 6848
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7eb17c00
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift55
+  xpos 6738
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_5\" \"\"\} \"\[lrange \[value name] 0 2]\" ]F"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _55
+  xpos 6738
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7eb17c00
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift54
+  xpos 6628
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_5\" \"\"\} \"\[lrange \[value name] 0 2]\" ]F"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _54
+  xpos 6628
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7eb17c00
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift53
+  xpos 6518
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_5\" \"\"\} \"\[lrange \[value name] 0 2]\" ]F"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _53
+  xpos 6518
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7eb17c00
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift52
+  xpos 6408
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_5\" \"\"\} \"\[lrange \[value name] 0 2]\" ]F"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _52
+  xpos 6408
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7eb17c00
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift51
+  xpos 6298
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_5\" \"\"\} \"\[lrange \[value name] 0 2]\" ]F"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _51
+  xpos 6298
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N87a43400
+ Dot {
+  name Dot9
+  xpos 5203
+  ypos 850
+ }
+set N1a857800 [stack 0]
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift50
+  xpos 6159
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message 10E
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _50
+  xpos 6159
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1a857800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift49
+  xpos 6049
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_4\" \"\"\} \"\[lrange \[value name] 0 2]\" ]E"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _49
+  xpos 6049
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1a857800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift48
+  xpos 5939
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_4\" \"\"\} \"\[lrange \[value name] 0 2]\" ]E"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _48
+  xpos 5939
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1a857800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift47
+  xpos 5829
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_4\" \"\"\} \"\[lrange \[value name] 0 2]\" ]E"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _47
+  xpos 5829
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1a857800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift46
+  xpos 5719
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_4\" \"\"\} \"\[lrange \[value name] 0 2]\" ]E"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _46
+  xpos 5719
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1a857800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift45
+  xpos 5609
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_4\" \"\"\} \"\[lrange \[value name] 0 2]\" ]E"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _45
+  xpos 5609
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1a857800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift44
+  xpos 5499
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_4\" \"\"\} \"\[lrange \[value name] 0 2]\" ]E"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _44
+  xpos 5499
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1a857800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift43
+  xpos 5389
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_4\" \"\"\} \"\[lrange \[value name] 0 2]\" ]E"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _43
+  xpos 5389
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1a857800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift42
+  xpos 5279
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_4\" \"\"\} \"\[lrange \[value name] 0 2]\" ]E"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _42
+  xpos 5279
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1a857800
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift41
+  xpos 5169
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_4\" \"\"\} \"\[lrange \[value name] 0 2]\" ]E"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _41
+  xpos 5169
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N87a3c400
+ Dot {
+  name Dot7
+  xpos 4055
+  ypos 841
+ }
+set N54c02400 [stack 0]
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift40
+  xpos 5011
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message 10D
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _40
+  xpos 5011
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N54c02400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift39
+  xpos 4901
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_3\" \"\"\} \"\[lrange \[value name] 0 2]\" ]D"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _39
+  xpos 4901
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N54c02400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift38
+  xpos 4791
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_3\" \"\"\} \"\[lrange \[value name] 0 2]\" ]D"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _38
+  xpos 4791
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N54c02400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift37
+  xpos 4681
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_3\" \"\"\} \"\[lrange \[value name] 0 2]\" ]D"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _37
+  xpos 4681
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N54c02400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift36
+  xpos 4571
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_3\" \"\"\} \"\[lrange \[value name] 0 2]\" ]D"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _36
+  xpos 4571
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N54c02400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift35
+  xpos 4461
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_3\" \"\"\} \"\[lrange \[value name] 0 2]\" ]D"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _35
+  xpos 4461
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N54c02400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift34
+  xpos 4351
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_3\" \"\"\} \"\[lrange \[value name] 0 2]\" ]D"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _34
+  xpos 4351
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N54c02400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift33
+  xpos 4241
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_3\" \"\"\} \"\[lrange \[value name] 0 2]\" ]D"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _33
+  xpos 4241
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N54c02400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift32
+  xpos 4131
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_3\" \"\"\} \"\[lrange \[value name] 0 2]\" ]D"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _32
+  xpos 4131
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N54c02400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift31
+  xpos 4021
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_3\" \"\"\} \"\[lrange \[value name] 0 2]\" ]D"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _31
+  xpos 4021
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N87a41000
+ Dot {
+  name Dot4
+  xpos 2925
+  ypos 813
+ }
+set N39965400 [stack 0]
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift30
+  xpos 3881
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message 10C
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _30
+  xpos 3881
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N39965400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift29
+  xpos 3661
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_2\" \"\"\} \"\[lrange \[value name] 0 2]\" ]C"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _29
+  xpos 3661
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N39965400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift28
+  xpos 3551
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_2\" \"\"\} \"\[lrange \[value name] 0 2]\" ]C"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _28
+  xpos 3551
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N39965400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift27
+  xpos 3441
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_2\" \"\"\} \"\[lrange \[value name] 0 2]\" ]C"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _27
+  xpos 3441
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N39965400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1"}}
+  name HueShift26
+  xpos 3331
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_2\" \"\"\} \"\[lrange \[value name] 0 2]\" ]C"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _26
+  xpos 3331
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N39965400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1" i}}
+  name HueShift25
+  xpos 3221
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_2\" \"\"\} \"\[lrange \[value name] 0 2]\" ]C"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _25
+  xpos 3221
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N39965400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1" i}}
+  name HueShift24
+  xpos 3111
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_2\" \"\"\} \"\[lrange \[value name] 0 2]\" ]C"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _24
+  xpos 3111
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N39965400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1" i}}
+  name HueShift23
+  xpos 3001
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_2\" \"\"\} \"\[lrange \[value name] 0 2]\" ]C"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _23
+  xpos 3001
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N39965400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1" i}}
+  name HueShift22
+  xpos 2891
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_2\" \"\"\} \"\[lrange \[value name] 0 2]\" ]C"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _22
+  xpos 2891
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N39965400
+ HueShift {
+  hue_rotation {{"Ctrl.rotation*\[string map \{\"HueShift\" \"\"\} \"\[lrange \[value name] 0 2]\" ]+1" i}}
+  name HueShift21
+  xpos 3771
+  ypos 945
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_2\" \"\"\} \"\[lrange \[value name] 0 2]\" ]C"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _21
+  xpos 3771
+  ypos 969
+  disable {{Textctrl.disable}}
+ }
+push $N87a38400
+ Dot {
+  name Dot2
+  xpos 1798
+  ypos 809
+ }
+set N1aaccc00 [stack 0]
+ HueShift {
+  hue_rotation {{Ctrl.rotation*21 i}}
+  name HueShift20
+  xpos 2754
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message 10B
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _20
+  xpos 2754
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1aaccc00
+ HueShift {
+  hue_rotation {{Ctrl.rotation*20 i}}
+  name HueShift19
+  xpos 2534
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_1\" \"\"\} \"\[lrange \[value name] 0 2]\"]B"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _19
+  xpos 2534
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1aaccc00
+ HueShift {
+  hue_rotation {{Ctrl.rotation*19 i}}
+  name HueShift18
+  xpos 2424
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_1\" \"\"\} \"\[lrange \[value name] 0 2]\"]B"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _18
+  xpos 2424
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1aaccc00
+ HueShift {
+  hue_rotation {{Ctrl.rotation*18 i}}
+  name HueShift17
+  xpos 2314
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_1\" \"\"\} \"\[lrange \[value name] 0 2]\"]B"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _17
+  xpos 2314
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1aaccc00
+ HueShift {
+  hue_rotation {{Ctrl.rotation*17 i}}
+  name HueShift16
+  xpos 2204
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_1\" \"\"\} \"\[lrange \[value name] 0 2]\"]B"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _16
+  xpos 2204
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1aaccc00
+ HueShift {
+  hue_rotation {{Ctrl.rotation*16 i}}
+  name HueShift15
+  xpos 2094
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_1\" \"\"\} \"\[lrange \[value name] 0 2]\"]B"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _15
+  xpos 2094
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1aaccc00
+ HueShift {
+  hue_rotation {{Ctrl.rotation*15 i}}
+  name HueShift14
+  xpos 1984
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_1\" \"\"\} \"\[lrange \[value name] 0 2]\"]B"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _14
+  xpos 1984
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1aaccc00
+ HueShift {
+  hue_rotation {{Ctrl.rotation*14 i}}
+  name HueShift13
+  xpos 1874
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_1\" \"\"\} \"\[lrange \[value name] 0 2]\"]B"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _13
+  xpos 1874
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1aaccc00
+ HueShift {
+  hue_rotation {{Ctrl.rotation*13 i}}
+  name HueShift12
+  xpos 1764
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_1\" \"\"\} \"\[lrange \[value name] 0 2]\"]B"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _12
+  xpos 1764
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N1aaccc00
+ HueShift {
+  hue_rotation {{Ctrl.rotation*12 i}}
+  name HueShift11
+  xpos 2644
+  ypos 944
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_1\" \"\"\} \"\[lrange \[value name] 0 2]\"]B"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _11
+  xpos 2644
+  ypos 968
+  disable {{Textctrl.disable}}
+ }
+push $N87a3f400
+ Dot {
+  name Dot10
+  xpos 655
+  ypos 821
+ }
+set N7b5db000 [stack 0]
+ HueShift {
+  hue_rotation {{Ctrl.rotation*11 i}}
+  name HueShift10
+  xpos 1611
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_\" \"\"\} \"\[lrange \[value name] 0 2]\" ]A"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _10
+  xpos 1611
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7b5db000
+ HueShift {
+  hue_rotation {{Ctrl.rotation*10 i}}
+  name HueShift9
+  xpos 1501
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_\" \"\"\} \"\[lrange \[value name] 0 2]\" ]A"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _9
+  xpos 1501
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7b5db000
+ HueShift {
+  hue_rotation {{Ctrl.rotation*9 i}}
+  name HueShift8
+  xpos 1391
+  ypos 948
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_\" \"\"\} \"\[lrange \[value name] 0 2]\" ]A"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _8
+  xpos 1391
+  ypos 972
+  disable {{Textctrl.disable}}
+ }
+push $N7b5db000
+ HueShift {
+  hue_rotation {{Ctrl.rotation*8 i}}
+  name HueShift7
+  xpos 1282
+  ypos 950
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_\" \"\"\} \"\[lrange \[value name] 0 2]\" ]A"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _7
+  xpos 1282
+  ypos 974
+  disable {{Textctrl.disable}}
+ }
+push $N7b5db000
+ HueShift {
+  hue_rotation {{Ctrl.rotation*7 i}}
+  name HueShift6
+  xpos 1172
+  ypos 950
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_\" \"\"\} \"\[lrange \[value name] 0 2]\" ]A"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color 0
+  name _6
+  xpos 1172
+  ypos 974
+  disable {{Textctrl.disable}}
+ }
+push $N7b5db000
+ HueShift {
+  hue_rotation {{Ctrl.rotation*6 i}}
+  name HueShift5
+  xpos 1062
+  ypos 950
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_\" \"\"\} \"\[lrange \[value name] 0 2]\" ]A"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _5
+  xpos 1062
+  ypos 974
+  disable {{Textctrl.disable}}
+ }
+push $N7b5db000
+ HueShift {
+  hue_rotation {{Ctrl.rotation*5 i}}
+  name HueShift4
+  xpos 951
+  ypos 951
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_\" \"\"\} \"\[lrange \[value name] 0 2]\" ]A"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _4
+  xpos 951
+  ypos 975
+  disable {{Textctrl.disable}}
+ }
+push $N7b5db000
+ HueShift {
+  hue_rotation {{Ctrl.rotation*4 i}}
+  name HueShift3
+  xpos 841
+  ypos 951
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_\" \"\"\} \"\[lrange \[value name] 0 2]\" ]A"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _3
+  xpos 841
+  ypos 975
+  disable {{Textctrl.disable}}
+ }
+push $N7b5db000
+ HueShift {
+  hue_rotation {{Ctrl.rotation*3 i}}
+  name HueShift2
+  xpos 732
+  ypos 951
+ }
+ Text {
+  opacity {{Textctrl.opacity}}
+  message "\[string map \{\"_\" \"\"\} \"\[lrange \[value name] 0 2]\" ]A"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _2
+  xpos 732
+  ypos 975
+  disable {{Textctrl.disable}}
+ }
+push $N7b5db000
+ HueShift {
+  color 0
+  hue_rotation {{Ctrl.rotation*2 i}}
+  name HueShift1
+  xpos 621
+  ypos 951
+ }
+ Text {
+  opacity {{Textctrl.opacity i}}
+  message "\[string map \{\"_\" \"\"\} \"\[lrange \[value name] 0 2]\" ]A"
+  font "\[knob Textctrl.font]"
+  size {{input.width/2 i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width i} {input.height i}}
+  center {1024 1024}
+  color 0
+  name _1
+  xpos 621
+  ypos 975
+  disable {{Textctrl.disable i}}
+ }
+ ContactSheet {
+  inputs 100
+  width {{parent.Ctrl.format i}}
+  height {{knob.width i}}
+  rows 10
+  columns {{rows i}}
+  center true
+  roworder TopBottom
+  splitinputs true
+  startframe 1
+  endframe 1
+  name ContactSheet1
+  xpos 11842
+  ypos 1100
+ }
+ Dot {
+  name Dot21
+  xpos 11876
+  ypos 1147
+ }
+set N1a47a000 [stack 0]
+push $N1a47a000
+ FilterErode {
+  channels alpha
+  size {{(parent.Ctrl.format/1000)/2 i}}
+  name FilterErode1
+  xpos 12047
+  ypos 1138
+ }
+ Blur {
+  channels alpha
+  size {{(parent.Ctrl.format/1000)*1.7 i}}
+  name Blur1
+  xpos 12047
+  ypos 1174
+ }
+ Transform {
+  translate {{(parent.Ctrl.format/1000)*1.7 i} {-(parent.Ctrl.format/1000)*1.7 i}}
+  center {2000 2000}
+  shutteroffset centred
+  name Transform1
+  label "\[value filter]"
+  xpos 12047
+  ypos 1210
+ }
+ Blur {
+  inputs 1+1
+  channels alpha
+  size 50
+  invert_mask true
+  name Blur2
+  xpos 12047
+  ypos 1297
+ }
+push $N1a47a000
+ Saturation {
+  saturation {{0.5*parent.sat i}}
+  name Saturation2
+  xpos 11842
+  ypos 1226
+ }
+ Multiply {
+  inputs 1+1
+  value 0.2
+  invert_mask true
+  name Multiply3
+  xpos 11842
+  ypos 1297
+  disable {{!parent.textshadow i}}
+ }
+ BlackOutside {
+  name BlackOutside1
+  xpos 11842
+  ypos 1375
+ }
+ Output {
+  name FranklinVFX
+  xpos 11842
+  ypos 1432
+ }
+push $N87a37400
+ Text {
+  opacity 0.9
+  message 1A
+  font C:/WINDOWS/Fonts/arial.ttf
+  size 1
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {input.width} {input.height}}
+  center {1024 1024}
+  color {0 1 0 0}
+  name Textctrl
+  selected true
+  xpos 707
+  ypos 299
+  disable {{!parent.text}}
+ }
+end_group

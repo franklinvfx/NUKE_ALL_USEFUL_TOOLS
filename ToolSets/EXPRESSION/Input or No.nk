@@ -1,0 +1,10 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+push $cut_paste_input
+NoOp {
+ name Input
+ label "\[python \{\"Yes\" if nuke.thisNode().inputs() else \"Rien\"\}]"
+ selected true
+ xpos -1252
+ ypos 76
+}

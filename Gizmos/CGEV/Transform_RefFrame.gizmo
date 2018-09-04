@@ -1,0 +1,76 @@
+Group {
+name Transform_Ref
+help "Matchmove ou Stabilize d'aprés un tracker,\npermet de modifier la reference frame, sans modifier celle du tracker\n\n\nATTENTION:  Le tracker reférence doit etre\nen mode \"none\" ou \"matchmove\" uniquement.\n\n\nUtilisation :\n\n-Rentrer le nom du Tracker voulu\n\n-Choisir le Mode de transform : MatchMove ou Stabilize, ainsi que les operations : Translate, Rotate, et Scale\n\n-*Optionnel* Changer la frame de reference\n"
+tile_color 0x9775a3ff
+label "Frame \[value RefFrame]"
+selected true
+addUserKnob {20 Transform_Track l Transform_Ref}
+addUserKnob {1 TrackerName l Transform t "Type Tracker name for link the node"}
+TrackerName ...Name
+addUserKnob {3 RefFrame l " " t "Custom reference frame"}
+RefFrame 1
+addUserKnob {22 setframe l " Set Current! " -STARTLINE T nuke.thisNode().knob('RefFrame').setValue(nuke.frame())}
+addUserKnob {26 ""}
+addUserKnob {41 translate l Translate t "Result of translate data" -STARTLINE T MatchMove.translate}
+addUserKnob {41 rotate l Rotate t "Result of rotate data" T MatchMove.rotate}
+addUserKnob {41 scale l Scale t "Result of scale data" T MatchMove.scale}
+addUserKnob {41 center l Center t "Result of center data" T MatchMove.center}
+addUserKnob {41 center_input l INVISIBLE +INVISIBLE T Transform_Ctrl.center_input}
+addUserKnob {41 invert_matrix l Invert T Transform_Ctrl.invert_matrix}
+addUserKnob {26 by2 l " " T "                                                                                               "}
+addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+addUserKnob {26 ""}
+addUserKnob {41 filter T Transform_Ctrl.filter}
+addUserKnob {41 clamp -STARTLINE T Transform_Ctrl.clamp}
+addUserKnob {41 black_outside l "black outside" -STARTLINE T Transform_Ctrl.black_outside}
+addUserKnob {41 motionblur T Transform_Ctrl.motionblur}
+addUserKnob {41 shutter T Transform_Ctrl.shutter}
+addUserKnob {41 shutteroffset l "shutter offset" T Transform_Ctrl.shutteroffset}
+addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Transform_Ctrl.shuttercustomoffset}
+}
+Input {
+inputs 0
+name Input
+xpos 436
+ypos 161
+}
+set N73b45000 [stack 0]
+Transform {
+translate {{(Transform_Ctrl.translate-Transform_Ctrl.translate(RefFrame))} {(Transform_Ctrl.translate-Transform_Ctrl.translate(RefFrame))}}
+rotate {{"((Transform_Ctrl.rotate-Transform_Ctrl.rotate(RefFrame)))"}}
+scale {{(Transform_Ctrl.scale-Transform_Ctrl.scale(RefFrame)+1)}}
+center {{(Transform_Ctrl.center-Transform_Ctrl.center(RefFrame)+center_input.w)} {(Transform_Ctrl.center-Transform_Ctrl.center(RefFrame)+center_input.h)}}
+invert_matrix {{Transform_Ctrl.invert_matrix}}
+filter {{Transform_Ctrl.filter}}
+clamp {{Transform_Ctrl.clamp}}
+black_outside {{Transform_Ctrl.black_outside}}
+motionblur {{Transform_Ctrl.motionblur}}
+shutter {{Transform_Ctrl.shutter}}
+shutteroffset {{Transform_Ctrl.shutteroffset}}
+shuttercustomoffset {{Transform_Ctrl.shuttercustomoffset}}
+name MatchMove
+tile_color 0xff00ff
+xpos 436
+ypos 212
+}
+Output {
+name Output
+xpos 436
+ypos 268
+}
+push $N73b45000
+Transform {
+translate {{"\[value TrackerName].translate.x"} {"\[value TrackerName].translate.y"}}
+rotate {{"\[value TrackerName].rotate"}}
+scale {{"\[value TrackerName].scale"}}
+center {{"\[value TrackerName].center.x"} {"\[value TrackerName].center.y"}}
+shutteroffset centred
+name Transform_Ctrl
+xpos 287
+ypos 211
+hide_input true
+addUserKnob {20 User}
+addUserKnob {14 center_input R 0 100}
+center_input {{width/2} {height/2}}
+}
+end_group

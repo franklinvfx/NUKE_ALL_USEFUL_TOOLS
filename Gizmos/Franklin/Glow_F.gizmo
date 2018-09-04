@@ -1,0 +1,1768 @@
+Group {
+ name Glow_F
+ help "Glow_F\n\nNatural glow effect using the exponential blur method.\nAberation chromatic effect is also include in the node.\n"
+ knobChanged "c = nuke.toNode('Copy3')\n\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(1) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')\n    \nif nuke.thisKnob().name() == 'chromatiqueab':\n    if nuke.thisKnob().value():\n        nuke.thisNode()\['abred'].setVisible(True)\n        nuke.thisNode()\['abgreen'].setVisible(True)\n        nuke.thisNode()\['abblue'].setVisible(True)\n        nuke.thisNode()\['FT1'].setVisible(True)\n    else:\n        nuke.thisNode()\['abred'].setVisible(False)\n        nuke.thisNode()\['abgreen'].setVisible(False)\n        nuke.thisNode()\['abblue'].setVisible(False)\n        nuke.thisNode()\['FT1'].setVisible(False)\n\nif nuke.thisKnob().name() == 'crop':\n    if nuke.thisKnob().value():\n        nuke.thisNode()\['adjbbox'].setVisible(False)\n    else:\n        nuke.thisNode()\['adjbbox'].setVisible(True)\n"
+ tile_color 0xcc804eff
+ icon F_iconrgb.png
+ selected true
+ addUserKnob {20 G l Glow}
+ addUserKnob {7 threshold l "<font color=\"green\">@b;Tolerance" t "Sets the low threshold, below which no glowing will occur."}
+ threshold 0.8
+ addUserKnob {6 preview l Preview t "Show the glow emiter image." -STARTLINE}
+ addUserKnob {14 size l Size R 0 50}
+ size 1
+ addUserKnob {6 crop l "Crop to Format" t "If bounding box is at or inside the format, dont enlarge it past the format. This avoids creating oversized images that you don't use." +STARTLINE}
+ crop true
+ addUserKnob {14 adjbbox l "        Add Pixels" -STARTLINE +HIDDEN R 0 100}
+ adjbbox 50
+ addUserKnob {6 fxonly l "Effect Only   " t "Return the glow without adding it to the input, so you can composite it yourself." +STARTLINE}
+ addUserKnob {6 screen l "Screen    " t "Will use blending mode 'screen' instead of 'plus' for softer highlights." +STARTLINE}
+ addUserKnob {26 S00 l " " T " "}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {19 tint l Tint t "Controls the color of added glow."}
+ tint 1
+ addUserKnob {6 tint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {41 white_1 l Gain t "Sets the gain of the added glow." T Color.white}
+ addUserKnob {41 gamma_1 l Gamma t "Sets the gamma of the added glow." T Color.gamma}
+ addUserKnob {41 saturation l Saturation t "Color saturation of the added glow." T Saturation.saturation}
+ addUserKnob {41 black_clamp l "Black Clamp  " t "Output that is less than zero is changed to zero." T Color.black_clamp}
+ addUserKnob {41 white_clamp_1 l "White Clamp" t "Output that is greather than 1 is changed to 1." -STARTLINE T Color.white_clamp}
+ addUserKnob {26 S01 l " "}
+ addUserKnob {6 chromatiqueab l "Chromatic Aberation" +STARTLINE}
+ addUserKnob {7 abred l "<font color=\"OrangeRed \">@b;R" +HIDDEN R -50 50}
+ abred -1
+ addUserKnob {7 abgreen l "<font color=\"green\">@b;G" +HIDDEN R -50 50}
+ addUserKnob {7 abblue l "<font color=\"RoyalBlue\">@b;B" +HIDDEN R -50 50}
+ abblue 2
+ addUserKnob {26 FT1 l " " +DISABLED +HIDDEN}
+ addUserKnob {26 FT2 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVfx.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin Vfx - 2017"}
+ addUserKnob {26 ""}
+ addUserKnob {41 from0 l Mask T Copy3.from0}
+ addUserKnob {41 disable_1 l Invert -STARTLINE T Invert1.disable}
+ addUserKnob {7 mix l Mix t "Dissolve between the original image at 0 and the full effect at 1."}
+ mix 1
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output "\[if \{\[value preview]==\"true\"\} \{return \"\[knob this.tile_color 0xb23030ff]\"\} \{return \"\[knob this.tile_color 0xcc804eff]\"\}]\[if \{\[value preview]==\"true\"\} \{return \"\[knob this.name_1 \"Preview\"]\"\} \{return \"\[knob this.name_1 \"rgb\"]\"\}]\[value name_1]"
+ addUserKnob {1 name_1 l INVISIBLE +INVISIBLE}
+ name_1 rgb
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 1139
+  ypos 119
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {6 in +STARTLINE}
+  in {{"\[exists input1]"}}
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels3
+  xpos 1139
+  ypos 234
+ }
+set N38616000 [stack 0]
+push $N38616000
+ Copy {
+  inputs 2
+  to0 rgba.alpha
+  name Copy3
+  xpos 1139
+  ypos 279
+  disable {{!parent.mask.in}}
+ }
+ Invert {
+  name Invert1
+  xpos 1139
+  ypos 470
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 940
+  ypos 118
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels2
+  selected true
+  xpos 940
+  ypos 233
+ }
+set N38655000 [stack 0]
+ Dot {
+  name Dot16
+  xpos 438
+  ypos 237
+ }
+ Dot {
+  name Dot8
+  xpos 438
+  ypos 480
+ }
+set N38654800 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle2
+  xpos 710
+  ypos 476
+ }
+push $N38655000
+ Dot {
+  name Dot18
+  xpos 974
+  ypos 372
+ }
+set N38654000 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 820
+  ypos 470
+  disable {{!parent.mask.in}}
+ }
+push $N38654000
+ Switch {
+  inputs 2
+  which {{Copy3.from0}}
+  name Switch1
+  xpos 943
+  ypos 605
+ }
+ Keyer {
+  operation "luminance key"
+  range {-0.1 0.3352017191 1 1}
+  name Keyer1
+  xpos 943
+  ypos 662
+ }
+ ColorCorrect {
+  saturation {{clamp((gain*7),0.6,1)}}
+  gamma {{clamp((gain*6),0.5,1)}}
+  gain {{-threshold+1.001}}
+  shadows 0
+  midtones 0
+  highlights 0
+  name Tolerence
+  xpos 943
+  ypos 700
+ }
+ Clamp {
+  channels rgb
+  name Clamp1
+  xpos 943
+  ypos 726
+ }
+ Premult {
+  name Premult1
+  xpos 943
+  ypos 752
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove1
+  xpos 943
+  ypos 795
+ }
+set N38714800 [stack 0]
+ Dot {
+  name Dot13
+  xpos 1486
+  ypos 799
+ }
+ Crop {
+  box {0 0 {width-1} {height-1}}
+  name Crop1
+  xpos 1452
+  ypos 875
+ }
+ Dot {
+  name Dot17
+  xpos 1486
+  ypos 2982
+ }
+push $N38714800
+ Crop {
+  box {0 0 {width-1} {height-1}}
+  crop false
+  name Crop2
+  xpos 943
+  ypos 870
+  disable {{!parent.crop}}
+ }
+ Reformat {
+  type scale
+  scale 1.1
+  resize none
+  name Reformat1
+  xpos 943
+  ypos 896
+  disable {{!parent.crop}}
+ }
+ Crop {
+  box {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  name Crop3
+  xpos 943
+  ypos 922
+  disable {{!parent.crop}}
+ }
+ AdjBBox {
+  numpixels {{adjbbox}}
+  name AdjBBox1
+  xpos 943
+  ypos 979
+  disable {{crop}}
+ }
+ Dot {
+  name Dot19
+  xpos 977
+  ypos 1058
+ }
+set N9718800 [stack 0]
+ Dot {
+  name Dot15
+  xpos 576
+  ypos 1058
+ }
+set N38751400 [stack 0]
+ Dot {
+  name Dot14
+  xpos 576
+  ypos 1637
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{8192*parent.size} {8192*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_8192
+  xpos 833
+  ypos 1532
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{4096*parent.size} {4096*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_4096
+  xpos 833
+  ypos 1506
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{2048*parent.size} {2048*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_2048
+  xpos 833
+  ypos 1480
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{1024*parent.size} {1024*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_1024
+  xpos 833
+  ypos 1454
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{512*parent.size} {512*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_512
+  xpos 833
+  ypos 1428
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{256*parent.size} {256*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_256
+  xpos 833
+  ypos 1402
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{128*parent.size} {128*parent.size 128}}
+  crop {{parent.blur_1.crop}}
+  name blur_128
+  xpos 833
+  ypos 1376
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{64*parent.size} {64*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_64
+  xpos 833
+  ypos 1350
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{32*parent.size} {32*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_32
+  xpos 833
+  ypos 1324
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{16*parent.size} {16*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_16
+  xpos 833
+  ypos 1298
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{8*parent.size} {8*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_8
+  xpos 833
+  ypos 1272
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{4*parent.size} {4*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_4
+  xpos 833
+  ypos 1246
+  hide_input true
+ }
+push $N38751400
+ Blur {
+  channels {{{parent.blur_1.channels}}}
+  size {{2*parent.size} {2*parent.size}}
+  crop {{parent.blur_1.crop}}
+  name blur_2
+  xpos 833
+  ypos 1220
+  hide_input true
+ }
+push $N9718800
+ Multiply {
+  channels rgb
+  value 0
+  name Multiply2
+  xpos 943
+  ypos 1140
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  mix 0.3
+  name Plus2
+  xpos 943
+  ypos 1220
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  mix 0.6
+  name Plus4
+  xpos 943
+  ypos 1246
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  mix 0.9
+  name Plus8
+  xpos 943
+  ypos 1272
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Plus16
+  xpos 943
+  ypos 1298
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Plus32
+  xpos 943
+  ypos 1324
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Plus64
+  xpos 943
+  ypos 1350
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Plus128
+  xpos 943
+  ypos 1376
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Plus256
+  xpos 943
+  ypos 1402
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Plus512
+  xpos 943
+  ypos 1428
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Plus1024
+  xpos 943
+  ypos 1454
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Plus2048
+  xpos 943
+  ypos 1480
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Plus4096
+  xpos 943
+  ypos 1506
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Plus8192
+  xpos 943
+  ypos 1532
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox2
+  xpos 943
+  ypos 1633
+ }
+ Reformat {
+  type scale
+  scale 0.9090909091
+  resize none
+  name Reformat2
+  xpos 943
+  ypos 1708
+  disable {{!parent.crop}}
+ }
+ Crop {
+  box {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  crop false
+  name BBox
+  xpos 943
+  ypos 1734
+  disable {{!parent.crop}}
+ }
+ Grade {
+  multiply {{"\[python -execlocal size\\ =\\ nuke.thisGroup().knob('size').value()\\n\\nif\\ type(size)\\ !=\\ type(list()):\\n\\ if\\ size\\ >=\\ 1:\\n\\ \\ ret\\ =\\ (size/10+0.9)\\n\\ else:\\n\\ \\ ret\\ =\\ (size/2+0.5)\\n\\nelse:\\n\\ splitw\\ =\\ size\\\[0\\]\\n\\ splith\\ =\\ size\\\[1\\]\\n\\ if\\ splitw\\ >\\ splith:\\n\\ \\ if\\ splitw\\ >=\\ 1:\\n\\ \\ \\ ret\\ =\\ (splitw/10+0.9)\\n\\ \\ else:\\n\\ \\ \\ ret\\ =\\ (splitw/2+0.5)\\n\\n\\ else:\\n\\ \\ if\\ splith\\ >=\\ 1:\\n\\ \\ \\ ret\\ =\\ (splith/10+0.9)\\n\\ \\ else:\\n\\ \\ \\ ret\\ =\\ (splith/2+0.5)]"}}
+  name Size
+  xpos 943
+  ypos 1841
+ }
+ Grade {
+  white 3
+  gamma 0.7
+  name Default
+  xpos 943
+  ypos 1904
+ }
+ Grade {
+  channels rgba
+  white 1
+  multiply {{parent.tint.r} {parent.tint.g} {parent.tint.b} {parent.tint.a}}
+  name Color
+  xpos 943
+  ypos 1930
+ }
+ Saturation {
+  saturation 0.8
+  name Saturation
+  xpos 943
+  ypos 1956
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels4
+  xpos 943
+  ypos 2034
+ }
+ Dot {
+  name Dot2
+  xpos 977
+  ypos 2104
+ }
+set N389f3c00 [stack 0]
+ Dot {
+  name Dot5
+  xpos 844
+  ypos 2104
+ }
+set N389f3800 [stack 0]
+ Dot {
+  name Dot6
+  xpos 719
+  ypos 2104
+ }
+ Dot {
+  name Dot7
+  xpos 719
+  ypos 2395
+ }
+push $N389f3c00
+ Dot {
+  name Dot1
+  xpos 1127
+  ypos 2104
+ }
+set N389f2c00 [stack 0]
+ Remove {
+  name Remove2
+  xpos 1270
+  ypos 2094
+  disable {{!chromatiqueab}}
+ }
+ Radial {
+  area {0 0 {input.width} {input.height}}
+  name Radial2
+  xpos 1270
+  ypos 2171
+  disable {{!chromatiqueab}}
+ }
+ Invert {
+  channels alpha
+  name Invert2
+  xpos 1270
+  ypos 2197
+  disable {{!chromatiqueab}}
+ }
+ Grade {
+  channels alpha
+  gamma 0.2
+  white_clamp true
+  name Grade2
+  xpos 1270
+  ypos 2235
+  icon -
+  disable {{!chromatiqueab}}
+ }
+set N38a1dc00 [stack 0]
+push $N389f2c00
+ LensDistortion1_0 {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 {{abblue/1000}}
+  filter {{parent.LensDistortion1.filter}}
+  cardScale {1.004133821 1.004133821 1}
+  a -0.001009083702
+  b -0.002115092007
+  c -0.001014227746
+  name LensDistortion2
+  tile_color 0xff00
+  xpos 1093
+  ypos 2169
+  disable {{!chromatiqueab}}
+ }
+ Group {
+  inputs 2
+  name Blur2
+  help "Même utilité que le \"ZDefocus\" mais plus simple d'utilisation et surtout plus rapide.\n\nPour une utilisation souvent suffisante en 2D."
+  tile_color 0xffff
+  xpos 1093
+  ypos 2241
+  disable {{!chromatiqueab}}
+  addUserKnob {20 Controls}
+  addUserKnob {41 channels l "    Input" t "Choisir sur quel channel appliquer l'effet." T Blur11.channels}
+  addUserKnob {7 blur l Size R -100 100}
+  blur {{abblue}}
+ }
+  Input {
+   inputs 0
+   name ctrl_mask
+   xpos 219
+   ypos -195
+   number 1
+  }
+  Dot {
+   name Dot60
+   xpos 253
+   ypos -85
+  }
+set N38a1d000 [stack 0]
+  Dot {
+   name Dot61
+   xpos 468
+   ypos -85
+  }
+set N38a1cc00 [stack 0]
+  Dot {
+   name Dot63
+   xpos 683
+   ypos -85
+  }
+set N38a1c800 [stack 0]
+  Dot {
+   name Dot64
+   xpos 901
+   ypos -85
+  }
+set N38a1c400 [stack 0]
+  Dot {
+   name Dot66
+   xpos 1120
+   ypos -85
+  }
+set N38a1c000 [stack 0]
+  Dot {
+   name Dot68
+   xpos 1340
+   ypos -85
+  }
+set N38565c00 [stack 0]
+  Dot {
+   name Dot72
+   xpos 1550
+   ypos -85
+  }
+  Grade {
+   channels rgba
+   blackpoint 0.7
+   white_clamp true
+   name Grade27
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1516
+   ypos 38
+   icon -
+  }
+  Input {
+   inputs 0
+   name src
+   label rgba
+   xpos -130
+   ypos -211
+  }
+  Dot {
+   name Dot86
+   xpos -96
+   ypos -44
+  }
+set N38564c00 [stack 0]
+  Dot {
+   name Dot73
+   xpos 159
+   ypos -45
+  }
+set N38564800 [stack 0]
+  Dot {
+   name Dot74
+   xpos 377
+   ypos -45
+  }
+set N38564400 [stack 0]
+  Dot {
+   name Dot76
+   xpos 589
+   ypos -45
+  }
+set N38564000 [stack 0]
+  Dot {
+   name Dot77
+   xpos 810
+   ypos -45
+  }
+set N38587c00 [stack 0]
+  Dot {
+   name Dot79
+   xpos 1029
+   ypos -45
+  }
+set N38587800 [stack 0]
+  Dot {
+   name Dot81
+   xpos 1249
+   ypos -45
+  }
+set N38587400 [stack 0]
+  Dot {
+   name Dot85
+   xpos 1459
+   ypos -45
+  }
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*10 i}}
+   name Blur1
+   xpos 1425
+   ypos 38
+  }
+push $N38565c00
+  Grade {
+   channels rgba
+   blackpoint 0.5
+   whitepoint 0.7
+   white_clamp true
+   name Grade31
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1306
+   ypos 37
+   icon -
+  }
+push $N38587400
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*7 i}}
+   name Blur18
+   xpos 1215
+   ypos 36
+  }
+push $N38a1c000
+  Grade {
+   channels rgba
+   blackpoint 0.3
+   whitepoint 0.5
+   white_clamp true
+   name Grade33
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1086
+   ypos 36
+   icon -
+  }
+push $N38587800
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*5 i}}
+   name Blur20
+   xpos 995
+   ypos 37
+  }
+push $N38a1c400
+  Grade {
+   channels rgba
+   blackpoint 0.1
+   whitepoint 0.3
+   white_clamp true
+   name Grade35
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 867
+   ypos 36
+   icon -
+  }
+push $N38587c00
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*3 i}}
+   name Blur22
+   xpos 776
+   ypos 36
+  }
+push $N38a1c800
+  Grade {
+   channels rgba
+   blackpoint 0.05
+   whitepoint 0.1
+   white_clamp true
+   name Grade36
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 649
+   ypos 36
+   icon -
+  }
+push $N38564000
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10 i}}
+   name Blur23
+   xpos 555
+   ypos 36
+  }
+push $N38a1cc00
+  Grade {
+   channels rgba
+   blackpoint 0.025
+   whitepoint 0.05
+   white_clamp true
+   name Grade38
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 434
+   ypos 36
+   icon -
+  }
+push $N38564400
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10/4*2 i}}
+   name Blur25
+   xpos 343
+   ypos 36
+  }
+push $N38a1d000
+  Grade {
+   channels rgba
+   whitepoint 0.025
+   white_clamp true
+   name Grade39
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 219
+   ypos 38
+   icon -
+  }
+push $N38564800
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10/4 i}}
+   name Blur26
+   xpos 125
+   ypos 38
+  }
+push $N38564c00
+  Dot {
+   name Dot88
+   xpos -96
+   ypos 107
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix27
+   xpos 125
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix28
+   xpos 343
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix30
+   xpos 555
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix31
+   xpos 776
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix33
+   xpos 995
+   ypos 99
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix35
+   xpos 1215
+   ypos 99
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix39
+   xpos 1425
+   ypos 100
+  }
+  Output {
+   name Output1
+   xpos 1425
+   ypos 225
+  }
+  Blur {
+   inputs 0
+   channels {-rgba.red -rgba.green rgba.blue none}
+   size {{blur/10/4}}
+   name Blur11
+   xpos -23
+   ypos 38
+  }
+ end_group
+ Dot {
+  name Dot3
+  xpos 1127
+  ypos 2363
+ }
+push $N38a1dc00
+push $N389f3800
+ LensDistortion1_0 {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 {{abred/1000}}
+  cardScale {0.9941686392 0.9941686392 1}
+  a 0.00100507366
+  b 0.003423754824
+  c 0.001622296055
+  name LensDistortion1
+  tile_color 0xff000000
+  xpos 810
+  ypos 2167
+  disable {{!chromatiqueab}}
+ }
+ Group {
+  inputs 2
+  name Blur
+  help "Même utilité que le \"ZDefocus\" mais plus simple d'utilisation et surtout plus rapide.\n\nPour une utilisation souvent suffisante en 2D."
+  tile_color 0xff000000
+  xpos 810
+  ypos 2241
+  disable {{!chromatiqueab}}
+  addUserKnob {20 Controls}
+  addUserKnob {41 channels l "    Input" t "Choisir sur quel channel appliquer l'effet." T Blur11.channels}
+  addUserKnob {7 blur l Size R -100 100}
+  blur {{abred}}
+ }
+  Input {
+   inputs 0
+   name ctrl_mask
+   label a
+   xpos 219
+   ypos -195
+   number 1
+  }
+  Dot {
+   name Dot60
+   xpos 253
+   ypos -85
+  }
+set N38214400 [stack 0]
+  Dot {
+   name Dot61
+   xpos 468
+   ypos -85
+  }
+set N38214000 [stack 0]
+  Dot {
+   name Dot63
+   xpos 683
+   ypos -85
+  }
+set N3824bc00 [stack 0]
+  Dot {
+   name Dot64
+   xpos 901
+   ypos -85
+  }
+set N3824b800 [stack 0]
+  Dot {
+   name Dot66
+   xpos 1120
+   ypos -85
+  }
+set N3824b400 [stack 0]
+  Dot {
+   name Dot68
+   xpos 1340
+   ypos -85
+  }
+set N3824b000 [stack 0]
+  Dot {
+   name Dot72
+   xpos 1550
+   ypos -85
+  }
+  Grade {
+   channels rgba
+   blackpoint 0.7
+   white_clamp true
+   name Grade27
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1516
+   ypos 38
+   icon -
+  }
+  Input {
+   inputs 0
+   name src
+   label rgba
+   xpos -130
+   ypos -211
+  }
+  Dot {
+   name Dot86
+   xpos -96
+   ypos -44
+  }
+set N3824a000 [stack 0]
+  Dot {
+   name Dot73
+   xpos 159
+   ypos -45
+  }
+set N3826bc00 [stack 0]
+  Dot {
+   name Dot74
+   xpos 377
+   ypos -45
+  }
+set N3826b800 [stack 0]
+  Dot {
+   name Dot76
+   xpos 589
+   ypos -45
+  }
+set N3826b400 [stack 0]
+  Dot {
+   name Dot77
+   xpos 810
+   ypos -45
+  }
+set N3826b000 [stack 0]
+  Dot {
+   name Dot79
+   xpos 1029
+   ypos -45
+  }
+set N3826ac00 [stack 0]
+  Dot {
+   name Dot81
+   xpos 1249
+   ypos -45
+  }
+set N3826a800 [stack 0]
+  Dot {
+   name Dot85
+   xpos 1459
+   ypos -45
+  }
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*10 i}}
+   name Blur1
+   xpos 1425
+   ypos 38
+  }
+push $N3824b000
+  Grade {
+   channels rgba
+   blackpoint 0.5
+   whitepoint 0.7
+   white_clamp true
+   name Grade31
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1306
+   ypos 37
+   icon -
+  }
+push $N3826a800
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*7 i}}
+   name Blur18
+   xpos 1215
+   ypos 36
+  }
+push $N3824b400
+  Grade {
+   channels rgba
+   blackpoint 0.3
+   whitepoint 0.5
+   white_clamp true
+   name Grade33
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1086
+   ypos 36
+   icon -
+  }
+push $N3826ac00
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*5 i}}
+   name Blur20
+   xpos 995
+   ypos 37
+  }
+push $N3824b800
+  Grade {
+   channels rgba
+   blackpoint 0.1
+   whitepoint 0.3
+   white_clamp true
+   name Grade35
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 867
+   ypos 36
+   icon -
+  }
+push $N3826b000
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*3 i}}
+   name Blur22
+   xpos 776
+   ypos 36
+  }
+push $N3824bc00
+  Grade {
+   channels rgba
+   blackpoint 0.05
+   whitepoint 0.1
+   white_clamp true
+   name Grade36
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 649
+   ypos 36
+   icon -
+  }
+push $N3826b400
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10 i}}
+   name Blur23
+   xpos 555
+   ypos 36
+  }
+push $N38214000
+  Grade {
+   channels rgba
+   blackpoint 0.025
+   whitepoint 0.05
+   white_clamp true
+   name Grade38
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 434
+   ypos 36
+   icon -
+  }
+push $N3826b800
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10/4*2 i}}
+   name Blur25
+   xpos 343
+   ypos 36
+  }
+push $N38214400
+  Grade {
+   channels rgba
+   whitepoint 0.025
+   white_clamp true
+   name Grade39
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 219
+   ypos 38
+   icon -
+  }
+push $N3826bc00
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10/4 i}}
+   name Blur26
+   xpos 125
+   ypos 38
+  }
+push $N3824a000
+  Dot {
+   name Dot88
+   xpos -96
+   ypos 107
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix27
+   xpos 125
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix28
+   xpos 343
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix30
+   xpos 555
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix31
+   xpos 776
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix33
+   xpos 995
+   ypos 99
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix35
+   xpos 1215
+   ypos 99
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix39
+   xpos 1425
+   ypos 100
+  }
+  Output {
+   name Output1
+   xpos 1425
+   ypos 225
+  }
+  Blur {
+   inputs 0
+   channels {rgba.red -rgba.green -rgba.blue none}
+   size {{blur/10/4}}
+   name Blur11
+   xpos -23
+   ypos 38
+  }
+ end_group
+ Dot {
+  name Dot4
+  xpos 844
+  ypos 2325
+ }
+push $N38a1dc00
+push $N389f3c00
+ LensDistortion1_0 {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 {{abgreen/1000}}
+  filter {{parent.LensDistortion1.filter}}
+  cardScale {0.9988029003 0.9988029003 1}
+  a 0.0002025651338
+  b 0.0007281327853
+  c 0.0003343550488
+  name LensDistortion4
+  tile_color 0xff0000
+  xpos 943
+  ypos 2168
+  disable {{!chromatiqueab}}
+ }
+ Group {
+  inputs 2
+  name Blur1
+  help "Même utilité que le \"ZDefocus\" mais plus simple d'utilisation et surtout plus rapide.\n\nPour une utilisation souvent suffisante en 2D."
+  tile_color 0xff00ff
+  xpos 943
+  ypos 2241
+  disable {{!chromatiqueab}}
+  addUserKnob {20 Controls}
+  addUserKnob {41 channels l "    Input" t "Choisir sur quel channel appliquer l'effet." T Blur11.channels}
+  addUserKnob {7 blur l Size R -100 100}
+  blur {{abgreen}}
+ }
+  Input {
+   inputs 0
+   name ctrl_mask
+   label a
+   xpos 219
+   ypos -195
+   number 1
+  }
+  Dot {
+   name Dot60
+   xpos 253
+   ypos -85
+  }
+set N95f3800 [stack 0]
+  Dot {
+   name Dot61
+   xpos 468
+   ypos -85
+  }
+set N95f3400 [stack 0]
+  Dot {
+   name Dot63
+   xpos 683
+   ypos -85
+  }
+set N95f3000 [stack 0]
+  Dot {
+   name Dot64
+   xpos 901
+   ypos -85
+  }
+set N95f2c00 [stack 0]
+  Dot {
+   name Dot66
+   xpos 1120
+   ypos -85
+  }
+set N95f2800 [stack 0]
+  Dot {
+   name Dot68
+   xpos 1340
+   ypos -85
+  }
+set N95f2400 [stack 0]
+  Dot {
+   name Dot72
+   xpos 1550
+   ypos -85
+  }
+  Grade {
+   channels rgba
+   blackpoint 0.7
+   white_clamp true
+   name Grade27
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1516
+   ypos 38
+   icon -
+  }
+  Input {
+   inputs 0
+   name src
+   label rgba
+   xpos -130
+   ypos -211
+  }
+  Dot {
+   name Dot86
+   xpos -96
+   ypos -44
+  }
+set N960f400 [stack 0]
+  Dot {
+   name Dot73
+   xpos 159
+   ypos -45
+  }
+set N960f000 [stack 0]
+  Dot {
+   name Dot74
+   xpos 377
+   ypos -45
+  }
+set N960ec00 [stack 0]
+  Dot {
+   name Dot76
+   xpos 589
+   ypos -45
+  }
+set N960e800 [stack 0]
+  Dot {
+   name Dot77
+   xpos 810
+   ypos -45
+  }
+set N960e400 [stack 0]
+  Dot {
+   name Dot79
+   xpos 1029
+   ypos -45
+  }
+set N960e000 [stack 0]
+  Dot {
+   name Dot81
+   xpos 1249
+   ypos -45
+  }
+set N962fc00 [stack 0]
+  Dot {
+   name Dot85
+   xpos 1459
+   ypos -45
+  }
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*10 i}}
+   name Blur1
+   xpos 1425
+   ypos 38
+  }
+push $N95f2400
+  Grade {
+   channels rgba
+   blackpoint 0.5
+   whitepoint 0.7
+   white_clamp true
+   name Grade31
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1306
+   ypos 37
+   icon -
+  }
+push $N962fc00
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*7 i}}
+   name Blur18
+   xpos 1215
+   ypos 36
+  }
+push $N95f2800
+  Grade {
+   channels rgba
+   blackpoint 0.3
+   whitepoint 0.5
+   white_clamp true
+   name Grade33
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 1086
+   ypos 36
+   icon -
+  }
+push $N960e000
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*5 i}}
+   name Blur20
+   xpos 995
+   ypos 37
+  }
+push $N95f2c00
+  Grade {
+   channels rgba
+   blackpoint 0.1
+   whitepoint 0.3
+   white_clamp true
+   name Grade35
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 867
+   ypos 36
+   icon -
+  }
+push $N960e400
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10*3 i}}
+   name Blur22
+   xpos 776
+   ypos 36
+  }
+push $N95f3000
+  Grade {
+   channels rgba
+   blackpoint 0.05
+   whitepoint 0.1
+   white_clamp true
+   name Grade36
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 649
+   ypos 36
+   icon -
+  }
+push $N960e800
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10 i}}
+   name Blur23
+   xpos 555
+   ypos 36
+  }
+push $N95f3400
+  Grade {
+   channels rgba
+   blackpoint 0.025
+   whitepoint 0.05
+   white_clamp true
+   name Grade38
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 434
+   ypos 36
+   icon -
+  }
+push $N960ec00
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10/4*2 i}}
+   name Blur25
+   xpos 343
+   ypos 36
+  }
+push $N95f3800
+  Grade {
+   channels rgba
+   whitepoint 0.025
+   white_clamp true
+   name Grade39
+   label "\[if \{\[value reverse]==\"false\"\} \{return \"\[knob this.icon -]\"\} \{return \"\[knob this.icon Reverse]\"\}]\[value icon]"
+   xpos 219
+   ypos 38
+   icon -
+  }
+push $N960f000
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{blur/10/4 i}}
+   name Blur26
+   xpos 125
+   ypos 38
+  }
+push $N960f400
+  Dot {
+   name Dot88
+   xpos -96
+   ypos 107
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix27
+   xpos 125
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix28
+   xpos 343
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix30
+   xpos 555
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix31
+   xpos 776
+   ypos 98
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix33
+   xpos 995
+   ypos 99
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix35
+   xpos 1215
+   ypos 99
+  }
+  Keymix {
+   inputs 3
+   bbox B
+   name Keymix39
+   xpos 1425
+   ypos 100
+  }
+  Output {
+   name Output1
+   xpos 1425
+   ypos 225
+  }
+  Blur {
+   inputs 0
+   channels {-rgba.red rgba.green -rgba.blue none}
+   size {{blur/10/4}}
+   name Blur11
+   xpos -23
+   ypos 38
+  }
+ end_group
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  name Copy1
+  xpos 943
+  ypos 2315
+  disable {{!chromatiqueab}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.blue
+  name Copy4
+  xpos 943
+  ypos 2353
+  disable {{!chromatiqueab}}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 943
+  ypos 2391
+  disable {{!chromatiqueab}}
+ }
+ Dot {
+  name Dot11
+  xpos 977
+  ypos 2587
+ }
+set N96e6c00 [stack 0]
+ Dot {
+  name Dot9
+  xpos 1129
+  ypos 2587
+ }
+ Multiply {
+  channels rgb
+  value {{parent.mix}}
+  name Multiply1
+  xpos 1095
+  ypos 2685
+ }
+push $N38654800
+ Dot {
+  name Dot36
+  xpos 438
+  ypos 2728
+ }
+set N96e6000 [stack 0]
+ Copy {
+  inputs 2
+  channels rgb
+  name Copy2
+  xpos 1095
+  ypos 2711
+ }
+ Dot {
+  name Dot10
+  xpos 1129
+  ypos 2880
+ }
+push $N96e6c00
+push $N96e6000
+ Dot {
+  name Dot12
+  xpos 438
+  ypos 2768
+ }
+ Merge2 {
+  inputs 2
+  operation {{"group.screen == true ?25:24"}}
+  Achannels rgb
+  maskChannelMask -rgba.alpha
+  mix {{parent.mix}}
+  name Merge7
+  xpos 943
+  ypos 2764
+ }
+ Switch {
+  inputs 2
+  which {{parent.fxonly}}
+  name Switch2
+  xpos 943
+  ypos 2876
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name Switch3
+  xpos 943
+  ypos 2978
+ }
+ Output {
+  name FranklinVfx
+  xpos 943
+  ypos 3090
+ }
+ Blur {
+  inputs 0
+  channels rgb
+  size {{1*parent.size} {1*parent.size}}
+  crop false
+  name blur_1
+  xpos 833
+  ypos 1138
+  hide_input true
+ }
+end_group

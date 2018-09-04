@@ -13,7 +13,7 @@ except:
 
 #---------------------------------------------
 
-from menu import path
+from MMP import path
 
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './icons/nodes');

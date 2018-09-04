@@ -4,7 +4,7 @@ import nukescripts.rollingAutoSave
 import os.path as op
 
 # Add Directory 
-from menu import path
+from MMP import path
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './icons/nodes');
 nuke.pluginAddPath(path + './icons/grapichs');
@@ -34,7 +34,7 @@ last3_propertie = 'shift+v'        # keep only the 3 last properties open (close
 #--------------------------------------------------------------------------------------------
 shuffle = 'alt+k'                  # create a Shuffle node
 merge = 'm'                        # create a Merge node
-keymix = 'shift+k'                   # create a Keymix node
+keymix = 'shift+k'                 # create a Keymix node
 multiply = 'shift+m'               # create a Multiply node
 erode = 'e'                        # create a Erode (filter) node
 tracker = 'alt+t'                  # create a Tracker node

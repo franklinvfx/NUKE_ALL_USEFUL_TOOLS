@@ -10,9 +10,9 @@ path = 'C:\\Users\\frank\\Google Drive\\F_Pipe'
 
 nuke.pluginAddPath(path);              # F_Pipe folder path
 
-#import callbacksTrace                  # show all callbacks
+#import callbacksTrace                 # show all callbacks
 
-import CGEV_Tools                      # CGEV gizmos
+import C_Tools                         # C gizmos
 import F_Tools, F_Panels, F_Hub        # gizmos / panels / menu
 
 import Dots, mirrorNodes               # import now               (link to F_Hub)

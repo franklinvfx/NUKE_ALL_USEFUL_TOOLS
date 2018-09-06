@@ -1,6 +1,6 @@
 import nuke
 
-from MMP import path
+from Global_menu import path
 
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './Gizmos');

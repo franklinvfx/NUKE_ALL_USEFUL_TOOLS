@@ -4,7 +4,8 @@ import nukescripts.rollingAutoSave
 import os.path as op
 
 # Add Directory 
-from MMP import path
+from Global_menu import path
+
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './icons/nodes');
 nuke.pluginAddPath(path + './icons/grapichs');

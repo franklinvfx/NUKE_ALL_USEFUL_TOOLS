@@ -13,7 +13,7 @@ except:
 
 #---------------------------------------------
 
-from MMP import path
+from Global_menu import path
 
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './icons/nodes');
@@ -148,7 +148,7 @@ F_menu.addCommand( 'Other/Setup/Preserve Bbox', "nuke.createNode(\"Preserve_bbox
 nuke.toolbar("Nodes").addMenu("Franklin").addSeparator()
 #_____________________________________________________________
 
-F_menu.addCommand("Reload F. Tools", "F_Tools.reloadMenu()",  icon="F_reload.png")
+F_menu.addCommand("Reload F. Tools", 'import Reload as Reload; Reload.reloadMenu()',  icon="F_reload.png")
 #_____________________________________________________________
 
 
@@ -206,34 +206,3 @@ m = v.addMenu("IP")
 
 m.addCommand('IP List','nuke.load("viewerInputNodes"), viewerInput()', "Ctrl+Alt+i",  icon="F_ip.png") 
 m.addCommand('IP Remove','nuke.load("viewerInputNodes"), viewerInput(ipNode="Remove")', "Ctrl+Alt+Shift+i",  icon="F_ipr.png")
-
-
-##########################################################################################################################################
-##########################################################################################################################################
-#######                                                      #############################################################################
-#######              RELOAD MENU SCRIPT                      #############################################################################
-#######                                                      #############################################################################
-##########################################################################################################################################
-##########################################################################################################################################
-
-
-def reloadMenu():
-    #tell nuke to import stuff
-    import os
-    import menu
-    import F_Tools
-    import platform
-
-    #delete the menu.pyc file if it exits
-    if os.path.isfile(path):
-        os.remove(path)
-
-    #reload the menu.py file
-    reload(F_Tools)
-    from F_Tools import *
-
-    #delete the just created menu.pyc file
-    if os.path.isfile(path):
-        os.remove(path)
-
-    nuke.message('F. Tools has been reloaded')

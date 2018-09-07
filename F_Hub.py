@@ -76,49 +76,86 @@ m = menubar.addMenu("&Franklin VFX",  "franklin.png")           ########    #   
 ########################################################################    #   #  #####  #  ##  #####         # 
 
 m.addMenu('Node Graph', "F_node.png")    # Dossier 
-m.addCommand('Node Graph/Scale Tool', JFX_nodeScaler.ScaleNodes, sc_nodes, "F_nodetools.png") #######################################################################################
-m.addCommand('Node Graph/Mirror', 'mirrorNodes.mirrorNodes( nuke.selectedNodes(), direction="x" )', mir_nodes, "F_mirror.png") #######################################################################################
+m.addCommand('Node Graph/Scale Tool', JFX_nodeScaler.ScaleNodes, sc_nodes, "F_nodetools.png")                                        #######################################################################################
+m.addCommand('Node Graph/Mirror', 'mirrorNodes.mirrorNodes( nuke.selectedNodes(), direction="x" )', mir_nodes, "F_mirror.png")       #######################################################################################
 m.addMenu("Node Graph").addSeparator()   #######
-m.addCommand('Node Graph/Dots','Dots.Dots()', do_nodes, "Dot.png") #######################################################################################
+m.addCommand('Node Graph/Dots','Dots.Dots()', do_nodes, "Dot.png")                                                                   #######################################################################################
 m.addMenu("Node Graph").addSeparator()   #######
 m.addMenu('Node Graph/Customize', "F_customnode.png")    # Dossier 
-
-m.addMenu('Node Graph/Customize/Color', "F_ccolornode.png")   # Dossier  
-m.addCommand("Node Graph/Customize/Color/Red", lambda: batchTileColor(4278190335), red_nodes, 'F_rn.png', shortcutContext=2)
-m.addCommand("Node Graph/Customize/Color/Green", lambda: batchTileColor(16711935), green_nodes, 'F_gn.png', shortcutContext=2)
-m.addCommand("Node Graph/Customize/Color/Blue", lambda: batchTileColor(65535), blue_nodes, 'F_bn.png', shortcutContext=2)
-m.addCommand("Node Graph/Customize/Color/Cyan", lambda: batchTileColor(16777215), cyan_nodes, 'F_cn.png', shortcutContext=2)
-m.addCommand("Node Graph/Customize/Color/Magenta", lambda: batchTileColor(4278255615), magenta_nodes, 'F_mn.png', shortcutContext=2)
-m.addCommand("Node Graph/Customize/Color/Yellow", lambda: batchTileColor(4294902015), yellow_nodes, 'F_yn.png', shortcutContext=2)
-m.addMenu("Node Graph/Customize/Color").addSeparator()   #######
-m.addCommand("Node Graph/Customize/Color/Custom", lambda: batchTileColor(), customcolor_nodes, 'F_ccolornode.png', shortcutContext=2)
-
-####
-m.addMenu('Node Graph/Customize/Advance', "F_nodeadvance.png")    # Dossier  
-m.addCommand("Node Graph/Customize/Advance/Outline", "F_Hub.icongreen()", outline_ico, 'F_outlineon.png', shortcutContext=2)
-m.addCommand("Node Graph/Customize/Advance/Topline", "F_Hub.iconline()", topline_ico, 'F_toplineon.png', shortcutContext=2)
-m.addCommand("Node Graph/Customize/Advance/Grey", "F_Hub.icongrey()", grey_ico, "")
-m.addCommand("Node Graph/Customize/Advance/Zebra", "F_Hub.iconzebrar()", zebra_ico, 'F_zebraon.png', shortcutContext=2)
-m.addCommand("Node Graph/Customize/Advance/Mark", "F_Hub.iconcroixb()", check_ico, 'F_markon.png', shortcutContext=2)
-m.addCommand("Node Graph/Customize/Advance/Arrow", "F_Hub.iconarrow()", arrow_ico, 'F_arrowon.png', shortcutContext=2)
-m.addMenu("Node Graph/Customize/Advance").addSeparator()   #######
-#### 
-m.addMenu('Node Graph/Customize/Advance/More', "F_scalep.png")    # Dossier   
-m.addCommand("Node Graph/Customize/Advance/More/On Left", "F_Hub.fdoticon()", custom_ico, 'F_fon.png', shortcutContext=2)
-m.addCommand("Node Graph/Customize/Advance/More/On Right", "F_Hub.ficon()", 'F_fon.png')
-m.addMenu("Node Graph/Customize/Advance").addSeparator()     #######
-m.addCommand("Node Graph/Customize/Advance/Remove", "F_Hub.noicon()", "F_scalem.png")
-####
-m.addMenu("Node Graph/Customize/Font", "F_text.png")    # Dossier  
-m.addCommand("Node Graph/Customize/Font/Increase Size", "F_Hub.changeNodeFontSize(4)", upscale_name, "F_scalep.png", shortcutContext=2)
-m.addCommand("Node Graph/Customize/Font/Decrease Size", "F_Hub.changeNodeFontSize(-4)", downscale_name, "F_scalem.png", shortcutContext=2)
-m.addCommand("Node Graph/Customize/Font/-", "", "")
-m.addCommand("Node Graph/Customize/Font/To Black", "F_Hub.textToBlack()", nodefont_black, "F_textb.png", shortcutContext=2)
-m.addCommand("Node Graph/Customize/Font/-", "", "")
-m.addCommand("Node Graph/Customize/Font/To Red", "F_Hub.textToRed()", nodefont_red, "F_textr.png", shortcutContext=2)
-m.addCommand("Node Graph/Customize/Font/Select all Red", "F_Hub.selectRedTextNodes()")
-m.addCommand("Node Graph/Customize/Font/-", "", "")
-m.addCommand("Node Graph/Customize/Font/To White", "F_Hub.textToWhite()", nodefont_white, "F_textw.png", shortcutContext=2)
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+try:   # > Nuke 7
+	m.addMenu('Node Graph/Customize/Color', "F_ccolornode.png")   # Dossier  
+	m.addCommand("Node Graph/Customize/Color/Red", lambda: batchTileColor(4278190335), red_nodes, 'F_rn.png', shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Color/Green", lambda: batchTileColor(16711935), green_nodes, 'F_gn.png', shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Color/Blue", lambda: batchTileColor(65535), blue_nodes, 'F_bn.png', shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Color/Cyan", lambda: batchTileColor(16777215), cyan_nodes, 'F_cn.png', shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Color/Magenta", lambda: batchTileColor(4278255615), magenta_nodes, 'F_mn.png', shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Color/Yellow", lambda: batchTileColor(4294902015), yellow_nodes, 'F_yn.png', shortcutContext=2)
+	m.addMenu("Node Graph/Customize/Color").addSeparator()   #######
+	m.addCommand("Node Graph/Customize/Color/Custom", lambda: batchTileColor(), customcolor_nodes, 'F_ccolornode.png', shortcutContext=2)
+	####
+	m.addMenu('Node Graph/Customize/Advance', "F_nodeadvance.png")    # Dossier  
+	m.addCommand("Node Graph/Customize/Advance/Outline", "F_Hub.icongreen()", outline_ico, 'F_outlineon.png', shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Advance/Topline", "F_Hub.iconline()", topline_ico, 'F_toplineon.png', shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Advance/Grey", "F_Hub.icongrey()", grey_ico, "")
+	m.addCommand("Node Graph/Customize/Advance/Zebra", "F_Hub.iconzebrar()", zebra_ico, 'F_zebraon.png', shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Advance/Mark", "F_Hub.iconcroixb()", check_ico, 'F_markon.png', shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Advance/Arrow", "F_Hub.iconarrow()", arrow_ico, 'F_arrowon.png', shortcutContext=2)
+	m.addMenu("Node Graph/Customize/Advance").addSeparator()   #######
+	#### 
+	m.addMenu('Node Graph/Customize/Advance/More', "F_scalep.png")    # Dossier   
+	m.addCommand("Node Graph/Customize/Advance/More/On Left", "F_Hub.fdoticon()", custom_ico, 'F_fon.png', shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Advance/More/On Right", "F_Hub.ficon()", 'F_fon.png')
+	m.addMenu("Node Graph/Customize/Advance").addSeparator()     #######
+	m.addCommand("Node Graph/Customize/Advance/Remove", "F_Hub.noicon()", "F_scalem.png")
+	####
+	m.addMenu("Node Graph/Customize/Font", "F_text.png")    # Dossier  
+	m.addCommand("Node Graph/Customize/Font/Increase Size", "F_Hub.changeNodeFontSize(4)", upscale_name, "F_scalep.png", shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Font/Decrease Size", "F_Hub.changeNodeFontSize(-4)", downscale_name, "F_scalem.png", shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Font/-", "", "")
+	m.addCommand("Node Graph/Customize/Font/To Black", "F_Hub.textToBlack()", nodefont_black, "F_textb.png", shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Font/-", "", "")
+	m.addCommand("Node Graph/Customize/Font/To Red", "F_Hub.textToRed()", nodefont_red, "F_textr.png", shortcutContext=2)
+	m.addCommand("Node Graph/Customize/Font/Select all Red", "F_Hub.selectRedTextNodes()")
+	m.addCommand("Node Graph/Customize/Font/-", "", "")
+	m.addCommand("Node Graph/Customize/Font/To White", "F_Hub.textToWhite()", nodefont_white, "F_textw.png", shortcutContext=2)
+except:   # < Nuke 7
+	m.addMenu('Node Graph/Customize/Color', "F_ccolornode.png")   # Dossier  
+	m.addCommand("Node Graph/Customize/Color/Red", lambda: batchTileColor(4278190335), red_nodes, 'F_rn.png')
+	m.addCommand("Node Graph/Customize/Color/Green", lambda: batchTileColor(16711935), green_nodes, 'F_gn.png')
+	m.addCommand("Node Graph/Customize/Color/Blue", lambda: batchTileColor(65535), blue_nodes, 'F_bn.png')
+	m.addCommand("Node Graph/Customize/Color/Cyan", lambda: batchTileColor(16777215), cyan_nodes, 'F_cn.png')
+	m.addCommand("Node Graph/Customize/Color/Magenta", lambda: batchTileColor(4278255615), magenta_nodes, 'F_mn.png')
+	m.addCommand("Node Graph/Customize/Color/Yellow", lambda: batchTileColor(4294902015), yellow_nodes, 'F_yn.png')
+	m.addMenu("Node Graph/Customize/Color").addSeparator()   #######
+	m.addCommand("Node Graph/Customize/Color/Custom", lambda: batchTileColor(), customcolor_nodes, 'F_ccolornode.png')
+	####
+	m.addMenu('Node Graph/Customize/Advance', "F_nodeadvance.png")    # Dossier  
+	m.addCommand("Node Graph/Customize/Advance/Outline", "F_Hub.icongreen()", outline_ico, 'F_outlineon.png')
+	m.addCommand("Node Graph/Customize/Advance/Topline", "F_Hub.iconline()", topline_ico, 'F_toplineon.png')
+	m.addCommand("Node Graph/Customize/Advance/Grey", "F_Hub.icongrey()", grey_ico, "")
+	m.addCommand("Node Graph/Customize/Advance/Zebra", "F_Hub.iconzebrar()", zebra_ico, 'F_zebraon.png')
+	m.addCommand("Node Graph/Customize/Advance/Mark", "F_Hub.iconcroixb()", check_ico, 'F_markon.png')
+	m.addCommand("Node Graph/Customize/Advance/Arrow", "F_Hub.iconarrow()", arrow_ico, 'F_arrowon.png')
+	m.addMenu("Node Graph/Customize/Advance").addSeparator()   #######
+	#### 
+	m.addMenu('Node Graph/Customize/Advance/More', "F_scalep.png")    # Dossier   
+	m.addCommand("Node Graph/Customize/Advance/More/On Left", "F_Hub.fdoticon()", custom_ico, 'F_fon.png')
+	m.addCommand("Node Graph/Customize/Advance/More/On Right", "F_Hub.ficon()", 'F_fon.png')
+	m.addMenu("Node Graph/Customize/Advance").addSeparator()     #######
+	m.addCommand("Node Graph/Customize/Advance/Remove", "F_Hub.noicon()", "F_scalem.png")
+	####
+	m.addMenu("Node Graph/Customize/Font", "F_text.png")    # Dossier  
+	m.addCommand("Node Graph/Customize/Font/Increase Size", "F_Hub.changeNodeFontSize(4)", upscale_name, "F_scalep.png")
+	m.addCommand("Node Graph/Customize/Font/Decrease Size", "F_Hub.changeNodeFontSize(-4)", downscale_name, "F_scalem.png")
+	m.addCommand("Node Graph/Customize/Font/-", "", "")
+	m.addCommand("Node Graph/Customize/Font/To Black", "F_Hub.textToBlack()", nodefont_black, "F_textb.png")
+	m.addCommand("Node Graph/Customize/Font/-", "", "")
+	m.addCommand("Node Graph/Customize/Font/To Red", "F_Hub.textToRed()", nodefont_red, "F_textr.png")
+	m.addCommand("Node Graph/Customize/Font/Select all Red", "F_Hub.selectRedTextNodes()")
+	m.addCommand("Node Graph/Customize/Font/-", "", "")
+	m.addCommand("Node Graph/Customize/Font/To White", "F_Hub.textToWhite()", nodefont_white, "F_textw.png")
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 m.addCommand("Node Graph/Customize/Font/Select all White", "F_Hub.selectWhiteTextNodes()")
 #######################################################################################
 m.addMenu("Properties Pane", "F_prop.png")   # Dossier 
@@ -127,7 +164,7 @@ m.addCommand("Properties Pane/Keep 3 Last", "F_Hub.ClosePropertiesButLast(3)", l
 #######################################################################################
 m.addMenu('Viewer', "F_viewer.png")
 m.addMenu("Viewer/Input Process", "F_ip.png")   # Dossier 
-m.addCommand('Viewer/Input Process/Create','nuke.load("viewerInputNodes"), viewerInput()', "Ctrl+Alt+i", "F_list.png") #######################################################################################
+m.addCommand('Viewer/Input Process/Create','nuke.load("viewerInputNodes"), viewerInput()', "Ctrl+Alt+i", "F_list.png")               #######################################################################################
 m.addCommand('Viewer/Input Process/Remove','nuke.load("viewerInputNodes"), viewerInput(ipNode="Remove")', "Ctrl+Alt+Shift+i", "F_delete.png") #######################################################################################
 m.addMenu("Viewer").addSeparator()   #######
 ####
@@ -154,8 +191,13 @@ m.addSeparator()
 m.addMenu("Read - Write", "F_explorer.png")
 m.addMenu('Read - Write/Read',  'F_read.png') # Dossier #######
 m.addCommand("Read - Write/Read/Set Project From Read", "F_Hub.setProjectBoundsFromRead()",  'F_set.png')
-m.addCommand('Read - Write/Read/Open Read in Explorer','F_Hub.Revealexplr()', explorer,  'F_explore.png', shortcutContext=2)
-m.addCommand('Read - Write/Read/Rename Tool', 'import batchrenamer; batchrenamer.main()',  'F_superswap.png') #######################################################################################
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+try:   # > Nuke 7
+	m.addCommand('Read - Write/Read/Open Read in Explorer','F_Hub.Revealexplr()', explorer,  'F_explore.png', shortcutContext=2)
+except:   # < Nuke 7
+	m.addCommand('Read - Write/Read/Open Read in Explorer','F_Hub.Revealexplr()', explorer,  'F_explore.png')
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+m.addCommand('Read - Write/Read/Rename Tool', 'import batchrenamer; batchrenamer.main()',  'F_superswap.png')                        #######################################################################################
 ####
 m.addMenu('Read - Write/Read All',  'F_read.png') # Dossier #######
 m.addCommand('Read - Write/Read All/Reload All', 'F_Hub.readReload()',  'F_reload.png')
@@ -181,26 +223,42 @@ m.addCommand('Knobs/Set Expression', 'F_Hub.setExpression()',  "F_sete.png")
 #######################################################################################
 m.addSeparator()
 #import breakoutLayers
-import shuffleChannels
-import multiChannelSplit
-m.addCommand('Break Out v2', multiChannelSplit.MultiChannelSplit) #######################################################################################
-m.addCommand('Break Out', shuffleChannels.getData, '') #######################################################################################
+#import shuffleChannels
+#import multiChannelSplit
+m.addCommand('Break Out v2','nuke.load("multiChannelSplit"), multiChannelSplit.MultiChannelSplit')                                   #######################################################################################
+m.addCommand('Break Out','nuke.load("shuffleChannels"), shuffleChannels.getData', '')                                                #######################################################################################
 m.addCommand('Backdrop Re-Order UPDATE', 'F_Hub.reArrangeBDsByArea()', 'Ctrl+Alt+b')
-m.addCommand('Roto To Track', rotoToTrack.Roto_to_Trackers) #######################################################################################
+m.addCommand('Roto To Track', rotoToTrack.Roto_to_Trackers)                                                                          #######################################################################################
 #######################################################################################
 m.addSeparator()
-m.addMenu('Additional Shortcuts', "F_short.png")   # Dossier 
-m.addCommand('Additional Shortcuts/Shuffle', "nuke.createNode( \'Shuffle\' )", shuffle, "Shuffle.png", shortcutContext=2)
-m.addCommand('Additional Shortcuts/Merge      Smart', 'F_Hub.mergeThis()', merge, "F_merge.png", shortcutContext=2)
-m.addCommand('Additional Shortcuts/KeyMix', "nuke.createNode( \'Keymix\' )", keymix, "Keymix.png", shortcutContext=2)
-m.addMenu("Additional Shortcuts").addSeparator()   #######
-m.addCommand('Additional Shortcuts/Multiply', "nuke.createNode( \'Multiply\' )", multiply, "ColorMult.png", shortcutContext=2)
-m.addCommand('Additional Shortcuts/FilterErode', "nuke.createNode( \'FilterErode\' )", erode, "FilterErode.png", shortcutContext=2)
-m.addCommand("Additional Shortcuts/Tracker", "nuke.createNode(\"Tracker4\")", tracker, "Tracker.png", shortcutContext=2)
-m.addCommand('Additional Shortcuts/Transform  Smart', 'F_Hub.transformThis()', transform, "F_transformg.png", shortcutContext=2)
-m.addMenu("Additional Shortcuts").addSeparator()   #######
-m.addCommand("Additional Shortcuts/Duplicate", "F_Hub.copyKeepInputs(nuke.selectedNodes())", duplicate_node, "F_duplicate.png", shortcutContext=2)
-m.addCommand("Additional Shortcuts/Super Swap", 'import superSwap as superSwap; superSwap.swapper()', swap, "F_superswap.png", shortcutContext=2) #######################################################################################
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+try:   # > Nuke 7
+	m.addMenu('Additional Shortcuts', "F_short.png")   # Dossier 
+	m.addCommand('Additional Shortcuts/Shuffle', "nuke.createNode( \'Shuffle\' )", shuffle, "Shuffle.png", shortcutContext=2)
+	m.addCommand('Additional Shortcuts/Merge      Smart', 'F_Hub.mergeThis()', merge, "F_merge.png", shortcutContext=2)
+	m.addCommand('Additional Shortcuts/KeyMix', "nuke.createNode( \'Keymix\' )", keymix, "Keymix.png", shortcutContext=2)
+	m.addMenu("Additional Shortcuts").addSeparator()   #######
+	m.addCommand('Additional Shortcuts/Multiply', "nuke.createNode( \'Multiply\' )", multiply, "ColorMult.png", shortcutContext=2)
+	m.addCommand('Additional Shortcuts/FilterErode', "nuke.createNode( \'FilterErode\' )", erode, "FilterErode.png", shortcutContext=2)
+	m.addCommand("Additional Shortcuts/Tracker", "nuke.createNode(\"Tracker4\")", tracker, "Tracker.png", shortcutContext=2)
+	m.addCommand('Additional Shortcuts/Transform  Smart', 'F_Hub.transformThis()', transform, "F_transformg.png", shortcutContext=2)
+	m.addMenu("Additional Shortcuts").addSeparator()   #######
+	m.addCommand("Additional Shortcuts/Duplicate", "F_Hub.copyKeepInputs(nuke.selectedNodes())", duplicate_node, "F_duplicate.png", shortcutContext=2)
+	m.addCommand("Additional Shortcuts/Super Swap", 'import superSwap as superSwap; superSwap.swapper()', swap, "F_superswap.png", shortcutContext=2)  #######################################################################################
+except:   # < Nuke 7
+	m.addMenu('Additional Shortcuts', "F_short.png")   # Dossier 
+	m.addCommand('Additional Shortcuts/Shuffle', "nuke.createNode( \'Shuffle\' )", shuffle, "Shuffle.png")
+	m.addCommand('Additional Shortcuts/Merge      Smart', 'F_Hub.mergeThis()', merge, "F_merge.png")
+	m.addCommand('Additional Shortcuts/KeyMix', "nuke.createNode( \'Keymix\' )", keymix, "Keymix.png")
+	m.addMenu("Additional Shortcuts").addSeparator()   #######
+	m.addCommand('Additional Shortcuts/Multiply', "nuke.createNode( \'Multiply\' )", multiply, "ColorMult.png")
+	m.addCommand('Additional Shortcuts/FilterErode', "nuke.createNode( \'FilterErode\' )", erode, "FilterErode.png")
+	m.addCommand("Additional Shortcuts/Tracker", "nuke.createNode(\"Tracker4\")", tracker, "Tracker.png")
+	m.addCommand('Additional Shortcuts/Transform  Smart', 'F_Hub.transformThis()', transform, "F_transformg.png")
+	m.addMenu("Additional Shortcuts").addSeparator()   #######
+	m.addCommand("Additional Shortcuts/Duplicate", "F_Hub.copyKeepInputs(nuke.selectedNodes())", duplicate_node, "F_duplicate.png")
+	m.addCommand("Additional Shortcuts/Super Swap", 'import superSwap as superSwap; superSwap.swapper()', swap, "F_superswap.png")   #######################################################################################
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #######################################################################################
 #m.addSeparator()
 #m.addCommand("My Web Site !", "F_Hub.infos()",  "F_markg.png")

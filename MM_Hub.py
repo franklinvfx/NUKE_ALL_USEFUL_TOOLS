@@ -47,39 +47,8 @@ if os.path.exists(dirName):
 m.addSeparator()
 m.addCommand("Reload   ", "Reload.reloadMenu()", icon="MM.png")
 
-#------------------------------------------------------------------------------------------
-'''
-try:
-    def reloadMenu():
-        #tell nuke to import stuff
-        import os
-        import menu
-        import MM_Config
-        import platform
 
-        if platform.system() == "Darwin":
-            menuPath = '/Network/phatt/MMP/NUKE'
-            
-        elif platform.system() == "Windows":
-            menuPath = 'Y:\\MMP\\NUKE'
 
-        menuPath = path
-        #delete the menu.pyc file if it exits
-        if os.path.isfile(menuPath):
-            os.remove(menuPath)
 
-        #reload the menu.py file
-        reload(MM_Config)
-        from MM_Config import *
-
-        #delete the just created menu.pyc file
-        if os.path.isfile(menuPath):
-            os.remove(menuPath)
-
-        nuke.message('MachineMolle menu has been reloaded')
-except:
-    pass
-
-'''
 print '- Machine Molle Hub ............. OK'
 ##############################           #

@@ -113,5 +113,5 @@ C_menu.addCommand( 'Other/Effect/Caustic', "nuke.createNode(\"Caustic\")" , icon
 C_menu.addCommand( 'Other/Effect/Lightning', "nuke.createNode(\"Lightning\")" , icon="Lightning.png")
 C_menu.addCommand( 'Other/Effect/Rain', "nuke.createNode(\"Rain\")" , icon="Rain.png")
 
-print '- CGEV Tools .................... OK'
+print '- CGEV Tools .................... OK\n'
 ##############################           #

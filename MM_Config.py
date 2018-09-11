@@ -1,15 +1,32 @@
-import nuke, nukescripts, sys, os, platform
-
+import nuke
 from menu import path
 
-# Add Directory 
+
+#-----------------------------------------------------------------------------------------------------------------
+# ADD STARTING PRINT
+#-----------------------------------------------------------------------------------------------------------------
+info = '\n          _________________________\n         |      Machine Molle      |\n         |        Franklin         |\n         |________  2018  _________|\n\n'
+nuke.tprint(info)
+
+         #  _________________________
+         # |      Machine Molle      |
+         # |        Franklin         |
+         # |________  2018  _________|
+
+
+
+#-----------------------------------------------------------------------------------------------------------------
+# ADD PATH
+#-----------------------------------------------------------------------------------------------------------------
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './icons/nodes');
 nuke.pluginAddPath(path + './Python');
 nuke.pluginAddPath(path + './Python/More');
+nuke.pluginAddPath(path + './Python/NodeTable');
 nuke.pluginAddPath(path + './Gizmos');
 nuke.pluginAddPath(path + './Gizmos/Franklin');
 nuke.pluginAddPath(path + './Gizmos/C');
+nuke.pluginAddPath(path + './Gizmos/pixelfudger');
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -24,9 +41,10 @@ import MM_Preset
 #-----------------------------------------------------------------------------------------------------------------
 # IMPORT FRANKLIN PIPE
 #-----------------------------------------------------------------------------------------------------------------
-import F_Tools
-import F_Panels
-# import F_Hub
+nuke.load("F_Hub")
+nuke.load("F_Tools")
+nuke.load("F_Panels")
+nuke.load("F_Scripts")
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -36,30 +54,6 @@ import C_Tools                         # C gizmos
 
 
 
-#-----------------------------------------------------------------------------------------------------------------
-# IMPORT SCRIPTS
-#-----------------------------------------------------------------------------------------------------------------
-import Dots, mirrorNodes               # import now               (link to F_Hub)
-
-try:      # > Nuke 7
-	import W_hotbox, W_hotboxManager   # '<'
-except:   # < Nuke 6
-	nuke.error(' W_hotbox has not been load!\n                   - Maybe the Nuke version is to old\n')
-	pass
-
-import knob_scripter                   # 'Alt + z'
-import channel_hotbox                  # 'racine carre'           (link to F_Tools)
-import autoBackdrop as autoBackdrop    # 'Alt + b'                (link to F_Tools)
-
-
-
-
-#-----------------------------------------------------------------------------------------------------------------
-#DEBUG OPTIONS
-#-----------------------------------------------------------------------------------------------------------------
-# import callbacksTrace                 # show all callbacks
-
-
-
-
-print 'LOADING TOOLS FROM PATH: ' + path
+print '- Pipe Directory:  ' + path
+print '- Pipe Version: ................. 1.01\n'
+##############################           #

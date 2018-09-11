@@ -85,6 +85,19 @@ def addSRPanel():
 nuke.menu('Pane').addCommand('Search Replace', addSRPanel,  icon="F_superswap.png")
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
 
+#------------------------------
 
-print '- Franklin Panels ............... OK'
+from nukescripts import panels
+def get_node_table_widget():
+    from NodeTable import view as node_table_view
+    return node_table_view.NodeTableWidget(nuke.selectedNodes())
+
+panels.registerWidgetAsPanel('get_node_table_widget', 'Node Spreadsheet','de.filmkorn.NodeSpreadsheet', False)
+
+
+
+
+
+
+print '- Franklin Panels ............... OK\n'
 ##############################           #

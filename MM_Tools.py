@@ -1,16 +1,11 @@
-import nuke, sys
+import nuke
 
-
-import pixelfudger
-
-#print 'Loading Lab Tools...'
 menubar = nuke.menu("Nuke")
  
-# Custom Lab Tools
+
 toolbar = nuke.toolbar("Nodes")
+
 m = toolbar.addMenu("GIZMO", icon="icon.png")
-
-
 m.addCommand("Dugrain2", "nuke.createNode(\"Dugrain2.gizmo\")", icon="icon.png")
 m.addCommand("DespillMadness", "nuke.createNode(\"DespillMadness.gizmo\")", icon="key.png")
 m.addCommand("PushPixel", "nuke.createNode(\"PushPixel.gizmo\")", icon="key.png")
@@ -38,7 +33,7 @@ m.addCommand("CardToTrack", "nuke.createNode(\"CardToTrack.gizmo\")", icon="my.p
 
 
 #-------------------------------------------------------------------------------------------------------------------
-#GONZO TOOLS
+# GONZO TOOLS
 #------------------------------------------------------------------------------------------------------
 gonzoToolBar = nuke.menu("Nodes").addMenu("Gonzo_Tools", icon = "gonzoicon24.png")
 gonzoToolBar.addCommand("Filters/G_FineEdgeDetect", 'nuke.createNode("G_FineEdgeDetect")')
@@ -52,36 +47,27 @@ gonzoToolBar.addCommand("CC/G_WrappersDelight", 'nuke.createNode("G_WrappersDeli
 gonzoToolBar.addCommand("Filters/G_Sharpen", 'nuke.createNode("G_Sharpen")')
 
 
-#-----------------------------------------------------------------------------------------------------------------
-#3DE Tools
-#-----------------------------------------------------------------------------------------------------------------
-nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Standard_Degree_4", "nuke.createNode('LD_3DE4_Anamorphic_Standard_Degree_4')")
-nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Rescaled_Degree_4", "nuke.createNode('LD_3DE4_Anamorphic_Rescaled_Degree_4')")
-nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Degree_6", "nuke.createNode('LD_3DE4_Anamorphic_Degree_6')")
-nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Standard_Degree_4", "nuke.createNode('LD_3DE4_Radial_Standard_Degree_4')")
-nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Fisheye_Degree_8", "nuke.createNode('LD_3DE4_Radial_Fisheye_Degree_8')")
-nuke.menu("Nodes").addCommand("3DE4/LD_3DE_Classic_LD_Model", "nuke.createNode('LD_3DE_Classic_LD_Model')")
-
-
 
 #-----------------------------------------------------------------------------------------------------------------
-# Zync client-app generated config start
+# 3DE Tools
 #-----------------------------------------------------------------------------------------------------------------
-import nuke
-nuke.pluginAddPath('C:\\Users\\winuser6\\AppData\\Roaming\\Zync\\plugins\\zync-nuke')
-
-try:      # If Zync is installed
-	import zync_nuke
-	menubar = nuke.menu('Nuke')
-	menu = menubar.addMenu('&Render')
-	menu.addCommand('Render on ZYNC', 'zync_nuke.submit_dialog()')
-	print '- Zync .......................... OK'
+try:      # 3DE Exist
+	nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Standard_Degree_4", "nuke.createNode('LD_3DE4_Anamorphic_Standard_Degree_4')")
+	nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Rescaled_Degree_4", "nuke.createNode('LD_3DE4_Anamorphic_Rescaled_Degree_4')")
+	nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Degree_6", "nuke.createNode('LD_3DE4_Anamorphic_Degree_6')")
+	nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Standard_Degree_4", "nuke.createNode('LD_3DE4_Radial_Standard_Degree_4')")
+	nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Fisheye_Degree_8", "nuke.createNode('LD_3DE4_Radial_Fisheye_Degree_8')")
+	nuke.menu("Nodes").addCommand("3DE4/LD_3DE_Classic_LD_Model", "nuke.createNode('LD_3DE_Classic_LD_Model')")
+	print '- 3DE ........................... OK'
+except:   # 3DE Don't exist
+	print '- 3DE ........................... FALSE'
 	##############################           #
-except:   # If Zync is NOT installed
-	nuke.error(' Zync is NOT installed on this computer!')
-
-# Zync client-app generated config end
+	pass
 
 
+
+#-----------------------------------------------------------------------------------------------------------------
+# Machine Molle Tools LOAD
+#-----------------------------------------------------------------------------------------------------------------
 print '- Machine Molle Tools ........... OK'
-##############################           #
+##############################    \n       #

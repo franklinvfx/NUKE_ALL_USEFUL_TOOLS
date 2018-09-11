@@ -1,1 +1,20 @@
-import MMP
+
+
+#-----------------------------------------------------------------------------------------------------------------
+# IMPORT NUKE PIPE
+#-----------------------------------------------------------------------------------------------------------------
+
+import nuke, sys, platform
+
+if platform.system() == "Darwin":
+	path = "/Network/phatt/MMP/NUKE/NUKE_PIPE_DEV/"
+	
+elif platform.system() == "Windows":
+	path = "Y:\\MMP\\NUKE\\NUKE_PIPE_DEV\\"
+
+nuke.pluginAddPath(path);
+
+import MM_Config
+import F_Hub 
+# import Home_Config
+# import Other_Config

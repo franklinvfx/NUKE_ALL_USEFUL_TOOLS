@@ -1,13 +1,13 @@
 import nuke, nukescripts, math
 
-from Global_menu import path
+from menu import path
 
 
 def reloadMenu():
     #tell nuke to import stuff
     import os
     import menu
-    import F_Tools
+    #import F_Tools
     import platform
 
     #delete the menu.pyc file if it exits
@@ -15,8 +15,8 @@ def reloadMenu():
         os.remove(path)
 
     #reload the menu.py file
-    reload(F_Tools)
-    from F_Tools import *
+    reload(menu)
+    from menu import *
 
     #delete the just created menu.pyc file
     if os.path.isfile(path):

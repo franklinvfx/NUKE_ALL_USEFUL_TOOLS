@@ -13,11 +13,10 @@ except:
 
 #---------------------------------------------
 
-from Global_menu import path
+from menu import path
 
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './icons/nodes');
-nuke.pluginAddPath(path + './icons/grapichs');
 nuke.pluginAddPath(path + './Gizmos');
 nuke.pluginAddPath(path + './Gizmos/Franklin');
 nuke.pluginAddPath(path + './Python');
@@ -206,3 +205,8 @@ m = v.addMenu("IP")
 
 m.addCommand('IP List','nuke.load("viewerInputNodes"), viewerInput()', "Ctrl+Alt+i",  icon="F_ip.png") 
 m.addCommand('IP Remove','nuke.load("viewerInputNodes"), viewerInput(ipNode="Remove")', "Ctrl+Alt+Shift+i",  icon="F_ipr.png")
+
+
+
+print '- Franklin Tools ................ OK'
+##############################           #

@@ -1,14 +1,13 @@
-import nuke, nukescripts, random, colorsys
+import nuke, nukescripts, random, colorsys, sys, platform
 import webbrowser, os, re, inspect, subprocess, math
 import nukescripts.rollingAutoSave
 import os.path as op
 
 # Add Directory 
-from Global_menu import path
+from menu import path
 
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './icons/nodes');
-nuke.pluginAddPath(path + './icons/grapichs');
 nuke.pluginAddPath(path + './Python');
 nuke.pluginAddPath(path + './Python/More');
 
@@ -21,10 +20,10 @@ import viewerInputNodes #
 import superSwap        #
 import shuffle_Smart    #
 
-import gifwriter_ui
-
 #______________________________________________________________________________
 
+print '- Franklin Hub .................. OK'
+##############################           #
 
 # Add Shortcuts
 explorer = 'ctrl+r'                # open in explorer the folder of the selected (read or write)
@@ -155,6 +154,7 @@ except:   # < Nuke 7
 	m.addCommand("Node Graph/Customize/Font/Select all Red", "F_Hub.selectRedTextNodes()")
 	m.addCommand("Node Graph/Customize/Font/-", "", "")
 	m.addCommand("Node Graph/Customize/Font/To White", "F_Hub.textToWhite()", nodefont_white, "F_textw.png")
+	pass
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 m.addCommand("Node Graph/Customize/Font/Select all White", "F_Hub.selectWhiteTextNodes()")
 #######################################################################################
@@ -196,6 +196,7 @@ try:   # > Nuke 7
 	m.addCommand('Read - Write/Read/Open Read in Explorer','F_Hub.Revealexplr()', explorer,  'F_explore.png', shortcutContext=2)
 except:   # < Nuke 7
 	m.addCommand('Read - Write/Read/Open Read in Explorer','F_Hub.Revealexplr()', explorer,  'F_explore.png')
+	pass
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 m.addCommand('Read - Write/Read/Rename Tool', 'import batchrenamer; batchrenamer.main()',  'F_superswap.png')                        #######################################################################################
 ####
@@ -225,7 +226,7 @@ m.addSeparator()
 #import breakoutLayers
 #import shuffleChannels
 #import multiChannelSplit
-m.addCommand('Break Out v2','nuke.load("multiChannelSplit"), multiChannelSplit.MultiChannelSplit')                                   #######################################################################################
+# m.addCommand('Break Out v2','nuke.load("multiChannelSplit"), multiChannelSplit.MultiChannelSplit')                                   #######################################################################################
 m.addCommand('Break Out','nuke.load("shuffleChannels"), shuffleChannels.getData', '')                                                #######################################################################################
 m.addCommand('Backdrop Re-Order UPDATE', 'F_Hub.reArrangeBDsByArea()', 'Ctrl+Alt+b')
 m.addCommand('Roto To Track', rotoToTrack.Roto_to_Trackers)                                                                          #######################################################################################
@@ -258,6 +259,7 @@ except:   # < Nuke 7
 	m.addMenu("Additional Shortcuts").addSeparator()   #######
 	m.addCommand("Additional Shortcuts/Duplicate", "F_Hub.copyKeepInputs(nuke.selectedNodes())", duplicate_node, "F_duplicate.png")
 	m.addCommand("Additional Shortcuts/Super Swap", 'import superSwap as superSwap; superSwap.swapper()', swap, "F_superswap.png")   #######################################################################################
+	pass
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #######################################################################################
 #m.addSeparator()

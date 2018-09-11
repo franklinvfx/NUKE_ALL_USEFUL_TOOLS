@@ -8,12 +8,12 @@ try:
     import PySide.QtGui as QtGui
     import PySide.QtGui as QtGuiWidgets
 except:
-    # >= Nuke 11
+    # > Nuke 11
     import PySide2.QtCore as QtCore
     import PySide2.QtGui as QtGui
     import PySide2.QtWidgets as QtGuiWidgets
 
-from Global_menu import path
+from menu import path
 
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './Python');
@@ -84,3 +84,7 @@ def addSRPanel():
         return myPanel.addToPane()
 nuke.menu('Pane').addCommand('Search Replace', addSRPanel,  icon="F_superswap.png")
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
+
+
+print '- Franklin Panels ............... OK'
+##############################           #

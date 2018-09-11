@@ -1,6 +1,6 @@
 import nuke
 
-from Global_menu import path
+from menu import path
 
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './Gizmos');
@@ -112,3 +112,6 @@ C_menu.addMenu( 'Other/Effect',  icon='F_effect.png' ) #Sous Menu
 C_menu.addCommand( 'Other/Effect/Caustic', "nuke.createNode(\"Caustic\")" , icon="Caustic")
 C_menu.addCommand( 'Other/Effect/Lightning', "nuke.createNode(\"Lightning\")" , icon="Lightning.png")
 C_menu.addCommand( 'Other/Effect/Rain', "nuke.createNode(\"Rain\")" , icon="Rain.png")
+
+print '- CGEV Tools .................... OK'
+##############################           #

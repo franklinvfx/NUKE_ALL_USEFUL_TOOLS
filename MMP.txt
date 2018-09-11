@@ -1,9 +1,0 @@
-# To Match with the Machine Molle pipeline
-# If "MMP" filename change --> You need to update menu.py and Global_menu.py file
-
-import nuke
-
-path = 'C:\\Users\\frank\\Desktop\\WORK\\NUKE_PIPELINE\\NUKE_PIPE'   # Pipe folder path
-nuke.pluginAddPath(path);
-
-import Global_menu

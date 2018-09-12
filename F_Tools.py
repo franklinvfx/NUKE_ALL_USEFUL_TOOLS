@@ -13,15 +13,15 @@ except:
 
 #---------------------------------------------
 
-from menu import path
-
+from menu import pipe_path
+'''
 nuke.pluginAddPath(path + './icons');
 nuke.pluginAddPath(path + './icons/nodes');
 nuke.pluginAddPath(path + './Gizmos');
 nuke.pluginAddPath(path + './Gizmos/Franklin');
 nuke.pluginAddPath(path + './Python');
 nuke.pluginAddPath(path + './Python/More');
-
+'''
 #---------------------------------------------
 
 import channel_hotbox

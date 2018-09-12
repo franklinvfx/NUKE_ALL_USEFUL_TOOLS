@@ -1,5 +1,5 @@
 import nuke
-from menu import path
+from menu import pipe_path
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -17,15 +17,17 @@ nuke.tprint(info)
 #-----------------------------------------------------------------------------------------------------------------
 # ADD PATH
 #-----------------------------------------------------------------------------------------------------------------
-nuke.pluginAddPath(path + './icons');
-nuke.pluginAddPath(path + './icons/nodes');
-nuke.pluginAddPath(path + './Python');
-nuke.pluginAddPath(path + './Python/More');
-nuke.pluginAddPath(path + './Python/NodeTable');
-nuke.pluginAddPath(path + './Gizmos');
-nuke.pluginAddPath(path + './Gizmos/Franklin');
-nuke.pluginAddPath(path + './Gizmos/C');
-nuke.pluginAddPath(path + './Gizmos/pixelfudger');
+nuke.pluginAddPath(pipe_path + './icons');
+nuke.pluginAddPath(pipe_path + './icons/nodes');
+nuke.pluginAddPath(pipe_path + './icons/nodes/color');
+nuke.pluginAddPath(pipe_path + './Python');
+nuke.pluginAddPath(pipe_path + './Python/More');
+nuke.pluginAddPath(pipe_path + './Python/NodeTable');
+nuke.pluginAddPath(pipe_path + './Gizmos');
+nuke.pluginAddPath(pipe_path + './Gizmos/Franklin');
+nuke.pluginAddPath(pipe_path + './Gizmos/C');
+nuke.pluginAddPath(pipe_path + './Gizmos/C/icons');
+nuke.pluginAddPath(pipe_path + './Gizmos/pixelfudger');
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -53,6 +55,6 @@ import C_Tools                         # C gizmos
 
 
 
-print '- Pipe Directory:  ' + path
+print '- Pipe Directory:  ' + pipe_path
 print '- Pipe Version: ................. 1.01\n'
 ##############################           #

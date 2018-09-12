@@ -4,12 +4,12 @@ import nukescripts.rollingAutoSave
 import os.path as op
 
 # Add Directory 
-from menu import path
+# from menu import pipe_path
 
-nuke.pluginAddPath(path + './icons');
-nuke.pluginAddPath(path + './icons/nodes');
-nuke.pluginAddPath(path + './Python');
-nuke.pluginAddPath(path + './Python/More');
+# nuke.pluginAddPath(path + './icons');
+# nuke.pluginAddPath(path + './icons/nodes');
+# nuke.pluginAddPath(path + './Python');
+# nuke.pluginAddPath(path + './Python/More');
 
 #______________________________________________________________________________
 

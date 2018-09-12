@@ -13,11 +13,11 @@ except:
     import PySide2.QtGui as QtGui
     import PySide2.QtWidgets as QtGuiWidgets
 
-from menu import path
+# from menu import path
 
-nuke.pluginAddPath(path + './icons');
-nuke.pluginAddPath(path + './Python');
-nuke.pluginAddPath(path + './Python/More');
+# nuke.pluginAddPath(path + './icons');
+# nuke.pluginAddPath(path + './Python');
+# nuke.pluginAddPath(path + './Python/More');
 
 ##########################################################################################################################################
 ##########################################################################################################################################

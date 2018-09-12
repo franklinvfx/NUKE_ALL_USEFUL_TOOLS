@@ -5,13 +5,19 @@
 import nuke, sys, platform
 
 if platform.system() == "Darwin":
-	path = "/Network/phatt/MMP/NUKE/NUKE_PIPE_DEV/"
+	pipe_path = "/Network/phatt/MMP/NUKE/NUKE_PIPE_DEV/"
 	
 elif platform.system() == "Windows":
-	path = "Y:\\MMP\\NUKE\\NUKE_PIPE_DEV\\"
+	pipe_path = "Y:\\MMP\\NUKE\\NUKE_PIPE_DEV\\"
 
-nuke.pluginAddPath(path);
+nuke.pluginAddPath(pipe_path);
 
 import MM_Config
 # import Home_Config
 # import Other_Config
+
+
+#-----------------------------------------------------------------------------------------------------------------
+# DEBUG OPTIONS
+#-----------------------------------------------------------------------------------------------------------------
+# import callbacksTrace                 # show all callbacks

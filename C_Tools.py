@@ -1,11 +1,11 @@
 import nuke
 
-from menu import path
+# from menu import path
 
-nuke.pluginAddPath(path + './icons');
-nuke.pluginAddPath(path + './Gizmos');
-nuke.pluginAddPath(path + './Gizmos/C');
-nuke.pluginAddPath(path + './Gizmos/C/icons');
+# nuke.pluginAddPath(path + './icons');
+# nuke.pluginAddPath(path + './Gizmos');
+# nuke.pluginAddPath(path + './Gizmos/C');
+# nuke.pluginAddPath(path + './Gizmos/C/icons');
 
 ##########################################################################################################################################
 

@@ -45,11 +45,25 @@ except:   # Pixelfudger Don't exist
 
 
 
-import Dots, mirrorNodes               # import now               (link to F_Hub)
-import knob_scripter                   # 'Alt + z'
-import channel_hotbox                  # 'racine carre'           (link to F_Tools)
-import autoBackdrop as autoBackdrop    # 'Alt + b'                (link to F_Tools)
+#-----------------------------------------------------------------------------------------------------------------
+# OTHE TOOLS
+#-----------------------------------------------------------------------------------------------------------------
+try:      # ALL Exist
+	import Dots, mirrorNodes               # import now               (link to F_Hub)
+	import knob_scripter                   # 'Alt + z'
+	import channel_hotbox                  # 'racine carre'           (link to F_Tools)
+	import autoBackdrop as autoBackdrop    # 'Alt + b'                (link to F_Tools)
+
+	ALL1 = '- Knob Scripter ................. OK\n- C_Hotbox ...................... OK\n- Auto Backdrop ................. OK'
+	nuke.tprint(ALL1)
+
+except:   # ALL Don't exist
+	ALL2 = '- Knob Scripter ................. NONE\n- C_Hotbox ...................... NONE\n- Auto Backdrop ................. NONE'
+	nuke.tprint(ALL2)
+	pass
+
+
 
 FS = '- Franklin Scripts .............. OK\n'
 nuke.tprint(FS)
-##############################           #
+      ##############################    #

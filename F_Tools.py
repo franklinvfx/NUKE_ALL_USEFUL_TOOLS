@@ -208,5 +208,6 @@ m.addCommand('IP Remove','nuke.load("viewerInputNodes"), viewerInput(ipNode="Rem
 
 
 
-print '- Franklin Tools ................ OK'
+FT = '- Franklin Tools ................ OK'
+nuke.tprint(FT)
 ##############################           #

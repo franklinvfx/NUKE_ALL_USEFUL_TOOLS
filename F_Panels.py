@@ -99,5 +99,6 @@ panels.registerWidgetAsPanel('get_node_table_widget', 'Node Spreadsheet','de.fil
 
 
 
-print '- Franklin Panels ............... OK\n'
+FP = '- Franklin Panels ............... OK\n'
+nuke.tprint(FP)
 ##############################           #

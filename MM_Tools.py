@@ -62,7 +62,7 @@ try:      # 3DE Exist
 	DE1 = '- 3DE ........................... OK'
 	nuke.tprint(DE1)
 except:   # 3DE Don't exist
-	3DE2 = '- 3DE ........................... FALSE'
+	DE2 = '- 3DE ........................... FALSE'
 	nuke.tprint(DE2)
 	##############################           #
 	pass

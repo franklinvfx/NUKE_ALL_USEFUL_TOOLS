@@ -30,35 +30,24 @@ except:   # 3DE Don't exist
 	pass
 
 
-
-#-----------------------------------------------------------------------------------------------------------------
-# Pixelfudger
-#-----------------------------------------------------------------------------------------------------------------
-try:      # Pixelfudger Exist
-	import pixelfudger
-	PF1 = '- Pixelfudger ................... OK'
-	nuke.tprint(PF1)
-except:   # Pixelfudger Don't exist
-	PF2 = '- Pixelfudger ................... FALSE'
-	nuke.tprint(PF2)
-	pass
-
-
-
 #-----------------------------------------------------------------------------------------------------------------
 # OTHE TOOLS
 #-----------------------------------------------------------------------------------------------------------------
 try:      # ALL Exist
+	import pixelfudger
 	import Dots, mirrorNodes               # import now               (link to F_Hub)
 	import knob_scripter                   # 'Alt + z'
 	import channel_hotbox                  # 'racine carre'           (link to F_Tools)
-	import autoBackdrop as autoBackdrop    # 'Alt + b'                (link to F_Tools)
 
-	ALL1 = '- Knob Scripter ................. OK\n- C_Hotbox ...................... OK\n- Auto Backdrop ................. OK'
+	import autoBackdrop as autoBackdrop    # 'Alt + b'                (link to F_Tools)
+	nukescripts.autoBackdrop = autoBackdrop.autoBackdrop
+	nuke.menu('Nodes').addCommand( 'Other/Backdrop', 'autoBackdrop.autoBackdrop()', 'alt+b', 'Backdrop.png')
+
+	ALL1 = '- Knob Scripter ................. OK\n- C_Hotbox ...................... OK\n- Auto Backdrop ................. OK\n- Pixelfudger ................... OK'
 	nuke.tprint(ALL1)
 
 except:   # ALL Don't exist
-	ALL2 = '- Knob Scripter ................. NONE\n- C_Hotbox ...................... NONE\n- Auto Backdrop ................. NONE'
+	ALL2 = '- Knob Scripter ................. NONE\n- C_Hotbox ...................... NONE\n- Auto Backdrop ................. NONE\n- Pixelfudger ................... NONE'
 	nuke.tprint(ALL2)
 	pass
 

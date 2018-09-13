@@ -4,24 +4,23 @@ Group {
  knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\nif knob.name() in ('ar_selection', 'showPanel'):\n    mode = node\['ar_selection'].value()\n    if mode == 'Custom':\n        node\['ar_custom'].setVisible(True)\n    elif mode != 'Custom':\n        node\['ar_custom'].setVisible(False)"
  selected true
  addUserKnob {20 Franklin l Volet t "\nFor any questions or request contact me through my website: \nFranklinvfx.com\n\nThanks to all the Nukepedia community...\n"}
- addUserKnob {26 S01 l "@b;  Letterbox Bar" T " "}
- addUserKnob {4 ar_selection l "       Aspect Ratio" M {"Choose   " 1.00 1.19 1.25 1.33 1.35 1.37 1.43 1.50 1.56 1.60 1.66 1.75 1.778 1.85 2.00 2.20 2.35 2.40 2.55 2.59 2.76 4.00 Custom "" "" "" "" "" "" ""}}
+ addUserKnob {4 ar_selection l "<font color=\"green\">@b;Aspect Ratio" M {"Choose   " 1.00 1.19 1.25 1.33 1.35 1.37 1.43 1.50 1.56 1.60 1.66 1.75 1.778 1.85 2.00 2.20 2.35 2.40 2.55 2.59 2.76 4.00 Custom "" "" "" "" "" "" ""}}
  ar_selection Custom
  addUserKnob {7 ar_custom l "" -STARTLINE R 0 4}
- ar_custom 2.39
+ ar_custom 2.57
  addUserKnob {41 mix l Opacity t "Change the opacity of the Letterbox Bar." T Dissolve1.which}
+ addUserKnob {6 bbox l "Preserve Bbox" +STARTLINE}
  addUserKnob {26 S02 l " " T " \n"}
- addUserKnob {26 S03 l "@b; Edges"}
- addUserKnob {3 line l Width t "Change the thickness (value in pixel) of the Letterbox Bar edges."}
+ addUserKnob {3 line l "           Edges Width" t "Change the thickness (value in pixel) of the Letterbox Bar edges."}
  line 4
- addUserKnob {41 mix_2 l Opacity t "Change the opacity of the Letterbox Bar Edges." T Merge1.mix}
+ addUserKnob {41 mix_2 l "Edges Opacity" t "Change the opacity of the Letterbox Bar Edges." T Merge1.mix}
  addUserKnob {1 name1 l INVISIBLE +INVISIBLE}
  name1 "\[if \{\[value ar_selection]==\"Custom\"\} \{return \"\[value ar_custom]\"\} \{return \"\[value ar_selection]\"\}]"
  addUserKnob {1 output l INVISIBLE +INVISIBLE}
  output "\[regsub -all \"Choose\" \[value name1] \"\"] "
- addUserKnob {26 by1 l " " T " "}
- addUserKnob {26 by2 l " " T "                                                                                               "}
- addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v03 - CGEV - 2016"}
+ addUserKnob {26 FT2 l "                          " T " "}
+ addUserKnob {26 FT3 l " " T "                                                                                               "}
+ addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
 }
  Input {
   inputs 0
@@ -34,7 +33,7 @@ Group {
   xpos 291
   ypos 582
  }
-set N384b8400 [stack 0]
+set N71d99800 [stack 0]
  Dot {
   name Dot1
   xpos 168
@@ -45,7 +44,7 @@ set N384b8400 [stack 0]
   xpos 168
   ypos 970
  }
-push $N384b8400
+push $N71d99800
  Group {
   name Crop_Plus2
   help "@b; dCrop v2@n; for Nuke 6.0v3\n\nProvides options to crop a input by box, percentage, bbox or a aspect ratio relative to the input.\n\nCreated by Diogo Girondi\ndiogogirondi@gmail.com"
@@ -101,10 +100,10 @@ push $N384b8400
   Output {
    name Output1
    xpos 81
-   ypos 304
+   ypos 316
   }
  end_group
-set N38a75180 [stack 0]
+set Nfca7ed00 [stack 0]
  Shuffle {
   red white
   green white
@@ -115,7 +114,7 @@ set N38a75180 [stack 0]
   xpos 381
   ypos 675
  }
-set N385fa800 [stack 0]
+set N710ce800 [stack 0]
  Crop {
   box {{input.bbox.x+1} {input.bbox.y+1} {input.bbox.r-1} {input.bbox.t-1}}
   name Box
@@ -123,7 +122,7 @@ set N385fa800 [stack 0]
   xpos 381
   ypos 747
  }
-push $N385fa800
+push $N710ce800
  Crop {
   box {{Box.box.x-edge} {Box.box.y-edge} {Box.box.r+edge} {Box.box.t+edge}}
   name Crop1
@@ -140,8 +139,8 @@ push $N385fa800
   xpos 381
   ypos 873
  }
-push $N38a75180
-push $N384b8400
+push $Nfca7ed00
+push $N71d99800
  Dissolve {
   inputs 2
   which 1
@@ -161,10 +160,20 @@ push $N384b8400
   name CopyBBox1
   xpos 257
   ypos 967
+  disable {{!parent.bbox}}
  }
+set N7f813800 [stack 0]
  Output {
   name FranklinVFX
   xpos 257
   ypos 1079
+ }
+push $N7f813800
+ Viewer {
+  frame_range 10-51
+  fps 25
+  name Viewer1
+  xpos 392
+  ypos 987
  }
 end_group

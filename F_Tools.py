@@ -27,9 +27,9 @@ nuke.pluginAddPath(path + './Python/More');
 import channel_hotbox
 nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', '²')
 
-import autoBackdrop as autoBackdrop
-nukescripts.autoBackdrop = autoBackdrop.autoBackdrop
-nuke.menu('Nodes').addCommand( 'Other/Backdrop', 'autoBackdrop.autoBackdrop()', 'alt+b', 'Backdrop.png')
+# import autoBackdrop as autoBackdrop
+# nukescripts.autoBackdrop = autoBackdrop.autoBackdrop
+# nuke.menu('Nodes').addCommand( 'Other/Backdrop', 'autoBackdrop.autoBackdrop()', 'alt+b', 'Backdrop.png')
 
 
 ##########################################################################################################################################
@@ -43,6 +43,12 @@ nuke.menu('Nodes').addCommand( 'Other/Backdrop', 'autoBackdrop.autoBackdrop()', 
 
 toolbar = nuke.toolbar("Nodes")
 F_menu = toolbar.addMenu("Franklin", icon="F_menu.png")
+
+##############################################################
+#       DRAW        ##########################################
+##############################################################
+F_menu.addMenu( 'Draw',  icon='Draw.png' )
+F_menu.addCommand( 'Draw/Volet', "nuke.createNode(\"Volet\")" , icon="Volet.png")
 
 ##############################################################
 #       TIME        ##########################################
@@ -138,6 +144,7 @@ nuke.toolbar("Nodes").addMenu("Franklin").addSeparator()
 F_menu.addMenu( 'Other',  icon='F_other.png' )
 ##############################################################
 F_menu.addCommand( 'Other/VIEWER INPUT', "nuke.createNode(\"VIEWER_INPUT\")" , icon="F_viewer_input.png")
+F_menu.addCommand( 'Other/Volet', "nuke.createNode(\"Volet\")" , icon="F_viewer_input.png")
 F_menu.addCommand( 'Other/Dot_Link', "nuke.createNode(\"DotLink\")" , "ctrl+.", icon="F_dotlink.png")
 
 F_menu.addMenu( 'Other/Setup',  icon='F_setup.png' )          ########################################### Sous Menu ##################

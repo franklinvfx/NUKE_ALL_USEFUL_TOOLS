@@ -6,7 +6,7 @@
 #
 #----------------------------------------------------------------------------------------------------------
 
-from menu import path
+from menu import pipe_path
 
 ypos = float('-inf')
 xpos = float('inf')
@@ -42,7 +42,7 @@ if existingBackdrop is None:
     existingBackdrop.knob('bdheight').setValue(150)
 
 if existingNode is None:
-    existingNode = nuke.nodePaste(path + '/Gizmos/Franklin/VIEWER_INPUT.gizmo')
+    existingNode = nuke.nodePaste(pipe_path + '/Gizmos/Franklin/VIEWER_INPUT.gizmo')
     knob = nuke.Boolean_Knob('cgevviewerinput', 'cgevviewerinput', True)
     knob.setVisible(False)
 

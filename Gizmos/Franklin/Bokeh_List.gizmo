@@ -2,163 +2,56 @@ Group {
  inputs 0
  name Bokeh_Img
  onCreate "from menu import pipe_path\n\nsrc = '<img src=\":'\nfolder = 'Gizmos\\Franklin\\Bokeh_images\\img'\nsize = ' width = \"100\" height = \"100\">'\n\nnuke.thisNode().knob('pipe_path').setValue(pipe_path + folder + 'age.png')\nnuke.thisNode().knob('pipe_path').setEnabled(False)\n\nimg = src + pipe_path + folder\nimg = img.replace(\"\\\\\", \"/\")\n\nnuke.thisNode().knob('img01').setLabel(img + '01.png\"' + size)\nnuke.thisNode().knob('img02').setLabel(img + '02.png\"' + size)\nnuke.thisNode().knob('img03').setLabel(img + '03.png\"' + size)\nnuke.thisNode().knob('img05').setLabel(img + '05.png\"' + size)\nnuke.thisNode().knob('img06').setLabel(img + '06.png\"' + size)\nnuke.thisNode().knob('img07').setLabel(img + '07.png\"' + size)\nnuke.thisNode().knob('img08').setLabel(img + '08.png\"' + size)\nnuke.thisNode().knob('img09').setLabel(img + '09.png\"' + size)\nnuke.thisNode().knob('img10').setLabel(img + '10.png\"' + size)\nnuke.thisNode().knob('img11').setLabel(img + '11.png\"' + size)\nnuke.thisNode().knob('img12').setLabel(img + '12.png\"' + size)\nnuke.thisNode().knob('img13').setLabel(img + '13.png\"' + size)\nnuke.thisNode().knob('img14').setLabel(img + '14.png\"' + size)\nnuke.thisNode().knob('img15').setLabel(img + '15.png\"' + size)\nnuke.thisNode().knob('img16').setLabel(img + '16.png\"' + size)\nnuke.thisNode().knob('img17').setLabel(img + '17.png\"' + size)\nnuke.thisNode().knob('img18').setLabel(img + '18.png\"' + size)\nnuke.thisNode().knob('img19').setLabel(img + '19.png\"' + size)\nnuke.thisNode().knob('img20').setLabel(img + '20.png\"' + size)\nnuke.thisNode().knob('img21').setLabel(img + '21.png\"' + size)\nnuke.thisNode().knob('img22').setLabel(img + '22.png\"' + size)\nnuke.thisNode().knob('img23').setLabel(img + '23.png\"' + size)\nnuke.thisNode().knob('img24').setLabel(img + '24.png\"' + size)\nnuke.thisNode().knob('img25').setLabel(img + '25.png\"' + size)\nnuke.thisNode().knob('img26').setLabel(img + '26.png\"' + size)\nnuke.thisNode().knob('img27').setLabel(img + '27.png\"' + size)\nnuke.thisNode().knob('img28').setLabel(img + '28.png\"' + size)\nnuke.thisNode().knob('img29').setLabel(img + '29.png\"' + size)\n\nimgpipe_path = pipe_path + folder\nimgpipe_path = imgpipe_path.replace(\"\\\\\", \"/\")\nprint imgpipe_path\n\nwith nuke.thisNode():\n\tnode = nuke.toNode('Read_Bokeh')\n\tfile = node.knob('file').setValue(imgpipe_path + \"01.png\")"
- knobChanged "listenedKnobs = \['img01', 'img02', 'img03', 'img05', 'img06', 'img07', 'img08', 'img09', 'img10', 'img11', 'img12', 'img13', 'img14', 'img15', 'img16', 'img17', 'img18', 'img19', 'img20', 'img21', 'img22', 'img23', 'img24', 'img25', 'img26', 'img27', 'img28', 'img29']\n\nif nuke.thisKnob().name() in listenedKnobs:\n    \n    from menu import pipe_path\n\n    img = '<img src=\":'\n    folder = '\\Gizmos\\Franklin\\Bokeh_images\\img'\n    size = ' width = \"100\" height = \"100\">'\n\n    img = img + pipe_path + folder\n    img = img.replace(\"\\\\\", \"/\")\n    \n    kname = nuke.thisNode().knob('name').value()\n    imgpipe_path = pipe_path + folder\n    imgpipe_path = imgpipe_path.replace(\"\\\\\", \"/\")\n    \n    if nuke.thisKnob().name() == 'img01':\n        imgpipe_path = imgpipe_path + '01.png'\n    if nuke.thisKnob().name() == 'img02':\n        imgpipe_path = imgpipe_path + '02.png'\n    if nuke.thisKnob().name() == 'img03':\n        imgpipe_path = imgpipe_path + '03.png'\n    if nuke.thisKnob().name() == 'img05':\n        imgpipe_path = imgpipe_path + '05.png'\n    if nuke.thisKnob().name() == 'img06':\n        imgpipe_path = imgpipe_path + '06.png'\n    if nuke.thisKnob().name() == 'img07':\n        imgpipe_path = imgpipe_path + '07.png'\n    if nuke.thisKnob().name() == 'img08':\n        imgpipe_path = imgpipe_path + '08.png'\n    if nuke.thisKnob().name() == 'img09':\n        imgpipe_path = imgpipe_path + '09.png'\n    if nuke.thisKnob().name() == 'img10':\n        imgpipe_path = imgpipe_path + '10.png'\n    if nuke.thisKnob().name() == 'img11':\n        imgpipe_path = imgpipe_path + '11.png'\n    if nuke.thisKnob().name() == 'img12':\n        imgpipe_path = imgpipe_path + '12.png'\n    if nuke.thisKnob().name() == 'img13':\n        imgpipe_path = imgpipe_path + '13.png'\n    if nuke.thisKnob().name() == 'img14':\n        imgpipe_path = imgpipe_path + '14.png'\n    if nuke.thisKnob().name() == 'img15':\n        imgpipe_path = imgpipe_path + '15.png'\n    if nuke.thisKnob().name() == 'img16':\n        imgpipe_path = imgpipe_path + '16.png'\n    if nuke.thisKnob().name() == 'img17':\n        imgpipe_path = imgpipe_path + '17.png'\n    if nuke.thisKnob().name() == 'img18':\n        imgpipe_path = imgpipe_path + '18.png'\n    if nuke.thisKnob().name() == 'img19':\n        imgpipe_path = imgpipe_path + '19.png'\n    if nuke.thisKnob().name() == 'img20':\n        imgpipe_path = imgpipe_path + '20.png'\n    if nuke.thisKnob().name() == 'img21':\n        imgpipe_path = imgpipe_path + '21.png'\n    if nuke.thisKnob().name() == 'img22':\n        imgpipe_path = imgpipe_path + '22.png'\n    if nuke.thisKnob().name() == 'img23':\n        imgpipe_path = imgpipe_path + '23.png'\n    if nuke.thisKnob().name() == 'img24':\n        imgpipe_path = imgpipe_path + '24.png'\n    if nuke.thisKnob().name() == 'img25':\n        imgpipe_path = imgpipe_path + '25.png'\n    if nuke.thisKnob().name() == 'img26':\n        imgpipe_path = imgpipe_path + '26.png'\n    if nuke.thisKnob().name() == 'img27':\n        imgpipe_path = imgpipe_path + '27.png'\n    if nuke.thisKnob().name() == 'img28':\n        imgpipe_path = imgpipe_path + '28.png'\n    if nuke.thisKnob().name() == 'img29':\n        imgpipe_path = imgpipe_path + '29.png'\n    \n    with nuke.thisNode():\n    \tnode = nuke.toNode('Read_Bokeh')\n    \tfile = node.knob('file').setValue(imgpipe_path)"
+ knobChanged "listenedKnobs = \['img01', 'img02', 'img03', 'img05', 'img06', 'img07', 'img08', 'img09', 'img10', 'img11', 'img12', 'img13', 'img14', 'img15', 'img16', 'img17', 'img18', 'img19', 'img20', 'img21', 'img22', 'img23', 'img24', 'img25', 'img26', 'img27', 'img28', 'img29']\n\nif nuke.thisKnob().name() in listenedKnobs:\n    \n    from menu import pipe_path\n\n    img = '<img src=\":'\n    folder = 'Gizmos\\Franklin\\Bokeh_images\\img'\n    size = ' width = \"100\" height = \"100\">'\n\n    img = img + pipe_path + folder\n    img = img.replace(\"\\\\\", \"/\")\n    \n    kname = nuke.thisNode().knob('name').value()\n    imgpipe_path = pipe_path + folder\n    imgpipe_path = imgpipe_path.replace(\"\\\\\", \"/\")\n    \n    if nuke.thisKnob().name() == 'img01':\n        imgpipe_path = imgpipe_path + '01.png'\n    if nuke.thisKnob().name() == 'img02':\n        imgpipe_path = imgpipe_path + '02.png'\n    if nuke.thisKnob().name() == 'img03':\n        imgpipe_path = imgpipe_path + '03.png'\n    if nuke.thisKnob().name() == 'img05':\n        imgpipe_path = imgpipe_path + '05.png'\n    if nuke.thisKnob().name() == 'img06':\n        imgpipe_path = imgpipe_path + '06.png'\n    if nuke.thisKnob().name() == 'img07':\n        imgpipe_path = imgpipe_path + '07.png'\n    if nuke.thisKnob().name() == 'img08':\n        imgpipe_path = imgpipe_path + '08.png'\n    if nuke.thisKnob().name() == 'img09':\n        imgpipe_path = imgpipe_path + '09.png'\n    if nuke.thisKnob().name() == 'img10':\n        imgpipe_path = imgpipe_path + '10.png'\n    if nuke.thisKnob().name() == 'img11':\n        imgpipe_path = imgpipe_path + '11.png'\n    if nuke.thisKnob().name() == 'img12':\n        imgpipe_path = imgpipe_path + '12.png'\n    if nuke.thisKnob().name() == 'img13':\n        imgpipe_path = imgpipe_path + '13.png'\n    if nuke.thisKnob().name() == 'img14':\n        imgpipe_path = imgpipe_path + '14.png'\n    if nuke.thisKnob().name() == 'img15':\n        imgpipe_path = imgpipe_path + '15.png'\n    if nuke.thisKnob().name() == 'img16':\n        imgpipe_path = imgpipe_path + '16.png'\n    if nuke.thisKnob().name() == 'img17':\n        imgpipe_path = imgpipe_path + '17.png'\n    if nuke.thisKnob().name() == 'img18':\n        imgpipe_path = imgpipe_path + '18.png'\n    if nuke.thisKnob().name() == 'img19':\n        imgpipe_path = imgpipe_path + '19.png'\n    if nuke.thisKnob().name() == 'img20':\n        imgpipe_path = imgpipe_path + '20.png'\n    if nuke.thisKnob().name() == 'img21':\n        imgpipe_path = imgpipe_path + '21.png'\n    if nuke.thisKnob().name() == 'img22':\n        imgpipe_path = imgpipe_path + '22.png'\n    if nuke.thisKnob().name() == 'img23':\n        imgpipe_path = imgpipe_path + '23.png'\n    if nuke.thisKnob().name() == 'img24':\n        imgpipe_path = imgpipe_path + '24.png'\n    if nuke.thisKnob().name() == 'img25':\n        imgpipe_path = imgpipe_path + '25.png'\n    if nuke.thisKnob().name() == 'img26':\n        imgpipe_path = imgpipe_path + '26.png'\n    if nuke.thisKnob().name() == 'img27':\n        imgpipe_path = imgpipe_path + '27.png'\n    if nuke.thisKnob().name() == 'img28':\n        imgpipe_path = imgpipe_path + '28.png'\n    if nuke.thisKnob().name() == 'img29':\n        imgpipe_path = imgpipe_path + '29.png'\n    \n    with nuke.thisNode():\n    \tnode = nuke.toNode('Read_Bokeh')\n    \tfile = node.knob('file').setValue(imgpipe_path)"
  tile_color 0xca7d4eff
  gl_color 0xff
  selected true
  addUserKnob {20 FT l "Bokeh List"}
- addUserKnob {22 img01 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img01.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img02 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img02.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img03 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img03.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img05 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img05.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img06 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img06.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img07 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img07.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img08 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img08.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img09 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img09.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img10 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img10.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img11 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img11.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img12 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img12.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img13 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img13.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img14 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img14.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img15 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img15.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img16 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img16.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img17 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img17.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img18 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img18.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img19 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img19.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img20 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img20.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img21 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img21.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img22 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img22.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img23 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img23.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img24 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img24.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img25 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img25.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img26 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img26.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img27 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img27.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img28 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img28.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img29 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img29.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img01 l "<img src=\":img01.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img02 l "<img src=\":img02.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img03 l "<img src=\":img03.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img05 l "<img src=\":img05.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img06 l "<img src=\":img06.png\" width = \"100\" height = \"100\">" +STARTLINE}
+ addUserKnob {22 img07 l "<img src=\":img07.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img08 l "<img src=\":img08.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img09 l "<img src=\":img09.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img10 l "<img src=\":img10.png\" width = \"100\" height = \"100\">" +STARTLINE}
+ addUserKnob {22 img11 l "<img src=\":img11.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img12 l "<img src=\":img12.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img13 l "<img src=\":img13.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img14 l "<img src=\":img14.png\" width = \"100\" height = \"100\">" +STARTLINE}
+ addUserKnob {22 img15 l "<img src=\":img15.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img16 l "<img src=\":img16.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img17 l "<img src=\":img17.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img18 l "<img src=\":img18.png\" width = \"100\" height = \"100\">" +STARTLINE}
+ addUserKnob {22 img19 l "<img src=\":img19.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img20 l "<img src=\":img20.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img21 l "<img src=\":img21.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img22 l "<img src=\":img22.png\" width = \"100\" height = \"100\">" +STARTLINE}
+ addUserKnob {22 img23 l "<img src=\":img23.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img24 l "<img src=\":img24.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img25 l "<img src=\":img25.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img26 l "<img src=\":img26.png\" width = \"100\" height = \"100\">" +STARTLINE}
+ addUserKnob {22 img27 l "<img src=\":img27.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img28 l "<img src=\":img28.png\" width = \"100\" height = \"100\">" -STARTLINE}
+ addUserKnob {22 img29 l "<img src=\":img29.png\" width = \"100\" height = \"100\">" -STARTLINE}
  addUserKnob {26 ""}
  addUserKnob {3 output_size l "Output Size"}
  output_size 512
  addUserKnob {6 anamorphic l Anamorphic -STARTLINE}
  addUserKnob {1 pipe_path l "Images path" +DISABLED}
- pipe_path "Y:\\MMP\\NUKE\\NUKE_PIPE_DEV\\Gizmos\\Franklin\\Bokeh_images\\imgage.png"
+ pipe_path ""
  addUserKnob {26 FT1 l " " T " "}
  addUserKnob {26 FT2 l " " T "                                                                                               "}
  addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
 }
  Read {
   inputs 0
-  file Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img
   format "110 110 0 0 110 110 1 "
   before black
   origset true
   on_error checkerboard
   colorspace sRGB
-  in_colorspace linear
-  out_colorspace linear
-  name Read_Bokeh
-  selected true
-  xpos -70
-  ypos -318
-  postage_stamp false
- }
- Reformat {
-  format "512 512 0 0 512 512 1 square_512"
-  filter Simon
-  clamp true
-  name Reformat_bokeh
-  xpos -70
-  ypos -240
- }
- Transform {
-  scale {1 0.5}
-  center {256 256}
-  filter Simon
-  clamp true
-  shutteroffset centred
-  name Transform_Anamorphic
-  xpos -70
-  ypos -178
-  disable {{!parent.anamorphic}}
- }
- Reformat {
-  type "to box"
-  box_width {{parent.output_size}}
-  box_height {{box_width}}
-  box_fixed true
-  box_pixel_aspect {{"anamorphic ? 2 : 1"}}
-  filter Simon
-  clamp true
-  name Reformat_Bokeh_final
-  xpos -70
-  ypos -143
- }
- Output {
-  name FranklinVFX
-  xpos -70
-  ypos -75
- }
-end_group
-set cut_paste_input [stack 0]
-version 10.5 v1
-Group {
- inputs 0
- name Bokeh_Img10
- onCreate "from menu import pipe_path\n\nsrc = '<img src=\":'\nfolder = 'Gizmos\\Franklin\\Bokeh_images\\img'\nsize = ' width = \"100\" height = \"100\">'\n\nnuke.thisNode().knob('pipe_path').setValue(pipe_path + folder + 'age.png')\nnuke.thisNode().knob('pipe_path').setEnabled(False)\n\nimg = src + pipe_path + folder\nimg = img.replace(\"\\\\\", \"/\")\n\nnuke.thisNode().knob('img01').setLabel(img + '01.png\"' + size)\nnuke.thisNode().knob('img02').setLabel(img + '02.png\"' + size)\nnuke.thisNode().knob('img03').setLabel(img + '03.png\"' + size)\nnuke.thisNode().knob('img05').setLabel(img + '05.png\"' + size)\nnuke.thisNode().knob('img06').setLabel(img + '06.png\"' + size)\nnuke.thisNode().knob('img07').setLabel(img + '07.png\"' + size)\nnuke.thisNode().knob('img08').setLabel(img + '08.png\"' + size)\nnuke.thisNode().knob('img09').setLabel(img + '09.png\"' + size)\nnuke.thisNode().knob('img10').setLabel(img + '10.png\"' + size)\nnuke.thisNode().knob('img11').setLabel(img + '11.png\"' + size)\nnuke.thisNode().knob('img12').setLabel(img + '12.png\"' + size)\nnuke.thisNode().knob('img13').setLabel(img + '13.png\"' + size)\nnuke.thisNode().knob('img14').setLabel(img + '14.png\"' + size)\nnuke.thisNode().knob('img15').setLabel(img + '15.png\"' + size)\nnuke.thisNode().knob('img16').setLabel(img + '16.png\"' + size)\nnuke.thisNode().knob('img17').setLabel(img + '17.png\"' + size)\nnuke.thisNode().knob('img18').setLabel(img + '18.png\"' + size)\nnuke.thisNode().knob('img19').setLabel(img + '19.png\"' + size)\nnuke.thisNode().knob('img20').setLabel(img + '20.png\"' + size)\nnuke.thisNode().knob('img21').setLabel(img + '21.png\"' + size)\nnuke.thisNode().knob('img22').setLabel(img + '22.png\"' + size)\nnuke.thisNode().knob('img23').setLabel(img + '23.png\"' + size)\nnuke.thisNode().knob('img24').setLabel(img + '24.png\"' + size)\nnuke.thisNode().knob('img25').setLabel(img + '25.png\"' + size)\nnuke.thisNode().knob('img26').setLabel(img + '26.png\"' + size)\nnuke.thisNode().knob('img27').setLabel(img + '27.png\"' + size)\nnuke.thisNode().knob('img28').setLabel(img + '28.png\"' + size)\nnuke.thisNode().knob('img29').setLabel(img + '29.png\"' + size)\n\nimgpipe_path = pipe_path + folder\nimgpipe_path = imgpipe_path.replace(\"\\\\\", \"/\")\nprint imgpipe_path\n\nwith nuke.thisNode():\n\tnode = nuke.toNode('Read_Bokeh')\n\tfile = node.knob('file').setValue(imgpipe_path + \"01.png\")"
- knobChanged "listenedKnobs = \['img01', 'img02', 'img03', 'img05', 'img06', 'img07', 'img08', 'img09', 'img10', 'img11', 'img12', 'img13', 'img14', 'img15', 'img16', 'img17', 'img18', 'img19', 'img20', 'img21', 'img22', 'img23', 'img24', 'img25', 'img26', 'img27', 'img28', 'img29']\n\nif nuke.thisKnob().name() in listenedKnobs:\n    \n    from menu import pipe_path\n\n    img = '<img src=\":'\n    folder = '\\Gizmos\\Franklin\\Bokeh_images\\img'\n    size = ' width = \"100\" height = \"100\">'\n\n    img = img + pipe_path + folder\n    img = img.replace(\"\\\\\", \"/\")\n    \n    kname = nuke.thisNode().knob('name').value()\n    imgpipe_path = pipe_path + folder\n    imgpipe_path = imgpipe_path.replace(\"\\\\\", \"/\")\n    \n    if nuke.thisKnob().name() == 'img01':\n        imgpipe_path = imgpipe_path + '01.png'\n    if nuke.thisKnob().name() == 'img02':\n        imgpipe_path = imgpipe_path + '02.png'\n    if nuke.thisKnob().name() == 'img03':\n        imgpipe_path = imgpipe_path + '03.png'\n    if nuke.thisKnob().name() == 'img05':\n        imgpipe_path = imgpipe_path + '05.png'\n    if nuke.thisKnob().name() == 'img06':\n        imgpipe_path = imgpipe_path + '06.png'\n    if nuke.thisKnob().name() == 'img07':\n        imgpipe_path = imgpipe_path + '07.png'\n    if nuke.thisKnob().name() == 'img08':\n        imgpipe_path = imgpipe_path + '08.png'\n    if nuke.thisKnob().name() == 'img09':\n        imgpipe_path = imgpipe_path + '09.png'\n    if nuke.thisKnob().name() == 'img10':\n        imgpipe_path = imgpipe_path + '10.png'\n    if nuke.thisKnob().name() == 'img11':\n        imgpipe_path = imgpipe_path + '11.png'\n    if nuke.thisKnob().name() == 'img12':\n        imgpipe_path = imgpipe_path + '12.png'\n    if nuke.thisKnob().name() == 'img13':\n        imgpipe_path = imgpipe_path + '13.png'\n    if nuke.thisKnob().name() == 'img14':\n        imgpipe_path = imgpipe_path + '14.png'\n    if nuke.thisKnob().name() == 'img15':\n        imgpipe_path = imgpipe_path + '15.png'\n    if nuke.thisKnob().name() == 'img16':\n        imgpipe_path = imgpipe_path + '16.png'\n    if nuke.thisKnob().name() == 'img17':\n        imgpipe_path = imgpipe_path + '17.png'\n    if nuke.thisKnob().name() == 'img18':\n        imgpipe_path = imgpipe_path + '18.png'\n    if nuke.thisKnob().name() == 'img19':\n        imgpipe_path = imgpipe_path + '19.png'\n    if nuke.thisKnob().name() == 'img20':\n        imgpipe_path = imgpipe_path + '20.png'\n    if nuke.thisKnob().name() == 'img21':\n        imgpipe_path = imgpipe_path + '21.png'\n    if nuke.thisKnob().name() == 'img22':\n        imgpipe_path = imgpipe_path + '22.png'\n    if nuke.thisKnob().name() == 'img23':\n        imgpipe_path = imgpipe_path + '23.png'\n    if nuke.thisKnob().name() == 'img24':\n        imgpipe_path = imgpipe_path + '24.png'\n    if nuke.thisKnob().name() == 'img25':\n        imgpipe_path = imgpipe_path + '25.png'\n    if nuke.thisKnob().name() == 'img26':\n        imgpipe_path = imgpipe_path + '26.png'\n    if nuke.thisKnob().name() == 'img27':\n        imgpipe_path = imgpipe_path + '27.png'\n    if nuke.thisKnob().name() == 'img28':\n        imgpipe_path = imgpipe_path + '28.png'\n    if nuke.thisKnob().name() == 'img29':\n        imgpipe_path = imgpipe_path + '29.png'\n    \n    with nuke.thisNode():\n    \tnode = nuke.toNode('Read_Bokeh')\n    \tfile = node.knob('file').setValue(imgpipe_path)"
- tile_color 0xca7d4eff
- gl_color 0xff
- selected true
- xpos -234
- ypos 867
- addUserKnob {20 FT l "Bokeh List"}
- addUserKnob {22 img01 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img01.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img02 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img02.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img03 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img03.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img05 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img05.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img06 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img06.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img07 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img07.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img08 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img08.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img09 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img09.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img10 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img10.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img11 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img11.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img12 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img12.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img13 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img13.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img14 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img14.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img15 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img15.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img16 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img16.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img17 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img17.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img18 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img18.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img19 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img19.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img20 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img20.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img21 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img21.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img22 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img22.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img23 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img23.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img24 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img24.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img25 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img25.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img26 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img26.png\" width = \"100\" height = \"100\">" +STARTLINE}
- addUserKnob {22 img27 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img27.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img28 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img28.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {22 img29 l "<img src=\":Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img29.png\" width = \"100\" height = \"100\">" -STARTLINE}
- addUserKnob {26 ""}
- addUserKnob {3 output_size l "Output Size"}
- output_size 512
- addUserKnob {6 anamorphic l Anamorphic -STARTLINE}
- addUserKnob {1 pipe_path l "Images path" +DISABLED}
- pipe_path "Y:\\MMP\\NUKE\\NUKE_PIPE_DEV\\Gizmos\\Franklin\\Bokeh_images\\imgage.png"
- addUserKnob {26 FT1 l " " T " "}
- addUserKnob {26 FT2 l " " T "                                                                                               "}
- addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2017"}
-}
- Read {
-  inputs 0
-  file Y:/MMP/NUKE/NUKE_PIPE_DEV/Gizmos/Franklin/Bokeh_images/img
-  format "110 110 0 0 110 110 1 "
-  before black
-  origset true
-  on_error checkerboard
-  colorspace sRGB
-  in_colorspace linear
-  out_colorspace linear
   name Read_Bokeh
   selected true
   xpos -70

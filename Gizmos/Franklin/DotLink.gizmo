@@ -9,6 +9,7 @@ Dot {
  selected true
  hide_input true
  addUserKnob {20 FTDOT l "Dot Link"}
+ addUserKnob {52 MM_easySearch l "" -STARTLINE T MM_easySearch(nuke.thisNode())}
  addUserKnob {22 python l INVISIBLE t "If it's not automatically done so use this button to reconnect the Dot to the input Node." -STARTLINE +INVISIBLE T "def getNode(nodeName):\n nodeToConnect = None\n for node in nuke.allNodes(): \n  if node.name() == nodeName: \n   return node \n\nnuke.thisNode().setInput(0,getNode(nuke.thisNode()\['input_node_2'].value()  ))"}
  addUserKnob {41 hide_input_1 l "Hide Input" T hide_input}
  addUserKnob {6 convert l "Postage Stamp" t "Display a small image on this node in Node Graph indicating its input." -STARTLINE}
@@ -22,5 +23,4 @@ Dot {
  addUserKnob {26 FT2 l " " T "                                                                                               "}
  addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2018"}
  addUserKnob {1 MM_inputName_hidden +HIDDEN}
- addUserKnob {52 MM_easySearch l "" -STARTLINE T MM_easySearch(nuke.thisNode())}
 }

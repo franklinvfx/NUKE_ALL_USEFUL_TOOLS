@@ -1,5 +1,5 @@
 Group {
- name ColorMerge_F
+ name ColorMerge
  help "Color Merge\n\nMerge the color from the Input \"Color\" to the footage in \"Src\".\n\nIf the \"Mix Color\" slider is on 0, the color is keep from the \"Src\".\n"
  knobChanged "c = nuke.toNode('Copy3')\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(2) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')"
  tile_color 0x7aa9ffff

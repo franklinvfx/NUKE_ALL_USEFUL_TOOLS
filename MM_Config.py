@@ -54,6 +54,18 @@ nuke.load("F_Scripts")
 import C_Tools                         # C gizmos
 
 
+#-----------------------------------------------------------------------------------------------------------------
+# SET NUKE PREFERENCES - W_HOTBOX
+#-----------------------------------------------------------------------------------------------------------------
+pipe_path = pipe_path.replace('\\', "/")
+pref = nuke.toNode('preferences')
+
+pref.knob('hotboxLocation').setValue(pipe_path + 'W_hotbox/')
+pref.knob('hotboxIconLocation').setValue(pipe_path + 'W_hotbox/icons/')
+pref.knob('hotboxShortcut').setValue('<')
+
+
+
 
 print '- Pipe Directory:  ' + pipe_path
 print '- Pipe Version: ................. 1.01\n'

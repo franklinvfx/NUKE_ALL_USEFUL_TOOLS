@@ -72,7 +72,7 @@ nodefont_white = 'ctrl+alt+t'      #
 
 ########################################################################    ## ##  #####  ##  #  #   #         ######    
 menubar = nuke.menu("Nuke")                                     ########    # # #  #      # # #  #   #         #          
-m = menubar.addMenu("&Franklin VFX",  "franklin.png")           ########    #   #  ###    # # #  #   #         ###       
+m = menubar.addMenu("&Franklin",  "franklin.png")           ########    #   #  ###    # # #  #   #         ###       
 ########################################################################    #   #  #####  #  ##  #####         # 
 
 m.addMenu('Node Graph', "F_node.png")    # Dossier 

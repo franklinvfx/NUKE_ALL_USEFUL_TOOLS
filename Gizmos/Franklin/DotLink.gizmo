@@ -24,3 +24,5 @@ Dot {
  addUserKnob {26 FTools l " " t "FranklinVFX.com\n" -STARTLINE T "<font color=\"#1C1C1C\"> Franklin VFX - 2018"}
  addUserKnob {1 MM_inputName_hidden +HIDDEN}
 }
+
+##

@@ -1,6 +1,6 @@
 #! /lot/s27/SWDEVL/SOFTWARE/linuxrh9_intel/nuke4.5/12/nuke4.5.12 -nx
 version 4.5012
-Gizmo {
+Group {
  inputs 4
  addUserKnob { 20 "" User }
  addUserKnob { 26 "" Additive }

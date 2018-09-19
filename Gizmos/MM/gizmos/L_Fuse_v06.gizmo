@@ -1,4 +1,4 @@
-Gizmo {
+Group {
 inputs 2
  help "<b><u>L_Fuse_v05</b></u>\t\nFuse is a replacement for the merge(over) node.  \n\n<b>\"Light Flare” - </b> wraps a luma keyed background over the foreground.  Only the brighter parts of the image are wrapped.  \n\n<b>\"Wrap All” - </b>wraps all of the background values over the foreground. \n\n<b>\"Bleed Color” -  </b>wraps hue values from the background over the foreground.  It replaces foreground hue values with background values.  \n\n<b>\"Edge Blur” - </b>blurs the edge areas of the composite.  This edge is determined by alpha transparency. So any parts of the alpha that are semi-transparent will be blurred. \n\n<b>\"Apply operations in Log” -  </b>will layer the foreground over the background in a Log colorspace resulting sometimes in a preferable result. \n\n<i>(For any questions, comments or suggestions please email gizmos@luma-pictures.com)</i>"
 addUserKnob {20 Fuse}

@@ -1,6 +1,6 @@
 #! C:/Program Files/Nuke7.0v6/Nuke7.0.exe -nx
 version 7.0 v6
-Gizmo {
+Group {
  inputs 3
  help "Uses a series of blurs added together to create a more optically-correct glow.\n\n\nCreated by Ben McEwan\nwww.benmcewan.com"
  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() in ('disableLuma', 'showPanel'):\n    switch = n\['disableLuma'].value()\n    if switch:\n        n\['lumaThreshold'].setEnabled(False)\n    else:\n        n\['lumaThreshold'].setEnabled(True)"

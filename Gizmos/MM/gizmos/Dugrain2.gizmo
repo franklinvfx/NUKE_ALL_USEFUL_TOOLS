@@ -1,6 +1,6 @@
 #! /Applications/Nuke10.5v1/Nuke10.5v1.app/Contents/MacOS//libnuke-10.5.1.dylib -nx
 version 10.5 v1
-Gizmo {
+Group {
  help "Adds synthetic grain. Push \"presets\" to get predefined types of grain, these are the correct size for 2K scans.\n\nYou can also adjust the sliders to match a sample piece of grain. Find a sample with a rather constant background, blur it to remove the grain, and use as input to this. View with a wipe in the viewer so you can make a match. It helps to view and match each of the red, green, blue seperately."
  label "\n"
  note_font "Bitstream Vera Sans"

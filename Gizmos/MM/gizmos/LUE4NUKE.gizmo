@@ -1,6 +1,6 @@
 #! /Applications/Nuke9.0v5/Nuke9.0v5.app/Contents/MacOS//libnuke-9.0.5.dylib -nx
 version 9.0 v5
-Gizmo {
+Group {
  inputs 2
  tile_color 0x2c00ffff
  addUserKnob {20 Primaries}

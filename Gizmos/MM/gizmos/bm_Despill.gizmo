@@ -1,6 +1,6 @@
 #! C:/Program Files/Nuke7.0v6/Nuke7.0.exe -nx
 version 7.0 v6
-Gizmo {
+Group {
 inputs 3
 help "A collection of despill algorithms. Based off Andreas Frickinger's \"DespillMadness\" gizmo, but with tweaks and extra features.\n\n\nCreated by Ben McEwan\nwww.benmcewan.com"
 knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\n\nif k.name() in ('replacementChoice', 'showPanel'):\n    replacementChoice = n\['replacementChoice'].value()\n    if replacementChoice == 'Auto':\n        n\['bgColour'].setVisible(False)\n        n\['lumaBoost'].setVisible(False)\n        n\['gammaCorrect'].setVisible(False)\n        n\['bgBlur'].setVisible(False)\n\n    elif replacementChoice == 'Colour':\n        n\['bgColour'].setVisible(True)\n        n\['lumaBoost'].setVisible(True)\n        n\['gammaCorrect'].setVisible(True)\n        n\['bgBlur'].setVisible(False)\n    \n    elif replacementChoice == 'Background':\n\n        n\['bgColour'].setVisible(False)\n        n\['lumaBoost'].setVisible(False)\n        n\['gammaCorrect'].setVisible(False)\n        n\['bgBlur'].setVisible(True)"

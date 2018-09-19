@@ -1,6 +1,6 @@
 #! C:/Program Files/Nuke6.0v6/Nuke6.0.exe -nx
 version 6.0 v6
-Gizmo {
+Group {
  inputs 2
  help "KillOutline reduces unwanted outlines from keyed footage.\n\nerode controls: erode the alpha in for the amount of the visible outline.\n\nexpand controls: expand outer pixels of eroded image out again until it reaches the edge of the original alpha.\n\ntransition treatment: if needed, blur the transition between original image and extension."
  addUserKnob {20 Settings}

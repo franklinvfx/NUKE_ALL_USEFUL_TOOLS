@@ -1,6 +1,6 @@
 #! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
 version 7.0 v8
-Gizmo {
+Group {
  inputs 2
  help "Push or Pull RGB pixels using the Alpha channel as mask.\n\nFor a best result you can combine several PushPixels.\n\n(beta version)"
  tile_color 0x262626ff

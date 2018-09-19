@@ -1,4 +1,4 @@
-Gizmo {
+Group {
  addUserKnob {20 BlurHue}
  addUserKnob {41 size T Blur1.size}
  addUserKnob {41 crop l "crop to format" T Blur1.crop}

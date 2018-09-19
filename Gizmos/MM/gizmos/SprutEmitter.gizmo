@@ -1,6 +1,6 @@
 #! /net/global/opt/foundry/nuke-7.0v9/Nuke7.0 -nx
 version 7.0 v9
-Gizmo {
+Group {
  inputs 2
  help "SprutEmitter v1.0\n(c) 2012-2014 theo@euahuba.com\n\nWritten by theodor groeneboom\nBased on Jos Stam's 1999 siggraph paper \"Stable Fluids\"\n\nUnder GPL/GNU License.\nPaypal donations to theo@euqahuba.com"
  tile_color 0x2098ffff

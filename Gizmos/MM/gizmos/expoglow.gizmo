@@ -1,6 +1,6 @@
 #! C:/Program Files/Nuke6.3v8/Nuke6.3.exe -nx
 version 6.3 v8
-Gizmo {
+Group {
  inputs 2
  addUserKnob {20 exponentialGlow l "Exponential Glow"}
  addUserKnob {20 PreGrade n 1}

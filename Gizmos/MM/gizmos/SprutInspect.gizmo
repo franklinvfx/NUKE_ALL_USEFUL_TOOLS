@@ -1,6 +1,6 @@
 #! /net/global/opt/foundry/nuke-7.0v9/Nuke7.0 -nx
 version 7.0 v9
-Gizmo {
+Group {
  tile_color 0x2098ffff
  gl_color 0x2098ffff
  note_font_size 30

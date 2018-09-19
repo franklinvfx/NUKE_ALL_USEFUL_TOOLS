@@ -2,7 +2,7 @@
 # By Jason Bidwell
 # Updated 05-04-2013
 
-Gizmo {
+Group {
 inputs 4
 tile_color 0xff7524ff
 note_font Verdana

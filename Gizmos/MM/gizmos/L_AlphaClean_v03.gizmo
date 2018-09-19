@@ -1,4 +1,4 @@
-Gizmo {
+Group {
  help "L_AlphaClean_v03 AlphaClean removes stray pixels from the alpha channel of your matte. Removes black pixels in the white area of the matte and white pixels in the black area. ”Size” - controls the size of pixels that are removed. ”Original Edge Amount” - controls how untouched the matte edge is. ”Original Edge Width” - defines the width of the original edge of the matte. (For any questions, comments or suggestions please email gizmos@luma-pictures.com)"
  addUserKnob {20 AlphaClean}
  addUserKnob {7 size R 0 10}

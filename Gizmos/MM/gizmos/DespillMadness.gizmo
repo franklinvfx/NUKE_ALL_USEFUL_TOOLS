@@ -1,6 +1,6 @@
 #! /Applications/Nuke6.3v4/NukeX6.3v4.app/../Nuke6.3v4.app/Contents/MacOS/Nuke6.3v4 -nx
 version 6.3 v4
-Gizmo {
+Group {
  inputs 2
  note_font "Bitstream Vera Sans"
  mapsize {0.15 0.15}

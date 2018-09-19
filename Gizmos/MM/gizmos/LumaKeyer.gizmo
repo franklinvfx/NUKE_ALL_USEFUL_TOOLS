@@ -1,6 +1,6 @@
 #! /Applications/Nuke6.0v4-32/Nuke6.0v4.app/Contents/MacOS/Nuke6.0v4 -nx
 version 6.0 v4
-Gizmo {
+Group {
  help " advanced luma keyer that uses misc colour space models to extract luminance"
  addUserKnob {20 User}
  addUserKnob {41 channels T Remove1.channels}

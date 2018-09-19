@@ -1,6 +1,6 @@
 #! /Applications/Nuke9.0v5/Nuke9.0v5.app/Contents/MacOS//libnuke-9.0.5.dylib -nx
 version 9.0 v5
-Gizmo {
+Group {
  inputs 2
  help "Push or Pull RGB pixels using the Alpha channel as mask.\n\nFor a best result you can combine several PushPixels.\n\n(beta version)"
  tile_color 0x94960fff

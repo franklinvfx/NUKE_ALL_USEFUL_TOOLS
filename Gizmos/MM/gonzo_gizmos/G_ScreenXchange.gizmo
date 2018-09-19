@@ -1,0 +1,549 @@
+Group {
+ name G_ScreenXchange
+ help "Screen-X-change\n\nThis tool  doesn't output a Matte, instead it replaces a Green or Bluescreen with Background using a different math  than usual Keying\n\nUse this tool to help retain  more detail on Tricky Edges. Choose your ScreenColor (Blue or Green), use the color picker to sample your actual Screen Color (do this by looking at you source) or Use a a CleanPlate of your Screen. Plug in a Matte and use it as a Masl, Hold Out (core Matte), Garbage Matte or a Base Key  to get rid of  Undesired areas. You can use the Mix value control the intensity of your \"Ghost\". This way you can use the Result as your New Background. Once you have a result you like you can check the \"Additive Output\" checkbox to ouptput an Addivtive result that you can Plus into your BG.\n\nSource = A plate that has Green or Blue Screen in it (MUST USE)\n\nBG = Background input (MUST USE)\n\nClean Plate = Instead of Sampling a Color, you can use a Clean Plate. You can  use IBKs color to make one  (OPTIONAL)\n\nMatte = You can Plug a Matte (alpha) and choose to use it as a Mask, HoldOut, Garbage Matte or a Base Key.  Use the Matte controls to tweak size and softness \n\n\n\n\n\nHope you find this Useful!\n\nDaniel Gonzalez Solozabal \nGONZO FX\n\n"
+ selected true
+ addUserKnob {20 User}
+ addUserKnob {26 Titile l Screen-X-Change T "                                          \n\n"}
+ addUserKnob {4 ScreenColor l "Screen Color" M {Blue Green}}
+ ScreenColor Green
+ addUserKnob {18 ColorPick l Color}
+ ColorPick {0 0.25 0}
+ addUserKnob {6 CleanPlateOption l "Use CleanPlate" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 MatteTitle l "Matte Input Controls" T "\n"}
+ addUserKnob {4 HOGB l "Use Matte Input as:" M {HoldOut Garbage "Base Key" Mask "" "" ""}}
+ HOGB Mask
+ addUserKnob {7 MatteShrink l "Matte Offset" R 0 40}
+ MatteShrink 1
+ addUserKnob {41 size l Softness T MatteBlur.size}
+ addUserKnob {26 ""}
+ addUserKnob {20 dede l "Channel Tweak" n 1}
+ dede 0
+ addUserKnob {41 which l "Red Balance" T AverageWRED1.which}
+ addUserKnob {7 GammaTweak l Gamma R 0 4}
+ GammaTweak 0.95
+ addUserKnob {7 GainTweak l Gain R 0 4}
+ GainTweak 0.95
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {7 DeSpillr l DeSpill}
+ DeSpillr 1
+ addUserKnob {26 ""}
+ addUserKnob {41 which_1 l Mix T OverallMix.which}
+ addUserKnob {6 addresult l "Additive Output" +STARTLINE}
+ addUserKnob {26 Signature l "" +STARTLINE T "\n\nGONZO FX    -   Daniel Gonzalez Solozabal\n"}
+}
+ Input {
+  inputs 0
+  name MatteInput
+  xpos 1561
+  ypos 1549
+  number 3
+ }
+ Blur {
+  channels rgba
+  filter quadratic
+  name MatteBlur
+  xpos 1706
+  ypos 1549
+ }
+set N1cefdfe0 [stack 0]
+ Dilate {
+  channels rgba
+  size {{parent.MatteDilate.size i}}
+  name MatteDilate1
+  xpos 1859
+  ypos 1549
+ }
+set N8cbe410 [stack 0]
+ Dot {
+  name Dot20
+  xpos 1893
+  ypos 1490
+ }
+set N11092840 [stack 0]
+ Invert {
+  name InvertMatte1
+  xpos 2130
+  ypos 1480
+ }
+ Input {
+  inputs 0
+  name BG
+  xpos 1324
+  ypos 336
+  number 1
+ }
+ Dot {
+  name Dot2
+  xpos 1358
+  ypos 493
+ }
+set N1d19b310 [stack 0]
+ Dot {
+  name Dot1
+  xpos 2242
+  ypos 479
+ }
+ Dot {
+  name Dot3
+  xpos 2242
+  ypos 1374
+ }
+set N10a3e060 [stack 0]
+push $N1d19b310
+ Input {
+  inputs 0
+  name CleanPlate
+  xpos 870
+  ypos 349
+  number 2
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.ColorPick.r i x1001 0} {parent.ColorPick.g i} {parent.ColorPick.b i} 0}
+  name ScreenColor
+  xpos 1048
+  ypos 455
+ }
+ Switch {
+  inputs 2
+  which {{parent.CleanPlateOption i}}
+  name ColorOrClean
+  xpos 870
+  ypos 478
+ }
+ Dot {
+  name Dot7
+  xpos 904
+  ypos 585
+ }
+set N10a59d60 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name BGminusCOLOR
+  xpos 1324
+  ypos 581
+ }
+push $N10a59d60
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name ColorGreenCH
+  xpos 870
+  ypos 665
+ }
+set N10a48660 [stack 0]
+push $N10a59d60
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name ColorBlueCH
+  xpos 1025
+  ypos 663
+ }
+set N10a898e0 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.GreenOrBlue1.which i}}
+  name GreenOrBlue2
+  xpos 1025
+  ypos 711
+ }
+push $N10a59d60
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name ColorRedCH
+  xpos 718
+  ypos 664
+ }
+push $N10a898e0
+push $N10a48660
+ Switch {
+  inputs 2
+  which {{parent.ScreenColor i}}
+  name GreenOrBlue1
+  xpos 870
+  ypos 713
+ }
+ Dissolve {
+  inputs 2
+  which 0.5
+  name AverageWRED1
+  xpos 794
+  ypos 759
+ }
+ Gamma {
+  value {{parent.GammaTweak i}}
+  name GammaCHBG
+  xpos 794
+  ypos 814
+ }
+ Grade {
+  channels all
+  blackpoint 0.0001
+  white {{parent.GainTweak i}}
+  name GradeCHBG
+  xpos 794
+  ypos 881
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name MINUSaverageValue1
+  xpos 1025
+  ypos 887
+ }
+ Clamp {
+  minimum 0.0001
+  name ClampBG
+  xpos 1022
+  ypos 1066
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name MergeDivide
+  xpos 1324
+  ypos 1201
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos 1616
+  ypos 335
+ }
+ Reformat {
+  name Reformatsource
+  xpos 1616
+  ypos 543
+ }
+ Dot {
+  name Dot8
+  xpos 1650
+  ypos 645
+ }
+set N10b05710 [stack 0]
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name ColorGreenCH1
+  xpos 1616
+  ypos 707
+ }
+set N10b09970 [stack 0]
+push $N10b05710
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name ColorBlueCH1
+  xpos 1772
+  ypos 703
+ }
+set N10b16a70 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.GreenOrBlue1.which}}
+  name GreenOrBlue4
+  xpos 1772
+  ypos 756
+ }
+push $N10b05710
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name ColorRedCH1
+  xpos 1479
+  ypos 710
+ }
+push $N10b16a70
+push $N10b09970
+ Switch {
+  inputs 2
+  which {{parent.GreenOrBlue1.which i}}
+  name GreenOrBlue3
+  xpos 1616
+  ypos 756
+ }
+ Dissolve {
+  inputs 2
+  which {{parent.AverageWRED1.which}}
+  name AverageWRED2
+  xpos 1556
+  ypos 820
+ }
+ Gamma {
+  value {{parent.GammaCHBG.value i x1012 0.8}}
+  name GammaCHFG
+  xpos 1556
+  ypos 876
+ }
+ Grade {
+  channels all
+  white {{parent.GradeCHBG.white i}}
+  name GradeCHFG
+  xpos 1556
+  ypos 938
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name MINUSaverageValue2
+  xpos 1772
+  ypos 944
+ }
+ Multiply {
+  value {{parent.DeSpillr i}}
+  name MultiplySpill
+  xpos 1772
+  ypos 993
+ }
+set N10b6a060 [stack 0]
+ Clamp {
+  minimum 0.0001
+  name ClampFG
+  xpos 1772
+  ypos 1103
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name MergeMULTIPLY
+  xpos 1772
+  ypos 1201
+ }
+push $N10b05710
+ Dot {
+  name Dot9
+  xpos 2062
+  ypos 645
+ }
+set N10b8c870 [stack 0]
+ Merge2 {
+  inputs 2
+  operation plus
+  name MergePLUS
+  xpos 2028
+  ypos 1201
+ }
+ Dot {
+  name Dot5
+  xpos 2062
+  ypos 1300
+ }
+set N10b9da20 [stack 0]
+ Dot {
+  name Dot19
+  xpos 2636
+  ypos 1300
+ }
+set N10ba1d70 [stack 0]
+ Keymix {
+  inputs 3
+  name KeymixMask
+  xpos 2298
+  ypos 1480
+ }
+ Dot {
+  name Dot6
+  xpos 2332
+  ypos 1681
+ }
+push $N1cefdfe0
+ Dot {
+  name Dot21
+  xpos 1813
+  ypos 1639
+ }
+ Invert {
+  name InvertMatte
+  xpos 1855
+  ypos 1629
+ }
+ Dilate {
+  channels rgba
+  size {{-parent.MatteShrink i}}
+  name MatteDilate
+  xpos 2501
+  ypos 1635
+ }
+push $N10a3e060
+ Dot {
+  name Dot18
+  xpos 2242
+  ypos 1833
+ }
+set N10bc8660 [stack 0]
+push $N8cbe410
+push $N10b8c870
+ Dot {
+  name Dot13
+  xpos 2556
+  ypos 645
+ }
+set N10bcca80 [stack 0]
+ Dot {
+  name Dot10
+  xpos 2556
+  ypos 884
+ }
+set N10bcc5f0 [stack 0]
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name ShuffleGspill
+  xpos 2412
+  ypos 880
+ }
+push $N10b6a060
+ Dot {
+  name Dot15
+  xpos 2446
+  ypos 1003
+ }
+set N10be1fe0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name MINUSaverageValue3
+  xpos 2412
+  ypos 947
+ }
+push $N10bcc5f0
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.green
+  name CopyGspill
+  xpos 2522
+  ypos 941
+ }
+push $N10bcca80
+ Dot {
+  name Dot14
+  xpos 2868
+  ypos 912
+ }
+set N10bfe100 [stack 0]
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name ShuffleBspill
+  xpos 2670
+  ypos 908
+ }
+push $N10be1fe0
+ Merge2 {
+  inputs 2
+  operation minus
+  name MINUSaverageValue4
+  xpos 2670
+  ypos 999
+ }
+push $N10bfe100
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.blue
+  name CopyBSpill
+  xpos 2834
+  ypos 993
+ }
+ Switch {
+  inputs 2
+  which {{parent.GreenOrBlue1.which i}}
+  name GreenOrBlue6
+  xpos 2706
+  ypos 1122
+ }
+ Dot {
+  name Dot16
+  xpos 2740
+  ypos 1438
+ }
+set N10c2dab0 [stack 0]
+push $N10ba1d70
+ Keymix {
+  inputs 3
+  name CoreKeymix
+  xpos 2602
+  ypos 1543
+ }
+ Keymix {
+  inputs 3
+  name GarbageKeymix
+  xpos 2602
+  ypos 1728
+ }
+push $N11092840
+push $N10a3e060
+push $N10b9da20
+ Keymix {
+  inputs 3
+  name KeymixGB
+  xpos 1859
+  ypos 1364
+ }
+push $N11092840
+push $N10c2dab0
+push $N10b9da20
+ Keymix {
+  inputs 3
+  name KeymixHO
+  xpos 2028
+  ypos 1428
+ }
+ Switch {
+  inputs 4
+  which {{parent.HOGB i}}
+  name HOGBSwitch
+  xpos 2028
+  ypos 1734
+ }
+push $N10bc8660
+ Dissolve {
+  inputs 2
+  which 1
+  name OverallMix
+  xpos 2028
+  ypos 1823
+ }
+set N10c561f0 [stack 0]
+push $N10bc8660
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge2
+  xpos 2208
+  ypos 1902
+ }
+ Dot {
+  name Dot4
+  xpos 2242
+  ypos 1969
+ }
+push $N10c561f0
+ Switch {
+  inputs 2
+  which {{parent.addresult}}
+  name Switchoutput
+  xpos 2028
+  ypos 1965
+ }
+ Output {
+  name Output1
+  xpos 2028
+  ypos 2037
+ }
+end_group

@@ -1,0 +1,109 @@
+
+Group {
+name G_WrappersDelight
+help "Daniel Gonzalez S"
+addUserKnob {20 User l "Wrappers Delight"}
+addUserKnob {7 Sizerrr l Size R 0 100}
+Sizerrr 100
+addUserKnob {7 Intensityy l Intensity}
+Intensityy 0.2
+addUserKnob {7 BGblurr l "BG Blur" R 0 100}
+BGblurr 100
+}
+Input {
+inputs 0
+name mask
+xpos 369
+ypos 463
+number 2
+}
+Input {
+inputs 0
+name BG
+xpos -27
+ypos 325
+number 1
+}
+Blur {
+channels rgba
+size {{parent.BGblurr i}}
+name BlurBG
+xpos -27
+ypos 377
+}
+Shuffle {
+alpha white
+name Shuffle1
+xpos 83
+ypos 377
+}
+Input {
+inputs 0
+name Input
+xpos 543
+ypos 165
+}
+Dot {
+name Dot80
+xpos 577
+ypos 245
+}
+set N7f0d7000 [stack 0]
+Shuffle {
+red alpha
+green alpha
+blue alpha
+name ShuffleAAAA
+xpos 374
+ypos 241
+}
+set N160b7b10 [stack 0]
+Invert {
+name InvertAAAA
+xpos 197
+ypos 235
+}
+Blur {
+channels rgba
+size {{parent.Sizerrr i}}
+name SIZEAAAA
+xpos 197
+ypos 280
+}
+push $N160b7b10
+Merge2 {
+inputs 2
+operation in
+name InAAAA
+xpos 197
+ypos 332
+}
+Merge2 {
+inputs 2
+operation in
+name InBGAAAA
+xpos 197
+ypos 377
+}
+push $N7f0d7000
+Merge2 {
+inputs 2+1
+bbox B
+name FUCKKK
+xpos 369
+ypos 377
+}
+push $N7f0d7000
+Dissolve {
+inputs 2
+which {{parent.Intensityy i}}
+name Dissolveeee
+xpos 543
+ypos 371
+}
+Output {
+name Output1
+xpos 543
+ypos 444
+}
+end_group

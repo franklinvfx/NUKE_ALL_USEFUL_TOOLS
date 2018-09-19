@@ -1,8 +1,17 @@
 import nuke
+from menu import pipe_path
+
+#-----------------------------------------------------------------------------------------------------------------
+# ADD PATH
+#-----------------------------------------------------------------------------------------------------------------
+nuke.pluginAddPath(pipe_path + './Gizmos/MM');
+nuke.pluginAddPath(pipe_path + './Gizmos/MM/gizmos');
+nuke.pluginAddPath(pipe_path + './Gizmos/MM/gonzo_gizmos');
+nuke.pluginAddPath(pipe_path + './Gizmos/MM/gonzo_icons');
+
+
 
 menubar = nuke.menu("Nuke")
- 
-
 toolbar = nuke.toolbar("Nodes")
 
 m = toolbar.addMenu("GIZMO", icon="icon.png")

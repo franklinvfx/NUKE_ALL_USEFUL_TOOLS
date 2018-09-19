@@ -1,0 +1,117 @@
+
+Group {
+ inputs 2
+ name G_Matchtone
+ help "From: Sample the color from the area you wish to match\n\nTo: sample the color to be matched\n\nDaniel Gonzalez Solozabal\nGONZO FX"
+ addUserKnob {20 User l Matchtone}
+ addUserKnob {18 Fromm l From}
+ Fromm {1 1 1}
+ addUserKnob {18 Too l To}
+ Too {1 1 1}
+ addUserKnob {26 d l "" +STARTLINE T " \n"}
+ addUserKnob {41 which l Mix T mixalot.which}
+ addUserKnob {26 bh l " " T "\n "}
+ addUserKnob {26 Frim l "" +STARTLINE T "Daniel Gonzalez Solozabal   GONZO FX"}
+}
+ Input {
+  inputs 0
+  name Mask
+  xpos 439
+  ypos 196
+  number 1
+ }
+ Invert {
+  name Invertmask
+  xpos 397
+  ypos 300
+ }
+ Constant {
+  inputs 0
+  name blackass
+  xpos 507
+  ypos 315
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  name Maxmaskl
+  xpos 397
+  ypos 338
+ }
+ Input {
+  inputs 0
+  name Input
+  selected true
+  xpos 310
+  ypos 170
+ }
+ Dot {
+  name Dot1
+  xpos 332
+  ypos 279
+ }
+set Ne8fc600 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.Too.r i} {parent.Too.g i} {parent.Too.b i} 0}
+  name To
+  xpos 3
+  ypos 243
+ }
+ Shuffle {
+  alpha white
+  name Shuffleto
+  xpos 3
+  ypos 338
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.Fromm.r i} {parent.Fromm.g i} {parent.Fromm.b i} 0}
+  name From
+  xpos 87
+  ypos 240
+ }
+ Shuffle {
+  alpha white
+  name Shufflefrom
+  xpos 87
+  ypos 312
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name divfromto
+  xpos 87
+  ypos 338
+ }
+push $Ne8fc600
+ Merge2 {
+  inputs 2
+  operation multiply
+  name multfromto
+  xpos 177
+  ypos 338
+ }
+ Keymix {
+  inputs 3
+  channels rgb
+  name Keymixmatchtone
+  xpos 287
+  ypos 338
+ }
+push $Ne8fc600
+ Dissolve {
+  inputs 2
+  which 1
+  name mixalot
+  xpos 321
+  ypos 444
+ }
+ Output {
+  name Output1
+  xpos 321
+  ypos 482
+ }
+end_group

@@ -1,0 +1,37 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+ addUserKnob {20 User l Colormatch}
+ addUserKnob {41 channels T Grade1.channels}
+ addUserKnob {26 ""}
+ addUserKnob {26 Source}
+ addUserKnob {41 blackpoint T Grade1.blackpoint}
+ addUserKnob {41 whitepoint T Grade1.whitepoint}
+ addUserKnob {26 Target}
+ addUserKnob {41 black l blackpoint T Grade1.black}
+ addUserKnob {41 white l whitepoint T Grade1.white}
+ addUserKnob {26 ""}
+ addUserKnob {26 Adjust}
+ addUserKnob {41 multiply T Grade1.multiply}
+ addUserKnob {41 gamma T Grade1.gamma}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix T Grade1.mix}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 190
+  ypos -96
+ }
+ Grade {
+  multiply {1 1 1 1}
+  name Grade1
+  xpos 190
+  ypos -26
+ }
+ Output {
+  name Output1
+  xpos 190
+  ypos 52
+ }
+end_group

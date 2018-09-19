@@ -1,0 +1,524 @@
+
+Group {
+ help "Channel ReBuild\n\nUse this tool to rebuild existing color Channel o Channels that come with undesired aberrations, offests, bad pixels, etc.\n\nCheck boxes indicate channels that will be Fixed, all though the Channel chosen as a \"Good Channel\" in the dropdown will not be afected at all. Uncheck boxes to fix an induvidual channel to fix (If only channel is to be corrected, uncheck the other channel boxes)\n\nPick your \"good\" channel with the dropdown menu, to match opposite channel to it. Its selected to Green by default (which can be used to fix common chromatic aberrations where Red and Blue are off)\n\nSelect the amount of Fix by using the Amount slider\nYou can add some sharpening to the channels to help prevent bluriness \n\nHope you find this useful \n\nDaniel Gonzalez Solozabal"
+name G_ChannelReBuild
+ addUserKnob {20 User l ChannelRebuild}
+ addUserKnob {26 Title l "Aberratorade" T "\n"}
+ addUserKnob {26 Channelpick l Rebuild: T ""}
+ addUserKnob {6 redcheck l Red -STARTLINE}
+ redcheck true
+ addUserKnob {6 greencheck l Green t "   " -STARTLINE}
+ greencheck true
+ addUserKnob {6 bluecheck l Blue -STARTLINE}
+ bluecheck true
+ addUserKnob {4 menupulldown l "    Using" -STARTLINE M {R "G " B "" "" "" "" "" ""}}
+ menupulldown "G "
+ addUserKnob {26 note l "" -STARTLINE T " as a \"Good\" Channel"}
+ addUserKnob {7 BlendSlider l Amount R 1 30}
+ BlendSlider 2
+ addUserKnob {7 SharpenSlider l "Sharpen " R 0 10}
+ addUserKnob {26 Signature l "" +STARTLINE T "\n\nGONZO FX \nDaniel Gonzalez Solozabal / BruTools / www.retinaut.com"}
+}
+ Input {
+  inputs 0
+  name Source
+  label Plate
+  xpos 461
+  ypos 405
+ }
+ Dot {
+  name Dot39
+  xpos 495
+  ypos 660
+ }
+set N2c6ef40 [stack 0]
+ Dot {
+  name Dot77
+  xpos 495
+  ypos 1146
+ }
+set N2c708c0 [stack 0]
+ Dot {
+  name Dot79
+  xpos 495
+  ypos 1628
+ }
+ Dot {
+  name Dot80
+  xpos 874
+  ypos 1628
+ }
+set N18ef6da0 [stack 0]
+ Dot {
+  name Dot53
+  xpos 874
+  ypos 1698
+ }
+set N25b1e7d0 [stack 0]
+ Blur {
+  channels rgba
+  size {{parent.BlurG.size i}}
+  name BlurG1
+  xpos 898
+  ypos 1778
+ }
+set N18eeff90 [stack 0]
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle28
+  xpos 1008
+  ypos 1778
+ }
+push $N18eeff90
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name B_Shuffle2
+  xpos 898
+  ypos 1862
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name div6
+  xpos 1008
+  ypos 1862
+ }
+push $N25b1e7d0
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name B_Shuffle
+  xpos 534
+  ypos 1694
+ }
+ Dot {
+  name Dot55
+  xpos 568
+  ypos 1944
+ }
+set N25b2ccc0 [stack 0]
+ Dot {
+  name Dot56
+  xpos 568
+  ypos 2036
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge72
+  xpos 1008
+  ypos 2032
+ }
+ Dot {
+  name Dot69
+  xpos 1118
+  ypos 2036
+ }
+ Sharpen {
+  channels rgba
+  size {{parent.SharpenR.size i}}
+  name SharpenG2
+  xpos 1228
+  ypos 2033
+ }
+push $N25b1e7d0
+ Blur {
+  channels rgba
+  size {{parent.BlurR.size i}}
+  name BlurR1
+  xpos 731
+  ypos 1781
+ }
+set N25b83aa0 [stack 0]
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle36
+  xpos 621
+  ypos 1781
+ }
+push $N25b83aa0
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name B_Shuffle1
+  xpos 731
+  ypos 1865
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name div5
+  xpos 621
+  ypos 1865
+ }
+push $N25b2ccc0
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge74
+  xpos 621
+  ypos 1940
+ }
+ Dot {
+  name Dot68
+  xpos 1126
+  ypos 1944
+ }
+ Sharpen {
+  channels rgba
+  minimum {{parent.SharpenR.size i}}
+  name SharpenR2
+  xpos 1236
+  ypos 1941
+ }
+push $N18ef6da0
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  name CopyR1
+  xpos 1502
+  ypos 1936
+  disable {{parent.redcheck-1 i}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.green
+  name CopyG1
+  xpos 1502
+  ypos 2028
+  disable {{parent.greencheck-1 i}}
+ }
+push $N2c708c0
+ Dot {
+  name Dot48
+  xpos 850
+  ypos 1146
+ }
+set N2c721c0 [stack 0]
+ Dot {
+  name Dot40
+  xpos 850
+  ypos 1199
+ }
+set N2c73b00 [stack 0]
+ Blur {
+  channels rgba
+  size {{parent.BlurB.size i}}
+  name BlurB1
+  xpos 902
+  ypos 1304
+ }
+set N2c682c0 [stack 0]
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle25
+  xpos 1012
+  ypos 1304
+ }
+push $N2c682c0
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name G_Shuffle2
+  xpos 902
+  ypos 1383
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name div4
+  xpos 1012
+  ypos 1383
+ }
+push $N2c73b00
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name G_Shuffle
+  xpos 533
+  ypos 1195
+ }
+ Dot {
+  name Dot46
+  xpos 567
+  ypos 1465
+ }
+set N2c89520 [stack 0]
+ Dot {
+  name Dot45
+  xpos 567
+  ypos 1557
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge62
+  xpos 1012
+  ypos 1553
+ }
+ Dot {
+  name Dot72
+  xpos 1122
+  ypos 1557
+ }
+ Sharpen {
+  channels rgba
+  size {{parent.SharpenR.size i}}
+  name SharpenB2
+  xpos 1232
+  ypos 1554
+ }
+push $N2c73b00
+ Blur {
+  channels rgba
+  size {{parent.BlendSlider x1015 0}}
+  name BlurR
+  xpos 737
+  ypos 1302
+ }
+set N1db2b3c0 [stack 0]
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle11
+  xpos 627
+  ypos 1302
+ }
+push $N1db2b3c0
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name G_Shuffle1
+  xpos 737
+  ypos 1386
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name div3
+  xpos 627
+  ypos 1386
+ }
+push $N2c89520
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge60
+  xpos 627
+  ypos 1461
+ }
+ Dot {
+  name Dot66
+  xpos 1128
+  ypos 1465
+ }
+ Sharpen {
+  channels rgba
+  size {{parent.SharpenSlider}}
+  name SharpenR
+  xpos 1238
+  ypos 1462
+ }
+push $N2c721c0
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  name CopyR2
+  xpos 1521
+  ypos 1457
+  disable {{parent.redcheck-1 i}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.blue
+  name CopyB1
+  xpos 1521
+  ypos 1549
+  disable {{parent.bluecheck-1 i}}
+ }
+push $N2c6ef40
+ Dot {
+  name Dot78
+  xpos 851
+  ypos 660
+ }
+set N25b431c0 [stack 0]
+ Dot {
+  name Dot47
+  xpos 851
+  ypos 728
+ }
+set N1a58cde0 [stack 0]
+ Blur {
+  channels rgba
+  size {{parent.BlurR.size i}}
+  name BlurB
+  xpos 896
+  ypos 830
+ }
+set N1a5caf00 [stack 0]
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle30
+  xpos 1006
+  ypos 830
+ }
+push $N1a5caf00
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name R_Shuffle2
+  xpos 896
+  ypos 914
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name div2
+  xpos 1006
+  ypos 914
+ }
+push $N1a58cde0
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name R_Shuffle
+  xpos 543
+  ypos 724
+ }
+ Dot {
+  name Dot49
+  xpos 577
+  ypos 994
+ }
+set N18eab860 [stack 0]
+ Dot {
+  name Dot50
+  xpos 577
+  ypos 1086
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge66
+  xpos 1006
+  ypos 1082
+ }
+ Dot {
+  name Dot73
+  xpos 1116
+  ypos 1086
+ }
+ Sharpen {
+  channels rgba
+  size {{parent.SharpenR.size i}}
+  name SharpenB
+  xpos 1226
+  ypos 1083
+ }
+push $N1a58cde0
+ Blur {
+  channels rgba
+  size {{parent.BlurR.size i}}
+  name BlurG
+  xpos 737
+  ypos 831
+ }
+set N25b83ee0 [stack 0]
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle34
+  xpos 637
+  ypos 831
+ }
+push $N25b83ee0
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name R_Shuffle1
+  xpos 737
+  ypos 915
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name div1
+  xpos 637
+  ypos 915
+ }
+push $N18eab860
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge68
+  xpos 637
+  ypos 990
+ }
+ Dot {
+  name Dot75
+  xpos 1090
+  ypos 993
+ }
+ Sharpen {
+  channels rgba
+  size {{parent.SharpenR.size i}}
+  name SharpenG
+  xpos 1223
+  ypos 990
+ }
+push $N25b431c0
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.green
+  name CopyG2
+  xpos 1507
+  ypos 998
+  disable {{parent.greencheck-1 i}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.blue
+  name CopyB2
+  xpos 1507
+  ypos 1078
+ }
+ Switch {
+  inputs 3
+  which {{parent.menupulldown i}}
+  name MainSwitch
+  xpos 1831
+  ypos 1554
+ }
+ Output {
+  name Output2
+  xpos 2029
+  ypos 1554
+ }
+end_group

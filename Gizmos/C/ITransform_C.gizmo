@@ -1,13 +1,9 @@
-set cut_paste_input [stack 0]
-version 6.0 v5
-push $cut_paste_input
 Group {
- name ITransform_Plus
+ name ITransform_C
  help "Déforme (IDistort) l'image \"src\" a l'aide  d'outils de transformations 2D et d'un mask \"warp_mask\".\nCelui-ci sert à déterminer la partie affectée de l'image et sa quantité de blur adoucit la déformation dans ses contours.\n\nL'autre entrée \"mask\" permet de contraindre l'effet dans une partie précise."
  tile_color 0xa57aaaff
  label "\[value filter] "
  selected true
- icon F_onnode.png
  addUserKnob {20 "" l Transform}
  addUserKnob {41 matrix T Transform1.matrix}
  addUserKnob {41 translate T Transform1.translate}
@@ -20,62 +16,93 @@ Group {
  addUserKnob {26 s l " " T " "}
  addUserKnob {41 filter T IDistort2.filter}
  addUserKnob {6 linear l Linear -STARTLINE}
- linear true
  addUserKnob {26 d l " " T " "}
- addUserKnob {7 Amp l Amplitude}
+ addUserKnob {7 Amp l Amplitude R -1 1}
  Amp 1
+ addUserKnob {26 ""}
+ addUserKnob {4 CtrlBbox l Bbox M {"Source Bbox" "Result Bbox" "Crop to format"}}
  addUserKnob {26 ""}
  addUserKnob {20 add l INVISIBLE +INVISIBLE n 1}
  add 0
  addUserKnob {14 AdjBBox1_numpixels l INVISIBLE +INVISIBLE R 0 100}
  AdjBBox1_numpixels 1024
  addUserKnob {20 endGroup l INVISIBLE +INVISIBLE n -1}
- addUserKnob {41 maskChannel l mask T Keymix1.maskChannel}
+ addUserKnob {41 maskChannel l "mask channel" T Keymix1.maskChannel}
  addUserKnob {41 invertMask l invert -STARTLINE T Keymix1.invertMask}
 }
+ Transform {
+  inputs 0
+  center {1024 576}
+  filter Simon
+  black_outside false
+  name Transform1
+  tile_color 0xff0000ff
+  label "expresison link this\nto avoid st map overlay"
+  xpos -1067
+  ypos -81
+  hide_input true
+ }
  Input {
   inputs 0
   name mask
-  xpos 169
-  ypos -417
+  xpos 349
+  ypos -529
   number 2
  }
+set N24833c00 [stack 0]
  Crop {
   box {0 0 {Crop1.width} {Dot5.height}}
   crop false
   name Crop2
-  xpos 169
-  ypos -262
+  xpos 349
+  ypos -458
+ }
+push $N24833c00
+ Dot {
+  name Dot1
+  tile_color 0x8ce08ff
+  xpos 508
+  ypos -525
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch1.which}}
+  name Switch2
+  xpos 474
+  ypos -340
+ }
+ Invert {
+  name Invert1
+  xpos 474
+  ypos 866
  }
  Dot {
   name Dot7
-  xpos 203
-  ypos 462
+  tile_color 0x8ce08ff
+  xpos 508
+  ypos 968
  }
  Input {
   inputs 0
   name src
-  xpos -525
-  ypos -418
+  xpos -770
+  ypos -533
  }
  Dot {
   name Dot5
-  xpos -491
+  tile_color 0x8ce08ff
+  xpos -736
   ypos -260
  }
-set N2eb16b10 [stack 0]
+set N5d765800 [stack 0]
  Dot {
-  name Dot4
-  xpos -491
-  ypos 101
+  name Dot15
+  tile_color 0x8ce08ff
+  xpos -736
+  ypos -49
  }
-set N2eb16e80 [stack 0]
- Dot {
-  name Dot6
-  xpos -491
-  ypos 462
- }
-push $N2eb16b10
+set N7ea10400 [stack 0]
+push $N5d765800
  Remove {
   name Remove1
   xpos -210
@@ -85,20 +112,41 @@ push $N2eb16b10
   numpixels {{parent.AdjBBox1_numpixels.w} {parent.AdjBBox1_numpixels.h}}
   name AdjBBox1
   xpos -210
-  ypos -197
+  ypos -213
  }
  Expression {
   expr0 x
   expr1 y
   name Expression1
   xpos -210
-  ypos -140
+  ypos -173
  }
-set N2eb17c40 [stack 0]
+set Nb2c7e000 [stack 0]
+ Dot {
+  name Dot16
+  tile_color 0x8ce08ff
+  xpos -351
+  ypos -170
+ }
+set Nb2c7f000 [stack 0]
  Dot {
   name Dot2
-  xpos -342
-  ypos -137
+  tile_color 0x8ce08ff
+  xpos -592
+  ypos -170
+ }
+ Crop {
+  box {0 0 {Crop1.width} {Dot5.height}}
+  crop false
+  name Crop3
+  xpos -626
+  ypos -121
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox4
+  xpos -626
+  ypos -52
  }
  Transform {
   translate {{parent.Transform1.translate.main} {parent.Transform1.translate.main}}
@@ -114,38 +162,125 @@ set N2eb17c40 [stack 0]
   shutter {{parent.Transform1.shutter.main}}
   shutteroffset {{Transform1.shutteroffset}}
   shuttercustomoffset {{parent.Transform1.shuttercustomoffset.main}}
-  name Transform2
-  xpos -376
-  ypos -93
+  name Transform3
+  xpos -626
+  ypos -13
  }
-push $N2eb17c40
+set N619fc400 [stack 0]
+push $N619fc400
+add_layer {SizeBbox SizeBbox.a}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 SizeBbox.a
+  name Copy2
+  xpos -626
+  ypos 32
+ }
+push $N7ea10400
+ ChannelMerge {
+  inputs 2
+  A SizeBbox.a
+  output SizeBbox.a
+  name ChannelMerge1
+  xpos -770
+  ypos 25
+ }
+ Dot {
+  name Dot4
+  tile_color 0x8ce08ff
+  xpos -736
+  ypos 189
+ }
+set Ne21da400 [stack 0]
+ Dot {
+  name Dot9
+  tile_color 0x8ce08ff
+  xpos -736
+  ypos 515
+ }
+set Ne21dbc00 [stack 0]
+ Dot {
+  name Dot6
+  tile_color 0x8ce08ff
+  xpos -736
+  ypos 968
+ }
+push $N5d765800
+ Dot {
+  name Dot11
+  tile_color 0x8ce08ff
+  xpos -846
+  ypos -260
+ }
+ Dot {
+  name Dot12
+  tile_color 0x8ce08ff
+  xpos -846
+  ypos 598
+ }
+push $Ne21dbc00
+push $Nb2c7f000
+ Transform {
+  translate {{parent.Transform1.translate.main} {parent.Transform1.translate.main}}
+  rotate {{parent.Transform1.rotate.main}}
+  scale {{parent.Transform1.scale.main} {parent.Transform1.scale.main}}
+  skewX {{parent.Transform1.skewX.main}}
+  skewY {{parent.Transform1.skewY.main}}
+  center {{parent.Transform1.center.main} {parent.Transform1.center.main}}
+  filter {{Transform1.filter}}
+  clamp {{parent.Transform1.clamp.main}}
+  black_outside {{parent.Transform1.black_outside.main}}
+  motionblur {{parent.Transform1.motionblur.main}}
+  shutter {{parent.Transform1.shutter.main}}
+  shutteroffset {{Transform1.shutteroffset}}
+  shuttercustomoffset {{parent.Transform1.shuttercustomoffset.main}}
+  name Transform2
+  xpos -385
+  ypos 17
+ }
+push $Nb2c7e000
  Merge2 {
   inputs 2
   operation minus
   name Merge1
   xpos -210
-  ypos -93
+  ypos 17
  }
  Input {
   inputs 0
   name warp_mask
   xpos -18
-  ypos -420
+  ypos -530
   number 1
  }
+set N7ab52400 [stack 0]
  Crop {
   box {0 0 {Crop1.width} {Dot5.height}}
   crop false
   name Crop14
   xpos -18
-  ypos -265
+  ypos -463
+ }
+push $N7ab52400
+ Dot {
+  name Dot3
+  tile_color 0x8ce08ff
+  xpos 151
+  ypos -527
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch3.which}}
+  name Switch1
+  xpos 117
+  ypos -339
  }
  Clamp {
   channels alpha
   name Clamp1
-  selected true
-  xpos -18
-  ypos -241
+  xpos 117
+  ypos -256
  }
  Shuffle {
   red alpha
@@ -153,29 +288,23 @@ push $N2eb17c40
   blue alpha
   alpha black
   name Shuffle1
-  xpos -18
-  ypos -46
+  xpos 117
+  ypos 86
  }
  Merge2 {
   inputs 2
   operation multiply
   name Merge2
   xpos -210
-  ypos -46
- }
- Multiply {
-  value {{parent.Amp}}
-  name Multiply1
-  xpos -210
-  ypos -22
+  ypos 86
  }
  AddChannels {
   channels forward
   name AddChannels1
   xpos -210
-  ypos 14
+  ypos 136
  }
-push $N2eb16e80
+push $Ne21da400
  Copy {
   inputs 2
   from0 rgba.red
@@ -184,59 +313,108 @@ push $N2eb16e80
   to1 forward.v
   name Copy1
   xpos -210
-  ypos 86
+  ypos 172
  }
  Log2Lin {
   operation lin2log
   name Log2Lin1
   xpos -210
-  ypos 187
+  ypos 276
   disable {{!parent.linear}}
  }
  IDistort {
   uv forward
-  uv_scale {{parent.Multiply1.value}}
+  uv_scale {{parent.Amp}}
   blur_scale 0
   filter Simon
   name IDistort2
   xpos -210
-  ypos 232
+  ypos 300
  }
  Log2Lin {
   name Log2Lin2
   xpos -210
-  ypos 297
+  ypos 336
   disable {{!parent.linear}}
  }
- Keymix {
-  inputs 3
-  maskChannel none
-  name Keymix1
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
   xpos -210
-  ypos 453
+  ypos 512
  }
+set Ndc2c5000 [stack 0]
+ CopyBBox {
+  inputs 2
+  name CopyBBox3
+  xpos -210
+  ypos 595
+ }
+set Ndc2c5800 [stack 0]
  Crop {
   box {0 0 {input.width} {input.height}}
   name Crop1
   xpos -210
-  ypos 572
+  ypos 745
+ }
+push $Ndc2c5000
+ Dot {
+  name Dot13
+  tile_color 0x8ce08ff
+  xpos 7
+  ypos 515
+ }
+ Dot {
+  name Dot14
+  tile_color 0x8ce08ff
+  xpos 7
+  ypos 864
+ }
+push $Ndc2c5800
+ Dot {
+  name Dot10
+  tile_color 0x8ce08ff
+  xpos -67
+  ypos 599
+ }
+ Dot {
+  name Dot8
+  tile_color 0x8ce08ff
+  xpos -67
+  ypos 792
+ }
+ Switch {
+  inputs 3
+  which {{parent.CtrlBbox}}
+  name Switch3
+  xpos -210
+  ypos 861
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix1
+  xpos -210
+  ypos 958
+ }
+set N5b735400 [stack 0]
+ Viewer {
+  frame_range 1-280
+  colour_sample_bbox {-0.3984375 -0.2119140625 -0.3974609375 -0.2109375}
+  name Viewer1
+  xpos 70
+  ypos 1126
+ }
+push $N5b735400
+ Remove {
+  channels SizeBbox
+  name Remove2
+  xpos -210
+  ypos 1008
  }
  Output {
   name Output1
   xpos -210
-  ypos 652
- }
- Transform {
-  inputs 0
-  scale {1 1}
-  center {1024 576}
-  filter Simon
-  black_outside false
-  name Transform1
-  tile_color 0xff0000ff
-  label "expresison link this\nto avoid st map overlay"
-  xpos 62
-  ypos 200
-  hide_input true
+  ypos 1143
  }
 end_group

@@ -1,0 +1,6 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+Blocky {
+name Blocky
+selected true
+}

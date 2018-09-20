@@ -1,13 +1,15 @@
 Group {
  name DuGrain
  help "Adds synthetic grain. Push \"presets\" to get predefined types of grain, these are the correct size for 2K scans.\n\nYou can also adjust the sliders to match a sample piece of grain. Find a sample with a rather constant background, blur it to remove the grain, and use as input to this. View with a wipe in the viewer so you can make a match. It helps to view and match each of the red, green, blue seperately."
+ onCreate "if 'aces' in nuke.root().knob('OCIO_config').value():\n    nuke.thisNode().knob('colorspace').setValue('Aces')\nelse:\n    nuke.thisNode().knob('colorspace').setValue('Cineon')"
+ knobChanged "OCIOLog_Node = nuke.toNode('OCIO_Log')\nOCIOLog_Node2 = nuke.toNode('OCIO_Log2')\nworkingSpace = nuke.root().knob('workingSpaceLUT').value()\nworkingSpace = 'Aliases/' + workingSpace\nlogAlias = 'Aliases/logc3ei800_arriwide'\n\nif 'aces' in nuke.root().knob('OCIO_config').value():\n    OCIOLog_Node\['in_colorspace'].setValue(workingSpace)\n    OCIOLog_Node\['out_colorspace'].setValue(logAlias)\n    OCIOLog_Node2\['in_colorspace'].setValue(logAlias)\n    OCIOLog_Node2\['out_colorspace'].setValue(workingSpace)\nelse:\n    OCIOLog_Node\['in_colorspace'].setValue('linear')\n    OCIOLog_Node\['out_colorspace'].setValue('linear')\n    OCIOLog_Node2\['in_colorspace'].setValue('linear')\n    OCIOLog_Node2\['out_colorspace'].setValue('linear')"
  label "\n"
  note_font "Bitstream Vera Sans"
  selected true
  mapsize {0.15 0.15}
  addUserKnob {20 grain l Grain}
- addUserKnob {4 colorspace M {Linear Cineon sRGB ""}}
- colorspace Cineon
+ addUserKnob {4 colorspace M {Linear Cineon sRGB Aces ""}}
+ colorspace sRGB
  addUserKnob {41 seedValue l "seed value" T seed.seedValue}
  addUserKnob {20 sizeGroup l Size n 1}
  addUserKnob {14 redSize l red R 0 100}
@@ -55,7 +57,8 @@ Group {
  addUserKnob {41 highlightsSaturation l highlights T SaturationCorrect.highlights.saturation}
  addUserKnob {20 endSaturationGroup l endGroup n -1}
  addUserKnob {20 maskGroup l Mask n 1}
- addUserKnob {41 which l mix T Mix.which}
+ addUserKnob {7 mix}
+ mix 1
  addUserKnob {6 alpha l "Apply only through alpha" +STARTLINE}
  addUserKnob {41 invert_mask l "invert alpha" -STARTLINE T CopyAlpha.invert_mask}
  addUserKnob {20 endMaskGroup l endGroup n -1}
@@ -68,24 +71,24 @@ Group {
  BackdropNode {
   inputs 0
   name BackdropNode_add_noise
-  xpos 257
-  ypos 522
-  bdwidth 322
-  bdheight 375
+  xpos 80
+  ypos 670
+  bdwidth 356
+  bdheight 385
  }
  BackdropNode {
   inputs 0
   name BackdropNode_create_original_noise
   xpos 94
-  ypos 250
-  bdwidth 125
-  bdheight 356
+  ypos 210
+  bdwidth 332
+  bdheight 418
  }
  BackdropNode {
   inputs 0
   name BackdropNode_luminance_mask_disabled
-  xpos -552
-  ypos 596
+  xpos -816
+  ypos 533
   bdwidth 174
   bdheight 77
  }
@@ -94,36 +97,37 @@ Group {
   name BackdropNode_use_mask
   xpos -367
   ypos 403
-  bdwidth 407
-  bdheight 341
- }
- StickyNote {
-  inputs 0
-  name StickyNote2
-  label "display mask in linear colorspace"
-  xpos 389
-  ypos 1455
+  bdwidth 412
+  bdheight 376
  }
  StickyNote {
   inputs 0
   name StickyNote3
   label "add some high level values"
-  xpos 391
-  ypos 549
+  xpos 214
+  ypos 697
  }
  StickyNote {
   inputs 0
   name StickyNote4
   label "depending on cache luminosity"
-  xpos 396
-  ypos 765
+  xpos 219
+  ypos 913
  }
  StickyNote {
   inputs 0
   name StickyNote5
   label add
-  xpos 400
-  ypos 859
+  xpos 223
+  ypos 1007
+ }
+ NoOp {
+  inputs 0
+  name seed
+  xpos 272
+  ypos 297
+  addUserKnob {20 User}
+  addUserKnob {7 seedValue l "seed value" R -100 100}
  }
  ColorLookup {
   inputs 0
@@ -134,39 +138,92 @@ Group {
     blue {curve 1 s0 t-1.593999982 0.564 s-0.1209999993 t0}
     alpha {}}
   name LookupCache_presetDutruc_5245
-  xpos -880
-  ypos 402
+  xpos -638
+  ypos 456
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "La valeur de Seed est fixé a 50"
+  xpos 233
+  ypos 266
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "display mask in linear colorspace"
+  xpos 229
+  ypos 1659
  }
  Input {
   inputs 0
   name Input
-  selected true
-  xpos -120
-  ypos 64
+  xpos 116
+  ypos -211
  }
-set Na4d58000 [stack 0]
+ Dot {
+  name Dot3
+  xpos 150
+  ypos -103
+ }
+set N878e000 [stack 0]
+ OCIOColorSpace {
+  name OCIO_Log
+  xpos 398
+  ypos -20
+ }
+push $N878e000
  Colorspace {
   colorspace_out sRGB
   name Lin2sRGB
-  xpos -197
-  ypos 95
+  xpos 287
+  ypos -19
  }
-push $Na4d58000
+push $N878e000
  Colorspace {
   colorspace_out Cineon
   name Lin2Cin
-  xpos -46
-  ypos 98
+  xpos 179
+  ypos -16
  }
-push $Na4d58000
+push $N878e000
  Switch {
-  inputs 3
-  which {{colorspace i}}
+  inputs 4
+  which {{colorspace}}
   name InColorspace
-  xpos -120
-  ypos 130
+  xpos 116
+  ypos 78
  }
-set N9c33a880 [stack 0]
+ Dot {
+  name Dot1
+  xpos 150
+  ypos 167
+ }
+set N87b3000 [stack 0]
+ Dot {
+  name Dot6
+  xpos -56
+  ypos 185
+ }
+set N87b2c00 [stack 0]
+ Dot {
+  name Dot15
+  xpos -160
+  ypos 185
+ }
+set N87b2800 [stack 0]
+ Dot {
+  name Dot14
+  xpos -275
+  ypos 185
+ }
+set N87b2400 [stack 0]
+ Dot {
+  name Dot13
+  xpos -509
+  ypos 185
+ }
+set N87b2000 [stack 0]
  ColorLookup {
   channels {rgba.red rgba.green rgba.blue -rgba.alpha}
   lut {master {}
@@ -175,12 +232,17 @@ set N9c33a880 [stack 0]
     blue {curve 1 s0 t-3 x0.5375948548 0.1177500486 s0}
     alpha {}}
   name LookupCache
-  xpos -400
-  ypos 418
+  xpos -543
+  ypos 459
  }
-set Nae0c5400 [stack 0]
-push $Nae0c5400
-push $N9c33a880
+set N87e3c00 [stack 0]
+ Dot {
+  name Dot8
+  xpos -509
+  ypos 1668
+ }
+push $N87e3c00
+push $N87b3000
  Noise {
   output {rgba.red -rgba.green -rgba.blue -rgba.alpha}
   cliptype none
@@ -193,7 +255,7 @@ push $N9c33a880
   yrotate {{(0.5+(random(frame-10)/2)+redI)*20 i}}
   name red
   xpos 116
-  ypos 294
+  ypos 293
  }
  Noise {
   output {-rgba.red rgba.green -rgba.blue -rgba.alpha}
@@ -207,7 +269,7 @@ push $N9c33a880
   yrotate {{(0.5+(random(frame-20)/2)+greenI)*20 i}}
   name green
   xpos 116
-  ypos 330
+  ypos 329
  }
  Noise {
   output {-rgba.red -rgba.green rgba.blue -rgba.alpha}
@@ -222,28 +284,28 @@ push $N9c33a880
   yrotate {{(0.5+(random(frame-30)/2)+blueI)*20 i}}
   name blue
   xpos 116
-  ypos 366
+  ypos 365
  }
  Blur {
   channels {rgba.red -rgba.green -rgba.blue none}
   size 0.5
   name BlurRed
   xpos 116
-  ypos 412
+  ypos 411
  }
  Blur {
   channels {-rgba.red rgba.green -rgba.blue none}
   size 0.5
   name BlurGreen
   xpos 116
-  ypos 454
+  ypos 453
  }
  Blur {
   channels {-rgba.red -rgba.green rgba.blue none}
   size 0.5
   name BlurBlue
   xpos 116
-  ypos 496
+  ypos 495
  }
  Clamp {
   channels rgb
@@ -251,7 +313,7 @@ push $N9c33a880
   maximum {{max.r/2+0.5 i} {max.g/2+0.5 i} {max.b/2+0.5 i} 1}
   name ClampGrain
   xpos 116
-  ypos 540
+  ypos 539
  }
  ColorCorrect {
   lookup {shadow {curve 1 s-2.5 0 s0}
@@ -259,60 +321,60 @@ push $N9c33a880
     highlight {curve 0 s0 1 s2.5}}
   name SaturationCorrect
   xpos 116
-  ypos 564
+  ypos 563
  }
-set N16de5400 [stack 0]
+set N8839800 [stack 0]
  Grade {
   add {{random.r/2-1 i} {random.g/2-1 i} {random.b/2-1 i} 1}
   name GradeRandom
-  xpos 293
-  ypos 564
+  xpos 116
+  ypos 712
  }
  Blur {
   channels {rgba.red -rgba.green -rgba.blue none}
   size {{BlurRed.size/random.r i}}
   name BlurRed1
-  xpos 293
-  ypos 603
+  xpos 116
+  ypos 751
  }
  Blur {
   channels {-rgba.red rgba.green -rgba.blue none}
   size {{BlurGreen.size/random.g i}}
   name BlurGreen1
-  xpos 293
-  ypos 649
+  xpos 116
+  ypos 797
  }
  Blur {
   channels {-rgba.red -rgba.green rgba.blue none}
   size {{BlurBlue.size/random.b i}}
   name BlurBlue1
-  xpos 293
-  ypos 692
+  xpos 116
+  ypos 840
  }
  Merge2 {
   inputs 2
   operation multiply
   name Mult_RANDOM
-  xpos 293
-  ypos 765
+  xpos 116
+  ypos 913
  }
-push $N16de5400
+push $N8839800
  Dot {
   name Dot4
-  xpos 25
+  xpos -8
   ypos 567
  }
-set N9b113c00 [stack 0]
-push $Nae0c5400
-push $N9c33a880
+set N8838000 [stack 0]
+push $N87e3c00
+push $N87b2400
  ShuffleCopy {
   inputs 2
   green red2
   blue red2
   alpha red
   name RED
-  xpos -276
-  ypos 503
+  xpos -309
+  ypos 459
  }
  MergeExpression {
   inputs 2
@@ -320,20 +382,20 @@ push $N9c33a880
   channel1 {-rgba.red -rgba.green -rgba.blue none}
   channel2 {-rgba.red -rgba.green -rgba.blue none}
   name EXPGRAINR
-  xpos -291
-  ypos 625
+  xpos -309
+  ypos 628
  }
-push $N9b113c00
-push $Nae0c5400
-push $N9c33a880
+push $N8838000
+push $N87e3c00
+push $N87b2800
  ShuffleCopy {
   inputs 2
   red green2
   blue green2
   alpha green
   name GREEN
-  xpos -173
-  ypos 502
+  xpos -194
+  ypos 459
  }
  MergeExpression {
   inputs 2
@@ -341,28 +403,28 @@ push $N9c33a880
   expr1 Bg+(2*Ag-1)*(Bg*(multiply.g*greenM*Ba))
   channel2 {-rgba.red -rgba.green -rgba.blue none}
   name EXPGRAING
-  xpos -188
-  ypos 622
+  xpos -194
+  ypos 627
  }
  ShuffleCopy {
   inputs 2
   red red
   alpha white
   name RplusG
-  xpos -291
-  ypos 667
+  xpos -309
+  ypos 686
  }
-push $N9b113c00
-push $Nae0c5400
-push $N9c33a880
+push $N8838000
+push $N87e3c00
+push $N87b2c00
  ShuffleCopy {
   inputs 2
   red blue2
   green blue2
   alpha blue
   name BLUE
-  xpos -82
-  ypos 502
+  xpos -90
+  ypos 459
  }
  MergeExpression {
   inputs 2
@@ -370,8 +432,8 @@ push $N9c33a880
   channel1 {-rgba.red -rgba.green -rgba.blue none}
   expr2 Bb+(2*Ab-1)*(Bb*(multiply.b*blueM*Ba))
   name EXPGRAINB
-  xpos -82
-  ypos 620
+  xpos -90
+  ypos 627
  }
  ShuffleCopy {
   inputs 2
@@ -379,26 +441,36 @@ push $N9c33a880
   green green
   alpha white
   name plusB
-  xpos -291
-  ypos 705
+  xpos -309
+  ypos 724
  }
-push $N9b113c00
-push $N9c33a880
+push $N8838000
+push $N87b2000
+ Dot {
+  name Dot7
+  xpos -733
+  ypos 185
+ }
  MergeExpression {
   inputs 2
   expr0 Br+(2*Ar-1)*(Br*(multiply.r*redM))
   expr1 Bg+(2*Ag-1)*(Bg*(multiply.g*greenM))
   expr2 Bb+(2*Ab-1)*(Bb*(multiply.b*blueM))
   name EXPGRAIN
-  xpos -503
-  ypos 626
+  xpos -767
+  ypos 563
+ }
+ Dot {
+  name Dot12
+  xpos -733
+  ypos 1014
  }
  Switch {
   inputs 2
   which {{enableMask i}}
   name Enable_Mask
-  xpos -503
-  ypos 862
+  xpos -309
+  ypos 1010
  }
  MergeExpression {
   inputs 2
@@ -406,99 +478,101 @@ push $N9c33a880
   expr1 Bg+(Ag*random.g)
   expr2 Bb+(Ab*random.b)
   name RANDOM
-  xpos 293
-  ypos 862
+  xpos 116
+  ypos 1010
  }
  Dot {
   name Dot9
-  xpos 327
-  ypos 992
+  xpos 150
+  ypos 1140
  }
-set Ne71e5c00 [stack 0]
+set N88dd800 [stack 0]
+ OCIOColorSpace {
+  name OCIO_Log2
+  selected true
+  xpos 432
+  ypos 1229
+ }
+push $N88dd800
  Colorspace {
   colorspace_in sRGB
   name sRGB2Lin
-  xpos 217
-  ypos 1057
+  xpos 314
+  ypos 1228
  }
-push $Ne71e5c00
+push $N88dd800
  Colorspace {
   colorspace_in Cineon
   name Cin2Lin
-  xpos 372
-  ypos 1059
+  xpos 204
+  ypos 1229
  }
-push $Ne71e5c00
+push $N88dd800
  Switch {
-  inputs 3
+  inputs 4
   which {{colorspace i}}
   name OutColorspace
-  xpos 293
-  ypos 1131
+  xpos 116
+  ypos 1321
  }
-set N9c33ad00 [stack 0]
-push $Na4d58000
+ Dot {
+  name Dot2
+  xpos 150
+  ypos 1407
+ }
+set N88dc800 [stack 0]
+push $N878e000
  Dot {
   name Dot11
-  xpos -571
-  ypos 69
+  xpos -870
+  ypos -103
  }
  Dot {
-  name Dot10
-  xpos -571
-  ypos 1346
+  name Dot5
+  xpos -870
+  ypos 1454
  }
-set Ne71e4c00 [stack 0]
+set N88dc000 [stack 0]
  Copy {
   inputs 2
   channels rgb
   maskChannelInput rgba.alpha
   name CopyAlpha
-  xpos 56
-  ypos 1196
+  xpos -63
+  ypos 1437
  }
-push $N9c33ad00
+push $N88dc800
  Switch {
   inputs 2
   which {{alpha i}}
   name Enable_Alpha
-  xpos 293
-  ypos 1287
+  xpos 116
+  ypos 1492
  }
-push $Ne71e4c00
+push $N88dc000
+ Dot {
+  name Dot10
+  xpos -870
+  ypos 1551
+ }
  Dissolve {
   inputs 2
   channels rgb
-  which 1
+  which {{parent.mix}}
   name Mix
-  xpos 293
-  ypos 1341
+  xpos 116
+  ypos 1547
  }
  Switch {
   inputs 2
   which {{mask_grain i}}
   name Display_Mask
-  xpos 293
-  ypos 1458
+  xpos 116
+  ypos 1664
  }
  Output {
-  name Output2
-  xpos 293
-  ypos 1508
- }
- StickyNote {
-  inputs 0
-  name StickyNote1
-  label "La valeur de Seed est fixé a 50"
-  xpos 389
-  ypos 266
- }
- NoOp {
-  inputs 0
-  name seed
-  xpos 272
-  ypos 298
-  addUserKnob {20 User}
-  addUserKnob {7 seedValue l "seed value" R -100 100}
+  name Output
+  xpos 116
+  ypos 1742
  }
 end_group

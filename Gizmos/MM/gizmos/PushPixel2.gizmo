@@ -1,0 +1,275 @@
+#! /Applications/Nuke9.0v5/Nuke9.0v5.app/Contents/MacOS//libnuke-9.0.5.dylib -nx
+version 9.0 v5
+Group {
+ inputs 2
+ help "Push or Pull RGB pixels using the Alpha channel as mask.\n\nFor a best result you can combine several PushPixels.\n\n(beta version)"
+ tile_color 0x94960fff
+ label "-\nIntermediate"
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_size 10
+ mapsize {0.15 0.15}
+ addUserKnob {20 menu l Push-Pull}
+ addUserKnob {4 push_pull l mode M {Push Pull}}
+ addUserKnob {41 uv_scale l size T IDistort1.uv_scale}
+ addUserKnob {16 edge_size l Edge_size R 0 3}
+ edge_size 5
+ addUserKnob {41 size l "Soft select" T Blur1.size}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color 0.5
+  name Constant1
+  label "Root Format:\n\[value format]"
+  xpos -737
+  ypos 471
+ }
+set N2ca8c060 [stack 0]
+ Dot {
+  name Dot9
+  xpos -529
+  ypos 512
+ }
+ Transform {
+  translate {{parent.edge_size i} {parent.edge_size i}}
+  center {960 540}
+  name Trans_value1
+  xpos -563
+  ypos 546
+ }
+ Input {
+  inputs 0
+  name InputAlpha
+  xpos -461
+  ypos 322
+  number 1
+ }
+set N2ca95d50 [stack 0]
+ Dot {
+  name Dot4
+  xpos -200
+  ypos 325
+ }
+ Dot {
+  name Dot6
+  xpos -200
+  ypos 1294
+ }
+push $N2ca95d50
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name a_to_rgb
+  xpos -461
+  ypos 381
+ }
+set N2ca816b0 [stack 0]
+ Dot {
+  name Dot3
+  xpos -427
+  ypos 435
+ }
+set N2ca5e330 [stack 0]
+ Dot {
+  name Dot1
+  xpos -427
+  ypos 624
+ }
+set N2ca62550 [stack 0]
+ ColorCorrect {
+  gain 0.5
+  name ColorCorrect1
+  xpos -323
+  ypos 921
+ }
+push $N2ca62550
+ Transform {
+  translate {{(parent.Trans_value1.translate.x)*(-1) i} 0}
+  center {960 540}
+  name Transform1
+  xpos -329
+  ypos 816
+ }
+ ColorCorrect {
+  gain 0
+  name ColorCorrect6
+  xpos -329
+  ypos 843
+ }
+push $N2ca62550
+ Transform {
+  translate {{parent.Trans_value1.translate.x i} 0}
+  center {960 540}
+  name Transform6
+  xpos -331
+  ypos 761
+ }
+push $N2ca8c060
+ Dot {
+  name Dot2
+  xpos -703
+  ypos 643
+ }
+set N2ca338a0 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -433
+  ypos 761
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  xpos -433
+  ypos 843
+ }
+ Merge2 {
+  inputs 2
+  name Merge9
+  xpos -433
+  ypos 921
+ }
+push $N2ca62550
+ ColorCorrect {
+  gain 0.5
+  name ColorCorrect7
+  xpos -607
+  ypos 919
+ }
+push $N2ca62550
+ Transform {
+  translate {0 {parent.Trans_value1.translate.y*-1 i}}
+  center {960 540}
+  name Transform7
+  xpos -609
+  ypos 813
+ }
+ ColorCorrect {
+  gain 0
+  name ColorCorrect8
+  xpos -609
+  ypos 837
+ }
+push $N2ca62550
+ Transform {
+  translate {0 {parent.Trans_value1.translate.y i}}
+  center {960 540}
+  name Transform8
+  xpos -608
+  ypos 758
+ }
+push $N2ca338a0
+ Merge2 {
+  inputs 2
+  name Merge10
+  xpos -737
+  ypos 758
+ }
+ Merge2 {
+  inputs 2
+  name Merge11
+  selected true
+  xpos -737
+  ypos 837
+ }
+ Merge2 {
+  inputs 2
+  name Merge12
+  xpos -737
+  ypos 919
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  blue black
+  alpha white
+  name ShuffleCopy1
+  xpos -551
+  ypos 1006
+ }
+ Blur {
+  size 5
+  name Blur1
+  xpos -551
+  ypos 1051
+ }
+set Nb6867590 [stack 0]
+push $Nb6867590
+ Invert {
+  name Invert2
+  xpos -441
+  ypos 1079
+ }
+ Switch {
+  inputs 2
+  which {{push_pull i}}
+  name Switch2
+  label "0=Push\n1=Pull"
+  xpos -551
+  ypos 1113
+ }
+push $N2ca5e330
+ Input {
+  inputs 0
+  name InputRGB
+  xpos -866
+  ypos 316
+ }
+ Dot {
+  name Dot5
+  xpos -832
+  ypos 383
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos -867
+  ypos 425
+ }
+add_layer {push push.x push.y}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 push.x
+  from1 rgba.green
+  to1 push.y
+  name Copy1
+  xpos -867
+  ypos 1113
+ }
+set Nb6898570 [stack 0]
+ IDistort {
+  uv push
+  uv_offset 0.5
+  uv_scale 71
+  blur_scale 0
+  name IDistort1
+  xpos -867
+  ypos 1184
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos -866
+  ypos 1285
+ }
+ Output {
+  name Output1
+  xpos -866
+  ypos 1350
+ }
+push $N2ca816b0
+push $Nb6898570
+ Viewer {
+  inputs 2
+  input_process false
+  name Viewer1
+  xpos -815
+  ypos 1493
+ }
+end_group

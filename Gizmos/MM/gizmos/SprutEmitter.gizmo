@@ -1,0 +1,321 @@
+#! /net/global/opt/foundry/nuke-7.0v9/Nuke7.0 -nx
+version 7.0 v9
+Group {
+ inputs 2
+ help "SprutEmitter v1.0\n(c) 2012-2014 theo@euahuba.com\n\nWritten by theodor groeneboom\nBased on Jos Stam's 1999 siggraph paper \"Stable Fluids\"\n\nUnder GPL/GNU License.\nPaypal donations to theo@euqahuba.com"
+ tile_color 0x2098ffff
+ gl_color 0x2098ffff
+ note_font_size 30
+ note_font_color 0xfffcffff
+ addUserKnob {20 sprutEmitter l "Sprut Emitter"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {7 globalMult l "Global Multiplier" t "Multiplier of both density and velocity. Can be used as an on/off switch for the emission."}
+ globalMult 1
+ addUserKnob {4 view l View t "Displays different fields. Usefull for setting up turbulence fields and checking velocities." M {Output "Velocity Field" "Turbulence Field" ""}}
+ addUserKnob {20 transformTab l Transform n 1}
+ addUserKnob {26 Transform}
+ addUserKnob {41 matrix T Transform2.matrix}
+ addUserKnob {41 translate l Translation T Transform2.translate}
+ addUserKnob {41 rotate l Rotation T Transform2.rotate}
+ addUserKnob {41 scale l Scale T Transform2.scale}
+ addUserKnob {41 center T Transform2.center}
+ addUserKnob {41 motionblur T Transform2.motionblur}
+ addUserKnob {41 shutter T Transform2.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T Transform2.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Transform2.shuttercustomoffset}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 velocityTab l Velocity n 1}
+ velocityTab 0
+ addUserKnob {26 Velocity}
+ addUserKnob {7 velocityMult l "Velocity Multiplier" t "Overall velocity multiplier" R 0 10}
+ velocityMult 1
+ addUserKnob {30 velocityDirection l "Add direction" t "Adds a single direction to the fluid field."}
+ addUserKnob {7 velocityInherit l "Inherit Velocity" t "If the transform tabs are animated, you can add the motion to the velocites here."}
+ velocityInherit 0.5
+ addUserKnob {7 velocityRandom l "Random Direction" t "Adds a random uniform direction to the entire field for each frame."}
+ velocityRandom 0.1
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 turbulenceTab l Turbulence n 1}
+ turbulenceTab 0
+ addUserKnob {26 ""}
+ addUserKnob {7 affectDensity l "Affect Density" t "Affects the turbulence in the density field."}
+ affectDensity 1
+ addUserKnob {7 turbulenceMult l "Turbulence Mult" t "Adds turbulence to the velocity field."}
+ turbulenceMult 1
+ addUserKnob {26 ""}
+ addUserKnob {41 size l x/ysize T Noise1.size}
+ addUserKnob {41 zoffset l z T Noise1.zoffset}
+ addUserKnob {41 octaves T Noise1.octaves}
+ addUserKnob {41 nyquist l "clip at Nyquist limit" T Noise1.nyquist}
+ addUserKnob {41 lacunarity T Noise1.lacunarity}
+ addUserKnob {41 gain T Noise1.gain}
+ addUserKnob {41 gamma T Noise1.gamma}
+}
+ Input {
+  inputs 0
+  name shape
+  xpos -285
+  ypos -521
+ }
+ Shuffle {
+  in motion
+  red black
+  green black
+  blue black
+  alpha black
+  out motion
+  name Shuffle2
+  xpos -285
+  ypos -469
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos -285
+  ypos -443
+ }
+ Transform {
+  center {512 512}
+  motionblur 1
+  shutter 4
+  shutteroffset centred
+  name Transform2
+  xpos -285
+  ypos -396
+ }
+ Expression {
+  channel0 {forward.u -forward.v -backward.u -backward.v}
+  expr0 "(((  ((-slope.x)*val)  +  ((random(frame+5)-0.5))*(randomDir)  +  (velocityDirection.u)) * velocityMult) * a )"
+  channel1 {-forward.u forward.v -backward.u -backward.v}
+  expr1 "(((  ((-slope.y)*val)  +  ((random(frame+50)-0.5))*(randomDir)  +  (velocityDirection.v)) * velocityMult) * a)"
+  channel2 none
+  name Expression1
+  xpos -285
+  ypos -333
+  addUserKnob {20 User}
+  addUserKnob {7 randomDir l "Random Direction"}
+  randomDir {{parent.velocityRandom}}
+  addUserKnob {7 val}
+  val {{parent.velocityInherit}}
+  addUserKnob {12 slope}
+  slope {{Transform2.translate-Transform2.translate(frame-1)} {Transform2.translate-Transform2.translate(frame-1)}}
+ }
+ Input {
+  inputs 0
+  name grid
+  xpos -92
+  ypos -505
+  number 1
+ }
+ Shuffle {
+  in motion
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos -92
+  ypos -471
+ }
+ Merge2 {
+  inputs 2
+  also_merge motion
+  name Merge1
+  xpos -92
+  ypos -333
+ }
+ Dot {
+  name Dot1
+  xpos -58
+  ypos -275
+ }
+set N249f17c0 [stack 0]
+ Dot {
+  name Dot2
+  xpos -369
+  ypos -276
+ }
+ NoOp {
+  name NoOp1
+  xpos -403
+  ypos -210
+ }
+set N20dcb4d0 [stack 0]
+ Noise {
+  output motion
+  size 6.1
+  zoffset {{frame*0.1}}
+  lacunarity 1
+  gain 1
+  gamma 0.27
+  center {1030 438}
+  name Noise1
+  xpos -543
+  ypos -218
+ }
+set N249e61a0 [stack 0]
+ Dot {
+  name Dot5
+  xpos -653
+  ypos -207
+ }
+ Dot {
+  name Dot4
+  xpos -653
+  ypos 280
+ }
+ Shuffle {
+  in motion
+  name Shuffle6
+  xpos -202
+  ypos 276
+ }
+push $N20dcb4d0
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  out motion
+  name Shuffle3
+  xpos -403
+  ypos -134
+ }
+push $N249e61a0
+ NoOp {
+  name NoOp2
+  xpos -543
+  ypos -180
+ }
+set Nec1b520 [stack 0]
+ Matrix {
+  channels motion
+  matrix {
+      {0 -1 0}
+      {0 1 0}
+      {0 0 0}
+    }
+  name Matrix1
+  xpos -590
+  ypos -135
+ }
+push $Nec1b520
+ Matrix {
+  channels motion
+  matrix {
+      {0 0 0}
+      {-1 1 0}
+      {0 0 0}
+    }
+  name Matrix2
+  xpos -493
+  ypos -135
+ }
+ ShuffleCopy {
+  inputs 2
+  in motion
+  in2 motion
+  red red
+  blue black
+  alpha black
+  out motion
+  name ShuffleCopy1
+  xpos -540
+  ypos -79
+ }
+ Merge {
+  inputs 2
+  A {forward.u forward.v -backward.u -backward.v}
+  operation mult
+  B {forward.u forward.v -backward.u -backward.v}
+  output {forward.u forward.v -backward.u backward.v}
+  name Merge2
+  xpos -293
+  ypos -25
+ }
+ Grade {
+  channels {forward.u forward.v -backward.u backward.v}
+  white {{parent.turbulenceMult}}
+  black_clamp false
+  name Grade2
+  xpos -293
+  ypos 13
+ }
+ Dot {
+  name Dot3
+  xpos -259
+  ypos 133
+ }
+push $N249e61a0
+ Shuffle {
+  in motion
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle4
+  xpos -202
+  ypos -156
+ }
+ Grade {
+  channels rgba
+  name Grade4
+  selected true
+  xpos -202
+  ypos -130
+ }
+push $N249f17c0
+ Merge2 {
+  inputs 2
+  operation multiply
+  mix {{parent.affectDensity}}
+  name Merge3
+  xpos -92
+  ypos -130
+ }
+ Merge {
+  inputs 2
+  A forward
+  operation plus
+  B forward
+  output forward
+  bbox B
+  name Merge4
+  xpos -92
+  ypos 124
+ }
+ Grade {
+  channels {forward.u forward.v -backward.u -backward.v}
+  white {{width/2} {height/2} 1 1}
+  black_clamp false
+  name Grade3
+  xpos -92
+  ypos 162
+ }
+ Grade {
+  channels all
+  white {{parent.globalMult}}
+  black_clamp false
+  name Grade1
+  xpos -92
+  ypos 196
+ }
+set Nfa1fa40 [stack 0]
+ Shuffle {
+  in motion
+  name Shuffle5
+  xpos -202
+  ypos 202
+ }
+push $Nfa1fa40
+ Switch {
+  inputs 3
+  which {{parent.view}}
+  name Switch1
+  xpos -92
+  ypos 276
+ }
+ Output {
+  name Output1
+  xpos -92
+  ypos 340
+ }
+end_group

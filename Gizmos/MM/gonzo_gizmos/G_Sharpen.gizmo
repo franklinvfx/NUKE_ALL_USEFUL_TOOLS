@@ -1,0 +1,87 @@
+
+Group {
+name G_Sharpen
+help "Daniel Gonzalez Solozabal \nGonzo FX"
+tile_color 0xff4539ff
+addUserKnob {20 User l G_Sharpen}
+addUserKnob {41 channels T Blur27.channels}
+addUserKnob {41 size T Blur27.size}
+addUserKnob {41 saturation l "edge saturation" T Saturation7.saturation}
+addUserKnob {41 blackpoint l "black balance" T Grade1.blackpoint}
+addUserKnob {41 filter T Blur27.filter}
+addUserKnob {41 quality l "" -STARTLINE T Blur27.quality}
+addUserKnob {41 which l Mix T Dissolve1.which}
+}
+Input {
+inputs 0
+name Input
+xpos 508
+ypos 263
+}
+Dot {
+name Dot67
+xpos 542
+ypos 343
+}
+set Ncef5ea0 [stack 0]
+Dot {
+name Dot68
+xpos 466
+ypos 418
+}
+set Ncefb8b0 [stack 0]
+push $Ncef5ea0
+Blur {
+channels rgba
+size 3
+name Blur27
+xpos 271
+ypos 339
+}
+Merge2 {
+inputs 2
+operation divide
+name Multiply12
+xpos 271
+ypos 414
+}
+Grade {
+name Grade1
+xpos 271
+ypos 460
+}
+Saturation {
+saturation 0.5
+name Saturation7
+xpos 271
+ypos 504
+}
+Clamp {
+minimum 0.001
+maximum 10
+name Clamp9
+xpos 271
+ypos 547
+}
+push $Ncefb8b0
+Merge2 {
+inputs 2
+operation multiply
+name Multiply14
+xpos 432
+ypos 553
+}
+push $Ncef5ea0
+Dissolve {
+inputs 2
+which 1
+name Dissolve1
+xpos 508
+ypos 633
+}
+Output {
+name Output1
+xpos 508
+ypos 720
+}
+end_group

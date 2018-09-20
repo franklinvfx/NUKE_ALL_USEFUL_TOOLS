@@ -1,6 +1,6 @@
 import nuke, nukescripts, math
 
-from menu import path
+from menu import pipe_path
 
 
 def reloadMenu():

@@ -1,0 +1,130 @@
+
+Group {
+ name G_EdgeHammer
+ help "Use this tool to help tint edges of a premultiplied image, that show undesired brightness or darkness colour from incoming source. \n\nStep 1 - Plug in image with an alpha channel to source \n\nStep 2 - if undesired colour bleeding into image is brighter use the Max color picker and pick a near color that better respresents the color that edge should bring. If undesired bleeding colour is Darker use the  Min Color picker to choose the colour.\n\nStep 3 - Use the Matte controls (Size and Multiply) to control the size and presence of affected area.\n\nAvoid fixing rotos and tint those damn fuggers ;) Good Luck!\n\nDaniel Gonzalez Solozabal"
+ selected true
+ addUserKnob {20 User l EdgeHammer}
+ addUserKnob {26 Colortitle l Color T " "}
+ addUserKnob {41 maximum l max T Clampppp.maximum}
+ addUserKnob {41 minimum l min T Clampppp.minimum}
+ addUserKnob {26 mattetitle l Matte T " "}
+ addUserKnob {41 size T Blurrrr.size}
+ addUserKnob {41 value l Multipy T Multiplyyyy.value}
+ addUserKnob {26 ""}
+ addUserKnob {41 which l mix T MIXXX.which}
+}
+ Input {
+  inputs 0
+  name Mask
+  xpos 766
+  ypos 795
+  number 1
+ }
+ Invert {
+  name Inverttt1
+  xpos 597
+  ypos 789
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos 458
+  ypos 405
+ }
+ Dot {
+  name Dot1
+  xpos 492
+  ypos 477
+ }
+set N11ad9730 [stack 0]
+ Unpremult {
+  name Unpremultttt
+  xpos 458
+  ypos 525
+ }
+set N11adc8c0 [stack 0]
+push $N11ad9730
+ Invert {
+  channels alpha
+  name Invertttt
+  xpos 737
+  ypos 467
+ }
+ Blur {
+  channels alpha
+  size 5
+  name Blurrrr
+  xpos 737
+  ypos 505
+ }
+ Multiply {
+  channels alpha
+  value 1.5
+  name Multiplyyyy
+  xpos 737
+  ypos 547
+ }
+ Clamp {
+  channels alpha
+  name Clampamp
+  xpos 737
+  ypos 595
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name blacckck
+  xpos 627
+  ypos 680
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  name Maxaxax
+  xpos 627
+  ypos 601
+ }
+push $N11adc8c0
+ Clamp {
+  inputs 1+1
+  channels rgb
+  name Clampppp
+  selected true
+  xpos 517
+  ypos 601
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 453
+  ypos 789
+ }
+ Premult {
+  name Premultttt
+  xpos 453
+  ypos 843
+ }
+push $N11ad9730
+ Dot {
+  name Dot2
+  xpos 414
+  ypos 477
+ }
+ Dot {
+  name Dot3
+  xpos 409
+  ypos 893
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  name MIXXX
+  xpos 453
+  ypos 883
+ }
+ Output {
+  name Output1
+  xpos 453
+  ypos 969
+ }
+end_group

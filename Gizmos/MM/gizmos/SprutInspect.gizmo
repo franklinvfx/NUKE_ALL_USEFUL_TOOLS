@@ -1,0 +1,110 @@
+#! /net/global/opt/foundry/nuke-7.0v9/Nuke7.0 -nx
+version 7.0 v9
+Group {
+ tile_color 0x2098ffff
+ gl_color 0x2098ffff
+ note_font_size 30
+ note_font_color 0xffffffff
+ addUserKnob {20 User l "Sprut Inspect"}
+ addUserKnob {26 SprutInspect l "Sprut Inspect"}
+ addUserKnob {4 view l View M {Color White "" ""}}
+ addUserKnob {6 invert l "Invert Vectors" +STARTLINE}
+ addUserKnob {41 val l Step-size T Expression1.val}
+ addUserKnob {41 size l "Pre-Blur Vectors" T Blur1.size}
+ addUserKnob {41 scale l "Scale Vectors" T VectorBlur2.scale}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -532
+  ypos -595
+ }
+set N3c76ac0 [stack 0]
+ Dot {
+  name Dot1
+  xpos -498
+  ypos -339
+ }
+set N982c9b10 [stack 0]
+push $N982c9b10
+ Blur {
+  size 44
+  name Blur2
+  xpos -474
+  ypos -473
+ }
+push $N3c76ac0
+ Blur {
+  channels motion
+  size 30
+  name Blur1
+  xpos -379
+  ypos -569
+ }
+ Grade {
+  channels motion
+  white -1
+  black_clamp false
+  name Grade1
+  xpos -379
+  ypos -531
+  disable {{1-parent.invert}}
+ }
+ Expression {
+  temp_name0 points
+  temp_expr0 (fmod(x,val)*fmod(y,val))==1?1:0
+  channel0 rgb
+  expr0 points
+  channel1 rgb
+  expr1 points
+  channel2 rgb
+  expr2 points
+  channel3 rgb
+  expr3 points
+  name Expression1
+  xpos -379
+  ypos -493
+  addUserKnob {20 User}
+  addUserKnob {3 val}
+  val 12
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  selected true
+  xpos -379
+  ypos -467
+  disable {{parent.view}}
+ }
+ VectorBlur {
+  channels rgb
+  uv motion
+  scale -7
+  offset 0
+  method forward
+  name VectorBlur2
+  xpos -379
+  ypos -441
+ }
+ Grade {
+  multiply 40
+  gamma 1.94
+  black_clamp false
+  name Grade2
+  xpos -379
+  ypos -415
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge1
+  xpos -379
+  ypos -343
+ }
+ Output {
+  name Output1
+  xpos -379
+  ypos -295
+ }
+end_group

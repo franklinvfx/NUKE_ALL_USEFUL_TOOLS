@@ -8,10 +8,10 @@ Group {
  addUserKnob {20 User l "ID Merge"}
  addUserKnob {41 in l "<font color=\"green\">@b;Channel" t "Input Channel" T Shuffle1.in}
  addUserKnob {26 S1 l " " T " "}
- addUserKnob {6 red l "<font size = 3 color=\"#FE2E2E\">◄" t "Select to keep the channel in render." +STARTLINE}
- addUserKnob {6 green l "<font size = 3 color=\"green\">◄" t "Select to keep the channel in render." -STARTLINE}
- addUserKnob {6 blue l "<font size = 3 color=\"#0080FF\">◄" t "Select to keep the channel in render." -STARTLINE}
- addUserKnob {6 alpha l "<font size = 3 color=\"white\">◄" t "Select to keep the channel in render." -STARTLINE}
+ addUserKnob {6 red l "<font size = 3 color=\"#black\">-<font size = 3 color=\"#FE2E2E\">◄" t "Select to keep the channel in render." +STARTLINE}
+ addUserKnob {6 green l "<font size = 3 color=\"#black\">-<font size = 3 color=\"green\">◄" t "Select to keep the channel in render." -STARTLINE}
+ addUserKnob {6 blue l "<font size = 3 color=\"#black\">-<font size = 3 color=\"#0080FF\">◄" t "Select to keep the channel in render." -STARTLINE}
+ addUserKnob {6 alpha l "<font size = 3 color=\"#black\">-<font size = 3 color=\"white\">◄" t "Select to keep the channel in render." -STARTLINE}
  addUserKnob {26 S2 l " "}
  addUserKnob {4 out l "          Output" t "Choose the output channel. \n(Alpha or rgba)" M {rgba Alpha "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
  addUserKnob {4 operation l "          Operation" t "Merge Operation:\n\nPlus   A+B\nMax   max(A+B)" -STARTLINE M {plus max "" "" "" ""}}
@@ -36,7 +36,7 @@ Group {
   xpos -1318
   ypos 541
  }
-set N1f16a000 [stack 0]
+set N24c67400 [stack 0]
  Expression {
   channel0 rgba
   expr0 max(0)
@@ -44,7 +44,7 @@ set N1f16a000 [stack 0]
   xpos -1215
   ypos 602
  }
-push $N1f16a000
+push $N24c67400
  Expression {
   channel0 rgba
   expr0 0

@@ -38,7 +38,6 @@ nuke.pluginAddPath(pipe_path + './Gizmos/pixelfudger');
 # import MM_Preset
 
 
-
 #-----------------------------------------------------------------------------------------------------------------
 # IMPORT FRANKLIN PIPE
 #-----------------------------------------------------------------------------------------------------------------
@@ -52,6 +51,17 @@ nuke.load("F_Scripts")
 # IMPORT CGEV TOOLS
 #-----------------------------------------------------------------------------------------------------------------
 import C_Tools                         # C gizmos
+
+
+#-----------------------------------------------------------------------------------------------------------------
+# SET NUKE PREFERENCES - W_HOTBOX
+#-----------------------------------------------------------------------------------------------------------------
+pipe_path = pipe_path.replace('\\', "/")
+pref = nuke.toNode('preferences')
+
+pref.knob('hotboxLocation').setValue(pipe_path + 'W_hotbox/')
+pref.knob('hotboxIconLocation').setValue(pipe_path + 'W_hotbox/icons/')
+pref.knob('hotboxShortcut').setValue('<')
 
 
 

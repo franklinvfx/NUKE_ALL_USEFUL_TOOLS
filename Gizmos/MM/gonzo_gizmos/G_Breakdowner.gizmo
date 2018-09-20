@@ -1,0 +1,1299 @@
+Group {
+ name G_Breakdowner
+ help "BREAKDOWNER\n\nThis tool will help you make a Breakdowned shot for a Showreel in a fast and easy way. \n\n     Step 1   ---   Plug in the Shot that you want to breakdown in the 'Shot' Input  and Plug in the \"Layers\" of the breakdown that you want to show (ie Wireframed version, Greenscreen Plate etc..). You can plug in up to 10 \"Layers\" (Inputs 4-10 are sitting on left side of Gizmo).  \n\nNote:  Make sure all your input layers are sharing the same timing and frame range as your Shot.  In 'Freeze Frame' mode It is suggested to also plug in your Shot as your \"final Layer\" aswell so you present it as your final breakdown before it continues to play the rest of the shot after the breakdowns.\n\n     Step 2  ---   Fill out the node variables\n\nSHOT SETUP\nShot Framerange: Click 'Set' button to automatically set your 'Shot' Framerange. ( SHot must already be plugged into the 'Shot' input. Further calculations will be based of this Original Framerange)\n\nBreakdown Frame: The Frame were the breakdown will take place\n\n# of Layers: how many Layers you are pluggin into the tool (up to 8)\n\n\nBREAKDOWN CONTROLS \n\nBreakdown Type (2 types):\n'Freeze Frame' will play the Shot and stop in a desired frame ( Breakdown Frame ) and will breakdown the shot with the layers in that specific Frozen frame. Once it has finished wiping the layers it will conitune to play the shot till the end (this mode will increase automatically the shot framerange, depending on in input number and \"Frame per Layer' number).  'Continuous Play' will breakdown the shot asi it keeps playing. The breakdown will begin on the 'breakdown frame' that you have chosen as it keeps playing (for this option, make sure you pick up a frame thats gives time to the breakdown to finish ( ie. If you have 4 layers that will show up for 10 frames each you will have to give at least 40 frames before its last frame to your 'Breakdown Frame' to let the breakdown to finish)\n\nFrames per Layer:  How many frames will each \"Layer\" have to show up on the breakdown\n\nTransition Type: 'Wipe', 'Blurred Wipe' and 'Cross Dissolve'.   Wipe Direction (not for Crossdissolve)   \n'Transition Speed': 4 speeds (5,10, 15 and 20 frames) how many frames the \"Wipe\" takes to cross the Screen or how many frames will take to \"CrossFade\".\n\nOutput: 2 options. \"Breakdown Shot' outputs the breakdowned Shot beginig on the first frame of the Original Framerange. 'Edited' Option, will first play the 'Shot' and then will playe the \"Breakdowned\" Shot after it, in case you want to showcase the complete original Shot before its brokendown. \n\nFinal Frame Range:  Click 'Reset' button to update and know what your Final Frame Range will be before you play or render.  (TIP: its better to keep the timeline in 'Input' mode)\n\nCheers Amigos!\n\nDaniel Gonzalez Solozabal.    GONZO FX\n"
+ tile_color 0x8ff3f9ff
+ selected true
+ addUserKnob {20 User l BREAKDOWNER}
+ addUserKnob {26 ""}
+ addUserKnob {26 hyf l "Shot Setup" T " \n"}
+ addUserKnob {41 first_frame l "Shot Framerange" T FrameRangeMAIN.first_frame}
+ addUserKnob {41 last_frame l "" -STARTLINE T FrameRangeMAIN.last_frame}
+ addUserKnob {41 reset_1 l Set -STARTLINE T FrameRangeMAIN.reset}
+ addUserKnob {41 curframe_1 l "Breakdown Frame" T FrameHoldMAIN1.curframe}
+ addUserKnob {41 LayerNumber l "# of Layers (1-10)" t "How many Layers are you using beside the shot? \n\nWhats the last input number you are using?" T WIPE_CONTROLS1.LayerNumber}
+ addUserKnob {26 ""}
+ addUserKnob {26 srgt l "Breakdown Controls" T " \n"}
+ addUserKnob {4 TypeSwitch l "Breakdown Type" M {"Freeze Frame " "Continuous Play " "" "" "" ""}}
+ addUserKnob {41 time_offset l "Frames per Layer" T TimeOffsetMAIN.time_offset}
+ addUserKnob {41 WipeTypeSwitch l "Transition Type" T WipeMatte1.WipeTypeSwitch}
+ addUserKnob {41 wipedir l "     Wipe Direction" -STARTLINE T WipeMatte1.wipedir}
+ addUserKnob {41 WipeSpeed l "Transition Speed" T WipeMatte1.WipeSpeed}
+ addUserKnob {26 ""}
+ addUserKnob {4 Output M {"Breakdowned Shot" "Edited: Shot > Breakdowned Shot " ""}}
+ addUserKnob {26 ""}
+ addUserKnob {26 frfr l "" -STARTLINE T "Click 'Reset' to update and know your Final Frame Range "}
+ addUserKnob {41 first_frame_1 l "Final Frame Range" T FrameRange1.first_frame}
+ addUserKnob {41 last_frame_1 l "" -STARTLINE T FrameRange1.last_frame}
+ addUserKnob {41 reset -STARTLINE T FrameRange1.reset}
+ addUserKnob {26 dgss l "" +STARTLINE T "    \n Daniel Gonzalez Solozabal"}
+}
+ Input {
+  inputs 0
+  name Shot
+  xpos 461
+  ypos 284
+ }
+ NoOp {
+  name WIPE_CONTROLS1
+  xpos 461
+  ypos 333
+  addUserKnob {20 User}
+  addUserKnob {7 LayerNumber l "Number of Layers" R 1 10}
+  LayerNumber 3
+ }
+ Dot {
+  name Dot18
+  xpos 495
+  ypos 444
+ }
+set N157a2280 [stack 0]
+ Dot {
+  name Dot10
+  xpos 619
+  ypos 444
+ }
+set Nee47c20 [stack 0]
+ Dot {
+  name Dot19
+  xpos 1105
+  ypos 444
+ }
+ Dot {
+  name Dot20
+  xpos 1103
+  ypos 3039
+ }
+set Nda2b0720 [stack 0]
+ FrameRange {
+  first_frame {{parent.FrameRangeLAST.knob.first_frame i}}
+  last_frame {{parent.FrameRangeMAIN.knob.last_frame i}}
+  name FrameRange2
+  xpos 1275
+  ypos 3309
+ }
+push $Nda2b0720
+ TimeOffset {
+  time_offset {{parent.WIPE_CONTROLS1.LayerNumber*parent.TimeOffsetMAIN.time_offset+parent.TimeOffsetMAIN.time_offset i}}
+  name TimeOffset8
+  xpos 1069
+  ypos 3169
+ }
+ FrameRange {
+  first_frame {{parent.FrameRangeFIRST.knob.last_frame+1 i}}
+  last_frame {{parent.FrameRangeMAIN.knob.last_frame+parent.TimeOffset8.time_offset i}}
+  name FrameRangeLAST
+  xpos 1065
+  ypos 3215
+ }
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch10
+  xpos 1065
+  ypos 3309
+ }
+ Group {
+  inputs 0
+  name WipeMatte1
+  selected true
+  xpos 804
+  ypos 568
+  addUserKnob {20 User}
+  addUserKnob {4 WipeTypeSwitch l "Transition Type" M {Wipe "Blurred Wipe" "Cross Dissolve"}}
+  WipeTypeSwitch "Blurred Wipe"
+  addUserKnob {41 time_offset l "Start Wipe Matte at" T TimeOffset2.time_offset}
+  addUserKnob {4 WipeSpeed l "Wipe Speed" M {"5 frames" "10 frames" "15 frames" "20 frames" "" ""}}
+  addUserKnob {6 BlurCheck l "Wiper Blur" +STARTLINE}
+  BlurCheck true
+  addUserKnob {4 wipedir l "Wipe Direction" M {"Left to Right" "Right to Left" "Top to Bottom" "Bottom to Top"}}
+ }
+  Constant {
+   inputs 0
+   color {{curve 0 x20 1}}
+   name Constant5
+   xpos 1105
+   ypos 705
+  }
+  Constant {
+   inputs 0
+   color {{curve 0 x15 1}}
+   name Constant4
+   xpos 996
+   ypos 709
+  }
+  Constant {
+   inputs 0
+   color {{curve 0 x10 1}}
+   name Constant3
+   xpos 898
+   ypos 712
+  }
+  Constant {
+   inputs 0
+   color {{curve 0 x5 1}}
+   name Constant1
+   xpos 790
+   ypos 715
+  }
+  Switch {
+   inputs 4
+   which {{parent.WipeSpeed i x-1207 0}}
+   name SPEEDwipe1
+   xpos 936
+   ypos 824
+  }
+  Constant {
+   inputs 0
+   color 1
+   format "1828 1556 0 0 1828 1556 2 SoundstripCrop"
+   name Constant2
+   xpos 494
+   ypos 96
+  }
+  Crop {
+   box {-140 0 2098 1556}
+   name Crop2
+   xpos 494
+   ypos 211
+  }
+set Nc7219e70 [stack 0]
+  Blur {
+   channels rgba
+   size {620 0}
+   name Blur1
+   xpos 594
+   ypos 242
+  }
+push $Nc7219e70
+  Switch {
+   inputs 2
+   which {{parent.WipeTypeSwitch}}
+   name WipeType1
+   xpos 494
+   ypos 278
+  }
+  ColorLookup {
+   lut {master {curve C 0 s0.5 x0.8247339129 1 s0.6499999762}
+     red {}
+     green {}
+     blue {}
+     alpha {}}
+   name ColorLookup1
+   xpos 494
+   ypos 334
+  }
+  Clamp {
+   name Clamp1
+   xpos 494
+   ypos 371
+  }
+set Nc50b2480 [stack 0]
+  Transform {
+   translate {{curve -2580 x20 0} 0}
+   center {914 778}
+   name Transform4
+   xpos 694
+   ypos 448
+  }
+push $Nc50b2480
+  Transform {
+   translate {{curve i -2580 x15 0} 0}
+   center {914 778}
+   name Transform2
+   xpos 576
+   ypos 450
+  }
+push $Nc50b2480
+  Transform {
+   translate {{curve i -2580 x10 0} 0}
+   center {914 778}
+   name Transform3
+   xpos 473
+   ypos 451
+  }
+push $Nc50b2480
+  Transform {
+   translate {{curve i -2580 x5 0} 0}
+   center {914 778}
+   name Transform7
+   xpos 368
+   ypos 451
+  }
+  Switch {
+   inputs 4
+   which {{parent.WipeSpeed i x-1207 0}}
+   name SPEEDwipe
+   xpos 506
+   ypos 516
+  }
+set Nc4e1b950 [stack 0]
+  Transform {
+   rotate 90
+   scale {0.5 2.4}
+   center {914 778}
+   name Transform1
+   xpos 655
+   ypos 599
+  }
+set Nc4e223b0 [stack 0]
+push $Nc4e223b0
+  Mirror {
+   Vertical true
+   name Mirror2
+   xpos 758
+   ypos 599
+  }
+push $Nc4e1b950
+  Mirror {
+   Horizontal true
+   name Mirror1
+   xpos 560
+   ypos 600
+  }
+push $Nc4e1b950
+  Switch {
+   inputs 4
+   which {{parent.wipedir i}}
+   name DirectionSwitch
+   xpos 506
+   ypos 662
+  }
+  Reformat {
+   resize distort
+   name Reformat1
+   xpos 506
+   ypos 819
+  }
+set N1b1229c0 [stack 0]
+  Dot {
+   name Dot2
+   xpos 769
+   ypos 887
+  }
+push $N1b1229c0
+  Dot {
+   name Dot1
+   xpos 540
+   ypos 892
+  }
+  Switch {
+   inputs 3
+   which {{parent.WipeTypeSwitch i}}
+   name WipeType
+   xpos 735
+   ypos 945
+  }
+  TimeOffset {
+   time_offset {{parent.parent.FrameHoldMAIN1.curframe i}}
+   name TimeOffset2
+   xpos 735
+   ypos 989
+  }
+  Output {
+   name Output1
+   xpos 735
+   ypos 1077
+  }
+ end_group
+set Nac2dd500 [stack 0]
+ TimeOffset {
+  time_offset 10
+  name TimeOffsetMAIN
+  xpos 804
+  ypos 681
+ }
+set Ne1d208b0 [stack 0]
+ TimeOffset {
+  time_offset {{parent.TimeOffsetMAIN.time_offset i}}
+  name TimeOffset11
+  xpos 804
+  ypos 803
+ }
+set Ne1d27000 [stack 0]
+ TimeOffset {
+  time_offset {{parent.TimeOffsetMAIN.time_offset i}}
+  name TimeOffset12
+  xpos 804
+  ypos 962
+ }
+set Ne1d2dc80 [stack 0]
+ TimeOffset {
+  time_offset {{parent.TimeOffsetMAIN.time_offset i}}
+  name TimeOffset13
+  xpos 804
+  ypos 1136
+ }
+set Ne1d34a80 [stack 0]
+ TimeOffset {
+  time_offset {{parent.TimeOffsetMAIN.time_offset i}}
+  name TimeOffset14
+  xpos 804
+  ypos 1332
+ }
+set Ne1d3b7a0 [stack 0]
+ TimeOffset {
+  time_offset {{parent.TimeOffsetMAIN.time_offset i}}
+  name TimeOffset15
+  xpos 804
+  ypos 1536
+ }
+set Ne1e64240 [stack 0]
+ TimeOffset {
+  time_offset {{parent.TimeOffsetMAIN.time_offset i}}
+  name TimeOffset1
+  xpos 806
+  ypos 1725
+ }
+set Ne1e6af90 [stack 0]
+ TimeOffset {
+  time_offset {{parent.TimeOffsetMAIN.time_offset i}}
+  name TimeOffset2
+  xpos 804
+  ypos 1952
+ }
+set Ne1e71c80 [stack 0]
+ TimeOffset {
+  time_offset {{parent.TimeOffsetMAIN.time_offset i}}
+  name TimeOffset5
+  xpos 804
+  ypos 2176
+ }
+set Ne1e78840 [stack 0]
+push $Ne1e78840
+ TimeOffset {
+  time_offset {{parent.TimeOffsetMAIN.time_offset i}}
+  name TimeOffset6
+  xpos 808
+  ypos 2414
+ }
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch21
+  xpos 708
+  ypos 2414
+ }
+ Input {
+  inputs 0
+  name Input10
+  xpos -66
+  ypos 2281
+  number 10
+ }
+ Dot {
+  name Dot14
+  label "10\n"
+  note_font_size 50
+  xpos -32
+  ypos 2357
+ }
+set Ne1f999d0 [stack 0]
+push $Ne1f999d0
+ Group {
+  name FrameHoldM9
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos -66
+  ypos 2407
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe {{parent.FrameHoldMAIN1.curframe}}
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which}}
+  name Switch22
+  xpos 172
+  ypos 2413
+ }
+push $Ne1e71c80
+push $Ne1e78840
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch19
+  xpos 704
+  ypos 2176
+ }
+ Input {
+  inputs 0
+  name Input9
+  xpos -70
+  ypos 2038
+  number 9
+ }
+ Dot {
+  name Dot13
+  label "9\n"
+  note_font_size 50
+  xpos -36
+  ypos 2119
+ }
+set Ne1fc59f0 [stack 0]
+push $Ne1fc59f0
+ Group {
+  name FrameHoldM8
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos -70
+  ypos 2169
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe {{parent.FrameHoldMAIN1.curframe}}
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which}}
+  name Switch20
+  xpos 168
+  ypos 2175
+ }
+push $Ne1e6af90
+push $Ne1e71c80
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch9
+  xpos 704
+  ypos 1952
+ }
+ Input {
+  inputs 0
+  name Input8
+  xpos -70
+  ypos 1814
+  number 8
+ }
+ Dot {
+  name Dot2
+  label "8\n"
+  note_font_size 50
+  xpos -36
+  ypos 1895
+ }
+set Nc6b4a440 [stack 0]
+push $Nc6b4a440
+ Group {
+  name FrameHoldM7
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos -70
+  ypos 1945
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe {{parent.FrameHoldMAIN1.curframe}}
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which}}
+  name Switch17
+  xpos 168
+  ypos 1951
+ }
+push $Ne1e64240
+push $Ne1e6af90
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch8
+  xpos 681
+  ypos 1725
+ }
+ Input {
+  inputs 0
+  name Input7
+  xpos -72
+  ypos 1602
+  number 7
+ }
+ Dot {
+  name Dot1
+  label "7\n"
+  note_font_size 50
+  xpos -38
+  ypos 1679
+ }
+set Nc95ff880 [stack 0]
+push $Nc95ff880
+ Group {
+  name FrameHoldM6
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos -72
+  ypos 1719
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe {{parent.FrameHoldMAIN1.curframe}}
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which}}
+  name Switch16
+  xpos 99
+  ypos 1725
+ }
+push $Ne1d3b7a0
+push $Ne1e64240
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch7
+  xpos 671
+  ypos 1528
+ }
+ Input {
+  inputs 0
+  name Input6
+  xpos -76
+  ypos 1420
+  number 6
+ }
+ Dot {
+  name Dot21
+  label "6\n"
+  note_font_size 50
+  xpos -42
+  ypos 1476
+ }
+set Nc972bb60 [stack 0]
+push $Nc972bb60
+ Group {
+  name FrameHoldM5
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos -76
+  ypos 1530
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe {{parent.FrameHoldMAIN1.curframe}}
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which}}
+  name Switch15
+  xpos 76
+  ypos 1536
+ }
+push $Ne1d34a80
+push $Ne1d3b7a0
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch6
+  xpos 680
+  ypos 1332
+ }
+ Input {
+  inputs 0
+  name Input5
+  xpos -74
+  ypos 1195
+  number 5
+ }
+ Dot {
+  name Dot22
+  label "5\n"
+  note_font_size 50
+  xpos -40
+  ypos 1269
+ }
+set Nc94bd660 [stack 0]
+push $Nc94bd660
+ Group {
+  name FrameHoldM4
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos -74
+  ypos 1326
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe {{parent.FrameHoldMAIN1.curframe i}}
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which}}
+  name Switch14
+  xpos 69
+  ypos 1332
+ }
+push $Ne1d2dc80
+push $Ne1d34a80
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch5
+  xpos 686
+  ypos 1136
+ }
+ Input {
+  inputs 0
+  name Input4
+  xpos -79
+  ypos 1029
+  number 4
+ }
+ Dot {
+  name Dot23
+  label "4\n"
+  note_font_size 50
+  xpos -45
+  ypos 1088
+ }
+set Nc69f7d70 [stack 0]
+push $Nc69f7d70
+ Group {
+  name FrameHoldM3
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos -79
+  ypos 1130
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe {{parent.FrameHoldMAIN1.curframe}}
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch13
+  xpos 78
+  ypos 1136
+ }
+push $Ne1d27000
+push $Ne1d2dc80
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch4
+  xpos 665
+  ypos 962
+ }
+ Input {
+  inputs 0
+  name Input3
+  xpos -69
+  ypos 877
+  number 1
+ }
+ Dot {
+  name Dot24
+  label "3\n"
+  note_font_size 50
+  xpos -35
+  ypos 935
+ }
+set Nbe6b7c60 [stack 0]
+push $Nbe6b7c60
+ Group {
+  name FrameHoldM2
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos -69
+  ypos 965
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe {{parent.FrameHoldMAIN1.curframe}}
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch12
+  xpos 103
+  ypos 962
+ }
+push $Ne1d208b0
+push $Ne1d27000
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch3
+  xpos 661
+  ypos 803
+ }
+ Input {
+  inputs 0
+  name Input2
+  xpos -69
+  ypos 735
+  number 2
+ }
+ Dot {
+  name Dot25
+  label "2\n"
+  note_font_size 50
+  xpos -35
+  ypos 771
+ }
+set Nbe6df7f0 [stack 0]
+push $Nbe6df7f0
+ Group {
+  name FrameHoldM1
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos -69
+  ypos 836
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe {{parent.FrameHoldMAIN1.curframe}}
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch11
+  xpos 47
+  ypos 804
+ }
+push $Nac2dd500
+push $Ne1d208b0
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch2
+  xpos 661
+  ypos 681
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -72
+  ypos 607
+  number 3
+ }
+ Dot {
+  name Dot26
+  label "1\n"
+  note_font_size 50
+  xpos -38
+  ypos 657
+ }
+set N9c6fc270 [stack 0]
+push $N9c6fc270
+ Group {
+  name FrameHoldM
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos -72
+  ypos 675
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe {{parent.FrameHoldMAIN1.curframe i}}
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch1
+  xpos 61
+  ypos 681
+ }
+push $Nee47c20
+ Dot {
+  name Dot11
+  xpos 619
+  ypos 638
+ }
+push $N157a2280
+ Group {
+  name FrameHoldMAIN1
+  tile_color 0xd3ad4aff
+  label "\[value curframe]"
+  note_font "Bitstream Vera Sans"
+  xpos 461
+  ypos 489
+  mapsize {0.15 0.15}
+  addUserKnob {20 User}
+  addUserKnob {3 curframe l "first frame"}
+  curframe 1001
+  addUserKnob {22 setcurrent l "set current" -STARTLINE T nuke.thisNode().knob('curframe').setValue(nuke.frame())}
+  addUserKnob {3 increment}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 318
+   ypos 393
+  }
+  FrameHold {
+   first_frame {{(curframe)}}
+   increment {{parent.increment}}
+   name FrameHold
+   xpos 318
+   ypos 448
+  }
+  Output {
+   name Output1
+   xpos 318
+   ypos 531
+  }
+ end_group
+ FrameRange {
+  first_frame {{parent.FrameHoldMAIN1.curframe+1 i}}
+  last_frame {{parent.FrameRangeMAIN.knob.last_frame i}}
+  name FrameRange7
+  xpos 461
+  ypos 553
+ }
+push $N157a2280
+ Dot {
+  name Dot27
+  xpos 304
+  ypos 444
+ }
+set N1192ee10 [stack 0]
+ FrameRange {
+  first_frame {{parent.FrameRangeMAIN.knob.first_frame i}}
+  last_frame {{parent.FrameHoldMAIN1.curframe i}}
+  name FrameRange8
+  xpos 270
+  ypos 584
+ }
+ AppendClip {
+  inputs 2
+  firstFrame {{parent.FrameRangeMAIN.knob.first_frame i}}
+  lastFrame 1002
+  name AppendClip3
+  xpos 465
+  ypos 584
+ }
+ Switch {
+  inputs 2
+  which {{parent.TypeSwitch i}}
+  name SwitchType
+  xpos 465
+  ypos 634
+ }
+ Keymix {
+  inputs 3
+  name Keymix8
+  xpos 465
+  ypos 675
+ }
+ Keymix {
+  inputs 3
+  name Keymix9
+  xpos 465
+  ypos 797
+ }
+ Keymix {
+  inputs 3
+  name Keymix10
+  xpos 465
+  ypos 956
+ }
+ Keymix {
+  inputs 3
+  name Keymix11
+  xpos 465
+  ypos 1130
+ }
+ Keymix {
+  inputs 3
+  name Keymix12
+  xpos 465
+  ypos 1326
+ }
+ Keymix {
+  inputs 3
+  name Keymix13
+  xpos 465
+  ypos 1530
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 465
+  ypos 1719
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos 465
+  ypos 1946
+ }
+ Keymix {
+  inputs 3
+  name Keymix3
+  xpos 465
+  ypos 2170
+ }
+ Keymix {
+  inputs 3
+  name Keymix4
+  xpos 469
+  ypos 2408
+ }
+ Dot {
+  name Dot12
+  xpos 499
+  ypos 3229
+ }
+set Nb155fa50 [stack 0]
+ FrameRange {
+  first_frame {{parent.FrameRangeMAIN.knob.first_frame i}}
+  last_frame {{parent.FrameRangeMAIN.knob.last_frame i}}
+  name FrameRangeFIRST1
+  xpos 557
+  ypos 3267
+ }
+push $Nb155fa50
+ FrameRange {
+  first_frame {{parent.FrameRangeMAIN.knob.first_frame i}}
+  last_frame {{parent.FrameHoldMAIN1.curframe+parent.TimeOffset8.time_offset i x1133 1082}}
+  name FrameRangeFIRST
+  xpos 387
+  ypos 3275
+ }
+ Switch {
+  inputs 2
+  which {{parent.SwitchType.which i}}
+  name Switch18
+  xpos 459
+  ypos 3327
+ }
+ AppendClip {
+  inputs 2
+  firstFrame {{parent.FrameRangeMAIN.knob.first_frame i}}
+  lastFrame 1190
+  name AppendClip4
+  xpos 830
+  ypos 3537
+ }
+ Dot {
+  name Dot5
+  label "BREAKDOWN COMP"
+  note_font_size 50
+  xpos 864
+  ypos 3658
+ }
+set Nb158f2c0 [stack 0]
+ TimeOffset {
+  time_offset {{-parent.FrameRangeMAIN.knob.first_frame i x1082 0}}
+  name TimeOffset3
+  xpos 322
+  ypos 3913
+ }
+ TimeOffset {
+  time_offset {{parent.FrameRange6.knob.last_frame+1 i}}
+  name TimeOffset4
+  xpos 322
+  ypos 3976
+ }
+ Dot {
+  name Dot4
+  label "BREAKDOWN COMP\nw Time Offset \nto Start after SHOTs last frame"
+  note_font_size 50
+  xpos 356
+  ypos 4253
+ }
+push $N1192ee10
+ Dot {
+  name Dot6
+  xpos -120
+  ypos 444
+ }
+set N129f7e30 [stack 0]
+ FrameRange {
+  first_frame {{parent.FrameRangeMAIN.knob.first_frame i}}
+  last_frame {{parent.FrameRangeMAIN.knob.last_frame i}}
+  name FrameRange6
+  xpos -156
+  ypos 3972
+ }
+ Dot {
+  name Dot3
+  label SHOT
+  note_font_size 50
+  xpos -122
+  ypos 4259
+ }
+ AppendClip {
+  inputs 2
+  firstFrame {{parent.FrameRange6.knob.first_frame i}}
+  lastFrame 1261
+  name AppendClip1
+  xpos 82
+  ypos 4385
+ }
+ Dot {
+  name Dot7
+  label "EDITED\nSHOT > SHOT w Breakdowns"
+  note_font_size 50
+  xpos 116
+  ypos 4673
+ }
+push $Nb158f2c0
+ Dot {
+  name Dot8
+  xpos 1241
+  ypos 3933
+ }
+ Dot {
+  name Dot9
+  xpos 1241
+  ypos 4639
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Output " i}}
+  name OutputSwitch
+  xpos 727
+  ypos 4940
+ }
+ FrameRange {
+  first_frame 1001
+  last_frame 1001
+  name FrameRange1
+  xpos 727
+  ypos 5024
+ }
+ Output {
+  name Output1
+  xpos 729
+  ypos 5127
+ }
+push $N157a2280
+ FrameRange {
+  first_frame 1001
+  last_frame 1001
+  name FrameRangeMAIN
+  xpos 327
+  ypos 468
+ }
+push $N129f7e30
+ NoOp {
+  name FrameCount
+  xpos -277
+  ypos 3965
+  addUserKnob {20 User}
+  addUserKnob {7 framcount}
+  framcount {{parent.FrameRangeMAIN.knob.last_frame-parent.FrameRangeMAIN.knob.first_frame+parent.FrameRangeLAST.knob.last_frame+1}}
+ }
+end_group

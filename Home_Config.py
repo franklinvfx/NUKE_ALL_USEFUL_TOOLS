@@ -1,4 +1,4 @@
-import nuke
+﻿import nuke
 from menu import pipe_path
 
 
@@ -27,7 +27,8 @@ nuke.pluginAddPath(pipe_path + './Gizmos');
 nuke.pluginAddPath(pipe_path + './Gizmos/Franklin');
 nuke.pluginAddPath(pipe_path + './Gizmos/C');
 nuke.pluginAddPath(pipe_path + './Gizmos/C/icons');
-nuke.pluginAddPath(pipe_path + './Gizmos/pixelfudger');
+nuke.pluginAddPath(pipe_path + './Gizmos/Other');
+nuke.pluginAddPath(pipe_path + './Gizmos/Other/pixelfudger');
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -42,9 +43,9 @@ nuke.pluginAddPath(pipe_path + './Gizmos/pixelfudger');
 # IMPORT FRANKLIN PIPE
 #-----------------------------------------------------------------------------------------------------------------
 nuke.load("F_Hub")
-nuke.load("F_Tools")
 nuke.load("F_Panels")
 nuke.load("F_Scripts")
+nuke.load("F_Tools")
 
 
 #-----------------------------------------------------------------------------------------------------------------

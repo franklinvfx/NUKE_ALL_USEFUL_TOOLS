@@ -1,4 +1,4 @@
-import nuke
+﻿import nuke, os, platform
 from menu import pipe_path
 
 
@@ -27,7 +27,8 @@ nuke.pluginAddPath(pipe_path + './Gizmos');
 nuke.pluginAddPath(pipe_path + './Gizmos/Franklin');
 nuke.pluginAddPath(pipe_path + './Gizmos/C');
 nuke.pluginAddPath(pipe_path + './Gizmos/C/icons');
-nuke.pluginAddPath(pipe_path + './Gizmos/pixelfudger');
+nuke.pluginAddPath(pipe_path + './Gizmos/Other');
+nuke.pluginAddPath(pipe_path + './Gizmos/Other/pixelfudger');
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -42,9 +43,9 @@ import MM_Preset
 # IMPORT FRANKLIN PIPE
 #-----------------------------------------------------------------------------------------------------------------
 nuke.load("F_Hub")
-nuke.load("F_Tools")
 nuke.load("F_Panels")
 nuke.load("F_Scripts")
+nuke.load("F_Tools")
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -54,16 +55,37 @@ import C_Tools                         # C gizmos
 
 
 #-----------------------------------------------------------------------------------------------------------------
-# SET NUKE PREFERENCES - W_HOTBOX
+# SET NUKE PREFERENCES
 #-----------------------------------------------------------------------------------------------------------------
 pipe_path = pipe_path.replace('\\', "/")
 pref = nuke.toNode('preferences')
+
 
 pref.knob('hotboxLocation').setValue(pipe_path + 'W_hotbox/')
 pref.knob('hotboxIconLocation').setValue(pipe_path + 'W_hotbox/icons/')
 pref.knob('hotboxShortcut').setValue('<')
 
 
-print '- Pipe Directory:  ' + pipe_path
+# # Need to check all conditions
+# pref.knob('autoLocalCachePath').setValue('')
+# pref.knob('localCachePath').setValue('[getenv NUKE_TEMP_DIR]')
+
+
+#-----------------------------------------------------------------------------------------------------------------
+# SET NUKE_LOCAL DIRECTORY
+#-----------------------------------------------------------------------------------------------------------------
+# # Need to check all conditions
+# if platform.system() == "Windows":
+# 	local_path = 'D://NUKE_LOCAL/'
+# 	os.environ['NUKE_TEMP_DIR'] = local_path
+# 	print '- Nuke Local Directory:  ' + local_path
+# else:
+# 	print 'WARNING: nuke local path is not set!'
+
+
+
+
+
+print '- Pipe Directory:        ' + pipe_path
 print '- Pipe Version: ................. 1.01\n'
 ##############################           #

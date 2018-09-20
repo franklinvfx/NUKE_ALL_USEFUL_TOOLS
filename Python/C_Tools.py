@@ -16,7 +16,6 @@ C_menu = tools.addMenu("C",  icon="C.png")
 C_menu.addMenu( 'Draw',  icon='Draw.png' )
 C_menu.addCommand( 'Draw/Ramp Corner', "nuke.createNode(\"Ramp_Corner\")" , icon="Ramp_Corner.png")
 C_menu.addCommand( 'Draw/Noise C', "nuke.createNode(\"Noise_C\")" , icon="Noise_C.png")
-C_menu.addCommand( 'Draw/Volet', "nuke.createNode(\"Volet\")" , icon="Volet.png")
 C_menu.addCommand( 'Draw/DuGrain', "nuke.createNode(\"DuGrain\")" , icon="DuGrain.png")
 
 ##########################################################################################################################################

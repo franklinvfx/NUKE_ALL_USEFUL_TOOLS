@@ -63,8 +63,6 @@ pref.knob('hotboxLocation').setValue(pipe_path + 'W_hotbox/')
 pref.knob('hotboxIconLocation').setValue(pipe_path + 'W_hotbox/icons/')
 pref.knob('hotboxShortcut').setValue('<')
 
-pref.knob('platformPathRemaps').setValue(['W_hotbox/'], [2], [3])
-
 
 print '- Pipe Directory:  ' + pipe_path
 print '- Pipe Version: ................. 1.01\n'

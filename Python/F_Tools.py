@@ -144,7 +144,8 @@ nuke.toolbar("Nodes").addMenu("Franklin").addSeparator()
 F_menu.addMenu( 'Other',  icon='F_other.png' )
 ##############################################################
 F_menu.addCommand( 'Other/VIEWER INPUT', "nuke.createNode(\"VIEWER_INPUT\")" , icon="F_viewer_input.png")
-F_menu.addCommand( 'Other/Dot_Link', "nuke.createNode(\"DotLink\")" , "ctrl+.", icon="F_dotlink.png")
+F_menu.addCommand( 'Other/DotLink', "nuke.createNode(\"DotLink\")" , "ctrl+.", icon="F_dotlink.png")
+F_menu.addCommand( 'Other/Inspector', "nuke.createNode(\"Inspector\")" , icon="F_inspector.png")
 
 F_menu.addMenu( 'Other/Setup',  icon='F_setup.png' )          ########################################### Sous Menu ##################
 F_menu.addCommand( 'Other/Setup/Preserve Bbox', "nuke.createNode(\"Preserve_bbox\")" , "")

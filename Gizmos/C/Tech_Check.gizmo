@@ -1,0 +1,969 @@
+Group {
+ name TECHNICAL
+ knobChanged "\nif nuke.thisKnob().name().endswith('_solo') and nuke.thisKnob().value()  == True:\n    for knob in \[knob for knob in nuke.thisNode().knobs().values() if knob != nuke.thisKnob() and knob.name().endswith('_solo')]:\n        knob.setValue(False)\n"
+ tile_color 0xe7319b
+ selected true
+ addUserKnob {20 FT l "TECHNICAL CHECK"}
+ addUserKnob {26 text_diff l "@b;Compare" T ""}
+ addUserKnob {6 diff_solo l "" -STARTLINE}
+ addUserKnob {20 diff_group l " " n 1}
+ diff_group 0
+ addUserKnob {41 invertMask l Invert T Keymix1.invertMask}
+ addUserKnob {26 S02 l " " T " "}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_grade l "@b;Grade" T ""}
+ addUserKnob {6 grade_solo l " " -STARTLINE}
+ addUserKnob {20 grade_group l " " n 1}
+ grade_group 0
+ addUserKnob {19 saturation_1 l Saturation R 0 4}
+ saturation_1 2
+ addUserKnob {6 saturation_1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 contrast_1 l contrast R 0 4}
+ contrast_1 1
+ addUserKnob {6 contrast_1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 gamma_1 l Gamma R 0.2 5}
+ gamma_1 1
+ addUserKnob {6 gamma_1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 gain_1 l Gain R 0 4}
+ gain_1 1
+ addUserKnob {6 gain_1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 offset_1 l Offset R -1 1}
+ offset_1 {0 0 0 0}
+ addUserKnob {6 offset_1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 S07 l " " T " "}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_norm l "@b; Normalise" T ""}
+ addUserKnob {6 norm_solo l "" -STARTLINE}
+ addUserKnob {26 S11 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_grain l "@b;Grain" T ""}
+ addUserKnob {6 grain_solo l "" -STARTLINE}
+ addUserKnob {20 grain_group l " " n 1}
+ grain_group 0
+ addUserKnob {4 grain_mode l Mode M {"Color - Lum" "Color Only" ""}}
+ addUserKnob {7 grain_gain l Gain}
+ addUserKnob {26 S08 l " " T " "}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_color l "@b;Color" T ""}
+ addUserKnob {6 color_solo l "" -STARTLINE}
+ addUserKnob {20 RGB_group l "" +STARTLINE n 1}
+ RGB_group 0
+ addUserKnob {26 S04 l " " T " "}
+ addUserKnob {7 contrast l Contrast}
+ contrast 0.5
+ addUserKnob {6 shadows l Shadows +STARTLINE}
+ shadows true
+ addUserKnob {6 midtone l Midtone -STARTLINE}
+ midtone true
+ addUserKnob {6 highlight l Highlight -STARTLINE}
+ highlight true
+ addUserKnob {26 S05 l " " T " "}
+ addUserKnob {20 ranges_group l "Adjust Ranges" n 1}
+ ranges_group 0
+ addUserKnob {6 test l "Test - Adjust Ranges" +STARTLINE}
+ addUserKnob {41 lookup l "" +STARTLINE T ColorCorrect1.lookup}
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {1 output l INVISIBLE +INVISIBLE}
+ output CHECK
+ addUserKnob {26 by2 l "                     " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+}
+ BackdropNode {
+  inputs 0
+  name COMPARE_Backdrop1
+  tile_color 0x5a3f3eff
+  label "<\[value position]>\[value text]\n\[if \{\[value text]==\"\"\} \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\} \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 2112
+  ypos 45
+  bdwidth 685
+  bdheight 539
+  addUserKnob {20 mainTabTK l BackdropNode}
+  addUserKnob {1 text l Text}
+  text COMPARE
+  addUserKnob {4 position l "   Align" M {left center "" "" "" "" "" "" "" "" "" "" "" ""}}
+  position center
+  addUserKnob {26 ""}
+  addUserKnob {22 rndColors l " <img src=\"F_ccolornode.png\">          " T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )" +STARTLINE}
+  addUserKnob {26 SP03 l " " -STARTLINE T "       "}
+  addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\nautoBackdrop.Grow(n,50)"}
+  addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\nautoBackdrop.Shrink(n,50)"}
+  addUserKnob {26 ""}
+  addUserKnob {26 S01 l " " T " "}
+  addUserKnob {22 rndClrs3 l KEY T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nR,G,B= \[0.33300000000000002, 0.24299999999999999, 0.28999999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('KEY')\n" +STARTLINE}
+  addUserKnob {22 rndClrs4 l CLEAN -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.70299999999999996, 0.28000000000000003, 0.32200000000000001]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('CLEAN')\n"}
+  addUserKnob {22 rndClrs5 l REF -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.13800000000000001, 0.40400000000000003, 0.47399999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('REF')\n"}
+  addUserKnob {22 rndClrs6 l PUBLISH -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.221, 0.36799999999999999, 0.46000000000000002]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('PUBLISH')\n"}
+  addUserKnob {26 SP02 l " " -STARTLINE T "       "}
+  addUserKnob {22 rndClrs2 l 3D -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.82199999999999995, 0.312, 0.188]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('3D')\n\n"}
+  addUserKnob {22 rndClrs0 l CG -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.001, 0.30099999999999999, 0.35299999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('CG')\n\n"}
+  addUserKnob {22 rndClrs1 l FX -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.079000000000000001, 0.34000000000000002, 0.24199999999999999]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('FX')"}
+  addUserKnob {22 rndClrs7 l INVISIBLE -STARTLINE +INVISIBLE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_important.png')\nR,G,B= \[0.77600000000000002, 0.53300000000000003, 0.80000000000000004]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('IMPORTANT')\n"}
+  addUserKnob {26 S03 l " " T " "}
+ }
+ BackdropNode {
+  inputs 0
+  name GRADE_Backdrop2
+  tile_color 0x384937ff
+  label "<\[value position]>\[value text]\n\[if \{\[value text]==\"\"\} \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\} \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos -247
+  ypos 54
+  bdwidth 309
+  bdheight 243
+  addUserKnob {20 mainTabTK l BackdropNode}
+  addUserKnob {1 text l Text}
+  text GRADE
+  addUserKnob {4 position l "   Align" M {left center "" "" "" "" "" "" "" "" "" "" "" ""}}
+  position center
+  addUserKnob {26 ""}
+  addUserKnob {22 rndColors l " <img src=\"F_ccolornode.png\">          " T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )" +STARTLINE}
+  addUserKnob {26 SP03 l " " -STARTLINE T "       "}
+  addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\nautoBackdrop.Grow(n,50)"}
+  addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\nautoBackdrop.Shrink(n,50)"}
+  addUserKnob {26 ""}
+  addUserKnob {26 S01 l " " T " "}
+  addUserKnob {22 rndClrs3 l KEY T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nR,G,B= \[0.33300000000000002, 0.24299999999999999, 0.28999999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('KEY')\n" +STARTLINE}
+  addUserKnob {22 rndClrs4 l CLEAN -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.70299999999999996, 0.28000000000000003, 0.32200000000000001]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('CLEAN')\n"}
+  addUserKnob {22 rndClrs5 l REF -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.13800000000000001, 0.40400000000000003, 0.47399999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('REF')\n"}
+  addUserKnob {22 rndClrs6 l PUBLISH -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.221, 0.36799999999999999, 0.46000000000000002]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('PUBLISH')\n"}
+  addUserKnob {26 SP02 l " " -STARTLINE T "       "}
+  addUserKnob {22 rndClrs2 l 3D -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.82199999999999995, 0.312, 0.188]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('3D')\n\n"}
+  addUserKnob {22 rndClrs0 l CG -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.001, 0.30099999999999999, 0.35299999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('CG')\n\n"}
+  addUserKnob {22 rndClrs1 l FX -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.079000000000000001, 0.34000000000000002, 0.24199999999999999]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('FX')"}
+  addUserKnob {22 rndClrs7 l INVISIBLE -STARTLINE +INVISIBLE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_important.png')\nR,G,B= \[0.77600000000000002, 0.53300000000000003, 0.80000000000000004]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('IMPORTANT')\n"}
+  addUserKnob {26 S03 l " " T " "}
+ }
+ BackdropNode {
+  inputs 0
+  name GRAIN_Backdrop1
+  tile_color 0x3e4542ff
+  label "<\[value position]>\[value text]\n\[if \{\[value text]==\"\"\} \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\} \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 203
+  ypos 45
+  bdwidth 777
+  bdheight 994
+  addUserKnob {20 mainTabTK l BackdropNode}
+  addUserKnob {1 text l Text}
+  text GRAIN
+  addUserKnob {4 position l "   Align" M {left center "" "" "" "" "" "" "" "" "" "" "" ""}}
+  position center
+  addUserKnob {26 ""}
+  addUserKnob {22 rndColors l " <img src=\"F_ccolornode.png\">          " T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )" +STARTLINE}
+  addUserKnob {26 SP03 l " " -STARTLINE T "       "}
+  addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\nautoBackdrop.Grow(n,50)"}
+  addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\nautoBackdrop.Shrink(n,50)"}
+  addUserKnob {26 ""}
+  addUserKnob {26 S01 l " " T " "}
+  addUserKnob {22 rndClrs3 l KEY T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nR,G,B= \[0.33300000000000002, 0.24299999999999999, 0.28999999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('KEY')\n" +STARTLINE}
+  addUserKnob {22 rndClrs4 l CLEAN -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.70299999999999996, 0.28000000000000003, 0.32200000000000001]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('CLEAN')\n"}
+  addUserKnob {22 rndClrs5 l REF -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.13800000000000001, 0.40400000000000003, 0.47399999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('REF')\n"}
+  addUserKnob {22 rndClrs6 l PUBLISH -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.221, 0.36799999999999999, 0.46000000000000002]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('PUBLISH')\n"}
+  addUserKnob {26 SP02 l " " -STARTLINE T "       "}
+  addUserKnob {22 rndClrs2 l 3D -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.82199999999999995, 0.312, 0.188]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('3D')\n\n"}
+  addUserKnob {22 rndClrs0 l CG -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.001, 0.30099999999999999, 0.35299999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('CG')\n\n"}
+  addUserKnob {22 rndClrs1 l FX -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.079000000000000001, 0.34000000000000002, 0.24199999999999999]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('FX')"}
+  addUserKnob {22 rndClrs7 l INVISIBLE -STARTLINE +INVISIBLE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_important.png')\nR,G,B= \[0.77600000000000002, 0.53300000000000003, 0.80000000000000004]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('IMPORTANT')\n"}
+  addUserKnob {26 S03 l " " T " "}
+ }
+ BackdropNode {
+  inputs 0
+  name NORMALISE_Backdrop2
+  tile_color 0x384937ff
+  label "<\[value position]>\[value text]\n\[if \{\[value text]==\"\"\} \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\} \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 2937
+  ypos 53
+  bdwidth 547
+  bdheight 1002
+  addUserKnob {20 mainTabTK l BackdropNode}
+  addUserKnob {1 text l Text}
+  text NORMALISE
+  addUserKnob {4 position l "   Align" M {left center "" "" "" "" "" "" "" "" "" "" "" ""}}
+  position center
+  addUserKnob {26 ""}
+  addUserKnob {22 rndColors l " <img src=\"F_ccolornode.png\">          " T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )" +STARTLINE}
+  addUserKnob {26 SP03 l " " -STARTLINE T "       "}
+  addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\nautoBackdrop.Grow(n,50)"}
+  addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\nautoBackdrop.Shrink(n,50)"}
+  addUserKnob {26 ""}
+  addUserKnob {26 S01 l " " T " "}
+  addUserKnob {22 rndClrs3 l KEY T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nR,G,B= \[0.33300000000000002, 0.24299999999999999, 0.28999999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('KEY')\n" +STARTLINE}
+  addUserKnob {22 rndClrs4 l CLEAN -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.70299999999999996, 0.28000000000000003, 0.32200000000000001]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('CLEAN')\n"}
+  addUserKnob {22 rndClrs5 l REF -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.13800000000000001, 0.40400000000000003, 0.47399999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('REF')\n"}
+  addUserKnob {22 rndClrs6 l PUBLISH -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.221, 0.36799999999999999, 0.46000000000000002]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('PUBLISH')\n"}
+  addUserKnob {26 SP02 l " " -STARTLINE T "       "}
+  addUserKnob {22 rndClrs2 l 3D -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.82199999999999995, 0.312, 0.188]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('3D')\n\n"}
+  addUserKnob {22 rndClrs0 l CG -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.001, 0.30099999999999999, 0.35299999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('CG')\n\n"}
+  addUserKnob {22 rndClrs1 l FX -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.079000000000000001, 0.34000000000000002, 0.24199999999999999]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('FX')"}
+  addUserKnob {22 rndClrs7 l INVISIBLE -STARTLINE +INVISIBLE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_important.png')\nR,G,B= \[0.77600000000000002, 0.53300000000000003, 0.80000000000000004]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('IMPORTANT')\n"}
+  addUserKnob {26 S03 l " " T " "}
+ }
+ BackdropNode {
+  inputs 0
+  name "R G B_Backdrop1"
+  tile_color 0x372c2fff
+  label "<\[value position]>\[value text]\n\[if \{\[value text]==\"\"\} \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\} \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 1137
+  ypos 34
+  bdwidth 824
+  bdheight 1175
+  addUserKnob {20 mainTabTK l BackdropNode}
+  addUserKnob {1 text l Text}
+  text "R G B"
+  addUserKnob {4 position l "   Align" M {left center "" "" "" "" "" "" "" "" "" "" "" ""}}
+  position center
+  addUserKnob {26 ""}
+  addUserKnob {22 rndColors l " <img src=\"F_ccolornode.png\">          " T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )" +STARTLINE}
+  addUserKnob {26 SP03 l " " -STARTLINE T "       "}
+  addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\nautoBackdrop.Grow(n,50)"}
+  addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\nautoBackdrop.Shrink(n,50)"}
+  addUserKnob {26 ""}
+  addUserKnob {26 S01 l " " T " "}
+  addUserKnob {22 rndClrs3 l KEY T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nR,G,B= \[0.33300000000000002, 0.24299999999999999, 0.28999999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('KEY')\n" +STARTLINE}
+  addUserKnob {22 rndClrs4 l CLEAN -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.70299999999999996, 0.28000000000000003, 0.32200000000000001]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('CLEAN')\n"}
+  addUserKnob {22 rndClrs5 l REF -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.13800000000000001, 0.40400000000000003, 0.47399999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('REF')\n"}
+  addUserKnob {22 rndClrs6 l PUBLISH -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.221, 0.36799999999999999, 0.46000000000000002]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('PUBLISH')\n"}
+  addUserKnob {26 SP02 l " " -STARTLINE T "       "}
+  addUserKnob {22 rndClrs2 l 3D -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.82199999999999995, 0.312, 0.188]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('3D')\n\n"}
+  addUserKnob {22 rndClrs0 l CG -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.001, 0.30099999999999999, 0.35299999999999998]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('CG')\n\n"}
+  addUserKnob {22 rndClrs1 l FX -STARTLINE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_null.png')\nR,G,B= \[0.079000000000000001, 0.34000000000000002, 0.24199999999999999]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('FX')"}
+  addUserKnob {22 rndClrs7 l INVISIBLE -STARTLINE +INVISIBLE T "import colorsys\nn=nuke.thisNode()\nlist=\['CG', 'FX', '3D', 'KEY', 'CLEAN', 'REF', 'PUBLISH', 'IMPORTANT']\nn\[''].setValue('F_important.png')\nR,G,B= \[0.77600000000000002, 0.53300000000000003, 0.80000000000000004]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\nif ((n\['text'].getValue()=='') or (n\['text'].getValue() in list)):\n   n\['text'].setValue('IMPORTANT')\n"}
+  addUserKnob {26 S03 l " " T " "}
+ }
+ Input {
+  inputs 0
+  name Comp
+  xpos 2206
+  ypos -175
+ }
+ Dot {
+  name IN
+  gl_color 0xff
+  xpos 2240
+  ypos -69
+ }
+set Nac606000 [stack 0]
+ Dot {
+  name Dot1
+  xpos 1819
+  ypos -68
+ }
+set N7dd6dc00 [stack 0]
+ Dot {
+  name Dot29
+  label "Link to: <font size = 3 color=\"green\"> \[value input.name]"
+  xpos 348
+  ypos -68
+ }
+set N7dd6d800 [stack 0]
+ Dot {
+  name Dot16
+  label "Link to: <font size = 3 color=\"green\"> \[value input.name]"
+  xpos -105
+  ypos -67
+ }
+ ColorCorrect {
+  channels rgba
+  saturation {{saturation_1 i}}
+  contrast {{contrast_1 i}}
+  gamma {{parent.gamma_1 i}}
+  gain {{gain_1 i}}
+  offset {{offset_1 i}}
+  name ColorCorrect2
+  xpos -139
+  ypos 191
+ }
+ Dot {
+  name Dot17
+  xpos -105
+  ypos 1456
+ }
+push $N7dd6d800
+ Log2Lin {
+  operation lin2log
+  name Log2Lin1
+  xpos 314
+  ypos 181
+ }
+set N7dd6c800 [stack 0]
+ Blur {
+  size 2
+  name Blur1
+  xpos 439
+  ypos 241
+ }
+push $N7dd6c800
+ Merge2 {
+  inputs 2
+  operation difference
+  bbox B
+  name Merge8
+  xpos 314
+  ypos 307
+ }
+ Dot {
+  name Dot20
+  xpos 348
+  ypos 392
+ }
+set N7d9a3c00 [stack 0]
+ Dot {
+  name Dot21
+  xpos 875
+  ypos 392
+ }
+ Dot {
+  name Dot22
+  xpos 875
+  ypos 458
+ }
+set N7d9a3400 [stack 0]
+ Dot {
+  name Dot23
+  xpos 875
+  ypos 509
+ }
+set N7d9a3000 [stack 0]
+ Dot {
+  name Dot24
+  xpos 875
+  ypos 589
+ }
+set N7d9a2c00 [stack 0]
+ Dot {
+  name Dot25
+  xpos 875
+  ypos 641
+ }
+set N7d9a2800 [stack 0]
+ Dot {
+  name Dot26
+  xpos 875
+  ypos 722
+ }
+set N7d9a2400 [stack 0]
+ Dot {
+  name Dot27
+  xpos 875
+  ypos 769
+ }
+push $N7d9a2400
+ ColorMatrix {
+  matrix {
+      {0 0 0}
+      {0 0 0}
+      {1 1 1}
+    }
+  name ColorMatrix1
+  xpos 707
+  ypos 719
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  bbox B
+  name Merge9
+  xpos 707
+  ypos 766
+ }
+push $N7d9a2800
+push $N7d9a2c00
+ ColorMatrix {
+  matrix {
+      {0 0 0}
+      {1 1 1}
+      {0 0 0}
+    }
+  name ColorMatrix5
+  xpos 616
+  ypos 586
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  bbox B
+  name Merge10
+  xpos 616
+  ypos 638
+ }
+push $N7d9a3000
+push $N7d9a3400
+ ColorMatrix {
+  matrix {
+      {1 1 1}
+      {0 0 0}
+      {0 0 0}
+    }
+  name ColorMatrix6
+  xpos 469
+  ypos 455
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  bbox B
+  name Merge11
+  xpos 469
+  ypos 506
+ }
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.green
+  name Copy4
+  xpos 469
+  ypos 632
+ }
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.blue
+  name Copy5
+  xpos 469
+  ypos 760
+ }
+ Grade {
+  multiply 0.5
+  gamma 0.7
+  name Grade3
+  xpos 469
+  ypos 834
+  icon -
+ }
+push $N7d9a3c00
+ Grade {
+  multiply 20
+  name Grade1
+  xpos 314
+  ypos 646
+ }
+ Switch {
+  inputs 2
+  which {{grain_mode i}}
+  name Switch1
+  xpos 314
+  ypos 834
+ }
+ Grade {
+  multiply 10
+  mix {{grain_gain i}}
+  name Grade2
+  xpos 314
+  ypos 953
+  icon -
+ }
+ Dot {
+  name Dot36
+  xpos 348
+  ypos 1283
+ }
+push $N7dd6dc00
+ Dot {
+  name Dot40
+  xpos 1819
+  ypos 167
+ }
+set N54fc8800 [stack 0]
+ Dot {
+  name Dot41
+  xpos 1356
+  ypos 167
+ }
+set N54fc8400 [stack 0]
+ Dot {
+  name Dot42
+  xpos 1229
+  ypos 167
+ }
+ Dot {
+  name Dot13
+  xpos 1229
+  ypos 1007
+ }
+set Nf06e7c00 [stack 0]
+ AddChannels {
+  channels alpha
+  name AddChannels1
+  xpos 1195
+  ypos 1098
+ }
+push $Nf06e7c00
+push $N54fc8400
+ AddChannels {
+  channels rgba
+  name AddChannels2
+  xpos 1322
+  ypos 683
+ }
+ ColorCorrect {
+  gain 0
+  shadows.offset {1 0 0 0}
+  midtones.offset {0 0 1 0}
+  highlights.offset {0 1 0 0}
+  lookup {shadow {curve x0.04365216568 1 s0 x0.1214492768 0 s0}
+    midtone {1-shadow-highlight}
+    highlight {curve x0.1342016906 0 s0 x0.2082447559 1 s0}}
+  name ColorCorrect1
+  xpos 1322
+  ypos 707
+ }
+set Nf06e7000 [stack 0]
+ Dissolve {
+  inputs 2
+  which 0.5
+  name Dissolve1
+  xpos 1322
+  ypos 998
+ }
+push $Nf06e7000
+ Remove {
+  channels alpha
+  name Remove1
+  xpos 1540
+  ypos 701
+ }
+set Nf06e6800 [stack 0]
+ Shuffle {
+  alpha green
+  name Highlight
+  tile_color 0xff00ff
+  xpos 1650
+  ypos 797
+  disable {{!parent.highlight i}}
+ }
+push 0
+push $Nf06e6800
+ Shuffle {
+  alpha red
+  name Shadows
+  tile_color 0xff0000ff
+  xpos 1437
+  ypos 797
+  disable {{!parent.shadows i}}
+ }
+push $Nf06e6800
+ Shuffle {
+  alpha blue
+  name Midtone
+  tile_color 0xffff
+  xpos 1540
+  ypos 797
+  disable {{!parent.midtone i}}
+ }
+ Merge2 {
+  inputs 3+1
+  operation plus
+  name Merge1
+  xpos 1540
+  ypos 884
+ }
+push $N54fc8800
+ Grade {
+  gamma {{-parent.contrast+1.05 i}}
+  name Grade
+  xpos 1785
+  ypos 238
+  icon -
+ }
+ Dot {
+  name Dot3
+  xpos 1819
+  ypos 314
+ }
+set Na497000 [stack 0]
+ Dot {
+  name Dot2
+  xpos 1519
+  ypos 314
+ }
+ Dot {
+  name Dot9
+  xpos 1519
+  ypos 417
+ }
+set Na496800 [stack 0]
+ Dot {
+  name Dot8
+  xpos 1519
+  ypos 464
+ }
+set Na496400 [stack 0]
+ Dot {
+  name Dot7
+  xpos 1519
+  ypos 508
+ }
+set Na496000 [stack 0]
+ Dot {
+  name Dot6
+  xpos 1519
+  ypos 570
+ }
+set Ndc1edc00 [stack 0]
+ Dot {
+  name Dot5
+  xpos 1519
+  ypos 609
+ }
+push $Ndc1edc00
+ ColorMatrix {
+  matrix {
+      {0 0 0}
+      {0 0 0}
+      {1 1 1}
+    }
+  name ColorMatrix4
+  xpos 1575
+  ypos 566
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge4
+  xpos 1575
+  ypos 605
+ }
+push $Na496000
+push $Na496400
+ ColorMatrix {
+  matrix {
+      {0 0 0}
+      {1 1 1}
+      {0 0 0}
+    }
+  name ColorMatrix3
+  xpos 1642
+  ypos 460
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge3
+  xpos 1642
+  ypos 505
+ }
+push $Na496800
+push $Na497000
+ ColorMatrix {
+  matrix {
+      {1 1 1}
+      {0 0 0}
+      {0 0 0}
+    }
+  name ColorMatrix2
+  xpos 1785
+  ypos 367
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge2
+  xpos 1785
+  ypos 413
+ }
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.green
+  name Copy1
+  xpos 1785
+  ypos 499
+ }
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.blue
+  name Copy2
+  xpos 1785
+  ypos 599
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  invert_mask true
+  name Multiply1
+  xpos 1785
+  ypos 878
+ }
+ Switch {
+  inputs 2
+  which {{parent.test i}}
+  name Switch2
+  xpos 1785
+  ypos 1004
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos 1785
+  ypos 1098
+ }
+push $Nac606000
+ Dot {
+  name Dot10
+  xpos 3037
+  ypos -69
+ }
+ Dot {
+  name Dot142
+  xpos 3037
+  ypos 226
+ }
+set N77dcc400 [stack 0]
+ Reformat {
+  type scale
+  scale 0.2
+  pbb true
+  name Reformat6
+  xpos 3003
+  ypos 294
+ }
+ Dot {
+  name Dot150
+  xpos 3037
+  ypos 391
+ }
+set N3f4f3800 [stack 0]
+ Dot {
+  name Dot151
+  xpos 3147
+  ypos 391
+ }
+set N3f4f3400 [stack 0]
+ Dot {
+  name Dot152
+  xpos 3147
+  ypos 567
+ }
+set N3f4f3000 [stack 0]
+push $N3f4f3400
+ Dot {
+  name Dot153
+  xpos 3247
+  ypos 391
+ }
+ Dilate {
+  channels rgb
+  size {{"-max(input.format.w, input.format.h)"}}
+  name DilateMin
+  xpos 3213
+  ypos 459
+ }
+ Saturation {
+  saturation 0
+  mode Maximum
+  name Saturation6
+  xpos 3213
+  ypos 510
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox2
+  xpos 3213
+  ypos 563
+ }
+ Reformat {
+  type scale
+  scale {{1/Reformat6.scale i}}
+  name Reformat7
+  xpos 3213
+  ypos 663
+ }
+ Dot {
+  name Dot154
+  xpos 3247
+  ypos 765
+ }
+set Nce2ef400 [stack 0]
+push $N77dcc400
+ Dot {
+  name Dot155
+  xpos 3378
+  ypos 226
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  bbox B
+  name Merge68
+  xpos 3344
+  ypos 761
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp2
+  xpos 3344
+  ypos 852
+ }
+ Dot {
+  name Dot156
+  xpos 3378
+  ypos 930
+ }
+push $Nce2ef400
+push $N3f4f3000
+push $N3f4f3800
+ FilterErode {
+  channels rgb
+  size {{"-max(input.format.w, input.format.h)"}}
+  name ErodeMax
+  xpos 3003
+  ypos 460
+ }
+ Saturation {
+  saturation 0
+  mode Maximum
+  name Saturation7
+  xpos 3003
+  ypos 515
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 3003
+  ypos 563
+ }
+ Reformat {
+  type scale
+  scale {{1/Reformat6.scale i}}
+  name Reformat8
+  xpos 3003
+  ypos 662
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  bbox B
+  name Merge69
+  xpos 3003
+  ypos 761
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  bbox B
+  name Merge70
+  xpos 3003
+  ypos 927
+ }
+push $Nac606000
+ Dot {
+  name Dot4
+  xpos 2240
+  ypos 223
+ }
+set Na9ad0000 [stack 0]
+ Input {
+  inputs 0
+  name Master
+  xpos 2451
+  ypos -180
+  number 1
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels3
+  xpos 2451
+  ypos 187
+ }
+ Difference {
+  inputs 2
+  offset 0.1
+  gain 100
+  name Difference1
+  xpos 2451
+  ypos 213
+ }
+ CheckerBoard2 {
+  inputs 0
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  boxsize 10
+  color0 0.1
+  color1 0.5
+  color2 0.1
+  color3 0.5
+  linecolor 0
+  centerlinewidth 0
+  name CheckerBoard1
+  xpos 2659
+  ypos 421
+  postage_stamp false
+ }
+ Reformat {
+  type "to box"
+  box_width {{IN.input.width}}
+  box_height {{IN.input.height}}
+  box_fixed true
+  center false
+  name Reformat1
+  xpos 2659
+  ypos 447
+ }
+push $Na9ad0000
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 2451
+  ypos 441
+ }
+push $Na9ad0000
+ Switch {
+  inputs 2
+  which 1
+  name Difference
+  xpos 2206
+  ypos 447
+  disable {{!parent.diff_solo}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Normal
+  xpos 2206
+  ypos 927
+  disable {{!parent.norm_solo}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name ColorRGB
+  xpos 2206
+  ypos 1103
+  disable {{!parent.color_solo i}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Grain
+  xpos 2206
+  ypos 1279
+  disable {{!parent.grain_solo i}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Mirror2
+  xpos 2206
+  ypos 1451
+  disable {{!grade_solo i}}
+ }
+ Output {
+  name FranklinVFX
+  xpos 2206
+  ypos 1606
+ }
+end_group

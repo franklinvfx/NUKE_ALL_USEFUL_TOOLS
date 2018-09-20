@@ -1,3 +1,5 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
 NoOp {
  name Curve_Creator
  help "Curve Creator\n\nCréateur de courbes procédurales avec des paramétres pour chaque type de courbes."

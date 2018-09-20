@@ -1,10 +1,6 @@
-set cut_paste_input [stack 0]
-version 6.0 v5
-push $cut_paste_input
 Group {
 name ChromaticAberration
 selected true
-icon F_onnode.png
 addUserKnob {20 ChromaticAberration l Chromatic_Aberration}
 addUserKnob {26 Chromatic_Aberration}
 addUserKnob {41 Red T Red_Aberration.distortion1}

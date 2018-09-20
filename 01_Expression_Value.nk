@@ -1,0 +1,56 @@
+NoOp {
+ name Exp_Val
+ knobChanged "tmp_nameList = \['tmp_name1', 'tmp_name2', 'tmp_name3', 'tmp_name4']\nexprtextList = \['exprtext1', 'exprtext2', 'exprtext3', 'exprtext4']\n\ndef knobToDelete(exprNumber):\n    for knob in nuke.thisNode().allKnobs():\n        if '\[value exprtext' + exprNumber + ']' in knob.toScript() and knob.name() != 'knobChanged' and 'result_exp' not in knob.name():\n            nuke.thisNode().removeKnob(knob)\n            break\n\ndef modifyKnobName(knob, tmpName):\n    exprNumber = tmpName.split('tmp_name')\[-1]\n    knobToDelete(exprNumber)\n\n    newName = nuke.thisNode().knob(tmpName).value()\n    if knob.value() == '':\n        newName = tmpName + '_exp'\n\n    kn = nuke.Array_Knob(newName, None)\n    kn.setExpression('\[value exprtext' + exprNumber + ']')\n    kn.setFlag(nuke.STARTLINE)\n    kn.setFlag(nuke.INVISIBLE)\n    nuke.thisNode().addKnob(kn)\n\nif nuke.thisKnob().name() in tmp_nameList:\n    knob = nuke.thisKnob()\n\n    if knob.name() == 'tmp_name1':\n        modifyKnobName(knob, tmpName='tmp_name1')\n    elif knob.name() == 'tmp_name2':\n        modifyKnobName(knob, tmpName='tmp_name2')\n    elif knob.name() == 'tmp_name3':\n        modifyKnobName(knob, tmpName='tmp_name3')\n    elif knob.name() == 'tmp_name4':\n        modifyKnobName(knob, tmpName='tmp_name4')\n"
+ selected true
+ addUserKnob {20 User l "Expression Value"}
+ addUserKnob {20 G1 l 1 n 1}
+ addUserKnob {1 tmp_name1 l Name}
+ tmp_name1 w
+ addUserKnob {26 S01 l " " -STARTLINE T "                                                                                 "}
+ addUserKnob {1 exprtext1 l " "}
+ exprtext1 width
+ addUserKnob {78 result_exp1 l " " -STARTLINE n 1}
+ result_exp1 {{"\[value exprtext1]"}}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 G2 l 2 n 1}
+ G2 0
+ addUserKnob {1 tmp_name2 l Name}
+ addUserKnob {26 S02 l " " -STARTLINE T "                                                                                 "}
+ addUserKnob {1 exprtext2 l " "}
+ addUserKnob {78 result_exp2 l " " -STARTLINE n 1}
+ result_exp2 {{"\[value exprtext2]"}}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 G3 l 3 n 1}
+ G3 0
+ addUserKnob {1 tmp_name3 l Name}
+ addUserKnob {26 S03 l " " -STARTLINE T "                                                                                 "}
+ addUserKnob {1 exprtext3 l " "}
+ addUserKnob {78 result_exp3 l " " -STARTLINE n 1}
+ result_exp3 {{"\[value exprtext3]"}}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 G4 l 4 n 1}
+ G4 0
+ addUserKnob {1 tmp_name4 l Name}
+ addUserKnob {26 S04 l " " -STARTLINE T "                                                                                 "}
+ addUserKnob {1 exprtext4 l " "}
+ addUserKnob {78 result_exp4 l " " -STARTLINE n 1}
+ result_exp4 {{"\[value exprtext4]"}}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 S05 l " " T " "}
+ addUserKnob {1 expr l "        Global"}
+ expr w
+ addUserKnob {78 result l "" -STARTLINE n 1}
+ result {{"\[value expr]"}}
+ addUserKnob {26 S04B l " " T " "}
+ addUserKnob {26 BY l "                     " T "                                                                                               "}
+ addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter votre superviseur\n" -STARTLINE T "<font color=\"#1C1C1C\"> v01 - CGEV - 2017"}
+ addUserKnob {78 w +INVISIBLE n 1}
+ w {{"\[value exprtext1]"}}
+ addUserKnob {78 tmp_name3_exp +INVISIBLE n 1}
+ tmp_name3_exp {{"\[value exprtext3]"}}
+ addUserKnob {78 tmp_name4_exp +INVISIBLE n 1}
+ tmp_name4_exp {{"\[value exprtext4]"}}
+ addUserKnob {78 tmp_name2_exp +INVISIBLE n 1}
+ tmp_name2_exp {{"\[value exprtext2]"}}
+}

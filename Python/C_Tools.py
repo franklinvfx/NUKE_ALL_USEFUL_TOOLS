@@ -1,14 +1,5 @@
 import nuke
 
-# from menu import path
-
-# nuke.pluginAddPath(path + './icons');
-# nuke.pluginAddPath(path + './Gizmos');
-# nuke.pluginAddPath(path + './Gizmos/C');
-# nuke.pluginAddPath(path + './Gizmos/C/icons');
-
-##########################################################################################################################################
-
 tools = nuke.toolbar("Nodes")
 C_menu = tools.addMenu("C",  icon="C.png")
 
@@ -48,6 +39,7 @@ nuke.toolbar("Nodes").addMenu("C/Filter/Edge").addSeparator()
 C_menu.addCommand( 'Filter/Edge/Edge Roughen', "nuke.createNode(\"EdgeRoughen\")" , icon="F_edgeroughen.png")
 #-----------------------------
 C_menu.addCommand( 'Filter/IDefocus', "nuke.createNode(\"IDefocus\")" , icon="IDefocus.png")
+#C_menu.addCommand( 'Filter/Blocky', "nuke.createNode(\"Blocky\")" , icon="Blocky.png")
 
 ##########################################################################################################################################
 C_menu.addMenu( 'Merge',  icon='Merge.png' )
@@ -61,6 +53,7 @@ C_menu.addMenu( 'Transform',  icon='Transform.png' )
 C_menu.addCommand( 'Transform/Tracker Reformat', "nuke.createNode(\"Tracker_Reformat\")" , icon="Tracker_Reformat.png")
 nuke.toolbar("Nodes").addMenu("C/Transform").addSeparator()
 C_menu.addCommand( 'Transform/CornerPin Mix', "nuke.createNode(\"CornerPin_Mix\")" , icon="CornerPin_Mix.png")
+C_menu.addCommand( 'Transform/CornerPin Dissolve', "nuke.createNode(\"CornerPin_Dissolve\")" , icon="CornerPin_Dissolve.png")
 C_menu.addCommand( 'Transform/ICornerPin C', "nuke.createNode(\"CornerPin_C\")" , icon="ICornerPin_C.png")
 nuke.toolbar("Nodes").addMenu("C/Transform").addSeparator()
 C_menu.addCommand( 'Transform/ITransform C', "nuke.createNode(\"ITransform_C\")" , icon="ITransform_C.png")
@@ -95,13 +88,14 @@ C_menu.addCommand( '3D/Camera/CameraSmoother', "nuke.createNode(\"Camera_Smoothe
 #-----------------------------
 nuke.toolbar("Nodes").addMenu("C/3D").addSeparator()
 C_menu.addCommand( '3D/Noise Spherical', "nuke.createNode(\"Noise_Spherical\")" , icon="Noise_Spherical.png")
+C_menu.addCommand( '3D/AxisToRender', "nuke.createNode(\"AxisToRender\")" , icon="AxisToRender.png")
 
 ##########################################################################################################################################
 nuke.toolbar("Nodes").addMenu("C").addSeparator()
 C_menu.addMenu( 'Other',  icon='F_script.png' )
 #-----------------------------
-C_menu.addCommand( 'Other/Dot Link src', "nuke.createNode(\"Dot_Link_src\")" ,"ctrl+shift+.",  icon="NoOp.png")
 C_menu.addCommand( 'Other/Ruler 2D', "nuke.createNode(\"Ruler_2D\")" , icon="Ruler_2D.png")
+C_menu.addCommand( 'Other/Tech Check', "nuke.createNode(\"Tech_Check\")" , icon="Tech_Check.png")
 C_menu.addMenu( 'Other/Controler',  icon='F_effect.png' ) #Sous Menu
 C_menu.addCommand( 'Other/Controler/$GUI', "nuke.createNode(\"Control_$gui\")" , icon="Control_$gui.png")
 C_menu.addCommand( 'Other/Controler/Disable Nodes', "nuke.createNode(\"Disable_Nodes\")" , icon="Disable_Nodes.png")
@@ -111,6 +105,7 @@ C_menu.addMenu( 'Other/Effect',  icon='F_effect.png' ) #Sous Menu
 C_menu.addCommand( 'Other/Effect/Caustic', "nuke.createNode(\"Caustic\")" , icon="Caustic")
 C_menu.addCommand( 'Other/Effect/Lightning', "nuke.createNode(\"Lightning\")" , icon="Lightning.png")
 C_menu.addCommand( 'Other/Effect/Rain', "nuke.createNode(\"Rain\")" , icon="Rain.png")
+
 
 CT = '- CGEV Tools .................... OK\n'
 nuke.tprint(CT)

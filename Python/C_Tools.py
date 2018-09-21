@@ -1,4 +1,4 @@
-import nuke
+﻿import nuke
 
 tools = nuke.toolbar("Nodes")
 C_menu = tools.addMenu("C",  icon="C.png")
@@ -95,7 +95,6 @@ nuke.toolbar("Nodes").addMenu("C").addSeparator()
 C_menu.addMenu( 'Other',  icon='F_script.png' )
 #-----------------------------
 C_menu.addCommand( 'Other/Ruler 2D', "nuke.createNode(\"Ruler_2D\")" , icon="Ruler_2D.png")
-C_menu.addCommand( 'Other/Tech Check', "nuke.createNode(\"Tech_Check\")" , icon="Tech_Check.png")
 C_menu.addMenu( 'Other/Controler',  icon='F_effect.png' ) #Sous Menu
 C_menu.addCommand( 'Other/Controler/$GUI', "nuke.createNode(\"Control_$gui\")" , icon="Control_$gui.png")
 C_menu.addCommand( 'Other/Controler/Disable Nodes', "nuke.createNode(\"Disable_Nodes\")" , icon="Disable_Nodes.png")

@@ -10,15 +10,14 @@ nuke.pluginAddPath(pipe_path + './Gizmos/MM/gonzo_gizmos');
 nuke.pluginAddPath(pipe_path + './Gizmos/MM/gonzo_icons');
 
 
-
 menubar = nuke.menu("Nuke")
 toolbar = nuke.toolbar("Nodes")
 
-m = toolbar.addMenu("GIZMO", icon="icon.png")
-m.addCommand("Dugrain2", "nuke.createNode(\"Dugrain2.gizmo\")", icon="icon.png")
+m = toolbar.addMenu("GIZMO", icon="MM.png")
+#m.addCommand("Dugrain2", "nuke.createNode(\"Dugrain2.gizmo\")", icon="icon.png")
 m.addCommand("DespillMadness", "nuke.createNode(\"DespillMadness.gizmo\")", icon="key.png")
-m.addCommand("PushPixel", "nuke.createNode(\"PushPixel.gizmo\")", icon="key.png")
-m.addCommand("PushPixel2", "nuke.createNode(\"PushPixel2.gizmo\")", icon="key.png")
+#m.addCommand("PushPixel", "nuke.createNode(\"PushPixel.gizmo\")", icon="key.png")
+#m.addCommand("PushPixel2", "nuke.createNode(\"PushPixel2.gizmo\")", icon="key.png")
 m.addCommand("bm_Despill", "nuke.createNode(\"bm_Despill.gizmo\")", icon="key.png")
 m.addCommand("AdditiveKeyer2", "nuke.createNode(\"AdditiveKeyer2.gizmo\")", icon="key.png")
 m.addCommand("KillOutline", "nuke.createNode(\"KillOutline.gizmo\")", icon="key.png")

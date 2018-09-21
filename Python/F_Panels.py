@@ -1,4 +1,4 @@
-# Regroupement des panels les plus utiles
+﻿# Regroupement des panels les plus utiles
 
 import nuke, nukescripts, math
 

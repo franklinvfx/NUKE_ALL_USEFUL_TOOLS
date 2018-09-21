@@ -1,4 +1,4 @@
-import nuke, nukescripts, sys, os, platform
+﻿import nuke, nukescripts, sys, os, platform
 
 # NODE DEFAULT PRESETS ---------------------------------------------------------------------
 

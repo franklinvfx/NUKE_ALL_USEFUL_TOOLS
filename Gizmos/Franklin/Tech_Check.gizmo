@@ -69,8 +69,9 @@ Group {
  addUserKnob {20 endGroup_3 l endGroup n -1}
  addUserKnob {1 output l INVISIBLE +INVISIBLE}
  output CHECK
- addUserKnob {26 by2 l "                     " T "                                                                                               "}
- addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+ addUserKnob {26 FT1 l " " T " \n\n\n"}
+ addUserKnob {26 FT2 l "" +STARTLINE T "                                                                                                                   "}
+ addUserKnob {26 FT3 l " " -STARTLINE T "<font color=\"#1C1C1C\">Franklin VFX - 2017"}
 }
  BackdropNode {
   inputs 0

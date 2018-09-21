@@ -14,22 +14,6 @@ except:
 #---------------------------------------------
 
 from menu import pipe_path
-'''
-nuke.pluginAddPath(path + './icons');
-nuke.pluginAddPath(path + './icons/nodes');
-nuke.pluginAddPath(path + './Gizmos');
-nuke.pluginAddPath(path + './Gizmos/Franklin');
-nuke.pluginAddPath(path + './Python');
-nuke.pluginAddPath(path + './Python/More');
-'''
-#---------------------------------------------
-
-import channel_hotbox
-nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', '²')
-
-# import autoBackdrop as autoBackdrop
-# nukescripts.autoBackdrop = autoBackdrop.autoBackdrop
-# nuke.menu('Nodes').addCommand( 'Other/Backdrop', 'autoBackdrop.autoBackdrop()', 'alt+b', 'Backdrop.png')
 
 
 ##########################################################################################################################################
@@ -144,7 +128,9 @@ nuke.toolbar("Nodes").addMenu("Franklin").addSeparator()
 F_menu.addMenu( 'Other',  icon='F_other.png' )
 ##############################################################
 F_menu.addCommand( 'Other/VIEWER INPUT', "nuke.createNode(\"VIEWER_INPUT\")" , icon="F_viewer_input.png")
-F_menu.addCommand( 'Other/Dot_Link', "nuke.createNode(\"DotLink\")" , "ctrl+.", icon="F_dotlink.png")
+F_menu.addCommand( 'Other/DotLink', "nuke.createNode(\"DotLink\")" , "ctrl+.", icon="F_dotlink.png")
+F_menu.addCommand( 'Other/Inspector', "nuke.createNode(\"Inspector\")" , icon="F_inspector.png")
+F_menu.addCommand( 'Other/Tech Check', "nuke.createNode(\"Tech_Check\")" , icon="F_techcheck.png")
 
 F_menu.addMenu( 'Other/Setup',  icon='F_setup.png' )          ########################################### Sous Menu ##################
 F_menu.addCommand( 'Other/Setup/Preserve Bbox', "nuke.createNode(\"Preserve_bbox\")" , "")
@@ -195,22 +181,7 @@ nuke.knobDefault("Tracker4.label", "[value transform] / [value reference_frame]"
 nuke.knobDefault("Tracker3.label", "[value transform] / [value reference_frame]")
 
 
-##########################################################################################################################################
-##########################################################################################################################################
-#######                                                      #############################################################################
-#######              ADD TO VIEWER MENU                      #############################################################################
-#######                                                      #############################################################################
-##########################################################################################################################################
-##########################################################################################################################################
 
-import viewerInputNodes
-
-v = nuke.menu("Viewer")
-v.addCommand("-", '', '')
-m = v.addMenu("IP")
-
-m.addCommand('IP List','nuke.load("viewerInputNodes"), viewerInput()', "Ctrl+Alt+i",  icon="F_ip.png") 
-m.addCommand('IP Remove','nuke.load("viewerInputNodes"), viewerInput(ipNode="Remove")', "Ctrl+Alt+Shift+i",  icon="F_ipr.png")
 
 
 

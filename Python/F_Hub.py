@@ -1,4 +1,4 @@
-import nuke, nukescripts, random, colorsys, sys, platform
+﻿import nuke, nukescripts, random, colorsys, sys, platform
 import webbrowser, os, re, inspect, subprocess, math
 import nukescripts.rollingAutoSave
 import os.path as op

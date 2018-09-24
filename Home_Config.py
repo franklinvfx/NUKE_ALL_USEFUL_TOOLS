@@ -1,4 +1,16 @@
 ﻿import nuke
+
+try:
+    # < Nuke 11
+    import PySide.QtCore as QtCore
+    import PySide.QtGui as QtGui
+    import PySide.QtGui as QtGuiWidgets
+except:
+    # >= Nuke 11
+    import PySide2.QtCore as QtCore
+    import PySide2.QtGui as QtGui
+    import PySide2.QtWidgets as QtGuiWidgets
+
 from menu import pipe_path
 
 
@@ -36,7 +48,7 @@ nuke.pluginAddPath(pipe_path + './Gizmos/Other/pixelfudger');
 #-----------------------------------------------------------------------------------------------------------------
 # import MM_Tools 
 # import MM_Hub
-# import MM_Preset
+# import MM_Presets
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -46,6 +58,7 @@ nuke.load("F_Hub")
 nuke.load("F_Panels")
 nuke.load("F_Scripts")
 nuke.load("F_Tools")
+nuke.load("F_Presets")
 
 
 #-----------------------------------------------------------------------------------------------------------------

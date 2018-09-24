@@ -1,18 +1,4 @@
 ﻿import nuke, nukescripts, math
-
-try:
-    # < Nuke 11
-    import PySide.QtCore as QtCore
-    import PySide.QtGui as QtGui
-    import PySide.QtGui as QtGuiWidgets
-except:
-    # >= Nuke 11
-    import PySide2.QtCore as QtCore
-    import PySide2.QtGui as QtGui
-    import PySide2.QtWidgets as QtGuiWidgets
-
-#---------------------------------------------
-
 from menu import pipe_path
 
 
@@ -29,13 +15,13 @@ toolbar = nuke.toolbar("Nodes")
 F_menu = toolbar.addMenu("Franklin", icon="F_menu.png")
 
 ##############################################################
-#       DRAW        ##########################################
+#  DRAW
 ##############################################################
 F_menu.addMenu( 'Draw',  icon='Draw.png' )
 F_menu.addCommand( 'Draw/Volet', "nuke.createNode(\"Volet\")" , icon="Volet.png")
 
 ##############################################################
-#       TIME        ##########################################
+#  TIME
 ##############################################################
 F_menu.addMenu( 'Time', icon='F_time.png' )
 ##############################################################
@@ -44,7 +30,7 @@ F_menu.addCommand( 'Time/FrameRange_Infos', "nuke.createNode(\"FrameRange_Infos\
 #_____________________________________________________________
 
 ##############################################################
-#      CHANNEL      ##########################################
+#  CHANNEL
 ##############################################################
 F_menu.addMenu( 'Channel',  icon='F_channel.png' )
 ##############################################################
@@ -52,7 +38,7 @@ F_menu.addCommand( 'Channel/ID_Merge', "nuke.createNode(\"ID_Merge\")" , icon="F
 #_____________________________________________________________
 
 ##############################################################
-#       COLOR       ##########################################
+#  COLOR
 ##############################################################
 F_menu.addMenu( 'Color',  icon='F_color.png' )
 ##############################################################
@@ -63,7 +49,7 @@ F_menu.addCommand( 'Color/Despill_F', "nuke.createNode(\"Despill_F\")" , icon="F
 #_____________________________________________________________
 
 ##############################################################
-#       FILTER      ##########################################
+#  FILTER  
 ##############################################################
 F_menu.addMenu( 'Filter',  icon='F_filter.png' )
 ##############################################################
@@ -74,7 +60,7 @@ F_menu.addCommand( 'Filter/Bokeh_List', "nuke.createNode(\"Bokeh_List\")" , icon
 #_____________________________________________________________
 
 ##############################################################
-#     TRANSFORM     ##########################################
+#  TRANSFORM
 ##############################################################
 F_menu.addMenu( 'Transform',  icon='F_transform.png' )
 ##############################################################
@@ -84,11 +70,12 @@ F_menu.addCommand( 'Transform/AutoCrop', "nukescripts.autocrop()",  icon="F_auto
 #_____________________________________________________________
 
 ##############################################################
-#         3D        ##########################################
+#  3D
 ##############################################################
 F_menu.addMenu( '3D',  icon='F_3D.png' )
 ##############################################################
-F_menu.addMenu( '3D/Position',  icon='Yellow_Folder.png' )  ######################################## Sous Menu ##################
+###########  POSITION
+F_menu.addMenu( '3D/Position',  icon='Yellow_Folder.png' )
 F_menu.addCommand( '3D/Position/Pos_Mask', "nuke.createNode(\"P_Mask\")" , icon="F_pmask.png")
 F_menu.addCommand( '3D/Position/Pos_Ramp', "nuke.createNode(\"P_Ramp\")" , icon="F_pramp.png")
 nuke.toolbar("Nodes").addMenu("Franklin/3D/Position").addSeparator()
@@ -96,23 +83,23 @@ F_menu.addCommand( '3D/Position/Pos_Project', "nuke.createNode(\"P_Project\")" ,
 F_menu.addCommand( '3D/Position/Pos_Object', "nuke.createNode(\"P_Object\")" , icon="F_pobject.png")
 nuke.toolbar("Nodes").addMenu("Franklin/3D/Position").addSeparator()
 F_menu.addCommand( '3D/Position/Pos_Texture (UPDATE)', "nuke.createNode(\"Position_Texture\")" , icon="Position_Texture.png") #   ( NEED UPDATE)
-#-------------------------------------------------------------------------------------------------------------------------------
-F_menu.addMenu( '3D/Normals',  icon='Green_Folder.png' ) ########################################### Sous Menu ##################
+##########  NORMALS
+F_menu.addMenu( '3D/Normals',  icon='Green_Folder.png' )
 F_menu.addCommand( '3D/Normals/Normals_Cam', "nuke.createNode(\"Normals_Cam\")" , icon="F_normalcam.png")
-#-------------------------------------------------------------------------------------------------------------------------------
-F_menu.addMenu( '3D/UV',  icon='Lightblue_Folder.png' )  ########################################### Sous Menu ##################
+##########  UV
+F_menu.addMenu( '3D/UV',  icon='Lightblue_Folder.png' )
 F_menu.addCommand( '3D/UV/UV_Ramp', "nuke.createNode(\"UV_Ramp\")" , icon="F_uvramp.png")
-F_menu.addCommand( '3D/UV/UV_Grid', "nuke.createNode(\"UV_Grid\")" , icon="UV_Grid.png") #                                        ( NEED UPDATE)
-F_menu.addCommand( '3D/UV/STMove (UPDATE)', "nuke.createNode(\"STMove\")" , icon="STMove.png") #                                  ( NEED UPDATE)
-F_menu.addCommand( '3D/UV/UV_Card', "nuke.createNode(\"UV_Card\")" , icon="") #                                                   ( NEED UPDATE)
-#-------------------------------------------------------------------------------------------------------------------------------
-F_menu.addMenu( '3D/Depth',  icon='Grey_Folder.png' )    ########################################### Sous Menu ##################
+F_menu.addCommand( '3D/UV/UV_Grid', "nuke.createNode(\"UV_Grid\")" , icon="UV_Grid.png") #                       ( NEED UPDATE)
+F_menu.addCommand( '3D/UV/STMove (UPDATE)', "nuke.createNode(\"STMove\")" , icon="STMove.png") #                 ( NEED UPDATE)
+F_menu.addCommand( '3D/UV/UV_Card', "nuke.createNode(\"UV_Card\")" , icon="F_uvcard") #                          ( NEED UPDATE)
+##########  DEPTH
+F_menu.addMenu( '3D/Depth',  icon='Grey_Folder.png' )
 F_menu.addCommand( '3D/Depth/Depth_Ramp (beta)', "nuke.createNode(\"Depth_Ramp\")" , icon="Depth_Ramp.png") #            ( NEED UPDATE)
 F_menu.addCommand( '3D/Depth/Depth_Mask (beta)', "nuke.createNode(\"Depth_Mask\")" , icon="Depth_Mask.png") #            ( NEED UPDATE)
-#-------------------------------------------------------------------------------------------------------------------------------
-F_menu.addMenu( '3D/Deep',  icon='Blue_Folder.png' )     ########################################### Sous Menu ##################
+##########  DEEP
+F_menu.addMenu( '3D/Deep',  icon='Blue_Folder.png' )
 F_menu.addCommand( '3D/Deep/DeepTo_Pos', "nuke.createNode(\"DeepTo_Pos\")" , icon="F_deeptopos.png")
-#-------------------------------------------------------------------------------------------------------------------------------
+##########
 nuke.toolbar("Nodes").addMenu("Franklin/3D").addSeparator()
 F_menu.addCommand( '3D/NanRemove', "nuke.createNode(\"NanRemove\")" , icon="F_nanremove.png")
 F_menu.addCommand( '3D/Reflections', "nuke.createNode(\"Reflections\")" , icon="F_reflections.png")
@@ -131,7 +118,7 @@ F_menu.addCommand( 'Other/VIEWER INPUT', "nuke.createNode(\"VIEWER_INPUT\")" , i
 F_menu.addCommand( 'Other/DotLink', "nuke.createNode(\"DotLink\")" , "ctrl+.", icon="F_dotlink.png")
 F_menu.addCommand( 'Other/Inspector', "nuke.createNode(\"Inspector\")" , icon="F_inspector.png")
 F_menu.addCommand( 'Other/Tech Check', "nuke.createNode(\"Tech_Check\")" , icon="F_techcheck.png")
-
+##########  SETUP
 F_menu.addMenu( 'Other/Setup',  icon='F_setup.png' )          ########################################### Sous Menu ##################
 F_menu.addCommand( 'Other/Setup/Preserve Bbox', "nuke.createNode(\"Preserve_bbox\")" , "")
 #_____________________________________________________________

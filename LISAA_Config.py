@@ -1,4 +1,4 @@
-﻿import nuke
+import nuke
 
 try:
     # < Nuke 11
@@ -18,9 +18,9 @@ from menu import pipe_path
 # ADD STARTING PRINT
 #-----------------------------------------------------------------------------------------------------------------
 L1 = '\n          _________________________ '
-L2 = '\n         |      Machine Molle      |'
-L3 = '\n         |        Franklin         |'
-L4 = '\n         |________  2018  _________|'
+L2 = '\n         |        Franklin         |'
+L3 = '\n         |      LISAA - 2018       |'
+L4 = '\n         |_________________________|'
 
 info = L1 + L2 + L3 + L4 + '\n\n'
 nuke.tprint(info)
@@ -44,21 +44,13 @@ nuke.pluginAddPath(pipe_path + './Gizmos/Other/pixelfudger');
 
 
 #-----------------------------------------------------------------------------------------------------------------
-# IMPORT MACHINE MOLLE PIPE
-#-----------------------------------------------------------------------------------------------------------------
-import MM_Tools 
-import MM_Hub
-import MM_Presets
-
-
-#-----------------------------------------------------------------------------------------------------------------
 # IMPORT FRANKLIN PIPE
 #-----------------------------------------------------------------------------------------------------------------
 nuke.load("F_Hub")
 nuke.load("F_Panels")
 nuke.load("F_Scripts")
 nuke.load("F_Tools")
-nuke.load("F_Presets")
+# nuke.load("F_Presets")
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -68,37 +60,19 @@ import C_Tools                         # C gizmos
 
 
 #-----------------------------------------------------------------------------------------------------------------
-# SET NUKE PREFERENCES
+# SET NUKE PREFERENCES - W_HOTBOX
 #-----------------------------------------------------------------------------------------------------------------
 pipe_path = pipe_path.replace('\\', "/")
 pref = nuke.toNode('preferences')
-
 
 pref.knob('hotboxLocation').setValue(pipe_path + 'W_hotbox/')
 pref.knob('hotboxIconLocation').setValue(pipe_path + 'W_hotbox/icons/')
 pref.knob('hotboxShortcut').setValue('<')
 
 
-# # Need to check all conditions
-# pref.knob('autoLocalCachePath').setValue('')
-# pref.knob('localCachePath').setValue('[getenv NUKE_TEMP_DIR]')
 
-
-#-----------------------------------------------------------------------------------------------------------------
-# SET NUKE_LOCAL DIRECTORY
-#-----------------------------------------------------------------------------------------------------------------
-# # Need to check all conditions
-# if platform.system() == "Windows":
-# 	local_path = 'D://NUKE_LOCAL/'
-# 	os.environ['NUKE_TEMP_DIR'] = local_path
-# 	print '- Nuke Local Directory:  ' + local_path
-# else:
-# 	print 'WARNING: nuke local path is not set!'
-
-
-
-
-
-print '- Pipe Directory:        ' + pipe_path
-print '- Pipe Version: ................. 1.01\n'
+PP = '- Pipe Directory:  ' + pipe_path
+nuke.tprint(PP)
+PV = '- Pipe Version: ................. 1.01\n'
 ##############################           #
+nuke.tprint(PV)

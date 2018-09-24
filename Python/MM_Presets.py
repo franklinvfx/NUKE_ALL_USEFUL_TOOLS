@@ -30,11 +30,6 @@ nuke.knobDefault("Root.format", "SEPH_Format")
 nuke.knobDefault("Viewer.viewerProcess", "rec709")
 '''
 
-'''
-import cryptomatte_utilities
-cryptomatte_utilities.setup_cryptomatte_ui()
-'''
-
 
 print '- Machine Molle Presets ......... OK'
 ##############################           #

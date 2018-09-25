@@ -1,12 +1,10 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Alpha/Rgb...
 #
 #----------------------------------------------------------------------------------------------------------
-
-#from cgev.ui import messages
 
 for i in nuke.selectedNodes():
     if i.knob('output').value() == 'alpha':

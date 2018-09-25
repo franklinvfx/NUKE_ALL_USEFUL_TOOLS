@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Bokeh List
 #
@@ -17,7 +17,7 @@ emptySelection(selection)
 
 for i in selection:
 
-    BGNode = nuke.nodePaste("//stora/diska/global/templatesProd/05_Filter/01_Blur/Bokeh_List.gizmo")
+    BGNode = nuke.createNode("Bokeh_List")
     
     postion = [i.xpos()-i.screenWidth()/2,i.ypos()+i.screenHeight()/2]
     BGNode.setXpos(postion[0]-20-BGNode.screenWidth()/2)

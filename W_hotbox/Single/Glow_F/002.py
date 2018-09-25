@@ -2,16 +2,12 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Invert mask
+# NAME: Effect Only
 #
 #----------------------------------------------------------------------------------------------------------
 
-#from cgev.ui import messages
-
 for i in nuke.selectedNodes():
-    if i.knob('invert_mask').value() == 0:
-        i.knob('invert_mask').setValue(1)
+    if i.knob('fxonly').value() == 0:
+        i.knob('fxonly').setValue(1)
     else:
-        i.knob('invert_mask').setValue(0)
-        i.knob('icon').setValue(' ')
-#messages.splash('Invert mask set to : {}'.format(i.knob('invert_mask').value()))
+        i.knob('fxonly').setValue(0)

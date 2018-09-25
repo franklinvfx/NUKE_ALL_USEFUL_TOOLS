@@ -1,8 +1,8 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Create Transform
+# NAME: Create Transform Linked
 #
 #----------------------------------------------------------------------------------------------------------
 

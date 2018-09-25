@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: DotLink CG
 #
@@ -17,7 +17,7 @@ emptySelection(selection)
 
 for i in selection:
 
-    BGNode = nuke.nodePaste("//stora/diska/global/templatesProd/11_Other/06_Dot_Link.nk")
+    BGNode = nuke.createNode("DotLink")
     
     postion = [i.xpos()-i.screenWidth()/2,i.ypos()+i.screenHeight()/2]
     BGNode.knob('input_node_2').setValue('CG')

@@ -1,12 +1,10 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Alpha/Rgb...
 #
 #----------------------------------------------------------------------------------------------------------
-
-#from cgev.ui import messages
 
 for i in nuke.selectedNodes():
     if i.knob('channels').value() == 'alpha':
@@ -21,4 +19,3 @@ for i in nuke.selectedNodes():
     else:
         i.knob('channels').setValue('alpha')
         i.knob('label').setValue('')
-    #messages.splash('Channels set to : {}'.format(i.knob('channels').value()))

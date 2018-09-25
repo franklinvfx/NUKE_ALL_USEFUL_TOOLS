@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Dotlink Setup
 #
@@ -17,7 +17,7 @@ emptySelection(selection)
 
 for i in selection:
 
-    CamNode = nuke.nodePaste("//stora/diska/global/templatesProd/11_Other/06_Dot_Link.nk")
+    CamNode = nuke.createNode("DotLink")
     
     postion = [i.xpos()-i.screenWidth()/2,i.ypos()+i.screenHeight()/2]
     CamNode.knob('input_node_2').setValue('Camera')
@@ -25,7 +25,7 @@ for i in selection:
     CamNode.setXpos(postion[0]+200-CamNode.screenWidth()/2)
     CamNode.setYpos(postion[1]-8+CamNode.screenHeight()/2)
     
-    ImgNode = nuke.nodePaste("//stora/diska/global/templatesProd/11_Other/06_Dot_Link.nk")
+    ImgNode = nuke.createNode("DotLink")
     ImgNode.knob('input_node_2').setValue('Master_Undisto')
     ImgNode.knob('hide_input').setValue(1)
     ImgNode.setXpos(postion[0]+72+ImgNode.screenWidth()/2)

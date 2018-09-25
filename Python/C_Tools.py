@@ -39,7 +39,6 @@ nuke.toolbar("Nodes").addMenu("C/Filter/Edge").addSeparator()
 C_menu.addCommand( 'Filter/Edge/Edge Roughen', "nuke.createNode(\"EdgeRoughen\")" , icon="F_edgeroughen.png")
 #-----------------------------
 C_menu.addCommand( 'Filter/IDefocus', "nuke.createNode(\"IDefocus\")" , icon="IDefocus.png")
-#C_menu.addCommand( 'Filter/Blocky', "nuke.createNode(\"Blocky\")" , icon="Blocky.png")
 
 ##########################################################################################################################################
 C_menu.addMenu( 'Merge',  icon='Merge.png' )

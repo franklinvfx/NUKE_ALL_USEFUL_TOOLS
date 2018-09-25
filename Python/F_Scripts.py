@@ -48,7 +48,10 @@ try:      # ALL Exist
 	fv.addCommand('IP List','nuke.load("viewerInputNodes"), viewerInput()', "Ctrl+Alt+i",  icon="F_ip.png") 
 	fv.addCommand('IP Remove','nuke.load("viewerInputNodes"), viewerInput(ipNode="Remove")', "Ctrl+Alt+Shift+i",  icon="F_ipr.png")
 
-
+	import reduceKeyframes
+	m = nuke.menu( 'Animation' )
+	m.addCommand( 'Reduce Keyframes', "reduceKeyframes.doReduceKeyframes()" )
+	
 		  # PRINT
 	ALL1 = '- Knob Scripter ................. OK\n- C_Hotbox ...................... OK\n- Auto Backdrop ................. OK\n- Pixelfudger ................... OK'
 	nuke.tprint(ALL1)

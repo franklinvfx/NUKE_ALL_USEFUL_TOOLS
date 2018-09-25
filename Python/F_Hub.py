@@ -246,7 +246,7 @@ try:   # > Nuke 7
 	m.addCommand("Additional Shortcuts/Tracker", "nuke.createNode(\"Tracker4\")", tracker, "Tracker.png", shortcutContext=2)
 	m.addCommand('Additional Shortcuts/Transform  Smart', 'transformThis()', transform, "F_transformg.png", shortcutContext=2)
 	m.addMenu("Additional Shortcuts").addSeparator()   #######
-	m.addCommand("Additional Shortcuts/Duplicate", "copyKeepInputs(nuke.selectedNodes())", duplicate_node, "F_duplicate.png", shortcutContext=2)
+	m.addCommand("Additional Shortcuts/Duplicate2", "tetherCopy(nuke.selectedNodes())", duplicate_node, "F_duplicate.png", shortcutContext=2)
 	m.addCommand("Additional Shortcuts/Super Swap", 'import superSwap as superSwap; superSwap.swapper()', swap, "F_superswap.png", shortcutContext=2)  #######################################################################################
 except:   # < Nuke 7
 	m.addMenu('Additional Shortcuts', "F_short.png")   # Dossier 
@@ -259,7 +259,7 @@ except:   # < Nuke 7
 	m.addCommand("Additional Shortcuts/Tracker", "nuke.createNode(\"Tracker4\")", tracker, "Tracker.png")
 	m.addCommand('Additional Shortcuts/Transform  Smart', 'transformThis()', transform, "F_transformg.png")
 	m.addMenu("Additional Shortcuts").addSeparator()   #######
-	m.addCommand("Additional Shortcuts/Duplicate", "copyKeepInputs(nuke.selectedNodes())", duplicate_node, "F_duplicate.png")
+	m.addCommand("Additional Shortcuts/Duplicate2", "tetherCopy(nuke.selectedNodes())", duplicate_node, "F_duplicate.png")
 	m.addCommand("Additional Shortcuts/Super Swap", 'import superSwap as superSwap; superSwap.swapper()', swap, "F_superswap.png")   #######################################################################################
 	pass
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -721,23 +721,64 @@ def infos():
 #####################################################################################################################################
 #####################################################################################################################################
 
-def copyKeepInputs(node_list):
-    dst_list = []
-    for src in node_list:
-        xpos = src.xpos()
-        ypos = src.ypos()
-        nukescripts.clear_selection_recursive()
-        src.setSelected(True)
-        nuke.nodeCopy(nukescripts.cut_paste_file())
-        nukescripts.clear_selection_recursive()
-        dst = nuke.nodePaste(nukescripts.cut_paste_file())
-        for input in range(src.inputs()):
-            dst.setInput(input,src.input(input))                
-        dst.setXYpos(xpos+30, ypos+30)
-        dst_list.append(dst)
-    nukescripts.clear_selection_recursive()
-    for dst in dst_list:
-        dst.setSelected(True)
+# def copyKeepInputs(node_list):
+#     dst_list = []
+#     for src in node_list:
+#         xpos = src.xpos()
+#         ypos = src.ypos()
+#         nukescripts.clear_selection_recursive()
+#         src.setSelected(True)
+#         nuke.nodeCopy(nukescripts.cut_paste_file())
+#         nukescripts.clear_selection_recursive()
+#         dst = nuke.nodePaste(nukescripts.cut_paste_file())
+#         for input in range(src.inputs()):
+#             dst.setInput(input,src.input(input))                
+#         dst.setXYpos(xpos+30, ypos+30)
+#         dst_list.append(dst)
+#     nukescripts.clear_selection_recursive()
+#     for dst in dst_list:
+#         dst.setSelected(True)
+
+def unselectAll():
+    for n in nuke.selectedNodes():
+        n.setSelected(False)
+
+def tetherCopy(nodes):
+    cp = list()
+    unselectAll()
+    for n in nodes:
+        n.setSelected(True)
+        nuke.nodeCopy("%clipboard%")
+        n.setSelected(False)
+        nuke.nodePaste("%clipboard%")
+
+        cp.append(nuke.selectedNodes()[0])
+        copy = cp[len(cp) - 1]
+        copy.setSelected(False)
+        copy["xpos"].setValue(n["xpos"].value() + 50)
+        copy["ypos"].setValue(n["ypos"].value() + 50)
+
+    if len(cp) <= len(nodes):
+        for i in range(len(cp)):
+            src = nodes[i]
+            dst = cp[i]
+            deps = src.dependencies()
+            for di in range(len(deps)):
+                d = deps[di]
+                if d in nodes:
+                    ni = nodes.index(d)
+                    if src.input(di) is not None:
+                        dst.connectInput(di, cp[ni])
+                else:
+                    if src.input(di) is not None:
+                        dst.connectInput(di, d)
+
+    for n in cp:
+        n.setSelected(True)
+
+def tetherCopySelected():
+    tetherCopy(nuke.selectedNodes())
+
 
 #####################################################################################################################################
 #####################################################################################################################################
@@ -913,3 +954,74 @@ nuke.addOnScriptLoad(killViewers)
 #####################################################################################################################################
 #####################################################################################################################################
 #####################################################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def toggleStats():
+    if nuke.usingPerformanceTimers():
+        disableStats()
+    else:
+        enableStats()
+
+#enable the stats
+def enableStats():
+    nuke.startPerformanceTimers()
+
+#disable the stats
+def disableStats():
+    nuke.stopPerformanceTimers()
+
+#reset the stats    
+def resetStats():
+    if not nuke.usingPerformanceTimers():
+        enableStats()
+    nuke.resetPerformanceTimers()
+
+# toggleStats()
+# resetStats()

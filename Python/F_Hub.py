@@ -246,7 +246,7 @@ try:   # > Nuke 7
 	m.addCommand("Additional Shortcuts/Tracker", "nuke.createNode(\"Tracker4\")", tracker, "Tracker.png", shortcutContext=2)
 	m.addCommand('Additional Shortcuts/Transform  Smart', 'transformThis()', transform, "F_transformg.png", shortcutContext=2)
 	m.addMenu("Additional Shortcuts").addSeparator()   #######
-	m.addCommand("Additional Shortcuts/Duplicate2", "tetherCopy(nuke.selectedNodes())", duplicate_node, "F_duplicate.png", shortcutContext=2)
+	m.addCommand("Additional Shortcuts/Duplicate", "tetherCopy(nuke.selectedNodes())", duplicate_node, "F_duplicate.png", shortcutContext=2)
 	m.addCommand("Additional Shortcuts/Super Swap", 'import superSwap as superSwap; superSwap.swapper()', swap, "F_superswap.png", shortcutContext=2)  #######################################################################################
 except:   # < Nuke 7
 	m.addMenu('Additional Shortcuts', "F_short.png")   # Dossier 
@@ -259,7 +259,7 @@ except:   # < Nuke 7
 	m.addCommand("Additional Shortcuts/Tracker", "nuke.createNode(\"Tracker4\")", tracker, "Tracker.png")
 	m.addCommand('Additional Shortcuts/Transform  Smart', 'transformThis()', transform, "F_transformg.png")
 	m.addMenu("Additional Shortcuts").addSeparator()   #######
-	m.addCommand("Additional Shortcuts/Duplicate2", "tetherCopy(nuke.selectedNodes())", duplicate_node, "F_duplicate.png")
+	m.addCommand("Additional Shortcuts/Duplicate", "tetherCopy(nuke.selectedNodes())", duplicate_node, "F_duplicate.png")
 	m.addCommand("Additional Shortcuts/Super Swap", 'import superSwap as superSwap; superSwap.swapper()', swap, "F_superswap.png")   #######################################################################################
 	pass
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -720,25 +720,6 @@ def infos():
 #####################################################################################################################################
 #####################################################################################################################################
 #####################################################################################################################################
-
-# def copyKeepInputs(node_list):
-#     dst_list = []
-#     for src in node_list:
-#         xpos = src.xpos()
-#         ypos = src.ypos()
-#         nukescripts.clear_selection_recursive()
-#         src.setSelected(True)
-#         nuke.nodeCopy(nukescripts.cut_paste_file())
-#         nukescripts.clear_selection_recursive()
-#         dst = nuke.nodePaste(nukescripts.cut_paste_file())
-#         for input in range(src.inputs()):
-#             dst.setInput(input,src.input(input))                
-#         dst.setXYpos(xpos+30, ypos+30)
-#         dst_list.append(dst)
-#     nukescripts.clear_selection_recursive()
-#     for dst in dst_list:
-#         dst.setSelected(True)
-
 def unselectAll():
     for n in nuke.selectedNodes():
         n.setSelected(False)

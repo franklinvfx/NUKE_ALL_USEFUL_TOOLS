@@ -2,18 +2,26 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Publish
-# COLOR: #1fff00
-# TEXTCOLOR: #000000
+# NAME: Mocha
 #
 #----------------------------------------------------------------------------------------------------------
 
-from cgev.ui import messages
-from cgev.pipeline.data import session
-from cgev.pipeline.appconnector import dialogOpener
+import os
+import win32gui
+ 
+def windowEnumerationHandler(hwnd, top_windows):
+    top_windows.append((hwnd, win32gui.GetWindowText(hwnd)))
 
-sContext = session.getContext()
-sManager = session.getManager()
-element = nuke.selectedNodes()
+mocha_path = 'C:/Program Files/Imagineer Systems Ltd/mocha Pro V5/bin/mochapro.exe'
+if os.path.exists(mocha_path):
+    mocha_path = "\"C:\\Program Files\\Imagineer Systems Ltd\\mocha Pro V5\\bin\\mochapro.exe\" "
+else:
+    mocha_path = environment.getBinPath().replace('\\', '//')+'/mochaProV2/bin/mochapro.exe '
 
-dialogOpener.openDialogPublishImages(sManager, sContext, element)
+filename = nuke.selectedNode().knob('file').value()
+filename = filename.split('.')
+size = len(filename[-2])
+filename[-2] = str(nuke.selectedNode().firstFrame()).zfill(size)
+filename = '.'.join(filename)
+
+system.shell([mocha_path + filename], mode=system.EXEC_MODE.BACKGROUND)

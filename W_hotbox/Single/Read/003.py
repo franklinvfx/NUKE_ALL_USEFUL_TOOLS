@@ -1,10 +1,13 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Reload
+# NAME: Missing frames error/black
 #
 #----------------------------------------------------------------------------------------------------------
 
-for i in nuke.selectedNodes():
-    nuke.Script_Knob.execute(i.knob('reload'))
+for node in nuke.allNodes('Read'):
+    if node.knob('on_error').value() != 'black':
+       node.knob('on_error').setValue('black')
+    else:
+        node.knob('on_error').setValue('error')

@@ -1,12 +1,15 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Create Read
+# NAME: Batch <font color = "grey">Version Up
 #
 #----------------------------------------------------------------------------------------------------------
 
-from cgev.nuke.tools.nodes import write
+prev = nuke.selectedNode().knob('revision').value() + 1
+nuke.selectedNode().knob('revision').setValue(prev)
 
-filename = nuke.selectedNode()['file'].value()
-write.createRead(filename)
+messages.splash('Increment version to \'\' {}'.format(int(nuke.selectedNode().knob('revision').value())) + ' \'\'')
+
+man = session.getManager()
+write.update(man, False, nuke.selectedNode()['batch2'], nuke.selectedNode())

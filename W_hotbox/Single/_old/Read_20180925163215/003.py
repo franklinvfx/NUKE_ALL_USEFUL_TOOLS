@@ -1,10 +1,10 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
 #
-# NAME: Batch <font color = "grey">(F8)
+# NAME: Reload
 #
 #----------------------------------------------------------------------------------------------------------
 
-man = session.getManager()
-write.update(man, False, nuke.selectedNode()['batch2'], nuke.selectedNode())
+for i in nuke.selectedNodes():
+    nuke.Script_Knob.execute(i.knob('reload'))

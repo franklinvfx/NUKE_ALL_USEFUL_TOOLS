@@ -13,7 +13,6 @@ def localize(nodes):
             node.knob('localizationPolicy').setValue(0)
         else:
             node.knob('localizationPolicy').setValue(2)
-        messages.splash('Localization set to : {}'.format(node.knob('localizationPolicy').value()))
 
 nodes = nuke.selectedNodes()
 if len(nodes) > 1:

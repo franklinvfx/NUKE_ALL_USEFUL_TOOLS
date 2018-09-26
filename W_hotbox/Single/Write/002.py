@@ -6,5 +6,8 @@
 #
 #----------------------------------------------------------------------------------------------------------
 
-man = session.getManager()
-write.update(man, False, nuke.selectedNode()['batch2'], nuke.selectedNode())
+#man = session.getManager()
+#write.update(man, False, nuke.selectedNode()['batch2'], nuke.selectedNode())
+
+for node in nuke.selectedNodes():
+    node.knob('Render').execute()

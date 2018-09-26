@@ -1,9 +1,9 @@
-﻿# Telechargé depuis https://github.com/franklinvfx/NUKE_PIPE
+﻿# Telecharge depuis https://github.com/franklinvfx/NUKE_PIPE
 
-# Deplacez a l'endroit souhaité (en local ou sur votre réseau) le dossier et l'ensemble de son contenu.
-# Copiez l'integralité de ce fichier dans votre menu.py
+# Deplacez a l'endroit souhaite (en local ou sur votre reseau) le dossier et l'ensemble de son contenu.
+# Copiez l'integralite de ce fichier dans votre menu.py
 # Au premier lancement de nuke vous devrez selectionner le repertoire "NUKE_PIPE"
-# Par la suite ce répertoire sera systématiquement mémorisé
+# Par la suite ce repertoire sera systematiquement memorise
 
 # Copyright (c) 2018 Franklin's VFX Co.
 
@@ -30,7 +30,7 @@ nukeFolder = os.path.expanduser('~') + '/.nuke/'
 keepLooping = not isPathValid(pipe_path)
 
 while keepLooping and (pipe_path == "[EMPTY_PATH]" or pipe_path == "" or not isPathValid(pipe_path)):
-    pipe_path = nuke.getFilename('Selectionner le dossier télechargé depuis Github.', '*/')
+    pipe_path = nuke.getFilename('Selectionner le dossier telecharge depuis Github.', '*/')
 
     if isPathValid(pipe_path):
         menu_file = open(nukeFolder + 'menu.py', 'r')
@@ -47,9 +47,7 @@ while keepLooping and (pipe_path == "[EMPTY_PATH]" or pipe_path == "" or not isP
         menu_file.close()
         keepLooping = False
     else:
-        nuke.message('Le dossier selectionné ne contient pas les fichiers attendu.\nFaites un autre choix.')
-
-    print pipe_path
+        nuke.message('Le dossier selectionne ne contient pas les fichiers attendu.\nFaites un autre choix.')
 
 
 #-----------------------------------------------------------------------------------------------------------------

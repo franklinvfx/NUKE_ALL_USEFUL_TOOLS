@@ -44,6 +44,23 @@ nuke.pluginAddPath(pipe_path + './Gizmos/Other/pixelfudger');
 
 
 #-----------------------------------------------------------------------------------------------------------------
+# SET NUKE PREFERENCES - W_HOTBOX
+#-----------------------------------------------------------------------------------------------------------------
+pipe_path = pipe_path.replace('\\', "/")
+pref = nuke.toNode('preferences')
+
+
+pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
+pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
+pref.knob('hotboxShortcut').setValue('<')
+
+
+# # Need to check all conditions
+# pref.knob('autoLocalCachePath').setValue('')
+# pref.knob('localCachePath').setValue('[getenv NUKE_TEMP_DIR]')
+
+
+#-----------------------------------------------------------------------------------------------------------------
 # IMPORT FRANKLIN PIPE
 #-----------------------------------------------------------------------------------------------------------------
 nuke.load("F_Hub")
@@ -57,18 +74,6 @@ nuke.load("F_Tools")
 # IMPORT CGEV TOOLS
 #-----------------------------------------------------------------------------------------------------------------
 import C_Tools                         # C gizmos
-
-
-#-----------------------------------------------------------------------------------------------------------------
-# SET NUKE PREFERENCES - W_HOTBOX
-#-----------------------------------------------------------------------------------------------------------------
-pipe_path = pipe_path.replace('\\', "/")
-pref = nuke.toNode('preferences')
-
-pref.knob('hotboxLocation').setValue(pipe_path + 'W_hotbox/')
-pref.knob('hotboxIconLocation').setValue(pipe_path + 'W_hotbox/icons/')
-pref.knob('hotboxShortcut').setValue('<')
-
 
 
 PP = '- Pipe Directory:  ' + pipe_path

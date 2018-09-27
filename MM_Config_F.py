@@ -33,7 +33,6 @@ nuke.pluginAddPath(pipe_path + './icons');
 nuke.pluginAddPath(pipe_path + './icons/nodes');
 nuke.pluginAddPath(pipe_path + './icons/nodes/color');
 nuke.pluginAddPath(pipe_path + './Python');
-nuke.pluginAddPath(pipe_path + './Python/');
 nuke.pluginAddPath(pipe_path + './Python/More');
 nuke.pluginAddPath(pipe_path + './Python/NodeTable');
 nuke.pluginAddPath(pipe_path + './Gizmos');
@@ -45,7 +44,7 @@ nuke.pluginAddPath(pipe_path + './Gizmos/Other/pixelfudger');
 
 
 #-----------------------------------------------------------------------------------------------------------------
-# SET NUKE PREFERENCES
+# SET NUKE PREFERENCES - W_HOTBOX
 #-----------------------------------------------------------------------------------------------------------------
 pipe_path = pipe_path.replace('\\', "/")
 pref = nuke.toNode('preferences')
@@ -83,7 +82,6 @@ nuke.load("F_Presets")
 # IMPORT CGEV TOOLS
 #-----------------------------------------------------------------------------------------------------------------
 import C_Tools                         # C gizmos
-
 
 
 #-----------------------------------------------------------------------------------------------------------------

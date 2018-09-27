@@ -1,10 +1,11 @@
 ﻿'''
 Telecharge depuis https://github.com/franklinvfx/NUKE_PIPE
 
-Deplacez le dossier et l'ensemble de son contenu a l'endroit souhaite (en local ou sur votre reseau).
-Copiez l'integralite de ce fichier dans votre menu.py
-Au premier lancement de nuke vous devrez selectionner le repertoire "NUKE_PIPE"
-Par la suite ce repertoire sera systematiquement memorise
+1. Deplacez le dossier et l'ensemble de son contenu a l'endroit souhaite (en local ou sur votre reseau).
+2. Copiez l'integralite de ce fichier dans votre menu.py
+3. Au premier lancement de nuke, selectionnez le repertoire "NUKE_PIPE"
+   Par la suite ce repertoire sera systematiquement memorise
+4. 
 
 Copyright (c) 2018 Franklin's VFX Co.
 '''
@@ -30,7 +31,7 @@ nukeFolder = os.path.expanduser('~') + '/.nuke/'
 keepLooping = not isPathValid(pipe_path)
 
 while keepLooping and (pipe_path == "[EMPTY_PATH]" or pipe_path == "" or not isPathValid(pipe_path)):
-    pipe_path = nuke.getFilename('Selectionner le dossier telecharge depuis Github.', '*/')
+    pipe_path = nuke.getFilename('Selectionner le dossier telecharge depuis https://github.com/franklinvfx/NUKE_PIPE', '*/')
 
     if isPathValid(pipe_path):
         menu_file = open(nukeFolder + 'menu.py', 'r')
@@ -51,7 +52,7 @@ while keepLooping and (pipe_path == "[EMPTY_PATH]" or pipe_path == "" or not isP
 
 
 #-----------------------------------------------------------------------------------------------------------------
-# ADD PATH
+# ADD PATH - IMPORT CONFIG
 #-----------------------------------------------------------------------------------------------------------------
 if isPathValid(pipe_path):
     nuke.pluginAddPath(pipe_path)
@@ -59,7 +60,7 @@ if isPathValid(pipe_path):
     # import MM_Config
     # import MM_Config_F
     import Home_Config
-    # import LISAA_Config
+    # import Default_Config
     
 
 #-----------------------------------------------------------------------------------------------------------------

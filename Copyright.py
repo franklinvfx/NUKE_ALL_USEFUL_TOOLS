@@ -1,4 +1,4 @@
-﻿
+﻿'''
 Copyright (c) 2018 Franklin's VFX Co.
 
 Voici la liste des scripts utilisés - leur auteurs et leur version
@@ -71,3 +71,5 @@ Backdrop Manager v2.4
 
 Pixelfudger  v2.3
 	 Xavier Bourque
+
+'''

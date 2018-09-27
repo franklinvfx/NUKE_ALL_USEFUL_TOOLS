@@ -3,22 +3,12 @@ import webbrowser, os, re, inspect, subprocess, math
 import nukescripts.rollingAutoSave
 import os.path as op
 
-# Add Directory 
-# from menu import pipe_path
-
-# nuke.pluginAddPath(path + './icons');
-# nuke.pluginAddPath(path + './icons/nodes');
-# nuke.pluginAddPath(path + './Python');
-# nuke.pluginAddPath(path + './Python/More');
-
-#______________________________________________________________________________
 
 import JFX_nodeScaler   #
-#import breakoutLayers   #
 import rotoToTrack      #
 import viewerInputNodes #
 import superSwap        #
-import shuffle_Smart    #
+# import shuffle_Smart    #
 
 #______________________________________________________________________________
 

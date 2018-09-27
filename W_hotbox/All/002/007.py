@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Breakout Layers
 #
@@ -12,7 +12,10 @@ def main():
     import os
 
     class shuffleChannels(nukescripts.PythonPanel):
-        def __init__(self, n):
+
+        def __init__(self, n, folder):
+
+            self.nukeFolder = folder
             nukescripts.PythonPanel.__init__(self, 'shuffle channels')
             self.n = n
             self.channels = self.n.channels()
@@ -115,7 +118,7 @@ def main():
 
         def knobChanged(self, knob):
             if knob == self.presets:
-                updateLayersPreset()
+                updateLayersPreset(self.nukeFolder)
 
         def returnLayers(self):
             return self.layers
@@ -123,7 +126,7 @@ def main():
         def returnChannels(self):
             return self.channels
 
-    def getData():
+    def getData(folder):
         # Gets selected node or not
         try:
             global n
@@ -145,7 +148,7 @@ def main():
         else:
             global p
             # if all good, build and launches the panel
-            p = shuffleChannels(n)
+            p = shuffleChannels(n, folder)
 
         # Returns the layers list
         layers = p.returnLayers()
@@ -155,8 +158,8 @@ def main():
         if windowHeight > 1000:
             windowHeight = 1000
         p.setMinimumSize(600, windowHeight)
-        readPrefsFile(p)
-        refreshPresetsMenu()
+        readPrefsFile(p, folder)
+        refreshPresetsMenu(folder)
 
         # Launches the panel
         thePanel = p.showModalDialog()
@@ -177,7 +180,7 @@ def main():
                  'postage': p.postage.value()}
 
         # Writes the preferences file
-        writePrefsFile(p, str(prefs))
+        writePrefsFile(p, str(prefs), folder)
         # Here I collect what layers have been selected
         layerList = []
         for i in range(len(layers)):
@@ -291,13 +294,11 @@ def main():
         nukePrefs['goofy_foot'].setValue(defGoofyFootValue)
 
     # Reads the preferences file and sets the values on the panel knobs
-    def readPrefsFile(p):
+    def readPrefsFile(p, folder):
         try:
-            filepathR = '%s/.nuke/shufflePanelPrefs.txt' % os.getenv('HOME')
-            prefsFileR = open(filepathR, 'r')
+            prefsFileR = open(folder + 'BreakOutPrefs.txt', 'r')
         except:
-            filepathW = '%s/.nuke/shufflePanelPrefs.txt' % os.getenv('HOME')
-            prefsFileW = open(filepathW, 'w')
+            prefsFileW = open(folder + 'BreakOutPrefs.txt', 'w')
             prefsFileW.write("['prefs', {'All': ['All'], 'Selected':['Selected']}]")
             prefsFileW.close()
             return
@@ -322,18 +323,15 @@ def main():
             elif key == 'postage':
                 p.postage.setValue(prefs[key])
 
-    def writePrefsFile(p, prefs):
-        prefsFile = open('%s/.nuke/shufflePanelPrefs.txt' % os.getenv('HOME'),
-                         'r')
+    def writePrefsFile(p, prefs, folder):
+        prefsFile = open(folder + 'BreakOutPrefs.txt', 'r')
         prefsFileContent = eval(prefsFile.read())
         prefsFile.close()
-        prefsFile = open('%s/.nuke/shufflePanelPrefs.txt' % os.getenv('HOME'),
-                         'w')
+        prefsFile = open(folder + 'BreakOutPrefs.txt', 'w')
         prefsFile.write("[%s, %s]" % (prefs, prefsFileContent[1]))
 
-    def refreshPresetsMenu():
-        prefsFileR = open('%s/.nuke/shufflePanelPrefs.txt' % os.getenv('HOME'),
-                          'r')
+    def refreshPresetsMenu(folder):
+        prefsFileR = open(folder + 'BreakOutPrefs.txt', 'r')
         prefsFileContent = eval(prefsFileR.read())
         presetsInFile = prefsFileContent[1]
         listPresets = sorted(presetsInFile.keys())
@@ -343,9 +341,8 @@ def main():
         listPresets.insert(0, 'All')
         p.presets.setValues(listPresets)
 
-    def updateLayersPreset():
-        prefsFileR = open('%s/.nuke/shufflePanelPrefs.txt' % os.getenv('HOME'),
-                          'r')
+    def updateLayersPreset(folder):
+        prefsFileR = open(folder + 'BreakOutPrefs.txt', 'r')
         prefsFileContent = eval(prefsFileR.read())
         presetsInFile = prefsFileContent[1]
 
@@ -360,5 +357,5 @@ def main():
             selectAll()
         else:
             deselectAll()
-    getData()
+    getData(os.path.expanduser('~') + '/.nuke/')
 main()

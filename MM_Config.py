@@ -58,7 +58,7 @@ nuke.load("F_Hub")
 nuke.load("F_Panels")
 nuke.load("F_Scripts")
 nuke.load("F_Tools")
-nuke.load("F_Presets")
+# nuke.load("F_Presets")
 
 
 #-----------------------------------------------------------------------------------------------------------------

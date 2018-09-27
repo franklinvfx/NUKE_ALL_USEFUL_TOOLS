@@ -1,13 +1,13 @@
-﻿# Telecharge depuis https://github.com/franklinvfx/NUKE_PIPE
+﻿'''
+Telecharge depuis https://github.com/franklinvfx/NUKE_PIPE
 
-# Deplacez a l'endroit souhaite (en local ou sur votre reseau) le dossier et l'ensemble de son contenu.
-# Copiez l'integralite de ce fichier dans votre menu.py
-# Au premier lancement de nuke vous devrez selectionner le repertoire "NUKE_PIPE"
-# Par la suite ce repertoire sera systematiquement memorise
+Deplacez le dossier et l'ensemble de son contenu a l'endroit souhaite (en local ou sur votre reseau).
+Copiez l'integralite de ce fichier dans votre menu.py
+Au premier lancement de nuke vous devrez selectionner le repertoire "NUKE_PIPE"
+Par la suite ce repertoire sera systematiquement memorise
 
-# Copyright (c) 2018 Franklin's VFX Co.
-
-
+Copyright (c) 2018 Franklin's VFX Co.
+'''
 
 #-----------------------------------------------------------------------------------------------------------------
 # IMPORT NUKE PIPE

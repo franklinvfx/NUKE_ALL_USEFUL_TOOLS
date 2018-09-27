@@ -6,7 +6,7 @@ Telecharge depuis https://github.com/franklinvfx/NUKE_PIPE
 3. Au premier lancement de nuke, selectionnez le repertoire "NUKE_PIPE"
    Par la suite ce repertoire sera systematiquement memorise
 
-Copyright (c) 2018 Franklin's VFX Co.
+Copyright (c) 2018 Franklin VFX Co.
 '''
 
 #-----------------------------------------------------------------------------------------------------------------

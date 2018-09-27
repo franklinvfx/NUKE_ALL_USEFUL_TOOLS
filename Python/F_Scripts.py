@@ -24,14 +24,24 @@ except:   # 3DE Don't exist
 	nuke.tprint(C2)
 	pass
 
+#-----------------------------------------------------------------------------------------------------------------
+# SHORTCUT EDITOR
+#-----------------------------------------------------------------------------------------------------------------
+try:
+    import shortcuteditor
+    shortcuteditor.nuke_setup()
+except Exception:
+    import traceback
+    traceback.print_exc()
+
 
 #-----------------------------------------------------------------------------------------------------------------
 # OTHER SCRIPTS
 #-----------------------------------------------------------------------------------------------------------------
 try:      # ALL Exist
 	import pixelfudger
-
-	import Dots, mirrorNodes               # import now               (link to F_Hub)
+	import Dots
+	import mirrorNodes
 	import knob_scripter                   # 'Alt + z'
 
 	import autoBackdrop as autoBackdrop    # 'Alt + b'

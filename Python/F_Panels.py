@@ -13,11 +13,6 @@ except:
     import PySide2.QtGui as QtGui
     import PySide2.QtWidgets as QtGuiWidgets
 
-# from menu import path
-
-# nuke.pluginAddPath(path + './icons');
-# nuke.pluginAddPath(path + './Python');
-# nuke.pluginAddPath(path + './Python/More');
 
 ##########################################################################################################################################
 ##########################################################################################################################################
@@ -86,14 +81,6 @@ nuke.menu('Pane').addCommand('Search Replace', addSRPanel,  icon="F_superswap.pn
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
 
 #------------------------------
-
-from nukescripts import panels
-def get_node_table_widget():
-    from NodeTable import view as node_table_view
-    return node_table_view.NodeTableWidget(nuke.selectedNodes())
-
-panels.registerWidgetAsPanel('get_node_table_widget', 'Node Spreadsheet','de.filmkorn.NodeSpreadsheet', False)
-
 
 
 

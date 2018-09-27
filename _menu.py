@@ -5,7 +5,6 @@ Telecharge depuis https://github.com/franklinvfx/NUKE_PIPE
 2. Copiez l'integralite de ce fichier dans votre menu.py
 3. Au premier lancement de nuke, selectionnez le repertoire "NUKE_PIPE"
    Par la suite ce repertoire sera systematiquement memorise
-4. 
 
 Copyright (c) 2018 Franklin's VFX Co.
 '''
@@ -58,9 +57,8 @@ if isPathValid(pipe_path):
     nuke.pluginAddPath(pipe_path)
 
     # import MM_Config
-    # import MM_Config_F
-    import Home_Config
-    # import Default_Config
+    # import Home_Config
+    import Default_Config
     
 
 #-----------------------------------------------------------------------------------------------------------------

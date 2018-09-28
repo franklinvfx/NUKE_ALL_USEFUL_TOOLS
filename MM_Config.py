@@ -34,7 +34,6 @@ nuke.pluginAddPath(pipe_path + './icons/nodes');
 nuke.pluginAddPath(pipe_path + './icons/nodes/color');
 nuke.pluginAddPath(pipe_path + './Python');
 nuke.pluginAddPath(pipe_path + './Python/More');
-nuke.pluginAddPath(pipe_path + './Python/NodeTable');
 nuke.pluginAddPath(pipe_path + './Gizmos');
 nuke.pluginAddPath(pipe_path + './Gizmos/Franklin');
 nuke.pluginAddPath(pipe_path + './Gizmos/C');
@@ -48,12 +47,12 @@ nuke.pluginAddPath(pipe_path + './Gizmos/Other/pixelfudger');
 #-----------------------------------------------------------------------------------------------------------------
 pipe_path = pipe_path.replace('\\', "/")
 pref = nuke.toNode('preferences')
-
-
-pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
-pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
-pref.knob('hotboxShortcut').setValue('<')
-
+try:      # > Nuke 7
+	pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
+	pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
+	pref.knob('hotboxShortcut').setValue('<')
+except:   # < Nuke 6
+	pass
 
 # # Need to check all conditions
 # pref.knob('autoLocalCachePath').setValue('')
@@ -99,6 +98,6 @@ import C_Tools                         # C gizmos
 
 
 
-print '- Pipe Directory:        ' + pipe_path
-print '- Pipe Version: ................. 1.01\n'
+print '\n- Pipe Directory:        ' + pipe_path
+print '- Pipe Version: ................. 1.02\n'
 ##############################           #

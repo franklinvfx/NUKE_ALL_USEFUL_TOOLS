@@ -2,12 +2,12 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
 #
-# NAME: Fill Alpha
+# NAME: <font color="blue">B
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    i.knob('in').setValue('rgba')
-    i.knob('alpha').setValue('white')
+    for channel in ['red','green','blue','alpha']:
+        i.knob(channel).setValue('blue')
 
-    i.knob('tile_color').setValue(4278124287)
+    i.knob('tile_color').setValue(1061139199)

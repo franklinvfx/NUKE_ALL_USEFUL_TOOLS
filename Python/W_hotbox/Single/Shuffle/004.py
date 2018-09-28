@@ -1,15 +1,15 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Positon
+# NAME: Red
+# COLOR: #cc2828
+# TEXTCOLOR: #111111
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    if 'pWorld' in nuke.channels():
-        i.knob('in').setValue('pWorld')
-    else:
-        i.knob('in').setValue('Position')
+    for channel in ['red','green','blue','alpha']:
+        i.knob(channel).setValue('red')
 
-    i.knob('tile_color').setValue(2130739199)
+    i.knob('tile_color').setValue(2738107647)

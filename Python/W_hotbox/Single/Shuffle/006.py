@@ -1,13 +1,15 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: <font color="green">G
+# NAME: Blue
+# COLOR: #2851cc
+# TEXTCOLOR: #111111
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
     for channel in ['red','green','blue','alpha']:
-        i.knob(channel).setValue('green')
+        i.knob(channel).setValue('blue')
 
-    i.knob('tile_color').setValue(729426943)
+    i.knob('tile_color').setValue(1061139199)

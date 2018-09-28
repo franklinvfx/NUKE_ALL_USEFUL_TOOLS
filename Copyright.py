@@ -72,4 +72,7 @@ Backdrop Manager v2.4
 Pixelfudger  v2.3
 	 Xavier Bourque
 
+Thumbnail v1.1
+	 Simon Jokuschies
+
 '''

@@ -17,25 +17,25 @@ except:   # < Nuke 6
 #-----------------------------------------------------------------------------------------------------------------
 # CRYPTOMATTE
 #-----------------------------------------------------------------------------------------------------------------
-try:      # 3DE Exist
-	import cryptomatte_utilities
-	cryptomatte_utilities.setup_cryptomatte_ui()
-	C1 = '- Cryptomatte ................... OK'
-	nuke.tprint(C1)
-except:   # 3DE Don't exist
-	C2 = '- Cryptomatte ................... NONE'
-	nuke.tprint(C2)
-	pass
+# try:      # 3DE Exist
+# 	import cryptomatte_utilities
+# 	cryptomatte_utilities.setup_cryptomatte_ui()
+# 	C1 = '- Cryptomatte ................... OK'
+# 	nuke.tprint(C1)
+# except:   # 3DE Don't exist
+# 	C2 = '- Cryptomatte ................... NONE'
+# 	nuke.tprint(C2)
+# 	pass
 
 #-----------------------------------------------------------------------------------------------------------------
 # SHORTCUT EDITOR
 #-----------------------------------------------------------------------------------------------------------------
-try:
-    import shortcuteditor
-    shortcuteditor.nuke_setup()
-except Exception:
-    import traceback
-    traceback.print_exc()
+# try:
+#     import shortcuteditor
+#     shortcuteditor.nuke_setup()
+# except Exception:
+#     import traceback
+#     traceback.print_exc()
 
 
 #-----------------------------------------------------------------------------------------------------------------

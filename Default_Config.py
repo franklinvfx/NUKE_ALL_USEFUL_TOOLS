@@ -19,7 +19,7 @@ from menu import pipe_path
 #-----------------------------------------------------------------------------------------------------------------
 L1 = '\n          _________________________ '
 L2 = '\n         |        Franklin         |'
-L3 = '\n         |      NUKE    2018       |'
+L3 = '\n         |       NUKE  2018        |'
 L4 = '\n         |_________________________|'
 
 info = L1 + L2 + L3 + L4 + '\n\n'
@@ -32,14 +32,14 @@ nuke.tprint(info)
 nuke.pluginAddPath(pipe_path + './icons');
 nuke.pluginAddPath(pipe_path + './icons/nodes');
 nuke.pluginAddPath(pipe_path + './icons/nodes/color');
-nuke.pluginAddPath(pipe_path + './Python');
-nuke.pluginAddPath(pipe_path + './Python/More');
-nuke.pluginAddPath(pipe_path + './Gizmos');
-nuke.pluginAddPath(pipe_path + './Gizmos/Franklin');
-nuke.pluginAddPath(pipe_path + './Gizmos/C');
-nuke.pluginAddPath(pipe_path + './Gizmos/C/icons');
-nuke.pluginAddPath(pipe_path + './Gizmos/Other');
-nuke.pluginAddPath(pipe_path + './Gizmos/Other/pixelfudger');
+nuke.pluginAddPath(pipe_path + './python');
+nuke.pluginAddPath(pipe_path + './python/More');
+nuke.pluginAddPath(pipe_path + './gizmos');
+nuke.pluginAddPath(pipe_path + './gizmos/Franklin');
+nuke.pluginAddPath(pipe_path + './gizmos/C');
+nuke.pluginAddPath(pipe_path + './gizmos/C/icons');
+nuke.pluginAddPath(pipe_path + './gizmos/Other');
+nuke.pluginAddPath(pipe_path + './gizmos/Other/pixelfudger');
 
 
 #-----------------------------------------------------------------------------------------------------------------

@@ -9,7 +9,7 @@ Then I wish to thank the guys I worked with:
 	Jose Molina Garcia
 	Gaetan Baldy
 	Vincent Biaux
-	Thibaut Carpentier
+	Thibaud Carpentier
 
 
 W_Hotbox v1.7

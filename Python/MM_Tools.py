@@ -1,5 +1,5 @@
 import nuke
-from menu import pipe_path
+from menu_pipe import pipe_path
 
 #-----------------------------------------------------------------------------------------------------------------
 # ADD PATH

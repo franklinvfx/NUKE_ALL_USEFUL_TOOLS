@@ -1,13 +1,13 @@
 import nuke, nukescripts, math
 
-from menu import pipe_path
+from menu_pipe import pipe_path
 
 
 def reloadMenu():
     #tell nuke to import stuff
     import os
     import menu
-    #import F_Tools
+    import menu_pipe
     import platform
 
     #delete the menu.pyc file if it exits

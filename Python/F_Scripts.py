@@ -8,6 +8,12 @@ from menu_pipe import pipe_path
 #-----------------------------------------------------------------------------------------------------------------
 try:      # > Nuke 7
 	import W_hotbox, W_hotboxManager   # '<'
+	# SET NUKE PREFERENCES FOR W_HOTBOX
+	pipe_path = pipe_path.replace('\\', "/")
+	pref = nuke.toNode('preferences')
+	pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
+	pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
+	pref.knob('hotboxShortcut').setValue('<')
 	nuke.tprint(' ')
 except:   # < Nuke 6
 	W = '- W_hotbox ...................... NONE'
@@ -40,12 +46,12 @@ except:   # 3DE Don't exist
 
 
 #-----------------------------------------------------------------------------------------------------------------
-# OTHER SCRIPTS FOR NUKE > 7
+# SCRIPTS WITH PYSIDE FOR NUKE
 #-----------------------------------------------------------------------------------------------------------------
 try:      # ALL Exist
 	import knob_scripter                   # 'Alt + z'
 
-	import channel_hotbox                  # 'racine carre'           (link to F_Tools)
+	import channel_hotbox
 	nuke.menu('Nuke').findItem('Edit').addCommand('C_HotboxotBox', 'channel_hotbox.start()', '²')
 
 	import reduceKeyframes
@@ -63,7 +69,7 @@ except:   # ALL Don't exist
 	pass
 
 #-----------------------------------------------------------------------------------------------------------------
-# OTHER SCRIPTS FOR NUKE < 7
+# OTHER SCRIPTS
 #-----------------------------------------------------------------------------------------------------------------
 try:      # ALL Exist
 	import pixelfudger

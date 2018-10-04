@@ -1,5 +1,5 @@
 ﻿'''
-Telecharge depuis https://github.com/franklinvfx/NUKE_PIPE
+Telecharge depuis https://github.com/franklinvfx/NUKE_TOOLS
 
 1. Deplacez le dossier et l'ensemble de son contenu a l'endroit souhaite (en local ou sur votre reseau).
 2. Copiez l'integralite de ce fichier dans votre menu.py
@@ -56,10 +56,10 @@ while keepLooping and (pipe_path == "[EMPTY_PATH]" or pipe_path == "" or not isP
 if isPathValid(pipe_path):
     nuke.pluginAddPath(pipe_path)
 
-    import MM_Config
+    # import MM_Config
     # import MM_Config_F
     # import Home_Config
-    # import Default_Config
+    import Default_Config
     
 
 #-----------------------------------------------------------------------------------------------------------------

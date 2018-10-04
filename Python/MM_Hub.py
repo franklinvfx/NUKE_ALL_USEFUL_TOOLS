@@ -1,6 +1,6 @@
 ﻿import nuke, nukescripts, sys, os, platform
 
-from menu import pipe_path
+from menu_pipe import pipe_path
 
 # MACHINE MOLLE PROD MENU -----------------------------------------------------------------
 

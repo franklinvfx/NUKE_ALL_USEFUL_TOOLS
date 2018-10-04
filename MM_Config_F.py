@@ -11,7 +11,7 @@ except:
     import PySide2.QtGui as QtGui
     import PySide2.QtWidgets as QtGuiWidgets
 
-from menu import pipe_path
+from menu_pipe import pipe_path
 
 
 #-----------------------------------------------------------------------------------------------------------------

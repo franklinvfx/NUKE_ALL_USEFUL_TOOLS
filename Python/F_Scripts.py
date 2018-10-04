@@ -1,6 +1,6 @@
 ﻿import nuke
 
-from menu import pipe_path
+from menu_pipe import pipe_path
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -14,18 +14,19 @@ except:   # < Nuke 6
 	nuke.tprint(W)
 	pass
 
-#-----------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------
 # CRYPTOMATTE
-#-----------------------------------------------------------------------------------------------------------------
-# try:      # 3DE Exist
-# 	import cryptomatte_utilities
-# 	cryptomatte_utilities.setup_cryptomatte_ui()
-# 	C1 = '- Cryptomatte ................... OK'
-# 	nuke.tprint(C1)
-# except:   # 3DE Don't exist
-# 	C2 = '- Cryptomatte ................... NONE'
-# 	nuke.tprint(C2)
-# 	pass
+# -----------------------------------------------------------------------------------------------------------------
+try:      # 3DE Exist
+	import cryptomatte_utilities
+	cryptomatte_utilities.setup_cryptomatte()
+	cryptomatte_utilities.setup_cryptomatte_ui()
+	C1 = '- Cryptomatte ................... OK'
+	nuke.tprint(C1)
+except:   # 3DE Don't exist
+	C2 = '- Cryptomatte ................... NONE'
+	nuke.tprint(C2)
+	pass
 
 #-----------------------------------------------------------------------------------------------------------------
 # SHORTCUT EDITOR

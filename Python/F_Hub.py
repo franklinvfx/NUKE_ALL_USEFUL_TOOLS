@@ -8,6 +8,8 @@ import JFX_nodeScaler   #
 import rotoToTrack      #
 import viewerInputNodes #
 import superSwap        #
+import breakoutLayers
+import nukeSwitch
 # import shuffle_Smart    #
 
 #______________________________________________________________________________
@@ -62,7 +64,7 @@ nodefont_white = 'ctrl+alt+t'      #
 
 ########################################################################    ## ##  #####  ##  #  #   #         ######    
 menubar = nuke.menu("Nuke")                                     ########    # # #  #      # # #  #   #         #          
-m = menubar.addMenu("&Franklin",  "franklin.png")           ########    #   #  ###    # # #  #   #         ###       
+m = menubar.addMenu("&Franklin",  "franklin.png")               ########    #   #  ###    # # #  #   #         ###       
 ########################################################################    #   #  #####  #  ##  #####         # 
 
 m.addMenu('Node Graph', "F_node.png")    # Dossier 
@@ -218,10 +220,11 @@ m.addSeparator()
 #import shuffleChannels
 #import multiChannelSplit
 # m.addCommand('Break Out v2','nuke.load("multiChannelSplit"), multiChannelSplit.MultiChannelSplit')                                   #######################################################################################
-bre = m.addCommand('Break Out (UPDATE)','nuke.load("shuffleChannels"), shuffleChannels.getData', '')                                                #######################################################################################
-bre.setEnabled(False)
+m.addCommand('Break Out Layers',breakoutLayers.main, '')                                                #######################################################################################
+#bre.setEnabled(False)
 #m.addCommand('Backdrop Re-Order UPDATE', 'reArrangeBDsByArea()', 'Ctrl+Alt+b')
 m.addCommand('Roto To Track', rotoToTrack.Roto_to_Trackers)                                                                          #######################################################################################
+m.addCommand('Nuke X Switch ', nukeSwitch.versionSwitch)   
 #######################################################################################
 m.addSeparator()
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

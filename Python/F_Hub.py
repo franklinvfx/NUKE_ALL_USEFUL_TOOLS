@@ -10,6 +10,7 @@ import viewerInputNodes #
 import superSwap        #
 import breakoutLayers
 import nukeSwitch
+import reorderBackdrop
 # import shuffle_Smart    #
 
 #______________________________________________________________________________
@@ -216,13 +217,9 @@ m.addCommand('Knobs/Set Value', 'setValue()',  "F_setv.png")
 m.addCommand('Knobs/Set Expression', 'setExpression()',  "F_sete.png")
 #######################################################################################
 m.addSeparator()
-#import breakoutLayers
-#import shuffleChannels
-#import multiChannelSplit
-# m.addCommand('Break Out v2','nuke.load("multiChannelSplit"), multiChannelSplit.MultiChannelSplit')                                   #######################################################################################
-m.addCommand('Break Out Layers',breakoutLayers.main, '')                                                #######################################################################################
+m.addCommand('Break Out Layers',breakoutLayers.main)                                                #######################################################################################
 #bre.setEnabled(False)
-#m.addCommand('Backdrop Re-Order UPDATE', 'reArrangeBDsByArea()', 'Ctrl+Alt+b')
+m.addCommand('Backdrop Re-Order', reorderBackdrop.Bdrop)
 m.addCommand('Roto To Track', rotoToTrack.Roto_to_Trackers)                                                                          #######################################################################################
 m.addCommand('Nuke X Switch ', nukeSwitch.versionSwitch)   
 #######################################################################################

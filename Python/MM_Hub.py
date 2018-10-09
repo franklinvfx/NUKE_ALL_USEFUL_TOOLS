@@ -2,6 +2,7 @@
 
 from menu_pipe import pipe_path
 
+
 # MACHINE MOLLE PROD MENU -----------------------------------------------------------------
 
 menubar = nuke.menu("Nuke")
@@ -9,39 +10,34 @@ m = menubar.addMenu("MM", icon="MM.png")
 
 #------------------------------------------------------------------------------------------
 
-m.addMenu("SEPHORA")
-noth = m.addCommand("SEPHORA/Nothing", "nuke.nodePaste(path + 'SEPHORA/no.nk')")
-noth.setEnabled(False)
+# m.addMenu("SEPHORA")
+# noth = m.addCommand("SEPHORA/Nothing", "nuke.nodePaste(path + 'SEPHORA/no.nk')")
+# noth.setEnabled(False)
 #m.addCommand("SEPHORA/Grain", "nuke.nodePaste(Tool_path + 'SEPHORA/Grain.nk')")
 
 #------------------------------------------------------------------------------------------
 
 
 dirName = "Y:\\MMP\\NUKE\\SHARE_SCRIPT\\"
-mmTemplatesMenuName = 'MM/SHARE SCRIPT/'
-menubar.addCommand(mmTemplatesMenuName + "HOW IT WORKS" ,"nuke.message('Heu')")
-#menubar.addCommand(mmTemplatesMenuName + "OPEN FOLDER" ,"Explr()")
+MMMenuName = 'MM/SHARE SCRIPT/'
 
-def Explr():
-    b = mmTemplatesMenuName
-    u = os.path.split(b)[0]
-    u = os.path.normpath(u)
-    cmd = 'explorer "%s"' % (u)
-    os.system(cmd)
+m = menubar.addMenu("MM/SHARE SCRIPT", icon="MM.png")
+menubar.addCommand(MMMenuName + "HOW IT WORKS" ,"nuke.message('Heu')")
+menubar.addCommand(MMMenuName + "OPEN SHARED FOLDER" , "os.system('explorer \"%s\"')" % (dirName))
+m.addSeparator()
 
 if os.path.exists(dirName):
     for filename in os.listdir(dirName):
         if filename.endswith(".nk"):
             name = filename.split(".nk")[0].replace("_", " ")
-            nuke.menu('Nuke').addCommand(mmTemplatesMenuName + name ,"nuke.nodePaste('"+dirName+ "/" +filename+"')")
+            
+            nuke.menu('Nuke').addCommand(MMMenuName + name ,"nuke.nodePaste('"+dirName+ "/" +filename+"')")
 
 
 #------------------------------------------------------------------------------------------
 
-m.addSeparator()
-m.addCommand("Reload   ", "Reload.reloadMenu()", icon="MM.png")
-
-
+# m.addSeparator()
+# m.addCommand("Reload   ", 'nuke.load("Reload"); reloadMenu()', icon="MM.png")
 
 
 print '- Machine Molle Hub ............. OK'

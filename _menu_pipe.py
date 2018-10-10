@@ -15,7 +15,7 @@ Copyright (c) 2018 Franklin VFX Co.
 import nuke, sys, platform, os
 
 def isPathValid(path):
-    if os.path.isfile(path + "Copyright.py"):
+    if os.path.isfile(path + "Authors.py"):
         return True
     else:
         return False

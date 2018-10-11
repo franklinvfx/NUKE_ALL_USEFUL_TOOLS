@@ -98,10 +98,6 @@ except:   # ALL Don't exist
 	pass
 
 
-menubar = nuke.menu("Nuke")
-# m = menubar.addMenu("Reload", 'nuke.load("Reload"); reloadMenu()', icon="F_reload.png")
-menubar.addCommand("Reload", 'nuke.load("Reload"); reloadMenu()', icon="F_reload.png")
-
 FS = '- Franklin Scripts .............. OK'
 nuke.tprint(FS)
       ##############################    #

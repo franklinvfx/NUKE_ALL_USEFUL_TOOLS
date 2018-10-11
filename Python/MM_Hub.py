@@ -36,8 +36,8 @@ if os.path.exists(dirName):
 
 #------------------------------------------------------------------------------------------
 
-# m.addSeparator()
-# m.addCommand("Reload   ", 'nuke.load("Reload"); reloadMenu()', icon="MM.png")
+m.addSeparator()
+m.addCommand("Reload   ", 'nuke.load("Reload"); reloadSpecific("MM", "MM_Hub")', icon="MM.png")
 
 
 print '- Machine Molle Hub ............. OK'

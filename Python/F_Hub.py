@@ -15,10 +15,6 @@ import reorderBackdrop
 
 #______________________________________________________________________________
 
-FT = '- Franklin Hub .................. OK'
-nuke.tprint(FT)
-##############################           #
-
 # Add Shortcuts
 explorer = 'ctrl+r'                # open in explorer the folder of the selected (read or write)
 create_dir = 'ctrl+alt+w'          # create directory from selected Read node
@@ -65,7 +61,7 @@ nodefont_white = 'ctrl+alt+t'      #
 
 ########################################################################    ## ##  #####  ##  #  #   #         ######    
 menubar = nuke.menu("Nuke")                                     ########    # # #  #      # # #  #   #         #          
-m = menubar.addMenu("&Franklin",  "franklin.png")               ########    #   #  ###    # # #  #   #         ###       
+m = menubar.addMenu("Franklin",  "franklin.png")               ########    #   #  ###    # # #  #   #         ###       
 ########################################################################    #   #  #####  #  ##  #####         # 
 
 m.addMenu('Node Graph', "F_node.png")    # Dossier 
@@ -218,7 +214,6 @@ m.addCommand('Knobs/Set Expression', 'setExpression()',  "F_sete.png")
 #######################################################################################
 m.addSeparator()
 m.addCommand('Break Out Layers',breakoutLayers.main)                                                #######################################################################################
-#bre.setEnabled(False)
 m.addCommand('Backdrop Re-Order', reorderBackdrop.Bdrop)
 m.addCommand('Roto To Track', rotoToTrack.Roto_to_Trackers)                                                                          #######################################################################################
 m.addCommand('Nuke X Switch ', nukeSwitch.versionSwitch)   
@@ -255,7 +250,9 @@ except:   # < Nuke 7
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #######################################################################################
 #m.addSeparator()
-#m.addCommand("My Web Site !", "infos()",  "F_markg.png")
+# m.addCommand("My Web Site !", "infos()",  "F_markg.png")
+m.addSeparator()
+m.addCommand("Reload Menu", 'nuke.load("Reload"); reloadSpecific("Franklin", "F_Hub")', icon="")
 
 #####################################################################################################################################
 #####################################################################################################################################
@@ -996,3 +993,11 @@ def resetStats():
 
 # toggleStats()
 # resetStats()
+
+
+
+
+
+
+FT = '- Franklin Hub .................. OK'
+nuke.tprint(FT)

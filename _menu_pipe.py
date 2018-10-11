@@ -15,7 +15,7 @@ Copyright (c) 2018 Franklin VFX Co.
 import nuke, sys, platform, os
 
 def isPathValid(path):
-    if os.path.isfile(path + "Copyright.py"):
+    if os.path.isfile(path + "Authors.py"):
         return True
     else:
         return False
@@ -30,7 +30,7 @@ nukeFolder = os.path.expanduser('~') + '/.nuke/'
 keepLooping = not isPathValid(pipe_path)
 
 while keepLooping and (pipe_path == "[EMPTY_PATH]" or pipe_path == "" or not isPathValid(pipe_path)):
-    pipe_path = nuke.getFilename('Selectionner le dossier telecharge depuis https://github.com/franklinvfx/NUKE_PIPE', '*/')
+    pipe_path = nuke.getFilename('Selectionner le dossier telecharge depuis https://github.com/franklinvfx/NUKE_TOOLS', '*/')
 
     if isPathValid(pipe_path):
         menu_file = open(nukeFolder + 'menu_pipe.py', 'r')

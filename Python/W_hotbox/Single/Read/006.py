@@ -25,7 +25,10 @@ def writeFromRead():
         write.setName("Write_from_" + read.name())
         write['file'].setValue( dirpath + description + "/" + filename.replace("."+padding, description+"."+padding))
         write['colorspace'].setValue(colorspace)
-        write['create_directories'].setValue('true')
+        try:
+            write['create_directories'].setValue('true')
+        except:
+            pass
         
         #postion = [read.xpos()-read.screenWidth()/2,read.ypos()+read.screenHeight()/2]
         #write.setXpos(postion[0]+200)
@@ -45,7 +48,7 @@ def writeFromRead():
         
         nuke.nodePaste('%clipboard%')
                 
-        nodesToPlace = sorted( nuke.selectedNodes(), key=lambda node: node.ypos())
+        nodesToPlace = sorted( nuke.selectedNodes(), key = lambda node: node.ypos())
         
         for index,node in enumerate(nodesToPlace):
             node.setXYpos(nodePos[0]+100, nodePos[1])

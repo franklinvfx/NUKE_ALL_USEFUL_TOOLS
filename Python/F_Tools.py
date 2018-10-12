@@ -1,5 +1,5 @@
 ﻿import nuke, nukescripts, math
-from menu import pipe_path
+from menu_pipe import pipe_path
 
 
 ##########################################################################################################################################
@@ -123,11 +123,11 @@ F_menu.addMenu( 'Other/Setup',  icon='F_setup.png' )          ##################
 F_menu.addCommand( 'Other/Setup/Preserve Bbox', "nuke.createNode(\"Preserve_bbox\")" , "")
 #_____________________________________________________________
 
-nuke.toolbar("Nodes").addMenu("Franklin").addSeparator()
-#_____________________________________________________________
+# nuke.toolbar("Nodes").addMenu("Franklin").addSeparator()
+# #_____________________________________________________________
 
-F_menu.addCommand("Reload F. Tools", 'import Reload as Reload; Reload.reloadMenu()',  icon="F_reload.png")
-#_____________________________________________________________
+# F_menu.addCommand("Reload F. Tools", 'import Reload as Reload; Reload.reloadMenu()',  icon="F_reload.png")
+# #_____________________________________________________________
 
 
 

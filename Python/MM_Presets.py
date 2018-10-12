@@ -31,6 +31,33 @@ nuke.knobDefault("Viewer.viewerProcess", "rec709")
 '''
 
 
+
+
+
+
+
+
+
+
+
+
+
+#PRISM CUSTOM
+# nuke.menu('Nodes').addCommand( 'Image/WritePrism', lambda: nuke.createNode("WritePrism"), 'w', 'Write.png')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 print '- Machine Molle Presets ......... OK'
 ##############################           #
 

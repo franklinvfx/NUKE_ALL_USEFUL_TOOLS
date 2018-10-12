@@ -1,6 +1,6 @@
 ﻿import nuke
 
-from menu import pipe_path
+from menu_pipe import pipe_path
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -8,24 +8,31 @@ from menu import pipe_path
 #-----------------------------------------------------------------------------------------------------------------
 try:      # > Nuke 7
 	import W_hotbox, W_hotboxManager   # '<'
+	# SET NUKE PREFERENCES FOR W_HOTBOX
+	pipe_path = pipe_path.replace('\\', "/")
+	pref = nuke.toNode('preferences')
+	pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
+	pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
+	pref.knob('hotboxShortcut').setValue('<')
 	nuke.tprint(' ')
 except:   # < Nuke 6
 	W = '- W_hotbox ...................... NONE'
 	nuke.tprint(W)
 	pass
 
-#-----------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------
 # CRYPTOMATTE
-#-----------------------------------------------------------------------------------------------------------------
-# try:      # 3DE Exist
-# 	import cryptomatte_utilities
-# 	cryptomatte_utilities.setup_cryptomatte_ui()
-# 	C1 = '- Cryptomatte ................... OK'
-# 	nuke.tprint(C1)
-# except:   # 3DE Don't exist
-# 	C2 = '- Cryptomatte ................... NONE'
-# 	nuke.tprint(C2)
-# 	pass
+# -----------------------------------------------------------------------------------------------------------------
+try:      # 3DE Exist
+	import cryptomatte_utilities
+	cryptomatte_utilities.setup_cryptomatte()
+	cryptomatte_utilities.setup_cryptomatte_ui()
+	C1 = '- Cryptomatte ................... OK'
+	nuke.tprint(C1)
+except:   # 3DE Don't exist
+	C2 = '- Cryptomatte ................... NONE'
+	nuke.tprint(C2)
+	pass
 
 #-----------------------------------------------------------------------------------------------------------------
 # SHORTCUT EDITOR
@@ -39,12 +46,12 @@ except:   # < Nuke 6
 
 
 #-----------------------------------------------------------------------------------------------------------------
-# OTHER SCRIPTS FOR NUKE > 7
+# SCRIPTS WITH PYSIDE FOR NUKE
 #-----------------------------------------------------------------------------------------------------------------
 try:      # ALL Exist
 	import knob_scripter                   # 'Alt + z'
 
-	import channel_hotbox                  # 'racine carre'           (link to F_Tools)
+	import channel_hotbox
 	nuke.menu('Nuke').findItem('Edit').addCommand('C_HotboxotBox', 'channel_hotbox.start()', '²')
 
 	import reduceKeyframes
@@ -62,7 +69,7 @@ except:   # ALL Don't exist
 	pass
 
 #-----------------------------------------------------------------------------------------------------------------
-# OTHER SCRIPTS FOR NUKE < 7
+# OTHER SCRIPTS
 #-----------------------------------------------------------------------------------------------------------------
 try:      # ALL Exist
 	import pixelfudger

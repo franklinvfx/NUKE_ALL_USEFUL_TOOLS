@@ -6,7 +6,7 @@
 #
 #----------------------------------------------------------------------------------------------------------
 
-from menu import pipe_path
+from menu_pipe import pipe_path
 
 ypos = float('-inf')
 xpos = float('inf')

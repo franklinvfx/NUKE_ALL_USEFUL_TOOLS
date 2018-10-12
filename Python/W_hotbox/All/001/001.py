@@ -3,10 +3,11 @@
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Disable
+# COLOR: #545454
 #
 #----------------------------------------------------------------------------------------------------------
 
-from menu import pipe_path
+from menu_pipe import pipe_path
 
 ypos = float('-inf')
 xpos = float('inf')

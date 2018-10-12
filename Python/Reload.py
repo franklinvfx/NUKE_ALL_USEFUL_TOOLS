@@ -1,25 +1,31 @@
-import nuke, nukescripts, math
+import nuke, nukescripts, math, os
+import MM_Hub
+import F_Hub
 
-from menu import pipe_path
+import importlib
+import sys
+
+from menu_pipe import pipe_path
+
+def deletePycFromFolder(fpath):
+    listfiles = os.listdir(fpath)
+    for f in listfiles:
+        if os.path.isfile(fpath + f) and f.endswith(".pyc"):
+            try:
+                os.remove(fpath + f)
+            except:
+                print 'WARNING: file reload ignored for ' + f
 
 
-def reloadMenu():
-    #tell nuke to import stuff
-    import os
-    import menu
-    #import F_Tools
-    import platform
+def reloadSpecific(menuToReload, moduleToReload):
+    folderPath = os.path.expanduser('~') + '/.nuke/'
 
-    #delete the menu.pyc file if it exits
-    if os.path.isfile(pipe_path):
-        os.remove(pipe_path)
+    deletePycFromFolder(folderPath)
+    deletePycFromFolder(pipe_path)
 
-    #reload the menu.py file
-    reload(menu)
-    from menu import *
+    m = nuke.menu("Nuke").findItem(menuToReload)
+    m.clearMenu()
+    reload(sys.modules[moduleToReload])
+    importlib.import_module(moduleToReload)
 
-    #delete the just created menu.pyc file
-    if os.path.isfile(pipe_path):
-        os.remove(pipe_path)
-
-    nuke.message('Every menu has been reloaded')
+    print moduleToReload + " has been reloaded!"

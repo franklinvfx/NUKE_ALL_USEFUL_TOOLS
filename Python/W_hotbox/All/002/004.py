@@ -1,12 +1,9 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Select Dependencies
 #
 #----------------------------------------------------------------------------------------------------------
 
-from cgev.nuke.tools.nodes import operations
-
-for node in nuke.selectedNodes():
-    operations.selectDependencies(node)
+nuke.load('selectDependencies')

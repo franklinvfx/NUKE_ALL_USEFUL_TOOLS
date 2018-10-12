@@ -11,7 +11,7 @@ except:
     import PySide2.QtGui as QtGui
     import PySide2.QtWidgets as QtGuiWidgets
 
-from menu import pipe_path
+from menu_pipe import pipe_path
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -45,14 +45,14 @@ nuke.pluginAddPath(pipe_path + './gizmos/Other/pixelfudger');
 #-----------------------------------------------------------------------------------------------------------------
 # SET NUKE PREFERENCES - W_HOTBOX
 #-----------------------------------------------------------------------------------------------------------------
-pipe_path = pipe_path.replace('\\', "/")
-pref = nuke.toNode('preferences')
-try:      # > Nuke 7
-	pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
-	pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
-	pref.knob('hotboxShortcut').setValue('<')
-except:   # < Nuke 6
-	pass
+# pipe_path = pipe_path.replace('\\', "/")
+# pref = nuke.toNode('preferences')
+# try:      # > Nuke 7
+# 	pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
+# 	pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
+# 	pref.knob('hotboxShortcut').setValue('<')
+# except:   # < Nuke 6
+# 	pass
 
 
 #-----------------------------------------------------------------------------------------------------------------

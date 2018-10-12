@@ -2,8 +2,10 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Reorder Backdrop
+# NAME: Nuke X Switch
 #
 #----------------------------------------------------------------------------------------------------------
 
-nuke.load('reorderBackdrop')
+#import nukeSwitch
+nuke.load("nukeSwitch")
+versionSwitch()

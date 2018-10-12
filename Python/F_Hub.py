@@ -8,13 +8,12 @@ import JFX_nodeScaler   #
 import rotoToTrack      #
 import viewerInputNodes #
 import superSwap        #
+import breakoutLayers
+import nukeSwitch
+import reorderBackdrop
 # import shuffle_Smart    #
 
 #______________________________________________________________________________
-
-FT = '- Franklin Hub .................. OK'
-nuke.tprint(FT)
-##############################           #
 
 # Add Shortcuts
 explorer = 'ctrl+r'                # open in explorer the folder of the selected (read or write)
@@ -62,7 +61,7 @@ nodefont_white = 'ctrl+alt+t'      #
 
 ########################################################################    ## ##  #####  ##  #  #   #         ######    
 menubar = nuke.menu("Nuke")                                     ########    # # #  #      # # #  #   #         #          
-m = menubar.addMenu("&Franklin",  "franklin.png")           ########    #   #  ###    # # #  #   #         ###       
+m = menubar.addMenu("Franklin",  "franklin.png")               ########    #   #  ###    # # #  #   #         ###       
 ########################################################################    #   #  #####  #  ##  #####         # 
 
 m.addMenu('Node Graph', "F_node.png")    # Dossier 
@@ -214,14 +213,10 @@ m.addCommand('Knobs/Set Value', 'setValue()',  "F_setv.png")
 m.addCommand('Knobs/Set Expression', 'setExpression()',  "F_sete.png")
 #######################################################################################
 m.addSeparator()
-#import breakoutLayers
-#import shuffleChannels
-#import multiChannelSplit
-# m.addCommand('Break Out v2','nuke.load("multiChannelSplit"), multiChannelSplit.MultiChannelSplit')                                   #######################################################################################
-bre = m.addCommand('Break Out (UPDATE)','nuke.load("shuffleChannels"), shuffleChannels.getData', '')                                                #######################################################################################
-bre.setEnabled(False)
-#m.addCommand('Backdrop Re-Order UPDATE', 'reArrangeBDsByArea()', 'Ctrl+Alt+b')
+m.addCommand('Break Out Layers',breakoutLayers.main)                                                #######################################################################################
+m.addCommand('Backdrop Re-Order', reorderBackdrop.Bdrop)
 m.addCommand('Roto To Track', rotoToTrack.Roto_to_Trackers)                                                                          #######################################################################################
+m.addCommand('Nuke X Switch ', nukeSwitch.versionSwitch)   
 #######################################################################################
 m.addSeparator()
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -255,7 +250,9 @@ except:   # < Nuke 7
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #######################################################################################
 #m.addSeparator()
-#m.addCommand("My Web Site !", "infos()",  "F_markg.png")
+# m.addCommand("My Web Site !", "infos()",  "F_markg.png")
+m.addSeparator()
+m.addCommand("Reload Menu", 'nuke.load("Reload"); reloadSpecific("Franklin", "F_Hub")', icon="")
 
 #####################################################################################################################################
 #####################################################################################################################################
@@ -996,3 +993,11 @@ def resetStats():
 
 # toggleStats()
 # resetStats()
+
+
+
+
+
+
+FT = '- Franklin Hub .................. OK'
+nuke.tprint(FT)

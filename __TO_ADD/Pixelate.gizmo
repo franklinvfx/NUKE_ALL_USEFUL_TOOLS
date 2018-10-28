@@ -1,0 +1,86 @@
+set cut_paste_input [stack 0]
+version 9.0 v6
+push $cut_paste_input
+Group {
+ name SD_Pixelate
+ selected true
+ xpos -300
+ ypos 49
+ addUserKnob {20 User}
+ addUserKnob {7 Pixelate t "Amount of pixel reducing you want (Can't be zero!)." R 1 1500}
+ Pixelate 11
+ addUserKnob {41 Pixel_type l INVISIBLE t "Pick the pixel filter you prefer to use (generally Impulse)." +INVISIBLE T Reformat_to_original.filter}
+ addUserKnob {6 Affect_alpha l "Affect alpha" t "Choose to pixelate the alpha channel or not." -STARTLINE}
+ Affect_alpha true
+ addUserKnob {26 ""}
+ addUserKnob {26 Author l "" +STARTLINE T "Author - Sacha Danjou - Glassworks"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -588
+  ypos -173
+ }
+set N62a8400 [stack 0]
+ Dot {
+  name Dot1
+  xpos -554
+  ypos -106
+ }
+ Reformat {
+  type "to box"
+  box_width {{Input1.width/parent.Pixelate}}
+  box_height {{Input1.height/parent.Pixelate}}
+  box_fixed true
+  filter Impulse
+  black_outside true
+  name Reformat_pixelate
+  xpos -588
+  ypos -4
+ }
+ Crop {
+  box {0 0 {Reformat_node.box_width} {Reformat_node.box_height}}
+  name Crop_aspect_ratio
+  xpos -588
+  ypos 33
+ }
+ Reformat {
+  type "to box"
+  box_width {{Input1.width}}
+  box_height {{Input1.height}}
+  box_fixed true
+  resize distort
+  filter Impulse
+  black_outside true
+  name Reformat_to_original
+  xpos -588
+  ypos 79
+ }
+set N3bf1800 [stack 0]
+push $N62a8400
+ Dot {
+  name Dot2
+  xpos -704
+  ypos -170
+ }
+ Switch {
+  inputs 2
+  which {{parent.Affect_alpha}}
+  name Switch1
+  xpos -738
+  ypos 175
+ }
+push $N3bf1800
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy1
+  selected true
+  xpos -588
+  ypos 175
+ }
+ Output {
+  name Output1
+  xpos -588
+  ypos 256
+ }
+end_group

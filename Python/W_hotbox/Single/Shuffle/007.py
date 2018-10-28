@@ -3,8 +3,6 @@
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Alpha
-# COLOR: #bababa
-# TEXTCOLOR: #111111
 #
 #----------------------------------------------------------------------------------------------------------
 

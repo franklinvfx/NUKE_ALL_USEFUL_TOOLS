@@ -1,10 +1,9 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Jump to frame
 #
 #----------------------------------------------------------------------------------------------------------
 
-for node in nuke.selectedNodes():
-	nuke.frame(node.knob('first_frame').value())
+nuke.frame(nuke.selectedNode().knob('first_frame').value())

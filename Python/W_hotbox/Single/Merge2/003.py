@@ -1,19 +1,13 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: BBox Union/B
 #
 #----------------------------------------------------------------------------------------------------------
 
-'''for i in nuke.selectedNodes():
+for i in nuke.selectedNo des():
     if i.knob('bbox'). value() == 'union':
         i.knob('bbox'). setValue('B')
     else:
-        i.knob('bbox').setValue('union')'''
-
-for i in nuke.selectedNodes():
-    if i.knob('bbox'). value() != 'union':
-        i.knob('bbox'). setValue('union')
-    else:
-        i.knob('bbox').setValue('B')
+        i.knob('bbox').setValue('union')

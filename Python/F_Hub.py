@@ -28,7 +28,7 @@ keymix = 'shift+k'                 # create a Keymix node
 multiply = 'shift+m'               # create a Multiply node
 erode = 'e'                        # create a Erode (filter) node
 tracker = 'alt+t'                  # create a Tracker node
-transform = 't'                    # create a Merge node
+transform = ''                    # create a Merge node
 #--------------------------------------------------------------------------------------------
 duplicate_node = 'alt+v'           # duplicate the node and keep inputs
 swap = 'shift+x'                   # options on multiple nodes (Grade, Transform, Ramp, Shuffle, CornerPin2D, Mirror, FrameHold, Blur, ColorCorrect, Grade)

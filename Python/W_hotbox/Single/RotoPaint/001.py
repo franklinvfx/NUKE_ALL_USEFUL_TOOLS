@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Set LifeTime to All
 #
@@ -9,7 +9,7 @@
 #modified version of code found on the fourms
 #http://community.thefoundry.co.uk/discussion/topic.aspx?f=190&t=102599
 
-'''strokes = []
+strokes = []
 
 def getStrokes(layer):
     global strokes
@@ -31,10 +31,4 @@ for i in nuke.selectedNodes():
         if 'ltt' in attrs:
             attrs.remove('ltt')
             attrs.add('ltt', 0)
-        curvesKnob.changed()'''
-
-for i in nuke.selectedNodes():
-    for elt in i.knob('curves').rootLayer:
-        if 'ltt' in elt.getAttributes() and elt.getAttributes().getValue(0, 'ltt') != 0:
-            elt.getAttributes().remove('ltt')
-            elt.getAttributes().add('ltt', 0)
+        curvesKnob.changed()

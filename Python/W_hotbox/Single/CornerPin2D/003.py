@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: Convert to Matrix
 #
@@ -25,7 +25,7 @@
 def main():
     import nuke
     import math
-    from cgev.common import log
+    #from cgev.common import log
 
     def applyTransform(x,y,z,node,tMatrix):
         tMatrix.makeIdentity()

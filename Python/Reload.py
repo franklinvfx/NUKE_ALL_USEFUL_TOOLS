@@ -1,9 +1,9 @@
 import nuke, nukescripts, math, os
-import MM_Hub
-import F_Hub
-
 import importlib
 import sys
+
+# import MM_Hub
+# import F_Hub
 
 from menu_pipe import pipe_path
 
@@ -23,6 +23,7 @@ def reloadSpecific(menuToReload, moduleToReload):
     deletePycFromFolder(folderPath)
     deletePycFromFolder(pipe_path)
 
+    importlib.import_module(moduleToReload)###
     m = nuke.menu("Nuke").findItem(menuToReload)
     m.clearMenu()
     reload(sys.modules[moduleToReload])

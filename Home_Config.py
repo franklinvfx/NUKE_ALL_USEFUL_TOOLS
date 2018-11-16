@@ -40,6 +40,7 @@ nuke.pluginAddPath(pipe_path + './gizmos/C');
 nuke.pluginAddPath(pipe_path + './gizmos/C/icons');
 nuke.pluginAddPath(pipe_path + './gizmos/Other');
 nuke.pluginAddPath(pipe_path + './gizmos/Other/pixelfudger');
+nuke.pluginAddPath(pipe_path + './smartScripter');
 
 
 #-----------------------------------------------------------------------------------------------------------------

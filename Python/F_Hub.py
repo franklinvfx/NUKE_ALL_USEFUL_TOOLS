@@ -1,4 +1,4 @@
-﻿import nuke, nukescripts, random, colorsys, sys, platform
+import nuke, nukescripts, random, colorsys, sys, platform
 import webbrowser, os, re, inspect, subprocess, math
 import nukescripts.rollingAutoSave
 import os.path as op
@@ -12,6 +12,8 @@ import breakoutLayers
 import nukeSwitch
 import reorderBackdrop
 # import shuffle_Smart    #
+
+from smartScripter import osl as smartScripter
 
 #______________________________________________________________________________
 
@@ -213,10 +215,11 @@ m.addCommand('Knobs/Set Value', 'setValue()',  "F_setv.png")
 m.addCommand('Knobs/Set Expression', 'setExpression()',  "F_sete.png")
 #######################################################################################
 m.addSeparator()
-m.addCommand('Break Out Layers',breakoutLayers.main)                                                #######################################################################################
-m.addCommand('Backdrop Re-Order', reorderBackdrop.Bdrop)
+m.addCommand("smartScripter", lambda: smartScripter.main(floating=True), "F9", "C_scripter.png")                                     #######################################################################################
+m.addCommand('Break Out Layers',breakoutLayers.main)                                                                                 #######################################################################################
+m.addCommand('Backdrop Re-Order', reorderBackdrop.Bdrop)                                                                             #######################################################################################
 m.addCommand('Roto To Track', rotoToTrack.Roto_to_Trackers)                                                                          #######################################################################################
-m.addCommand('Nuke X Switch ', nukeSwitch.versionSwitch)   
+m.addCommand('Nuke X Switch ', nukeSwitch.versionSwitch)                                                                             #######################################################################################
 #######################################################################################
 m.addSeparator()
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

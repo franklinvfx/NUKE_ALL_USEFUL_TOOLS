@@ -1,0 +1,38 @@
+QWidget, QMessageBox#ask_dialog {
+    background-color: rgb(50, 50, 50);
+}
+
+QTableWidget::item {
+    border-right: 1px dotted #666666;
+    outline: None;
+}
+
+QPushButton[style=blue] {
+    background-color: rgba(51, 204, 255, 150);
+    padding: 10px;
+}
+
+QLineEdit[style=red] {
+    background-color: #662222;
+}
+
+QLineEdit[style=tall] {
+    padding: 10px;
+}
+
+QPushButton[color = red] {
+    color: rgb(120, 30, 30);
+    background-color: rgb(35, 35, 35);
+}
+
+QTableWidget { outline: None; }
+
+QToolButton, QPushButton[style=simple] {
+    border: none;
+    outline: none;
+}
+
+QComboBox{ color: rgb(255, 255, 255); min-width: 70px; }
+QComboBox QAbstractItemView{ background : rgb(50,50,50); }
+
+QScrollBar::handle:vertical, QScrollBar::handle:horizontal {max-height: 5px; background-color: rgb(40 , 40, 40); }

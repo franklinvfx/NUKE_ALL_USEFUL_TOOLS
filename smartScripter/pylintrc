@@ -1,0 +1,2 @@
+[MESSAGES CONTROL]
+disable=attribute-defined-outside-init, useless-super-delegation, unnecessary-lambda, too-many-instance-attributes

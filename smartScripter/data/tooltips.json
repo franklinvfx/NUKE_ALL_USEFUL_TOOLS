@@ -1,0 +1,22 @@
+{	"smartScripter": [
+      {"tt": "combo_stacks", "ttt": "stacks", "ttc": "Switch between stacks in your stack root and create new stacks. The stack root can be changed in the settings section."},
+      {"tt": "toggle_command", "ttt": "quick command toggle", "ttc": "Click to toggle the visibility of the command input."},
+      {"tt": "refresh", "ttt": "refresh", "ttc": "Click to refresh the commands table. This will re-scan for commands. When you are working in a shared stack root with other users than this might be useful. If you are just working on your own, then you will probably not need this functionality."},
+      {"tt": "settings", "ttt": "settings", "ttc": "Click to show the settings."},
+      {"tt": "command_language_switch", "ttt": "language", "ttc": "Click to switch between python and tcl language."},
+      {"tt": "command_prompt", "ttt": "command prompt", "ttc": "Execute one command line. Make sure to set your language on the left to 'py' or 'tcl'. Press enter to execute. You can use the <i>up</i> and <i>down</i> arrows to cycle your command prompt history."}
+    ],
+
+    "settings": [
+      {"tt": "tooltips", "ttt": "tooltips", "ttc": "If checked, show tooltips for all major widgets.<br><br><i>Needs a re-launch of smartScripter to become affective.</i>"},
+      {"tt": "command_tooltips", "ttt": "command tooltips", "ttc": "If checked, display the source code of each command as a tooltip when hovering over them.<br><br><i>Needs a re-launch of smartScripter to become affective.</i>"},
+      {"tt": "auto_clear_command", "ttt": "auto clear command", "ttc": "If checked, clear the command prompt on successful command execution."},
+      {"tt": "auto_close_script", "ttt": "auto close smartScripter", "ttc": "If checked, close the smartScripter after having executed (clicked) a command in the table.<br><br><i>Will close the smartScripter only when being in floating mode.</i>"},
+      {"tt": "auto_close_command", "ttt": "auto close quick command", "ttc": "If checked, close the smartScripter after having successfully executed a command in the quick command prompt.<br><br><i>Will close the smartScripter only when being in floating mode.</i>"},
+      {"tt": "commands_size", "ttt": "commands_size", "ttc": "Set the size of the commands in the commands table."},
+      {"tt": "default_lang_new_command", "ttt": "default language new command", "ttc": "Use this language as a default when creating a new command by dragging your code into the smartScripter window."},
+      {"tt": "stack_root", "ttt": "stack_root", "ttc": "Set the root directory for all stacks. This lets you change between several stack root directories."},
+      {"tt": "clear_history", "ttt": "clear_history", "ttc": "Click to flush the command prompt history."},
+      {"tt": "save_and_close", "ttt": "save_and_close", "ttc": "Click to apply the settings and hide the settings section. The updated settings become affective immediately."}
+    ]
+}

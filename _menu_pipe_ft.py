@@ -21,10 +21,10 @@ def isPathValid(path):
         return False
 
 if platform.system() == "Darwin": 
-    pipe_path = '/Network/phatt/MMP/NUKE/NUKE_PIPE/' #PathMac
+    pipe_path = '' #PathMac
 
 elif platform.system() == "Windows":
-    pipe_path = 'Y:\\MMP\\NUKE\\NUKE_PIPE\\' #PathWin
+    pipe_path = '' #PathWin
 
 nukeFolder = os.path.expanduser('~') + '/.nuke/'
 keepLooping = not isPathValid(pipe_path)
@@ -38,9 +38,9 @@ while keepLooping and (pipe_path == "[EMPTY_PATH]" or pipe_path == "" or not isP
         menu_file.close()
 
         if platform.system() == "Darwin": 
-            menu_content = menu_content.replace("'/Network/phatt/MMP/NUKE/NUKE_PIPE/' #PathMac", "'" + pipe_path + "' #PathMac")
+            menu_content = menu_content.replace("'' #PathMac", "'" + pipe_path + "' #PathMac")
         elif platform.system() == "Windows": 
-            menu_content = menu_content.replace("'Y:\\MMP\\NUKE\\NUKE_PIPE\\' #PathWin", "'" + pipe_path + "' #PathWin")
+            menu_content = menu_content.replace("'' #PathWin", "'" + pipe_path + "' #PathWin")
 
         menu_file = open(nukeFolder + 'menu_pipe.py', 'w')
         menu_file.write(menu_content)

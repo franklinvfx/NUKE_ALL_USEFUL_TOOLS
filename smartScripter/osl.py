@@ -12,7 +12,11 @@ if os.path.isfile(os.path.join(os.path.dirname(__file__), ".dev")):
 
 # release => cython files
 else:
-    print "cragl loading: smartScripter"
+    # print "cragl loading: smartScripter"
+    
+    #>>>F_Start
+    print '- smartScripter ................. OK'
+    #>>>F_End
 
     if sys.platform == 'darwin':
         from smartScripter_m import *

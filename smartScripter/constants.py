@@ -4,6 +4,8 @@
 from collections import OrderedDict
 import os
 
+from menu_pipe import pipe_path
+
 # Abbreviation for Python command. This wil be displayed in the drop down
 # menu for new commands and will be used internally.
 PY = "py"
@@ -34,8 +36,9 @@ DEFAULT_SETTINGS = {
     "default_language_new_commands": "py",
     "show_command_widgets": True,
     "current_stack": "",
-    "stack_root": os.path.join(os.path.expanduser("~"), "cragl",
-                               "smartScripter"),
+    "stack_root": pipe_path + "smartScripter" ,   
+    # "stack_root": os.path.join(os.path.expanduser("~"), "cragl",
+    #                            "smartScripter"),
     "history": [],
     "command_size": "medium"
 }

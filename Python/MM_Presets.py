@@ -4,6 +4,12 @@
 
 nuke.knobDefault("Root.fps", "25")
 
+nuke.menu('Nodes').addCommand( "Time/FrameHold", "nuke.createNode('FrameHold')['first_frame'].setValue( nuke.frame() )",  'FrameHold.png')
+nuke.knobDefault("Transform.shutteroffset", "center")
+nuke.knobDefault("Tracker3.shutteroffset", "center")
+nuke.knobDefault("Tracker4.shutteroffset", "center")
+nuke.knobDefault("CornerPin2D.shutteroffset", "center")
+nuke.knobDefault("ScanlineRender.shutteroffset", "center")
 '''
 nuke.knobDefault("Write.colorspace", "sRGB")
 nuke.knobDefault("Write.channels", "rgb")

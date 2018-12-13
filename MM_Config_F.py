@@ -1,4 +1,4 @@
-﻿import nuke
+﻿import nuke, platform, os
 
 try:
     # < Nuke 11
@@ -54,9 +54,7 @@ pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
 pref.knob('hotboxShortcut').setValue('<')
 
 
-# # Need to check all conditions
-# pref.knob('autoLocalCachePath').setValue('')
-# pref.knob('localCachePath').setValue('[getenv NUKE_TEMP_DIR]')
+
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -90,13 +88,19 @@ import C_Tools                         # C gizmos
 #-----------------------------------------------------------------------------------------------------------------
 # SET NUKE_LOCAL DIRECTORY
 #-----------------------------------------------------------------------------------------------------------------
-# # Need to check all conditions
-# if platform.system() == "Windows":
-# 	local_path = 'D://NUKE_LOCAL/'
-# 	os.environ['NUKE_TEMP_DIR'] = local_path
-# 	print '- Nuke Local Directory:  ' + local_path
-# else:
-# 	print 'WARNING: nuke local path is not set!'
+# Need to check all conditions
+if platform.system() == "Windows":
+	local_path = 'D://NUKE_LOCAL/'
+	os.environ['NUKE_TEMP_DIR'] = local_path
+	print '- Nuke Local Directory:  ' + local_path
+else:
+	print 'WARNING: nuke local path is not set!'
+
+
+# Need to check all conditions
+pref.knob('autoLocalCachePath').setValue('')
+# pref.knob('localCachePath').setValue('[getenv NUKE_TEMP_DIR]')
+pref.knob('localCachePath').setValue(local_path)
 
 
 

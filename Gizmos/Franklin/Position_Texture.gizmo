@@ -1,0 +1,474 @@
+add_layer {position position.red position.green position.blue position.alpha}
+Group {
+name Pos_Texture
+help "Position Texture\n\nApply a texture using the render of the Position pass.\nChoose between \"Procedural\" (fBm, Turbulence, Random Noise, CheckerBoard and Ring) or \"Texture Input\".\n"
+knobChanged "node = nuke.thisNode()\nknob = nuke.thisKnob()\ninputT = nuke.exists(\"Alpha\") \n\nif knob.name() in ('matte', 'showPanel'):\n    mode = node\['matte'].value()\n    if mode == 'Position Input':\n        if str(inputT)==\"True\":\n             n = nuke.toNode('Alpha')\n             nuke.delete(n)\n    elif mode == 'Alpha (New Input)':\n        if str(inputT)==\"False\":\n            nuke.message(\"Add New Input in Node\")\n            i = nuke.createNode('Input', inpanel=False )\n            i\['name'].setValue('Alpha')\n            n = nuke.toNode('Switch2')\n            n.setInput(0,i)\n\nif knob.name() in ('texture', 'showPanel'):\n    mode = node\['texture'].value()\n    if mode == 'Procedural':\n           node\['noisetype'].setEnabled(True)\n           # knobs off\n           node\['offset'].setVisible(False)\n           node\['size'].setVisible(False)\n           node\['uniscale'].setVisible(False)\n           node\['F1'].setVisible(False)\n           node\['octaves'].setVisible(False)\n           node\['lacunarity'].setVisible(False)\n           node\['gain'].setVisible(False)\n           node\['gamma'].setVisible(False)\n           node\['radius'].setVisible(False)\n           node\['Set'].setVisible(False)\n           node\['Ring_Center'].setVisible(False)\n           node\['Sring'].setVisible(False)\n           node\['phase'].setVisible(False)\n           node\['Center'].setVisible(False)\n           node\['Stexture1'].setVisible(False)\n           node\['tex_rotate'].setVisible(False)\n           node\['tex_scale'].setVisible(False)\n           node\['tex_uniscale'].setVisible(False)\n           node\['tex_scew'].setVisible(False)\n           node\['Stexture2'].setVisible(False)\n           node\['tex_mirrorx'].setVisible(False)\n           node\['tex_tilex'].setVisible(False)\n           node\['tex_mirrory'].setVisible(False)\n           node\['tex_tiley'].setVisible(False)\n\n    elif mode == 'Texture Input':\n           node\['noisetype'].setEnabled(False)\n           node\['noisetype'].setValue(0)\n           # knobs off\n           node\['offset'].setVisible(False)\n           node\['size'].setVisible(False)\n           node\['uniscale'].setVisible(False)\n           node\['F1'].setVisible(False)\n           node\['octaves'].setVisible(False)\n           node\['lacunarity'].setVisible(False)\n           node\['gain'].setVisible(False)\n           node\['gamma'].setVisible(False)\n           node\['radius'].setVisible(False)\n           node\['Ring_Center'].setVisible(False)\n           node\['Sring'].setVisible(False)\n           node\['phase'].setVisible(False)\n           # knobs on\n           node\['Set'].setVisible(True)\n           node\['Center'].setVisible(True)\n           node\['Stexture1'].setVisible(True)\n           node\['tex_rotate'].setVisible(True)\n           node\['tex_scale'].setVisible(True)\n           node\['tex_uniscale'].setVisible(True)\n           node\['tex_scew'].setVisible(True)\n           node\['Stexture2'].setVisible(True)\n           node\['tex_mirrorx'].setVisible(True)\n           node\['tex_tilex'].setVisible(True)\n           node\['tex_mirrory'].setVisible(True)\n           node\['tex_tiley'].setVisible(True)\n\nif knob.name() in ('noisetype', 'showPanel'):\n    mode = node\['noisetype'].value()\n    if mode == 'fBm':\n        # knobs on\n        node\['offset'].setVisible(True)\n        node\['size'].setVisible(True)\n        node\['uniscale'].setVisible(True)\n        node\['octaves'].setVisible(True)\n        node\['lacunarity'].setVisible(True)\n        node\['gain'].setVisible(True)\n        node\['gamma'].setVisible(True)\n        node\['F1'].setVisible(True)\n        # knobs off\n        node\['radius'].setVisible(False)\n        node\['Ring_Center'].setVisible(False)\n        node\['Sring'].setVisible(False)\n        node\['phase'].setVisible(False)\n        node\['Set'].setVisible(False)\n        node\['Center'].setVisible(False)\n        node\['Stexture2'].setVisible(False)\n        node\['tex_rotate'].setVisible(False)\n        node\['tex_scale'].setVisible(False)\n        node\['tex_uniscale'].setVisible(False)\n        node\['tex_scew'].setVisible(False)\n        node\['Stexture2'].setVisible(False)\n        node\['tex_mirrorx'].setVisible(False)\n        node\['tex_tilex'].setVisible(False)\n        node\['tex_mirrory'].setVisible(False)\n        node\['tex_tiley'].setVisible(False)\n\n    elif mode == 'Turbulence':\n        # knobs on\n        node\['offset'].setVisible(True)\n        node\['size'].setVisible(True)\n        node\['uniscale'].setVisible(True)\n        node\['octaves'].setVisible(True)\n        node\['lacunarity'].setVisible(True)\n        node\['gain'].setVisible(True)\n        node\['gamma'].setVisible(True)\n        node\['F1'].setVisible(True)\n        # knobs off\n        node\['radius'].setVisible(False)\n        node\['Ring_Center'].setVisible(False)\n        node\['Sring'].setVisible(False)\n        node\['phase'].setVisible(False)\n        node\['Set'].setVisible(False)\n        node\['Center'].setVisible(False)\n        node\['Stexture2'].setVisible(False)\n        node\['tex_rotate'].setVisible(False)\n        node\['tex_scale'].setVisible(False)\n        node\['tex_uniscale'].setVisible(False)\n        node\['tex_scew'].setVisible(False)\n        node\['Stexture2'].setVisible(False)\n        node\['tex_mirrorx'].setVisible(False)\n        node\['tex_tilex'].setVisible(False)\n        node\['tex_mirrory'].setVisible(False)\n        node\['tex_tiley'].setVisible(False)\n\n    elif mode == 'Random':\n        # knobs on\n        node\['offset'].setVisible(True)\n        node\['size'].setVisible(True)\n        node\['uniscale'].setVisible(True)\n        node\['octaves'].setVisible(True)\n        node\['lacunarity'].setVisible(True)\n        node\['gain'].setVisible(True)\n        node\['gamma'].setVisible(True)\n        node\['F1'].setVisible(True)\n        # knobs off\n        node\['radius'].setVisible(False)\n        node\['Ring_Center'].setVisible(False)\n        node\['Sring'].setVisible(False)\n        node\['phase'].setVisible(False)\n        node\['Set'].setVisible(False)\n        node\['Center'].setVisible(False)\n        node\['Stexture2'].setVisible(False)\n        node\['tex_rotate'].setVisible(False)\n        node\['tex_scale'].setVisible(False)\n        node\['tex_uniscale'].setVisible(False)\n        node\['tex_scew'].setVisible(False)\n        node\['Stexture2'].setVisible(False)\n        node\['tex_mirrorx'].setVisible(False)\n        node\['tex_tilex'].setVisible(False)\n        node\['tex_mirrory'].setVisible(False)\n        node\['tex_tiley'].setVisible(False)\n\n    elif mode == 'CheckerBoard':\n        # knobs on\n        node\['offset'].setVisible(True)\n        node\['size'].setVisible(True)\n        node\['uniscale'].setVisible(True)\n        # knobs off\n        node\['octaves'].setVisible(False)\n        node\['lacunarity'].setVisible(False)\n        node\['gain'].setVisible(False)\n        node\['gamma'].setVisible(False)\n        node\['F1'].setVisible(False)\n        node\['radius'].setVisible(False)\n        node\['Ring_Center'].setVisible(False)\n        node\['Sring'].setVisible(False)\n        node\['phase'].setVisible(False)\n        node\['Set'].setVisible(False)\n        node\['Center'].setVisible(False)\n        node\['Stexture1'].setVisible(False)\n        node\['tex_rotate'].setVisible(False)\n        node\['tex_scale'].setVisible(False)\n        node\['tex_uniscale'].setVisible(False)\n        node\['tex_scew'].setVisible(False)\n        node\['Stexture2'].setVisible(False)\n        node\['tex_mirrorx'].setVisible(False)\n        node\['tex_tilex'].setVisible(False)\n        node\['tex_mirrory'].setVisible(False)\n        node\['tex_tiley'].setVisible(False)\n\n    elif mode == 'Ring':\n        # knobs off\n        node\['offset'].setVisible(False)\n        node\['size'].setVisible(False)\n        node\['uniscale'].setVisible(False)\n        node\['octaves'].setVisible(False)\n        node\['lacunarity'].setVisible(False)\n        node\['gain'].setVisible(False)\n        node\['gamma'].setVisible(False)\n        node\['F1'].setVisible(False)\n        # knobs on\n        node\['radius'].setVisible(True)\n        node\['Ring_Center'].setVisible(False)\n        node\['Sring'].setVisible(True)\n        node\['phase'].setVisible(True)\n        # knobs off\n        node\['Set'].setVisible(True)\n        node\['Center'].setVisible(True)\n        node\['Stexture1'].setVisible(False)\n        node\['tex_rotate'].setVisible(False)\n        node\['tex_scale'].setVisible(False)\n        node\['tex_uniscale'].setVisible(False)\n        node\['tex_scew'].setVisible(False)\n        node\['Stexture2'].setVisible(False)\n        node\['tex_mirrorx'].setVisible(False)\n        node\['tex_tilex'].setVisible(False)\n        node\['tex_mirrory'].setVisible(False)\n        node\['tex_tiley'].setVisible(False)"
+tile_color 0xdda92aff
+selected true
+addUserKnob {20 FranklinVFX l "Position Texture"}
+addUserKnob {41 in l "Position Channel" t "Select the Position Channel" T Shuffle_input_channel.in}
+addUserKnob {6 premult l "(Un)Premult by     -->  " t "The Position Pass is divide by the Alpha channel before being processed, and multiplied again afterwards. This can improve the texturing of anti-aliased edges." +STARTLINE}
+premult true
+addUserKnob {4 matte l " Alpha from " t "Choose the Alpha channel.\nAlpha is usefull for a better result with clean edge (UnPremult / Premult).\n\nPosition Input: \nAutomatic pick the .a from the Input.\n\nAlpha (New Input):\nPick the .a from an other Input." -STARTLINE M {"Position Input" "Alpha (New Input)" ""}}
+addUserKnob {26 ""}
+addUserKnob {4 texture l "Texture Type" t "Choose if you want to apply a procedural texture or a texture from an input image." M {Procedural "Texture Input" "" "" ""}}
+addUserKnob {4 noisetype l "     Algorithme" t "Choose the type of algorithme you want to apply.\nfBm, Turbulence, Random Noise, CheckerBoard or Ring" -STARTLINE M {None fBm Turbulence Random CheckerBoard Ring "" "" "" "" "" "" "" "" "" "" "" ""}}
+noisetype fBm
+addUserKnob {26 ""}
+addUserKnob {13 offset l Transform t "Adjust the position on x,y and z."}
+addUserKnob {13 size l Scale t "Adjust the scale on x,y and z."}
+size {1 1 1}
+addUserKnob {16 uniscale l "Uniform Scale" t "Adjust the scale with the same value on x,y and z."}
+uniscale 0.5
+addUserKnob {26 F1 l "" +STARTLINE}
+addUserKnob {3 octaves l Octaves t "Number of Perlin noise fonctions to add."}
+octaves 10
+addUserKnob {7 lacunarity l Lacunarity t "Each Octaves multiplies frequency by this amount." R 0 10}
+lacunarity 2
+addUserKnob {7 gain l Gain}
+gain 0.5
+addUserKnob {7 gamma l Gamma}
+gamma 0.5
+addUserKnob {12 Center t "This coordinate determine the position of the Input Texture." +HIDDEN}
+Center {1000 500}
+addUserKnob {12 Ring_Center +HIDDEN +INVISIBLE}
+addUserKnob {22 Set l " Set Center " t "Match the pivot coordinate to the Center point." -STARTLINE +HIDDEN T "fr = nuke.thisNode().knob('frame_hold').setValue(nuke.frame())\nto = nuke.toNode(\"Pick1\")\n\na = nuke.thisNode()\nhold = to\['CenterHold'].setExpression('Pick1.CenterPosition (\[value name].frame_hold)')\nclear = to\['CenterHold'].clearAnimated()\n"}
+addUserKnob {26 Sring l " " +HIDDEN T " "}
+addUserKnob {18 radius l Radius +HIDDEN}
+radius 0.05
+addUserKnob {6 radius_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {7 phase l Phase +HIDDEN R 0 100}
+addUserKnob {26 Stexture1 l "  " +HIDDEN T " "}
+addUserKnob {13 tex_rotate l Rotate t "Adjust the rotation on x,y and z." +HIDDEN}
+addUserKnob {13 tex_scale l Scale t "Adjust the scale on x,y and z." +HIDDEN}
+tex_scale {1 1 1}
+addUserKnob {16 tex_uniscale l "Uniform Scale" t "Adjust the scale with the same value on x,y and z." +HIDDEN}
+tex_uniscale 1
+addUserKnob {13 tex_scew l Scew t "Adjust the scew on x,y and z." +HIDDEN}
+addUserKnob {26 Stexture2 l " " +HIDDEN T " "}
+addUserKnob {6 tex_tilex l "Tile X     " +HIDDEN +STARTLINE}
+tex_tilex true
+addUserKnob {6 tex_mirrorx l "Mirror X   " -STARTLINE +HIDDEN}
+tex_mirrorx true
+addUserKnob {6 tex_tiley l "Tile Y     " +HIDDEN +STARTLINE}
+tex_tiley true
+addUserKnob {6 tex_mirrory l "Mirror Y" -STARTLINE +HIDDEN}
+tex_mirrory true
+addUserKnob {26 by1 l " " T " "}
+addUserKnob {26 by2 l " " T "                                                                                                         "}
+addUserKnob {26 CGEV l " " t "\nEn cas de probleme, contacter Gaetan Baldy sur le chat\n" -STARTLINE T "<font color=\"#1C1C1C\"> v02 - CGEV - 2016"}
+addUserKnob {3 frame_hold l INVISIBLE -STARTLINE +INVISIBLE}
+frame_hold 110
+addUserKnob {1 output l INVISIBLE +INVISIBLE}
+output "\[string map \{\"Procedural\" \"\" \"Input\" \"\"\} \"\[value texture]\" ]\[if \{\[value texture]==\"Procedural\"\} \{return \"\[knob this.name2 \"\[value noisetype]\"]\"\}  \{return \"\[knob this.name2 \"\"]\"\}]\[value name2]"
+addUserKnob {1 name2 l INVISIBLE +INVISIBLE}
+name2 fBm
+}
+Axis2 {
+ inputs 0
+ rotate {{-parent.AxisTransformation.rotate i} {-parent.AxisTransformation.rotate i} {-parent.AxisTransformation.rotate i}}
+ scaling {{AxisTransformation.scaling i} {parent.AxisTransformation.scaling i} {parent.AxisTransformation.scaling i}}
+ uniform_scale {{1000/parent.AxisTransformation.uniform_scale i}}
+ skew {{-parent.AxisTransformation.skew i} {-parent.AxisTransformation.skew i} {-parent.AxisTransformation.skew i}}
+ name Axis2
+ xpos 279
+ ypos -216
+}
+Axis2 {
+ inputs 0
+ rotate {{parent.tex_rotate i} {parent.tex_rotate i} {parent.tex_rotate i}}
+ scaling {{1/(parent.tex_scale) i} {parent.tex_scale i} {parent.tex_scale i}}
+ uniform_scale {{parent.tex_uniscale i}}
+ skew {{parent.tex_scew i} {parent.tex_scew i} {parent.tex_scew i}}
+ name AxisTransformation
+ xpos 401
+ ypos -215
+}
+Input {
+ inputs 0
+ name Pos
+ xpos -1108
+ ypos -853
+}
+Dot {
+ name Dot12
+ xpos -1074
+ ypos -776
+}
+set N4bf4e800 [stack 0]
+Dot {
+ name Dot2
+ xpos -937
+ ypos -776
+}
+set N4bf4e400 [stack 0]
+push 0
+Switch {
+ inputs 2
+ which {{!matte}}
+ name Switch2
+ xpos -971
+ ypos -711
+}
+NoOp {
+ name AlphaCheck
+ xpos -971
+ ypos -644
+ addUserKnob {20 User}
+ addUserKnob {6 alpha +STARTLINE}
+ alpha {{"\[python \"len(\\\[n for n in nuke.channels(nuke.thisNode().input(0)) if n.find(\\\".a\\\") != -1])>0\"]" i}}
+}
+AddChannels {
+ channels rgba
+ name AddAlpha
+ xpos -971
+ ypos -569
+}
+Dot {
+ name Dot4
+ xpos -937
+ ypos -487
+}
+set N4bf79800 [stack 0]
+push $N4bf4e400
+Dot {
+ name Dot11
+ xpos -710
+ ypos -776
+}
+Shuffle {
+ in position
+ name Shuffle_input_channel
+ xpos -744
+ ypos -646
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy1
+ xpos -744
+ ypos -496
+}
+set N4bf78c00 [stack 0]
+Unpremult {
+ name Unpremult2
+ xpos -840
+ ypos -420
+ disable {{!AlphaCheck.alpha i}}
+}
+push $N4bf78c00
+Switch {
+ inputs 2
+ which {{parent.premult}}
+ name Switch4
+ xpos -744
+ ypos -352
+}
+set N4baeb680 [stack 0]
+Dot {
+ name Dot1
+ xpos 21
+ ypos -348
+}
+set N4bf78400 [stack 0]
+Dot {
+ name Dot7
+ xpos 21
+ ypos 420
+}
+push $N4bf79800
+Dot {
+ name Dot8
+ xpos -937
+ ypos 105
+}
+set N4bfa5c00 [stack 0]
+Dot {
+ name Dot3
+ xpos -937
+ ypos 263
+}
+push $N4bfa5c00
+push $N4bf78400
+Dot {
+ name Dot5
+ xpos 182
+ ypos -349
+}
+set N4bfa5400 [stack 0]
+Expression {
+ expr0 "r - parent.Pick1.CenterHold.x"
+ expr1 "g - parent.Pick1.CenterHold.y"
+ expr2 "b - parent.Pick1.CenterHold.z"
+ name To_Center
+ xpos 148
+ ypos -274
+}
+ColorMatrix {
+ matrix {
+     {{parent.Axis2.world_matrix.0 i} {parent.Axis2.world_matrix.1 i} {parent.Axis2.world_matrix.2 i}}
+     {{parent.Axis2.world_matrix.4 i} {parent.Axis2.world_matrix.5 i} {parent.Axis2.world_matrix.6 i}}
+     {{parent.Axis2.world_matrix.8 i} {parent.Axis2.world_matrix.9 i} {parent.Axis2.world_matrix.10 i}}
+   }
+ name ColorMatrix2
+ xpos 148
+ ypos -195
+}
+Expression {
+ expr0 "(r + (parent.Get_format1.format.w/2) ) / parent.Get_format1.format.w"
+ expr1 "(g + (parent.Get_format1.format.h/2) ) / parent.Get_format1.format.h"
+ name To_STMap
+ xpos 148
+ ypos -117
+}
+Expression {
+ expr0 "TileX ? ( MirrorX ? (     (abs(fmod(r, 2)) > 1) ? (1 - abs(fmod(r,1))) : abs(fmod(r,1))     ) :  abs(fmod(r, 1)) ) : r"
+ expr1 "TileY ? ( MirrorY ? (     (abs(fmod(g, 2)) > 1) ? (1 - abs(fmod(g,1))) : abs(fmod(g,1))     ) :  abs(fmod(g, 1)) ) : g"
+ name Tiling2
+ xpos 148
+ ypos -43
+ addUserKnob {20 User}
+ addUserKnob {6 TileX +STARTLINE}
+ TileX {{parent.tex_tilex}}
+ addUserKnob {6 MirrorX -STARTLINE}
+ MirrorX {{parent.tex_mirrorx}}
+ addUserKnob {6 TileY +STARTLINE}
+ TileY {{parent.tex_tiley}}
+ addUserKnob {6 MirrorY -STARTLINE}
+ MirrorY {{parent.tex_mirrory}}
+}
+Input {
+ inputs 0
+ name Texture
+ xpos 501
+ ypos -611
+ number 1
+}
+Assert {
+ expression {{"\[value check] == 0 ? \[exists parent.input1] : 1"}}
+ message "  Need a input image!"
+ name ERROR
+ xpos 501
+ ypos -523
+ icon F_croixb.png
+ addUserKnob {20 User}
+ addUserKnob {6 check +STARTLINE}
+ check {{!parent.texture}}
+}
+set N4bfc9000 [stack 0]
+Dot {
+ name Dot6
+ tile_color 0x8ce08ff
+ xpos 535
+ ypos -348
+}
+set N4bfc8c00 [stack 0]
+Dot {
+ name Dot10
+ xpos 535
+ ypos 32
+}
+STMap {
+ inputs 2
+ channels rgb
+ uv rgb
+ name STMap2
+ xpos 148
+ ypos 29
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy2
+ xpos 148
+ ypos 96
+}
+Dot {
+ name Dot9
+ xpos 182
+ ypos 200
+}
+push $N4baeb680
+Dot {
+ name Dot13
+ xpos -710
+ ypos -237
+}
+set N4c069800 [stack 0]
+Expression {
+ temp_name0 dist
+ temp_expr0 "sqrt(pow2( (r - Center.r) /Radius.r*2) + pow2( (g- Center.g) / Radius.g*2) + pow2( (b - Center.b) / Radius.b*2) )"
+ temp_name1 tex
+ temp_expr1 "sin(dist+Phase)/2 + 0.5"
+ expr0 tex
+ expr1 tex
+ expr2 tex
+ name RadialWaves
+ xpos -629
+ ypos -157
+ cached true
+ addUserKnob {20 User}
+ addUserKnob {18 Radius}
+ Radius {{parent.radius.r} {parent.radius.g} {parent.radius.b}}
+ addUserKnob {6 Radius_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 Center}
+ Center {{parent.Pick1.CenterHold} {parent.Pick1.CenterHold} {parent.Pick1.CenterHold}}
+ addUserKnob {6 Center_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 Phase R 0 100}
+ Phase {{parent.phase}}
+}
+push $N4c069800
+Expression {
+ temp_name0 lr
+ temp_expr0 "abs(fmod(r,(size.x*-uniform_scale))) > 0.5 ? 1 : 0"
+ temp_name1 lg
+ temp_expr1 "abs(fmod(g,(size.y*-uniform_scale))) > 0.5 ? 1 : 0"
+ temp_name2 lb
+ temp_expr2 "abs(fmod(b,(size.z*-uniform_scale)) > 0.5 ? 1 : 0"
+ temp_name3 checker
+ temp_expr3 lr^^lg^^lb
+ channel0 rgb
+ expr0 checker
+ channel1 none
+ channel2 none
+ channel3 none
+ name Checker
+ xpos -744
+ ypos -158
+ cached true
+ addUserKnob {20 User}
+ addUserKnob {16 uniform_scale}
+ uniform_scale {{parent.uniscale*2}}
+}
+push $N4c069800
+Expression {
+ temp_name0 fBmNoise
+ temp_expr0 fBm((r+offset.x)*1/size.x/uniform_scale,(g+offset.y)*1/size.y/uniform_scale,(b+offset.z)*1/size.z/uniform_scale,octaves,lacunarity,gain)*.5+0.5
+ temp_name1 turbNoise
+ temp_expr1 turbulence((r+offset.x)*1/size.x/uniform_scale,(g+offset.y)*1/size.y/uniform_scale,(b+offset.z)*1/size.z/uniform_scale,octaves,lacunarity,gain)
+ temp_name2 random
+ temp_expr2 random((r+offset.x)*1/size.x/uniform_scale,(g+offset.y)*1/size.y/uniform_scale,(b+offset.z)*1/size.z/uniform_scale)
+ channel0 rgb
+ expr0 "noisetype==1 ? fBmNoise : noisetype==2 ? turbNoise : noisetype==3 ? random : 0"
+ channel1 none
+ channel2 none
+ channel3 none
+ name noise
+ xpos -856
+ ypos -156
+ cached true
+ addUserKnob {20 User}
+ addUserKnob {16 uniform_scale}
+ uniform_scale {{parent.uniscale/20}}
+}
+set N4c068400 [stack 0]
+push $N4c068400
+push $N4c068400
+push 0
+Switch {
+ inputs 6
+ which {{parent.noisetype}}
+ name Switch3
+ xpos -744
+ ypos -54
+}
+Gamma {
+ channels rgb
+ value {{parent.gamma i}}
+ name Gamma1
+ xpos -744
+ ypos 7
+}
+push 0
+Switch {
+ inputs 2
+ which {{parent.noisetype i}}
+ name Switch7
+ xpos -744
+ ypos 76
+}
+Switch {
+ inputs 2
+ which {{parent.texture}}
+ name Switch1
+ xpos -744
+ ypos 197
+}
+set N4baea900 [stack 0]
+Multiply {
+ inputs 1+1
+ value 0
+ invert_mask true
+ name Multiply2
+ xpos -837
+ ypos 254
+ disable {{!AlphaCheck.alpha i}}
+}
+push $N4baea900
+Switch {
+ inputs 2
+ which {{parent.premult}}
+ name Switch5
+ xpos -744
+ ypos 334
+}
+Switch {
+ inputs 2
+ which {{parent.picker i}}
+ name Switch8
+ xpos -744
+ ypos 415
+ disable {{"!(parent.noisetype == 5)" i}}
+}
+push $N4bf4e800
+Copy {
+ inputs 2
+ channels rgb
+ name Copy3
+ xpos -1108
+ ypos 402
+}
+Output {
+ name FranklinVFX
+ xpos -1108
+ ypos 494
+}
+push $N4bfc8c00
+NoOp {
+ name Get_format1
+ xpos 425
+ ypos -352
+ addUserKnob {20 User}
+ addUserKnob {14 format R 0 100}
+ format {{format.h i} {format.w i}}
+}
+push $N4bfc9000
+Viewer {
+ frame_range 1-4981
+ name Viewer1
+ xpos 692
+ ypos -445
+}
+push $N4bfa5400
+FrameHold {
+ first_frame {{parent.frame_hold}}
+ name FrameHold1
+ xpos 271
+ ypos -359
+}
+NoOp {
+ name Pick1
+ xpos 271
+ ypos -321
+ addUserKnob {20 User}
+ addUserKnob {12 Center}
+ Center {{parent.Center x64 1753} {parent.Center x64 341}}
+ addUserKnob {13 CenterPosition}
+ CenterPosition {{"\[sample this Red Center.x Center.y]"} {"\[sample this Green Center.x Center.y]"} {"\[sample this Blue Center.x Center.y]"}}
+ addUserKnob {13 CenterHold}
+ addUserKnob {3 frame_hold}
+ frame_hold {{parent.frame_hold}}
+}
+end_group

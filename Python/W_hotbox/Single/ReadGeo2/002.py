@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------------------------
 #
-# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
+# AUTOMATICALLY GENERATED FILE TO BE USED BY MAGIC HOTBOX
 #
 # NAME: Convert
 #
@@ -13,8 +13,7 @@ f = None
 eltToPop = []
 archive = []
 
-path = os.path.expanduser('~') + '/.nuke/paste.nk'
-#path = 'C:/paste.nk'
+path = 'C:/paste.nk'
 nuke.nodeCopy(path)
 with open(path, 'r') as ptc_file:
     f = ptc_file.read()
@@ -38,14 +37,14 @@ for line in f:
 for elt in sorted(eltToPop, reverse=True):
     f.pop(elt)
 
-#posList = f[0].split(' ')
-#normList = f[1].split(' ')
-#colList = f[2].split(' ')
+posList = f[0].split(' ')
+normList = f[1].split(' ')
+colList = f[2].split(' ')
 
-#numPoints = long(posList[0])
-#posList.pop(0)
-#normList.pop(0)
-#colList.pop(0)
+numPoints = long(posList[0])
+posList.pop(0)
+normList.pop(0)
+colList.pop(0)
 
 for i in range (0, numPoints-1):
     archive.append(posList[3*i])

@@ -2,13 +2,9 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Green
+# NAME: Toggle Anamorphic
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    i.knob('in').setValue('rgba')
-    for channel in ['red','green','blue','alpha']:
-        i.knob(channel).setValue('green')
-
-    i.knob('tile_color').setValue(12517631)
+    i.knob('aspect').setValue(1.5-i.knob('aspect').value())

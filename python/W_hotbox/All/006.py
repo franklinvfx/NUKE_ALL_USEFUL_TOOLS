@@ -2,13 +2,13 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Green
+# NAME: Toggle Invert Mask
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    i.knob('in').setValue('rgba')
-    for channel in ['red','green','blue','alpha']:
-        i.knob(channel).setValue('green')
-
-    i.knob('tile_color').setValue(12517631)
+    maskKnob = i.knob('invert_mask')
+    if maskKnob == None:
+        maskKnob = i.knob('invertMask')
+    if maskKnob != None:
+        maskKnob.setValue(1-maskKnob.value())

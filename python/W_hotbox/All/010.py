@@ -2,13 +2,14 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Green
+# NAME: Mirror
 #
 #----------------------------------------------------------------------------------------------------------
 
-for i in nuke.selectedNodes():
-    i.knob('in').setValue('rgba')
-    for channel in ['red','green','blue','alpha']:
-        i.knob(channel).setValue('green')
+selection = nuke.selectedNodes()
+allXpos = [i.xpos()+(i.screenWidth()/2) for i in selection]
+minXpos = min(allXpos)
+maxXpos = max(allXpos)
 
-    i.knob('tile_color').setValue(12517631)
+for index, i in enumerate(selection):
+    i.setXpos((maxXpos - allXpos[index] + minXpos)-(i.screenWidth()/2))

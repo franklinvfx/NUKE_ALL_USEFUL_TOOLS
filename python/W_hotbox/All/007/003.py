@@ -2,13 +2,14 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Green
+# NAME: Copy Class
 #
 #----------------------------------------------------------------------------------------------------------
 
-for i in nuke.selectedNodes():
-    i.knob('in').setValue('rgba')
-    for channel in ['red','green','blue','alpha']:
-        i.knob(channel).setValue('green')
+from PySide import QtGui
 
-    i.knob('tile_color').setValue(12517631)
+nodeClasses = ' '.join(sorted([i.Class() for i in nuke.selectedNodes()]))
+
+QtGui.QApplication.clipboard().setText(nodeClasses)
+
+	

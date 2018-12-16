@@ -2,13 +2,17 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Green
+# NAME: Projection Cam
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    i.knob('in').setValue('rgba')
-    for channel in ['red','green','blue','alpha']:
-        i.knob(channel).setValue('green')
-
-    i.knob('tile_color').setValue(12517631)
+	i.knob('tile_color').setValue(4284809471)
+	name = i.name()
+	if name.startswith('Camera') or name.startswith('ShotCamera'):
+		counter = 2
+		name = 'ProjectionCamera1'
+		while nuke.exists(name):
+			name = 'ProjectionCamera%i'%counter
+			counter += 1
+		i.setName(name)

@@ -13,8 +13,7 @@ f = None
 eltToPop = []
 archive = []
 
-path = os.path.expanduser('~') + '/.nuke/paste.nk'
-#path = '//stora/diska/tmp/share/paste.nk'
+path = '//stora/diska/tmp/share/paste.nk'
 nuke.nodeCopy(path)
 with open(path, 'r') as ptc_file:
     f = ptc_file.read()

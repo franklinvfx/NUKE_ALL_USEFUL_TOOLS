@@ -60,7 +60,7 @@ nuke.pluginAddPath(pipe_path + './smartScripter');
 # IMPORT MACHINE MOLLE PIPE
 #-----------------------------------------------------------------------------------------------------------------
 # import MM_Tools 
-import MM_Hub
+# import MM_Hub
 # import MM_Presets
 
 
@@ -68,6 +68,7 @@ import MM_Hub
 # IMPORT FRANKLIN PIPE
 #-----------------------------------------------------------------------------------------------------------------
 nuke.load("F_Hub")
+nuke.load("F_Menu_Share")
 nuke.load("F_Panels")
 nuke.load("F_Scripts")
 nuke.load("F_Tools")

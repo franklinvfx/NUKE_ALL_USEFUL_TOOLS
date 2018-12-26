@@ -11,9 +11,9 @@ import superSwap        #
 import breakoutLayers
 import nukeSwitch
 import reorderBackdrop
-# import shuffle_Smart    #
 
-from smartScripter import osl as smartScripter
+# import osl as smartScripter
+# from smartScripter import osl as smartScripter
 
 #______________________________________________________________________________
 
@@ -215,7 +215,7 @@ m.addCommand('Knobs/Set Value', 'setValue()',  "F_setv.png")
 m.addCommand('Knobs/Set Expression', 'setExpression()',  "F_sete.png")
 #######################################################################################
 m.addSeparator()
-m.addCommand("smartScripter", lambda: smartScripter.main(floating=True), "F9", "C_scripter.png")                                     #######################################################################################
+# m.addCommand("smartScripter", lambda: smartScripter.main(floating=True), "F9", "C_scripter.png")                                     #######################################################################################
 m.addCommand('Break Out Layers',breakoutLayers.main)                                                                                 #######################################################################################
 m.addCommand('Backdrop Re-Order', reorderBackdrop.Bdrop)                                                                             #######################################################################################
 m.addCommand('Roto To Track', rotoToTrack.Roto_to_Trackers)                                                                          #######################################################################################

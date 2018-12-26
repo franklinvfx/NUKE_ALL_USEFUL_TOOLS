@@ -2,12 +2,12 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: <img src="../F_croixb.png">
+# NAME: Arrow
 #
 #----------------------------------------------------------------------------------------------------------
 
-def iconcheck():
+def iconarrow():
   for node in nuke.selectedNodes():
-      node["icon"].setValue('F_croixb.png') # Check
+      node["icon"].setValue('F_arrow.png') # Arrow
     
-iconcheck()
+iconarrow()

@@ -32,19 +32,21 @@ nuke.tprint(info)
 nuke.pluginAddPath(pipe_path + './icons');
 nuke.pluginAddPath(pipe_path + './icons/nodes');
 nuke.pluginAddPath(pipe_path + './icons/nodes/color');
+
 nuke.pluginAddPath(pipe_path + './python');
-nuke.pluginAddPath(pipe_path + './python/More');
+nuke.pluginAddPath(pipe_path + './python/Franklin');
+nuke.pluginAddPath(pipe_path + './python/C');
+nuke.pluginAddPath(pipe_path + './python/MM');
+nuke.pluginAddPath(pipe_path + './python/Other');
+
 nuke.pluginAddPath(pipe_path + './gizmos');
 nuke.pluginAddPath(pipe_path + './gizmos/Franklin');
 nuke.pluginAddPath(pipe_path + './gizmos/C');
 nuke.pluginAddPath(pipe_path + './gizmos/C/icons');
+nuke.pluginAddPath(pipe_path + './gizmos/MM');
 nuke.pluginAddPath(pipe_path + './gizmos/Other');
 nuke.pluginAddPath(pipe_path + './gizmos/Other/pixelfudger');
-
-
-# # Need to check all conditions
-# pref.knob('autoLocalCachePath').setValue('')
-# pref.knob('localCachePath').setValue('[getenv NUKE_TEMP_DIR]')
+# nuke.pluginAddPath(pipe_path + './smartScripter');
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -82,6 +84,25 @@ import C_Tools                         # C gizmos
 # else:
 # 	print 'WARNING: nuke local path is not set!'
 
+
+# # Need to check all conditions
+# pref.knob('autoLocalCachePath').setValue('')
+# # pref.knob('localCachePath').setValue('[getenv NUKE_TEMP_DIR]')
+# pref.knob('localCachePath').setValue(local_path)
+
+
+#-----------------------------------------------------------------------------------------------------------------
+# SET NUKE PREFERENCES - W_HOTBOX
+#-----------------------------------------------------------------------------------------------------------------
+# pipe_path = pipe_path.replace('\\', "/")
+# pref = nuke.toNode('preferences')
+
+# try:      # > Nuke 7
+# 	pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
+# 	pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
+# 	pref.knob('hotboxShortcut').setValue('<')
+# except:   # < Nuke 6
+# 	pass
 
 
 

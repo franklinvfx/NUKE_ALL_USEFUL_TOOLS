@@ -1,16 +1,23 @@
 ﻿'''
-Telecharge depuis https://github.com/franklinvfx/NUKE_TOOLS
+https://github.com/franklinvfx/NUKE_TOOLS
 
-1. Deplacez le dossier et l'ensemble de son contenu a l'endroit souhaite (en local ou sur votre reseau).
-2. Copiez l'integralite de ce fichier dans votre menu.py
-3. Au premier lancement de nuke, selectionnez le repertoire "NUKE_PIPE"
-   Par la suite ce repertoire sera systematiquement memorise
+1. Deplacer le dossier "NUKE_TOOLS" et l'ensemble de son contenu a l'endroit souhaite (en local ou sur votre reseau).
+2. Deplacer ce fichier dans ton repertoire .nuke local (exemple: C:/Users/Franklin/.nuke)
+2. Copier / coller les 3 lignes suivantes n'importe ou dans ton fichier menu.py
+
+#>>>F_Start
+import menu_pipe
+#>>>F_End
+
+3. Au premier lancement de nuke, selectionnez l'emplacement du repertoire "NUKE_TOOLS"
+   Par la suite ce repertoire sera systematiquement memorise.
+
 
 Copyright (c) 2018 Franklin VFX Co.
 '''
 
 #-----------------------------------------------------------------------------------------------------------------
-# IMPORT NUKE PIPE
+# SET FOLDER FOR NUKE TOOLS
 #-----------------------------------------------------------------------------------------------------------------
 import nuke, sys, platform, os
 
@@ -54,12 +61,12 @@ while keepLooping and (pipe_path == "[EMPTY_PATH]" or pipe_path == "" or not isP
 # ADD PATH - IMPORT CONFIG
 #-----------------------------------------------------------------------------------------------------------------
 if isPathValid(pipe_path):
-    nuke.pluginAddPath(pipe_path)
+    nuke.pluginAddPath(pipe_path + "./config")
 
-    import MM_Config
+    # import MM_Config
     # import MM_Config_F
     # import Home_Config
-    # import Default_Config
+    import Default_Config
     
 
 #-----------------------------------------------------------------------------------------------------------------

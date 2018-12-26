@@ -3,11 +3,11 @@ from F_Menu_Share import dirName
 
 
 def shareNodes():
-
+    print dirName
     folder = next(os.walk(dirName))[1]
     folder =  " ".join(folder)
     folder = folder.replace('Disable', '')
-    folder = folder.replace('_', '')
+    # folder = folder.replace('_', '')
     folder = 'Root ' + folder
 
     try:
@@ -50,7 +50,7 @@ def shareNodes():
                 os.mkdir(subDir)
                 nukeFile = subDir + "\\" + fileName + '.nk'
         else:
-            folderChoose = '_' + p.value('Project')
+            folderChoose = p.value('Project')
             nukeFile = dirName + folderChoose + "\\" + fileName + '.nk'
 
         if fileName == '':

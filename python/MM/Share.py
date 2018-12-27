@@ -1,5 +1,5 @@
 import nuke, nukescripts, sys, os, os.path, platform
-from F_Menu_Share import dirName
+from MM_Toolsets import dirName
 
 
 def shareNodes():
@@ -69,10 +69,9 @@ def shareNodes():
                 menu_content = menu_content.replace("", clipboard)
             
                 menu_file = open(nukeFile, 'w')
-                print clipboard
-                #menu_file.write(menu_content)
+                menu_file.write(menu_content)
                 menu_file.close()
 
-                nuke.load("Reload"); reloadSpecific("F Toolsets", "F_Menu_Share")
+                nuke.load("Reload"); reloadSpecific("F Toolsets", "MM_Toolsets")
     else:
         return

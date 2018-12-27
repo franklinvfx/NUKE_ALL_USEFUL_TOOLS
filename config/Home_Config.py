@@ -68,13 +68,15 @@ nuke.pluginAddPath(pipe_path + './gizmos/Other/pixelfudger');
 # import MM_Tools 
 # import MM_Hub
 # import MM_Presets
+import MM_Toolsets
 
 
 #-----------------------------------------------------------------------------------------------------------------
 # IMPORT FRANKLIN PIPE
 #-----------------------------------------------------------------------------------------------------------------
 nuke.load("F_Hub")
-nuke.load("F_Menu_Share")
+import F_Toolsets
+# nuke.load("F_Toolsets")
 nuke.load("F_Panels")
 nuke.load("F_Scripts")
 nuke.load("F_Tools")
@@ -91,5 +93,5 @@ import C_Tools                         # C gizmos
 PP = '\n- Pipe Directory:  ' + pipe_path
 nuke.tprint(PP)
 PV = '- Pipe Version: ................. 1.02\n'
-##############################           #
+##############################          #
 nuke.tprint(PV)

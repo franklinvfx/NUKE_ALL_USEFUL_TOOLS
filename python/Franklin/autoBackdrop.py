@@ -80,8 +80,12 @@ def autoBackdrop():
 
     # Buid the Custom BackropNode
     tab = nuke.Tab_Knob('FT', 'BackdropNode')
-    text = nuke.String_Knob('text', 'Text')
+    #kchanged = nuke.knobChanged()
+    #text = nuke.String_Knob('text', 'Text')
+    text = nuke.Multiline_Eval_String_Knob('text', 'Text')
     position = nuke.Enumeration_Knob('position', '', ['left', 'Center'])
+    size = nuke.Double_Knob('font_size', 'Font Size') 
+    size.setRange(10,100)
 
     grow = nuke.PyScript_Knob('grow', ' <img src="F_scalep.png">', "n=nuke.thisNode()\n\ndef grow(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n['xpos'].setValue(n['xpos'].getValue()-step)\n            n['ypos'].setValue(n['ypos'].getValue()-step)\n            n['bdwidth'].setValue(n['bdwidth'].getValue()+step*2)\n            n['bdheight'].setValue(n['bdheight'].getValue()+step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\ngrow(n,50)")
     shrink = nuke.PyScript_Knob('shrink', ' <img src="F_scalem.png">', "n=nuke.thisNode()\n\ndef shrink(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n['xpos'].setValue(n['xpos'].getValue()+step)\n            n['ypos'].setValue(n['ypos'].getValue()+step)\n            n['bdwidth'].setValue(n['bdwidth'].getValue()-step*2)\n            n['bdheight'].setValue(n['bdheight'].getValue()-step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\nshrink(n,50)")
@@ -101,10 +105,13 @@ def autoBackdrop():
     pink = nuke.PyScript_Knob('pink', ' <img src="F_p.png">', "import colorsys\nn=nuke.thisNode()\nR,G,B= [0.92, 0.74, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n")
 
     n.addKnob(tab)
+    n['knobChanged'].setValue("listenedKnobs = ['text', 'position', 'name']\nnode = nuke.thisNode()\nname = node.knob('name').value()\ntext = node.knob('text').value()\nposition = node.knob('position').value()\nposition = \"<\" + position + \">\"\nlabel = node.knob('label').value()\n\nif nuke.thisKnob().name() in listenedKnobs:\n    if text == \"\":\n        if node.knob('position').value() == \"left\":\n            node.knob('label').setValue("")\n        else:\n            node.knob('label').setValue(position + name)\n    else:\n        if node.knob('position').value() == \"left\":\n            node.knob('label').setValue(text)\n        else:\n            node.knob('label').setValue(position + text)\n            \nelif nuke.thisKnob().name() == 'font_size':\n    fontSize = node.knob('font_size').value()\n    node.knob('note_font_size').setValue(fontSize)")
     n.addKnob(text)
+    n['text'].setFlag(nuke.STARTLINE)
+    n.addKnob(size)
+    n['font_size'].setValue(50)
     n.addKnob(position)
     n['position'].clearFlag(nuke.STARTLINE)
-    n['position'].setValue(1)
     n.addKnob(space1)
     n.addKnob(grow)
     n.addKnob(shrink)
@@ -118,7 +125,6 @@ def autoBackdrop():
     n.addKnob(darkblue)
     n.addKnob(magenta)
     n.addKnob(pink)
-    n['label'].setValue('<[value position]>[value text][if {[value text]==""}  {return "[knob this.name [python {nuke.thisNode().name().split(\'_\')[-1]}]]"}  {return "[knob this.name "[value text]_[python {nuke.thisNode().name().split(\'_\')[-1]}]"]"}]')
 
     # revert to previous selection
     n['selected'].setValue(True)

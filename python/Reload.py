@@ -25,7 +25,10 @@ def reloadSpecific(menuToReload, moduleToReload):
 
     importlib.import_module(moduleToReload)###
     m = nuke.menu("Nuke").findItem(menuToReload)
-    m.clearMenu()
+    try:
+        m.clearMenu()
+    except:
+        pass
     reload(sys.modules[moduleToReload])
     importlib.import_module(moduleToReload)
 

@@ -12,7 +12,7 @@ from menu_pipe import pipe_path
 
 
 toolbar = nuke.toolbar("Nodes")
-F_menu = toolbar.addMenu("Franklin", icon="F_menu.png")
+F_menu = toolbar.addMenu("F_tools", icon="F_menu.png")
 
 ##############################################################
 #  DRAW
@@ -78,10 +78,10 @@ F_menu.addMenu( '3D',  icon='F_3D.png' )
 F_menu.addMenu( '3D/Position',  icon='Yellow_Folder.png' )
 F_menu.addCommand( '3D/Position/Pos_Mask', "nuke.createNode(\"P_Mask\")" , icon="F_pmask.png")
 F_menu.addCommand( '3D/Position/Pos_Ramp', "nuke.createNode(\"P_Ramp\")" , icon="F_pramp.png")
-nuke.toolbar("Nodes").addMenu("Franklin/3D/Position").addSeparator()
+nuke.toolbar("Nodes").addMenu("F_tools/3D/Position").addSeparator()
 F_menu.addCommand( '3D/Position/Pos_Project', "nuke.createNode(\"P_Project\")" , icon="F_pproject.png")
 F_menu.addCommand( '3D/Position/Pos_Object', "nuke.createNode(\"P_Object\")" , icon="F_pobject.png")
-nuke.toolbar("Nodes").addMenu("Franklin/3D/Position").addSeparator()
+nuke.toolbar("Nodes").addMenu("F_tools/3D/Position").addSeparator()
 F_menu.addCommand( '3D/Position/Pos_Texture (UPDATE)', "nuke.createNode(\"Position_Texture\")" , icon="Position_Texture.png") #   ( NEED UPDATE)
 ##########  NORMALS
 F_menu.addMenu( '3D/Normals',  icon='Green_Folder.png' )
@@ -100,13 +100,13 @@ F_menu.addCommand( '3D/Depth/Depth_Mask (beta)', "nuke.createNode(\"Depth_Mask\"
 F_menu.addMenu( '3D/Deep',  icon='Blue_Folder.png' )
 F_menu.addCommand( '3D/Deep/DeepTo_Pos', "nuke.createNode(\"DeepTo_Pos\")" , icon="F_deeptopos.png")
 ##########
-nuke.toolbar("Nodes").addMenu("Franklin/3D").addSeparator()
+nuke.toolbar("Nodes").addMenu("F_tools/3D").addSeparator()
 F_menu.addCommand( '3D/NanRemove', "nuke.createNode(\"NanRemove\")" , icon="F_nanremove.png")
 F_menu.addCommand( '3D/Reflections', "nuke.createNode(\"Reflections\")" , icon="F_reflections.png")
 F_menu.addCommand( '3D/ScanlineRender_Fade', "nuke.createNode(\"ScanlineRender_Fade\")" , icon="F_scanlinerender.png")
 #_____________________________________________________________
 
-nuke.toolbar("Nodes").addMenu("Franklin").addSeparator()
+nuke.toolbar("Nodes").addMenu("F_tools").addSeparator()
 #_____________________________________________________________
 
 ##############################################################
@@ -119,19 +119,28 @@ F_menu.addCommand( 'Other/DotLink', "nuke.createNode(\"DotLink\")" , "ctrl+.", i
 F_menu.addCommand( 'Other/Inspector', "nuke.createNode(\"Inspector\")" , icon="F_inspector.png")
 F_menu.addCommand( 'Other/Tech Check', "nuke.createNode(\"Tech_Check\")" , icon="F_techcheck.png")
 ##########  SETUP
-F_menu.addMenu( 'Other/Setup',  icon='F_setup.png' )          ########################################### Sous Menu ##################
+F_menu.addMenu( 'Other/Setup',  icon='F_setup.png' )
 F_menu.addCommand( 'Other/Setup/Preserve Bbox', "nuke.createNode(\"Preserve_bbox\")" , "")
 #_____________________________________________________________
 
-# nuke.toolbar("Nodes").addMenu("Franklin").addSeparator()
+# nuke.toolbar("Nodes").addMenu("F_tools").addSeparator()
+# #_____________________________________________________________
+# F_menu.addCommand("Reload F. Tools", 'nuke.load("Reload"); reloadSpecific("F_tools", "F_Tools")',  icon="")
+try:
+	from Home_Config import dev
+	if dev == "True":
+		nuke.toolbar("Nodes").addMenu("F_tools").addSeparator()
+		F_menu.addCommand("Reload Tools", 'nuke.load("Reload"); reloadSpecific("F_tools", "F_Tools")',  icon="")
+	else:
+		pass
+except:
+	pass
+
 # #_____________________________________________________________
 
-# F_menu.addCommand("Reload F. Tools", 'import Reload as Reload; Reload.reloadMenu()',  icon="F_reload.png")
-# #_____________________________________________________________
 
 
 
-
-FT = '- Franklin Tools ................ OK'
+FT = '- F_Tools Tools ................ OK'
 nuke.tprint(FT)
 ##############################           #

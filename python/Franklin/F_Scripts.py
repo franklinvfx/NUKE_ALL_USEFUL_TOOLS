@@ -76,9 +76,9 @@ try:      # ALL Exist
 	import Dots
 	import mirrorNodes
 
-	import autoBackdrop as autoBackdrop    # 'Alt + b'
-	nukescripts.autoBackdrop = autoBackdrop.autoBackdrop
-	nuke.menu('Nodes').addCommand( 'Other/Backdrop', 'autoBackdrop.autoBackdrop()', 'alt+b', 'Backdrop.png')
+	import F_Backdrop as F_Backdrop    # 'Alt + b'
+	nukescripts.F_Backdrop = F_Backdrop.F_Backdrop
+	nuke.menu('Nodes').addCommand( 'Other/Backdrop', 'F_Backdrop.F_Backdrop()', 'alt+b', 'Backdrop.png')
 
 	import viewerInputNodes
 	v = nuke.menu("Viewer")

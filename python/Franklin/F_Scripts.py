@@ -88,12 +88,12 @@ try:      # ALL Exist
 	fv.addCommand('IP Remove','nuke.load("viewerInputNodes"), viewerInput(ipNode="Remove")', "Ctrl+Alt+Shift+i",  icon="F_ipr.png")
 
 		  # PRINT
-	ALL3 = '- Auto Backdrop ................. OK\n- Pixelfudger ................... OK'
+	ALL3 = '- Pixelfudger ................... OK'
 	nuke.tprint(ALL3)
 
 except:   # ALL Don't exist
 		  # PRINT
-	ALL4 = '- Auto Backdrop ................. NONE\n- Pixelfudger ................... NONE'
+	ALL4 = '- Pixelfudger ................... NONE'
 	nuke.tprint(ALL4)
 	pass
 

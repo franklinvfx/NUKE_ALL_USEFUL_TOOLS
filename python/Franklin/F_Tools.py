@@ -141,6 +141,6 @@ except:
 
 
 
-FT = '- F_Tools Tools ................ OK'
+FT = '- Franklin Tools ................ OK'
 nuke.tprint(FT)
 ##############################           #

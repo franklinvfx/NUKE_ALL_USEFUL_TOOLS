@@ -63,10 +63,10 @@ while keepLooping and (pipe_path == "[EMPTY_PATH]" or pipe_path == "" or not isP
 if isPathValid(pipe_path):
     nuke.pluginAddPath(pipe_path + "./config")
 
-    # import MM_Config
-    # import MM_Config_F
-    # import Home_Config
-    import Default_Config
+    # import MM_config
+    # import MM_config_F
+    # import Home_config
+    import Default_config
     
 
 #-----------------------------------------------------------------------------------------------------------------

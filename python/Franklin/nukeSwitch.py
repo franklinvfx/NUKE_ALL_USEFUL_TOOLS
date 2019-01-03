@@ -11,4 +11,3 @@ def versionSwitch():
         nukeProcess = subprocess.Popen([nukeExe, "--nukex", nukeScript]) # Launch Nuke X
         print 'Close nuke and launch nukeX'
     nuke.executeInMainThread(nuke.scriptExit) # Close current script
-# versionSwitch()

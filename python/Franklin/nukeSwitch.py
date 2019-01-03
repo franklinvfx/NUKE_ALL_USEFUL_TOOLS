@@ -1,4 +1,9 @@
-﻿import nuke, sys, subprocess
+﻿'''
+Copyright (c) 2018 Franklin VFX Co.
+Thanks to Thibaud Carpentier
+'''
+
+import nuke, sys, subprocess
 
 def versionSwitch():
     nuke.scriptSave() # Save current script

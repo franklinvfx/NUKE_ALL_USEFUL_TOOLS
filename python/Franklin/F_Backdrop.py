@@ -1,7 +1,9 @@
 '''
-I wrote this script inspired by that of Timur Khodzhaev. http://www.nukepedia.com/python/nodegraph/autobackdrop-replacement/finishdown?miv=1&mjv=2
+I wrote this script inspired by that of Timur Khodzhaev.
+Thanks to Vincent Biaux
 
-Copyright (c) 2018 Franklin VFX Co.
+Version 1.1
+Copyright (c) 2019 Franklin VFX Co.
 
 '''
 
@@ -27,7 +29,7 @@ def nodeIsInside(node, backdropNode):
     return topLeft and bottomRight
 
 
-def F_Backdrop():
+def autoBackdrop():
     '''
     Automatically puts a backdrop behind the selected nodes.
 

@@ -126,16 +126,16 @@ F_menu.addCommand( 'Other/Setup/Preserve Bbox', "nuke.createNode(\"Preserve_bbox
 # nuke.toolbar("Nodes").addMenu("F_tools").addSeparator()
 # #_____________________________________________________________
 # F_menu.addCommand("Reload F. Tools", 'nuke.load("Reload"); reloadSpecific("F_tools", "F_Tools")',  icon="")
-try:
-	from Home_config import dev
-	if dev == "True":
-		nuke.toolbar("Nodes").addMenu("F_tools").addSeparator()
-		F_menu.addCommand("Reload Tools", 'nuke.load("Reload"); reloadSpecific("F_tools", "F_Tools")',  icon="")
-	else:
-		print 'not dev'
-		pass
-except:
-	pass
+# try:
+# 	from Home_config import dev
+# 	if dev == "True":
+# 		nuke.toolbar("Nodes").addMenu("F_tools").addSeparator()
+# 		F_menu.addCommand("Reload Tools", 'nuke.load("Reload"); reloadSpecific("F_tools", "F_Tools")',  icon="")
+# 	else:
+# 		print 'not dev'
+# 		pass
+# except:
+# 	pass
 
 # #_____________________________________________________________
 

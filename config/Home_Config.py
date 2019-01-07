@@ -85,12 +85,10 @@ import MM_Toolsets
 # IMPORT FRANKLIN PIPE
 #-----------------------------------------------------------------------------------------------------------------
 nuke.load("F_Hub")
-import F_Toolsets
-# nuke.load("F_Toolsets")
+nuke.load("F_Toolsets")
 nuke.load("F_Panels")
 nuke.load("F_Scripts")
-# nuke.load("F_Tools")
-import F_Tools
+nuke.load("F_Tools")
 nuke.load("F_Presets")
 
 

@@ -20,7 +20,7 @@ toolsetMenuName = 'MM Toolsets'
 
 sharing_menu = nuke.menu("Nuke").addMenu(toolsetMenuName + "/SHARED SCRIPT", icon="F_deeptopos.png")
 mmtoolsets.addSeparator()
-nuke.menu("Nuke").addCommand(toolsetMenuName + "/Share Selected Nodes" , 'nuke.load("Share"), shareNodes()', icon="F_superswap.png")
+nuke.menu("Nuke").addCommand(toolsetMenuName + "/Share Selected Nodes" , 'nuke.load("MM_Share"), shareNodes()', icon="F_superswap.png")
 mmtoolsets.addSeparator()
 nuke.menu("Nuke").addCommand(toolsetMenuName + "/Open Folder" , openFolder, icon="F_explore.png")
 dirNameModified = dirName.replace("\\", "  ")
@@ -52,8 +52,8 @@ if os.path.exists(dirName):
             nuke.menu('Nuke').addCommand(toolsetMenuName + "/SHARED SCRIPT" + '/' + name ,"nuke.nodePaste('"+dirName+ "/" +filename+"')")
 
  
-# dis = nuke.menu( 'Nuke' ).addCommand( 'Franklin/SHARED SCRIPT/Disable' )
-# dis.setVisible( False )
+dis = nuke.menu( 'Nuke' ).addCommand(toolsetMenuName + '/SHARED SCRIPT/Disable' )
+dis.setVisible( False )
 
 
 print '- Machine Molle Toolsets ........ OK'

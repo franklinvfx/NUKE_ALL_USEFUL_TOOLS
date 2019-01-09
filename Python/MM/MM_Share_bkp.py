@@ -1,12 +1,13 @@
 import nuke, nukescripts, sys, os, os.path, platform
-from MM_Toolsets import dirName
+from MM_Hub import dirName
 
 
 def shareNodes():
-    print dirName
+
     folder = next(os.walk(dirName))[1]
     folder =  " ".join(folder)
     folder = folder.replace('Disable', '')
+    folder = folderName.replace('_', '')
     folder = 'Root ' + folder
 
     try:
@@ -34,24 +35,23 @@ def shareNodes():
     p.addButton('Cancel')
     p.addButton('Share')
 
-
     if p.show():
 
-        fullName = p.value("Node Name Setup:")
-        fileName = fullName.split("/")[-1]
-        fileNameChanged = "_" + fileName
-        newFolder = fullName.split("/")[0]
+        fileName = p.value("Node Name Setup:")
+
+        newFolder = fileName.split("/")[0]
+        fileName = fileName.split("/")[-1]
 
         if p.value('Project') == 'Root':
             if fileName == newFolder:
-                nukeFile = dirName + fileNameChanged + '.nk'
+                nukeFile = dirName + fileName + '.nk'
             else:
                 subDir = dirName + newFolder
                 os.mkdir(subDir)
-                nukeFile = subDir + "\\" + fileNameChanged + '.nk'
+                nukeFile = subDir + "\\" + fileName + '.nk'
         else:
-            folderChoose = p.value('Project')
-            nukeFile = dirName + folderChoose + "\\" + fileNameChanged + '.nk'
+            folderChoose = '_' + p.value('Project')
+            nukeFile = dirName + folderChoose + "\\" + fileName + '.nk'
 
         if fileName == '':
             nuke.message('WARNING: The setup need a name')
@@ -72,6 +72,6 @@ def shareNodes():
                 menu_file.write(menu_content)
                 menu_file.close()
 
-                nuke.load("Reload"); reloadSpecific("F Toolsets", "MM_Toolsets")
+                nuke.load("Reload"); reloadSpecific("MM", "MM_Hub")
     else:
         return

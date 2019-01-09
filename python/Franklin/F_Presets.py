@@ -36,6 +36,6 @@ nuke.knobDefault("Tracker3.label", "[value transform] / [value reference_frame]"
 
 
 
-FT = '- Franklin Presets .............. OK'
+FT = '- Franklin Presets .............. OK\n'
 nuke.tprint(FT)
 ##############################           #

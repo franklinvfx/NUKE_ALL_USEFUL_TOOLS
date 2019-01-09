@@ -105,6 +105,6 @@ C_menu.addCommand( 'Other/Effect/Lightning', "nuke.createNode(\"Lightning\")" , 
 C_menu.addCommand( 'Other/Effect/Rain', "nuke.createNode(\"Rain\")" , icon="Rain.png")
 
 
-CT = '- CGEV Tools .................... OK\n'
+CT = '- CGEV Tools .................... OK'
 nuke.tprint(CT)
 ##############################           #

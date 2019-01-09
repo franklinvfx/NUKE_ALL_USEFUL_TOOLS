@@ -14,9 +14,10 @@ try:      # > Nuke 7
 	pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
 	pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
 	pref.knob('hotboxShortcut').setValue('<')
-	nuke.tprint(' ')
+	WH = '        W_Hotbox ................ OK'
+	nuke.tprint(WH)
 except:   # < Nuke 6
-	W = '- W_hotbox ...................... NONE'
+	W = '         W_hotbox ................ NONE'
 	nuke.tprint(W)
 	pass
 
@@ -27,10 +28,10 @@ try:      # 3DE Exist
 	import cryptomatte_utilities
 	cryptomatte_utilities.setup_cryptomatte()
 	cryptomatte_utilities.setup_cryptomatte_ui()
-	C1 = '- Cryptomatte ................... OK'
+	C1 = '        Cryptomatte ............. OK'
 	nuke.tprint(C1)
 except:   # 3DE Don't exist
-	C2 = '- Cryptomatte ................... NONE'
+	C2 = '        Cryptomatte ............. NONE'
 	nuke.tprint(C2)
 	pass
 
@@ -59,12 +60,12 @@ try:      # ALL Exist
 	m.addCommand( 'Reduce Keyframes', "reduceKeyframes.doReduceKeyframes()" )
 	
 		  # PRINT
-	ALL1 = '- Knob Scripter ................. OK\n- C_Hotbox ...................... OK'
+	ALL1 = '        Knob Scripter ........... OK\n        C_Hotbox ................ OK'
 	nuke.tprint(ALL1)
 
 except:   # ALL Don't exist
 		  # PRINT
-	ALL2 = '- Knob Scripter ................. NONE\n- C_Hotbox ...................... NONE'
+	ALL2 = '        Knob Scripter ........... NONE\n        C_Hotbox ................ NONE'
 	nuke.tprint(ALL2)
 	pass
 
@@ -88,12 +89,12 @@ try:      # ALL Exist
 	fv.addCommand('IP Remove','nuke.load("viewerInputNodes"), viewerInput(ipNode="Remove")', "Ctrl+Alt+Shift+i",  icon="F_ipr.png")
 
 		  # PRINT
-	ALL3 = '- Pixelfudger ................... OK'
+	ALL3 = '        Pixelfudger ............. OK\n'
 	nuke.tprint(ALL3)
 
 except:   # ALL Don't exist
 		  # PRINT
-	ALL4 = '- Pixelfudger ................... NONE'
+	ALL4 = '        Pixelfudger ............. NONE\n'
 	nuke.tprint(ALL4)
 	pass
 

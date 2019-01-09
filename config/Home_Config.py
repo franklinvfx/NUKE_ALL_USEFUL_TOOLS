@@ -64,12 +64,12 @@ nuke.pluginAddPath(pipe_path + './gizmos/Other/pixelfudger');
 #-----------------------------------------------------------------------------------------------------------------
 # DEV OPTIONS
 #-----------------------------------------------------------------------------------------------------------------
-dev = "True"
-if dev == "True":
-    devPrint = '- Dev Options ................... Yes'
-else:
-    devPrint = '- Dev Options ................... No'
-nuke.tprint(devPrint)
+# dev = "True"
+# if dev == "True":
+#     devPrint = '- Dev Options ................... OK'
+# else:
+#     devPrint = '- Dev Options ................... FALSE'
+# nuke.tprint(devPrint)
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ nuke.tprint(devPrint)
 # import MM_Tools 
 # import MM_Hub
 # import MM_Presets
-import MM_Toolsets
+# import MM_Toolsets
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -93,10 +93,10 @@ nuke.load("F_Presets")
 
 
 #-----------------------------------------------------------------------------------------------------------------
-# IMPORT CGEV TOOLS
+# IMPORT OTHER TOOLS
 #-----------------------------------------------------------------------------------------------------------------
-import C_Tools                         # C gizmos
-
+import C_Tools                         # CGEV gizmos
+import Spin_Tools                      # SpinVFX gizmos
 
 
 

@@ -44,7 +44,7 @@ if os.path.exists(dirName):
                         name = filename.split(".nk")[0]
                         name = name.split(".gizmo")[0]
                         filePath =  dirName + folder + '\\' + filename
-                        nuke.menu('Nuke').addCommand(toolsetMenuName + "/SHARED SCRIPT" + '/' + folder + '/' + name ,"nuke.nodePaste(filePath)")
+                        nuke.menu('Nuke').addCommand(toolsetMenuName + "/SHARED SCRIPT" + '/' + folder + '/' + name ,"nuke.nodePaste('"+dirName + folder + "\\" + filename+"')")
 
         else:
             name = filename.split(".nk")[0].replace("_", " ")
@@ -56,5 +56,5 @@ if os.path.exists(dirName):
 # dis.setVisible( False )
 
 
-print'- MM Toolsets ................... OK'
+print '- Machine Molle Toolsets ........ OK'
 ##############################          #

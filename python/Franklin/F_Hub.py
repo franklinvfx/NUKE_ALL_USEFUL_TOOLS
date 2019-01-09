@@ -1005,5 +1005,5 @@ def resetStats():
 
 
 
-FT = '- Franklin Hub .................. OK'
+FT = '\n- Franklin Hub .................. OK'
 nuke.tprint(FT)

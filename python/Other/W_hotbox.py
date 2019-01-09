@@ -663,8 +663,8 @@ class hotboxButton(QtWidgets.QLabel):
         hotboxError = '\nW_HOTBOX ERROR: %s -%s:\n\n%s'%('/'.join(buttonName),lineNumber,errorDescription)
 
         #print error
-        print hotboxError
-        nuke.tprint(hotboxError)
+        # print hotboxError
+        # nuke.tprint(hotboxError)
 
     def setSelectionStatus(self, selected = False):
         '''
@@ -1265,4 +1265,7 @@ lastPosition = ''
 
 #----------------------------------------------------------------------------------------------------------
 
-nuke.tprint('W_hotbox v%s, built %s.\nCopyright (c) 2016 Wouter Gilsing. All Rights Reserved.'%(version,releaseDate))
+#nuke.tprint('W_hotbox v%s, built %s.\nCopyright (c) 2016 Wouter Gilsing. All Rights Reserved.'%(version,releaseDate))
+
+# WH = '- W_Hotbox ...................... OK'
+# nuke.tprint(WH)

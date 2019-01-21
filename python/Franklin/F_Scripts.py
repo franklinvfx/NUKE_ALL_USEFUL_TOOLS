@@ -1,4 +1,4 @@
-﻿import nuke
+﻿import nuke, nukescripts
 
 from menu_pipe import pipe_path
 
@@ -97,6 +97,25 @@ except:   # ALL Don't exist
 	ALL4 = '        Pixelfudger ............. NONE\n'
 	nuke.tprint(ALL4)
 	pass
+
+
+
+#-----------------------------------------------------------------------------------------------------------------
+# KEEP EXISTING FRAMES
+#-----------------------------------------------------------------------------------------------------------------
+try:      # > Nuke 11
+	import j3p_renderdialog_n11
+	nukescripts.showRenderDialog = j3p_renderdialog_n11.showRenderDialog 
+	SF1 = '        Render Options........... OK'
+except:   # < Nuke 10
+	import j3p_renderdialog_n10
+	nukescripts.showRenderDialog = j3p_renderdialog_n10.showRenderDialog 
+	SF1 = '        Render Options........... OK'
+	pass
+nuke.tprint(SF1)
+
+
+
 
 # from animatedSnap3D import *
 # try:

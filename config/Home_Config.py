@@ -49,17 +49,19 @@ nuke.pluginAddPath(pipe_path + './gizmos/Other/pixelfudger');
 # nuke.pluginAddPath(pipe_path + './smartScripter');
 
 
-#-----------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------
 # SET NUKE PREFERENCES - W_HOTBOX
-#-----------------------------------------------------------------------------------------------------------------
-# pipe_path = pipe_path.replace('\\', "/")
-# pref = nuke.toNode('preferences')
-# try:      # > Nuke 7
-# 	pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
-# 	pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
-# 	pref.knob('hotboxShortcut').setValue('<')
-# except:   # < Nuke 6
-# 	pass
+# -----------------------------------------------------------------------------------------------------------------
+pipe_path = pipe_path.replace('\\', "/")
+pref = nuke.toNode('preferences')
+
+try:      # > Nuke 7
+	pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
+	pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
+	pref.knob('hotboxShortcut').setValue('<')
+except:   # < Nuke 6
+	pass
+
 
 #-----------------------------------------------------------------------------------------------------------------
 # DEV OPTIONS
@@ -102,6 +104,5 @@ import Spin_Tools                      # SpinVFX gizmos
 
 PP = '\n- Pipe Directory:  ' + pipe_path
 nuke.tprint(PP)
-PV = '- Pipe Version: ................. 1.02\n'
-##############################          #
+PV = '- Pipe Version: ................. 1.03\n'
 nuke.tprint(PV)

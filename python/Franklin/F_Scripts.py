@@ -89,12 +89,12 @@ try:      # ALL Exist
 	fv.addCommand('IP Remove','nuke.load("viewerInputNodes"), viewerInput(ipNode="Remove")', "Ctrl+Alt+Shift+i",  icon="F_ipr.png")
 
 		  # PRINT
-	ALL3 = '        Pixelfudger ............. OK\n'
+	ALL3 = '        Pixelfudger ............. OK'
 	nuke.tprint(ALL3)
 
 except:   # ALL Don't exist
 		  # PRINT
-	ALL4 = '        Pixelfudger ............. NONE\n'
+	ALL4 = '        Pixelfudger ............. NONE'
 	nuke.tprint(ALL4)
 	pass
 
@@ -106,11 +106,11 @@ except:   # ALL Don't exist
 try:      # > Nuke 11
 	import j3p_renderdialog_n11
 	nukescripts.showRenderDialog = j3p_renderdialog_n11.showRenderDialog 
-	SF1 = '        Render Options........... OK'
+	SF1 = '        Render Options........... OK\n'
 except:   # < Nuke 10
 	import j3p_renderdialog_n10
 	nukescripts.showRenderDialog = j3p_renderdialog_n10.showRenderDialog 
-	SF1 = '        Render Options........... OK'
+	SF1 = '        Render Options........... OK\n'
 	pass
 nuke.tprint(SF1)
 

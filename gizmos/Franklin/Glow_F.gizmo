@@ -3,8 +3,8 @@ Group {
  help "Glow_F\n\nNatural glow effect using the exponential blur method.\nAberation chromatic effect is also include in the node.\n"
  knobChanged "c = nuke.toNode('Copy3')\n\nif nuke.thisKnob().name() == 'inputChange':\n   if nuke.thisNode().input(1) != None:\n       c\['from0'].setValue('rgba.alpha')\n   else:\n       c\['from0'].setValue('none')\n    \nif nuke.thisKnob().name() == 'chromatiqueab':\n    if nuke.thisKnob().value():\n        nuke.thisNode()\['abred'].setVisible(True)\n        nuke.thisNode()\['abgreen'].setVisible(True)\n        nuke.thisNode()\['abblue'].setVisible(True)\n        nuke.thisNode()\['FT1'].setVisible(True)\n    else:\n        nuke.thisNode()\['abred'].setVisible(False)\n        nuke.thisNode()\['abgreen'].setVisible(False)\n        nuke.thisNode()\['abblue'].setVisible(False)\n        nuke.thisNode()\['FT1'].setVisible(False)\n\nif nuke.thisKnob().name() == 'crop':\n    if nuke.thisKnob().value():\n        nuke.thisNode()\['adjbbox'].setVisible(False)\n    else:\n        nuke.thisNode()\['adjbbox'].setVisible(True)\n"
  tile_color 0xcc804eff
- icon F_iconrgb.png
  selected true
+ icon F_iconrgb.png
  addUserKnob {20 G l Glow}
  addUserKnob {7 threshold l "<font color=\"green\">@b;Tolerance" t "Sets the low threshold, below which no glowing will occur."}
  threshold 0.8
@@ -18,7 +18,7 @@ Group {
  addUserKnob {6 fxonly l "Effect Only   " t "Return the glow without adding it to the input, so you can composite it yourself." +STARTLINE}
  addUserKnob {6 screen l "Screen    " t "Will use blending mode 'screen' instead of 'plus' for softer highlights." +STARTLINE}
  addUserKnob {26 S00 l " " T " "}
- addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 ""}
  addUserKnob {19 tint l Tint t "Controls the color of added glow."}
  tint 1
  addUserKnob {6 tint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
@@ -63,8 +63,8 @@ Group {
   xpos 1139
   ypos 234
  }
-set N38616000 [stack 0]
-push $N38616000
+set N6ad9400 [stack 0]
+push $N6ad9400
  Copy {
   inputs 2
   to0 rgba.alpha
@@ -87,11 +87,10 @@ push $N38616000
  AddChannels {
   channels rgba
   name AddChannels2
-  selected true
   xpos 940
   ypos 233
  }
-set N38655000 [stack 0]
+set N6c98e000 [stack 0]
  Dot {
   name Dot16
   xpos 438
@@ -102,7 +101,7 @@ set N38655000 [stack 0]
   xpos 438
   ypos 480
  }
-set N38654800 [stack 0]
+set N717d7400 [stack 0]
  Shuffle {
   red black
   green black
@@ -112,13 +111,13 @@ set N38654800 [stack 0]
   xpos 710
   ypos 476
  }
-push $N38655000
+push $N6c98e000
  Dot {
   name Dot18
   xpos 974
   ypos 372
  }
-set N38654000 [stack 0]
+set N717d7c00 [stack 0]
  Keymix {
   inputs 3
   name Keymix1
@@ -126,7 +125,7 @@ set N38654000 [stack 0]
   ypos 470
   disable {{!parent.mask.in}}
  }
-push $N38654000
+push $N717d7c00
  Switch {
   inputs 2
   which {{Copy3.from0}}
@@ -170,7 +169,7 @@ push $N38654000
   xpos 943
   ypos 795
  }
-set N38714800 [stack 0]
+set N74247800 [stack 0]
  Dot {
   name Dot13
   xpos 1486
@@ -187,7 +186,7 @@ set N38714800 [stack 0]
   xpos 1486
   ypos 2982
  }
-push $N38714800
+push $N74247800
  Crop {
   box {0 0 {width-1} {height-1}}
   crop false
@@ -213,7 +212,7 @@ push $N38714800
   disable {{!parent.crop}}
  }
  AdjBBox {
-  numpixels {{adjbbox}}
+  numpixels {{adjbbox} {adjbbox}}
   name AdjBBox1
   xpos 943
   ypos 979
@@ -224,19 +223,19 @@ push $N38714800
   xpos 977
   ypos 1058
  }
-set N9718800 [stack 0]
+set N741a3400 [stack 0]
  Dot {
   name Dot15
   xpos 576
   ypos 1058
  }
-set N38751400 [stack 0]
+set N741a2c00 [stack 0]
  Dot {
   name Dot14
   xpos 576
   ypos 1637
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{8192*parent.size} {8192*parent.size}}
@@ -246,7 +245,7 @@ push $N38751400
   ypos 1532
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{4096*parent.size} {4096*parent.size}}
@@ -256,7 +255,7 @@ push $N38751400
   ypos 1506
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{2048*parent.size} {2048*parent.size}}
@@ -266,7 +265,7 @@ push $N38751400
   ypos 1480
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{1024*parent.size} {1024*parent.size}}
@@ -276,7 +275,7 @@ push $N38751400
   ypos 1454
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{512*parent.size} {512*parent.size}}
@@ -286,7 +285,7 @@ push $N38751400
   ypos 1428
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{256*parent.size} {256*parent.size}}
@@ -296,7 +295,7 @@ push $N38751400
   ypos 1402
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{128*parent.size} {128*parent.size 128}}
@@ -306,7 +305,7 @@ push $N38751400
   ypos 1376
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{64*parent.size} {64*parent.size}}
@@ -316,7 +315,7 @@ push $N38751400
   ypos 1350
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{32*parent.size} {32*parent.size}}
@@ -326,7 +325,7 @@ push $N38751400
   ypos 1324
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{16*parent.size} {16*parent.size}}
@@ -336,7 +335,7 @@ push $N38751400
   ypos 1298
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{8*parent.size} {8*parent.size}}
@@ -346,7 +345,7 @@ push $N38751400
   ypos 1272
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{4*parent.size} {4*parent.size}}
@@ -356,7 +355,7 @@ push $N38751400
   ypos 1246
   hide_input true
  }
-push $N38751400
+push $N741a2c00
  Blur {
   channels {{{parent.blur_1.channels}}}
   size {{2*parent.size} {2*parent.size}}
@@ -366,7 +365,7 @@ push $N38751400
   ypos 1220
   hide_input true
  }
-push $N9718800
+push $N741a3400
  Multiply {
   channels rgb
   value 0
@@ -558,7 +557,6 @@ push $N9718800
  }
  Grade {
   channels rgba
-  white 1
   multiply {{parent.tint.r} {parent.tint.g} {parent.tint.b} {parent.tint.a}}
   name Color
   xpos 943
@@ -581,13 +579,13 @@ push $N9718800
   xpos 977
   ypos 2104
  }
-set N389f3c00 [stack 0]
+set N7039a800 [stack 0]
  Dot {
   name Dot5
   xpos 844
   ypos 2104
  }
-set N389f3800 [stack 0]
+set N7039a400 [stack 0]
  Dot {
   name Dot6
   xpos 719
@@ -598,13 +596,13 @@ set N389f3800 [stack 0]
   xpos 719
   ypos 2395
  }
-push $N389f3c00
+push $N7039a800
  Dot {
   name Dot1
   xpos 1127
   ypos 2104
  }
-set N389f2c00 [stack 0]
+set N718ae000 [stack 0]
  Remove {
   name Remove2
   xpos 1270
@@ -635,8 +633,8 @@ set N389f2c00 [stack 0]
   icon -
   disable {{!chromatiqueab}}
  }
-set N38a1dc00 [stack 0]
-push $N389f2c00
+set N718ae800 [stack 0]
+push $N718ae000
  LensDistortion1_0 {
   serializeKnob ""
   serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
@@ -655,7 +653,7 @@ push $N389f2c00
  Group {
   inputs 2
   name Blur2
-  help "Même utilité que le \"ZDefocus\" mais plus simple d'utilisation et surtout plus rapide.\n\nPour une utilisation souvent suffisante en 2D."
+  help "Mï¿½me utilitï¿½ que le \"ZDefocus\" mais plus simple d'utilisation et surtout plus rapide.\n\nPour une utilisation souvent suffisante en 2D."
   tile_color 0xffff
   xpos 1093
   ypos 2241
@@ -677,37 +675,37 @@ push $N389f2c00
    xpos 253
    ypos -85
   }
-set N38a1d000 [stack 0]
+set N71803400 [stack 0]
   Dot {
    name Dot61
    xpos 468
    ypos -85
   }
-set N38a1cc00 [stack 0]
+set N71802000 [stack 0]
   Dot {
    name Dot63
    xpos 683
    ypos -85
   }
-set N38a1c800 [stack 0]
+set N77aaf000 [stack 0]
   Dot {
    name Dot64
    xpos 901
    ypos -85
   }
-set N38a1c400 [stack 0]
+set N77aae000 [stack 0]
   Dot {
    name Dot66
    xpos 1120
    ypos -85
   }
-set N38a1c000 [stack 0]
+set N77aaf400 [stack 0]
   Dot {
    name Dot68
    xpos 1340
    ypos -85
   }
-set N38565c00 [stack 0]
+set N77aafc00 [stack 0]
   Dot {
    name Dot72
    xpos 1550
@@ -735,43 +733,43 @@ set N38565c00 [stack 0]
    xpos -96
    ypos -44
   }
-set N38564c00 [stack 0]
+set N7180d400 [stack 0]
   Dot {
    name Dot73
    xpos 159
    ypos -45
   }
-set N38564800 [stack 0]
+set N7180c800 [stack 0]
   Dot {
    name Dot74
    xpos 377
    ypos -45
   }
-set N38564400 [stack 0]
+set N7180c000 [stack 0]
   Dot {
    name Dot76
    xpos 589
    ypos -45
   }
-set N38564000 [stack 0]
+set N73c2d800 [stack 0]
   Dot {
    name Dot77
    xpos 810
    ypos -45
   }
-set N38587c00 [stack 0]
+set N73c2c800 [stack 0]
   Dot {
    name Dot79
    xpos 1029
    ypos -45
   }
-set N38587800 [stack 0]
+set N73c2c000 [stack 0]
   Dot {
    name Dot81
    xpos 1249
    ypos -45
   }
-set N38587400 [stack 0]
+set N73c2d400 [stack 0]
   Dot {
    name Dot85
    xpos 1459
@@ -784,7 +782,7 @@ set N38587400 [stack 0]
    xpos 1425
    ypos 38
   }
-push $N38565c00
+push $N77aafc00
   Grade {
    channels rgba
    blackpoint 0.5
@@ -796,7 +794,7 @@ push $N38565c00
    ypos 37
    icon -
   }
-push $N38587400
+push $N73c2d400
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10*7 i}}
@@ -804,7 +802,7 @@ push $N38587400
    xpos 1215
    ypos 36
   }
-push $N38a1c000
+push $N77aaf400
   Grade {
    channels rgba
    blackpoint 0.3
@@ -816,7 +814,7 @@ push $N38a1c000
    ypos 36
    icon -
   }
-push $N38587800
+push $N73c2c000
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10*5 i}}
@@ -824,7 +822,7 @@ push $N38587800
    xpos 995
    ypos 37
   }
-push $N38a1c400
+push $N77aae000
   Grade {
    channels rgba
    blackpoint 0.1
@@ -836,7 +834,7 @@ push $N38a1c400
    ypos 36
    icon -
   }
-push $N38587c00
+push $N73c2c800
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10*3 i}}
@@ -844,7 +842,7 @@ push $N38587c00
    xpos 776
    ypos 36
   }
-push $N38a1c800
+push $N77aaf000
   Grade {
    channels rgba
    blackpoint 0.05
@@ -856,7 +854,7 @@ push $N38a1c800
    ypos 36
    icon -
   }
-push $N38564000
+push $N73c2d800
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10 i}}
@@ -864,7 +862,7 @@ push $N38564000
    xpos 555
    ypos 36
   }
-push $N38a1cc00
+push $N71802000
   Grade {
    channels rgba
    blackpoint 0.025
@@ -876,7 +874,7 @@ push $N38a1cc00
    ypos 36
    icon -
   }
-push $N38564400
+push $N7180c000
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10/4*2 i}}
@@ -884,7 +882,7 @@ push $N38564400
    xpos 343
    ypos 36
   }
-push $N38a1d000
+push $N71803400
   Grade {
    channels rgba
    whitepoint 0.025
@@ -895,7 +893,7 @@ push $N38a1d000
    ypos 38
    icon -
   }
-push $N38564800
+push $N7180c800
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10/4 i}}
@@ -903,7 +901,7 @@ push $N38564800
    xpos 125
    ypos 38
   }
-push $N38564c00
+push $N7180d400
   Dot {
    name Dot88
    xpos -96
@@ -977,8 +975,8 @@ push $N38564c00
   xpos 1127
   ypos 2363
  }
-push $N38a1dc00
-push $N389f3800
+push $N718ae800
+push $N7039a400
  LensDistortion1_0 {
   serializeKnob ""
   serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
@@ -996,7 +994,7 @@ push $N389f3800
  Group {
   inputs 2
   name Blur
-  help "Même utilité que le \"ZDefocus\" mais plus simple d'utilisation et surtout plus rapide.\n\nPour une utilisation souvent suffisante en 2D."
+  help "Mï¿½me utilitï¿½ que le \"ZDefocus\" mais plus simple d'utilisation et surtout plus rapide.\n\nPour une utilisation souvent suffisante en 2D."
   tile_color 0xff000000
   xpos 810
   ypos 2241
@@ -1019,37 +1017,37 @@ push $N389f3800
    xpos 253
    ypos -85
   }
-set N38214400 [stack 0]
+set N7432dc00 [stack 0]
   Dot {
    name Dot61
    xpos 468
    ypos -85
   }
-set N38214000 [stack 0]
+set N717bc400 [stack 0]
   Dot {
    name Dot63
    xpos 683
    ypos -85
   }
-set N3824bc00 [stack 0]
+set N717bdc00 [stack 0]
   Dot {
    name Dot64
    xpos 901
    ypos -85
   }
-set N3824b800 [stack 0]
+set N717bd800 [stack 0]
   Dot {
    name Dot66
    xpos 1120
    ypos -85
   }
-set N3824b400 [stack 0]
+set N717bc000 [stack 0]
   Dot {
    name Dot68
    xpos 1340
    ypos -85
   }
-set N3824b000 [stack 0]
+set N717bd400 [stack 0]
   Dot {
    name Dot72
    xpos 1550
@@ -1077,43 +1075,43 @@ set N3824b000 [stack 0]
    xpos -96
    ypos -44
   }
-set N3824a000 [stack 0]
+set N78f69400 [stack 0]
   Dot {
    name Dot73
    xpos 159
    ypos -45
   }
-set N3826bc00 [stack 0]
+set N78f69800 [stack 0]
   Dot {
    name Dot74
    xpos 377
    ypos -45
   }
-set N3826b800 [stack 0]
+set N78f69000 [stack 0]
   Dot {
    name Dot76
    xpos 589
    ypos -45
   }
-set N3826b400 [stack 0]
+set N78f69c00 [stack 0]
   Dot {
    name Dot77
    xpos 810
    ypos -45
   }
-set N3826b000 [stack 0]
+set N741bb800 [stack 0]
   Dot {
    name Dot79
    xpos 1029
    ypos -45
   }
-set N3826ac00 [stack 0]
+set N741bbc00 [stack 0]
   Dot {
    name Dot81
    xpos 1249
    ypos -45
   }
-set N3826a800 [stack 0]
+set N741ba800 [stack 0]
   Dot {
    name Dot85
    xpos 1459
@@ -1126,7 +1124,7 @@ set N3826a800 [stack 0]
    xpos 1425
    ypos 38
   }
-push $N3824b000
+push $N717bd400
   Grade {
    channels rgba
    blackpoint 0.5
@@ -1138,7 +1136,7 @@ push $N3824b000
    ypos 37
    icon -
   }
-push $N3826a800
+push $N741ba800
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10*7 i}}
@@ -1146,7 +1144,7 @@ push $N3826a800
    xpos 1215
    ypos 36
   }
-push $N3824b400
+push $N717bc000
   Grade {
    channels rgba
    blackpoint 0.3
@@ -1158,7 +1156,7 @@ push $N3824b400
    ypos 36
    icon -
   }
-push $N3826ac00
+push $N741bbc00
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10*5 i}}
@@ -1166,7 +1164,7 @@ push $N3826ac00
    xpos 995
    ypos 37
   }
-push $N3824b800
+push $N717bd800
   Grade {
    channels rgba
    blackpoint 0.1
@@ -1178,7 +1176,7 @@ push $N3824b800
    ypos 36
    icon -
   }
-push $N3826b000
+push $N741bb800
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10*3 i}}
@@ -1186,7 +1184,7 @@ push $N3826b000
    xpos 776
    ypos 36
   }
-push $N3824bc00
+push $N717bdc00
   Grade {
    channels rgba
    blackpoint 0.05
@@ -1198,7 +1196,7 @@ push $N3824bc00
    ypos 36
    icon -
   }
-push $N3826b400
+push $N78f69c00
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10 i}}
@@ -1206,7 +1204,7 @@ push $N3826b400
    xpos 555
    ypos 36
   }
-push $N38214000
+push $N717bc400
   Grade {
    channels rgba
    blackpoint 0.025
@@ -1218,7 +1216,7 @@ push $N38214000
    ypos 36
    icon -
   }
-push $N3826b800
+push $N78f69000
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10/4*2 i}}
@@ -1226,7 +1224,7 @@ push $N3826b800
    xpos 343
    ypos 36
   }
-push $N38214400
+push $N7432dc00
   Grade {
    channels rgba
    whitepoint 0.025
@@ -1237,7 +1235,7 @@ push $N38214400
    ypos 38
    icon -
   }
-push $N3826bc00
+push $N78f69800
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10/4 i}}
@@ -1245,7 +1243,7 @@ push $N3826bc00
    xpos 125
    ypos 38
   }
-push $N3824a000
+push $N78f69400
   Dot {
    name Dot88
    xpos -96
@@ -1319,8 +1317,8 @@ push $N3824a000
   xpos 844
   ypos 2325
  }
-push $N38a1dc00
-push $N389f3c00
+push $N718ae800
+push $N7039a800
  LensDistortion1_0 {
   serializeKnob ""
   serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
@@ -1339,7 +1337,7 @@ push $N389f3c00
  Group {
   inputs 2
   name Blur1
-  help "Même utilité que le \"ZDefocus\" mais plus simple d'utilisation et surtout plus rapide.\n\nPour une utilisation souvent suffisante en 2D."
+  help "Mï¿½me utilitï¿½ que le \"ZDefocus\" mais plus simple d'utilisation et surtout plus rapide.\n\nPour une utilisation souvent suffisante en 2D."
   tile_color 0xff00ff
   xpos 943
   ypos 2241
@@ -1362,37 +1360,37 @@ push $N389f3c00
    xpos 253
    ypos -85
   }
-set N95f3800 [stack 0]
+set N74242800 [stack 0]
   Dot {
    name Dot61
    xpos 468
    ypos -85
   }
-set N95f3400 [stack 0]
+set N74242400 [stack 0]
   Dot {
    name Dot63
    xpos 683
    ypos -85
   }
-set N95f3000 [stack 0]
+set N6dcf6800 [stack 0]
   Dot {
    name Dot64
    xpos 901
    ypos -85
   }
-set N95f2c00 [stack 0]
+set N6dcf7000 [stack 0]
   Dot {
    name Dot66
    xpos 1120
    ypos -85
   }
-set N95f2800 [stack 0]
+set N6dcf7400 [stack 0]
   Dot {
    name Dot68
    xpos 1340
    ypos -85
   }
-set N95f2400 [stack 0]
+set N6dcf7c00 [stack 0]
   Dot {
    name Dot72
    xpos 1550
@@ -1420,43 +1418,43 @@ set N95f2400 [stack 0]
    xpos -96
    ypos -44
   }
-set N960f400 [stack 0]
+set N717cb400 [stack 0]
   Dot {
    name Dot73
    xpos 159
    ypos -45
   }
-set N960f000 [stack 0]
+set N717cac00 [stack 0]
   Dot {
    name Dot74
    xpos 377
    ypos -45
   }
-set N960ec00 [stack 0]
+set N717e5c00 [stack 0]
   Dot {
    name Dot76
    xpos 589
    ypos -45
   }
-set N960e800 [stack 0]
+set N717e4400 [stack 0]
   Dot {
    name Dot77
    xpos 810
    ypos -45
   }
-set N960e400 [stack 0]
+set N717e4000 [stack 0]
   Dot {
    name Dot79
    xpos 1029
    ypos -45
   }
-set N960e000 [stack 0]
+set N717e5400 [stack 0]
   Dot {
    name Dot81
    xpos 1249
    ypos -45
   }
-set N962fc00 [stack 0]
+set N717e4800 [stack 0]
   Dot {
    name Dot85
    xpos 1459
@@ -1469,7 +1467,7 @@ set N962fc00 [stack 0]
    xpos 1425
    ypos 38
   }
-push $N95f2400
+push $N6dcf7c00
   Grade {
    channels rgba
    blackpoint 0.5
@@ -1481,7 +1479,7 @@ push $N95f2400
    ypos 37
    icon -
   }
-push $N962fc00
+push $N717e4800
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10*7 i}}
@@ -1489,7 +1487,7 @@ push $N962fc00
    xpos 1215
    ypos 36
   }
-push $N95f2800
+push $N6dcf7400
   Grade {
    channels rgba
    blackpoint 0.3
@@ -1501,7 +1499,7 @@ push $N95f2800
    ypos 36
    icon -
   }
-push $N960e000
+push $N717e5400
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10*5 i}}
@@ -1509,7 +1507,7 @@ push $N960e000
    xpos 995
    ypos 37
   }
-push $N95f2c00
+push $N6dcf7000
   Grade {
    channels rgba
    blackpoint 0.1
@@ -1521,7 +1519,7 @@ push $N95f2c00
    ypos 36
    icon -
   }
-push $N960e400
+push $N717e4000
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10*3 i}}
@@ -1529,7 +1527,7 @@ push $N960e400
    xpos 776
    ypos 36
   }
-push $N95f3000
+push $N6dcf6800
   Grade {
    channels rgba
    blackpoint 0.05
@@ -1541,7 +1539,7 @@ push $N95f3000
    ypos 36
    icon -
   }
-push $N960e800
+push $N717e4400
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10 i}}
@@ -1549,7 +1547,7 @@ push $N960e800
    xpos 555
    ypos 36
   }
-push $N95f3400
+push $N74242400
   Grade {
    channels rgba
    blackpoint 0.025
@@ -1561,7 +1559,7 @@ push $N95f3400
    ypos 36
    icon -
   }
-push $N960ec00
+push $N717e5c00
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10/4*2 i}}
@@ -1569,7 +1567,7 @@ push $N960ec00
    xpos 343
    ypos 36
   }
-push $N95f3800
+push $N74242800
   Grade {
    channels rgba
    whitepoint 0.025
@@ -1580,7 +1578,7 @@ push $N95f3800
    ypos 38
    icon -
   }
-push $N960f000
+push $N717cac00
   Blur {
    channels {{{parent.Blur11.channels}}}
    size {{blur/10/4 i}}
@@ -1588,7 +1586,7 @@ push $N960f000
    xpos 125
    ypos 38
   }
-push $N960f400
+push $N717cb400
   Dot {
    name Dot88
    xpos -96
@@ -1687,7 +1685,7 @@ push $N960f400
   xpos 977
   ypos 2587
  }
-set N96e6c00 [stack 0]
+set N71afa000 [stack 0]
  Dot {
   name Dot9
   xpos 1129
@@ -1700,13 +1698,13 @@ set N96e6c00 [stack 0]
   xpos 1095
   ypos 2685
  }
-push $N38654800
+push $N717d7400
  Dot {
   name Dot36
   xpos 438
   ypos 2728
  }
-set N96e6000 [stack 0]
+set N71afb800 [stack 0]
  Copy {
   inputs 2
   channels rgb
@@ -1719,8 +1717,8 @@ set N96e6000 [stack 0]
   xpos 1129
   ypos 2880
  }
-push $N96e6c00
-push $N96e6000
+push $N71afa000
+push $N71afb800
  Dot {
   name Dot12
   xpos 438

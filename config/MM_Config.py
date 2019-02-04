@@ -64,7 +64,6 @@ nuke.pluginAddPath(pipe_path + './gizmos/Other/pixelfudger');
 # IMPORT MACHINE MOLLE PIPE
 #-----------------------------------------------------------------------------------------------------------------
 import MM_Tools 
-# import MM_Hub
 import MM_Presets
 import MM_Toolsets
 
@@ -76,7 +75,6 @@ nuke.load("F_Hub")
 nuke.load("F_Panels")
 nuke.load("F_Scripts")
 nuke.load("F_Tools")
-# nuke.load("F_Presets")
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -119,7 +117,10 @@ import Spin_Tools                      # SpinVFX gizmos
 
 
 
-
-print '\n- Pipe Directory:        ' + pipe_path
-print '- Pipe Version: ................. 1.02\n'
-##############################           #
+#-----------------------------------------------------------------------------------------------------------------
+# PRINT LOADING INFOS
+#-----------------------------------------------------------------------------------------------------------------
+PP = '\n- Pipe Directory:        ' + pipe_path
+nuke.tprint(PP)
+PV = '- Pipe Version: ................. 1.03\n'
+nuke.tprint(PV)

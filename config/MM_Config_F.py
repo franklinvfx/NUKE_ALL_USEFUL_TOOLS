@@ -1,4 +1,4 @@
-﻿import nuke, platform, os
+import nuke, platform, os
 
 try:
     # < Nuke 11
@@ -20,7 +20,7 @@ from menu_pipe import pipe_path
 L1 = '\n          _________________________ '
 L2 = '\n         |      Machine Molle      |'
 L3 = '\n         |     Franklin CUSTOM     |'
-L4 = '\n         |________  2018  _________|'
+L4 = '\n         |________  2019  _________|'
 
 info = L1 + L2 + L3 + L4 + '\n\n'
 nuke.tprint(info)
@@ -55,10 +55,12 @@ nuke.pluginAddPath(pipe_path + './gizmos/Other/pixelfudger');
 pipe_path = pipe_path.replace('\\', "/")
 pref = nuke.toNode('preferences')
 
-
-pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
-pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
-pref.knob('hotboxShortcut').setValue('<')
+try:      # > Nuke 7
+    pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
+    pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
+    pref.knob('hotboxShortcut').setValue('<')
+except:   # < Nuke 6
+    pass
 
 
 #-----------------------------------------------------------------------------------------------------------------
@@ -75,8 +77,7 @@ pref.knob('hotboxShortcut').setValue('<')
 #-----------------------------------------------------------------------------------------------------------------
 # IMPORT MACHINE MOLLE PIPE
 #-----------------------------------------------------------------------------------------------------------------
-import MM_Tools 
-# import MM_Hub
+import MM_Tools
 import MM_Presets
 import MM_Toolsets
 
@@ -97,10 +98,6 @@ nuke.load("F_Presets")
 import C_Tools                         # CGEV gizmos
 import Spin_Tools                      # SpinVFX gizmos
 
-# #-----------------------------------------------------------------------------------------------------------------
-# # IMPORT GLOBAL
-# #-----------------------------------------------------------------------------------------------------------------
-# import Reload
 
 #-----------------------------------------------------------------------------------------------------------------
 # SET NUKE_LOCAL DIRECTORY
@@ -121,8 +118,10 @@ pref.knob('localCachePath').setValue(local_path)
 
 
 
-
-
-print '- Pipe Directory:        ' + pipe_path
-print '- Pipe Version: ................. 1.02\n'
-##############################           #
+#-----------------------------------------------------------------------------------------------------------------
+# PRINT LOADING INFOS
+#-----------------------------------------------------------------------------------------------------------------
+PP = '\n- Pipe Directory:        ' + pipe_path
+nuke.tprint(PP)
+PV = '- Pipe Version: ................. 1.03\n'
+nuke.tprint(PV)

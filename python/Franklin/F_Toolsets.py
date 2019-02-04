@@ -56,5 +56,5 @@ if os.path.exists(dirName):
 # dis.setVisible( False )
 
 
-print'- F Toolsets .................... OK'
+print'- Franklin Toolsets ............. OK'
 ##############################          #

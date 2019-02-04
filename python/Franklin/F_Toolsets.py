@@ -2,6 +2,7 @@ import nuke, nukescripts, sys, os, platform
 from menu_pipe import pipe_path
 
 
+
 # TOOLSET ADD MENU -----------------------------------------------------------------
 
 ftoolsets = nuke.menu("Nuke").addMenu('F Toolsets', "F_deeptopos.png")    # Dossier 
@@ -11,7 +12,8 @@ if platform.system() == "Darwin":
     openFolder = "os.system('open \"%s\"')" % (dirName)
 
 elif platform.system() == "Windows":
-    dirName = "D:\\WORK\\SHARING_SCRIPTS\\"
+    dirName = pipe_path + "gizmos/Toolsets/"
+    dirName = dirName.replace('/','\\\\')
     openFolder = "os.system('explorer \"%s\"')" % (dirName)
 
 
@@ -22,10 +24,9 @@ sharing_menu = nuke.menu("Nuke").addMenu(toolsetMenuName + "/SHARED SCRIPT", ico
 ftoolsets.addSeparator()
 nuke.menu("Nuke").addCommand(toolsetMenuName + "/Share Selected Nodes" , 'nuke.load("Share"), shareNodes()', icon="F_superswap.png")
 ftoolsets.addSeparator()
-nuke.menu("Nuke").addCommand(toolsetMenuName + "/Open Folder" , openFolder, icon="F_explore.png")
-dirNameModified = dirName.replace("\\", "  ")
-dirpath = nuke.menu("Nuke").addCommand(toolsetMenuName + "/" + "Path (" + dirNameModified + ")", '')
-dirpath.setEnabled( False )
+dirNameModified = dirName.replace("Toolsets\\\\" , "Toolsets")
+dirNameModified = dirNameModified.replace("\\\\", " | ")
+nuke.menu("Nuke").addCommand(toolsetMenuName + "/Open Folder (" + dirNameModified + ")" , openFolder, icon="F_explore.png")
 ftoolsets.addSeparator()
 nuke.menu("Nuke").addCommand(toolsetMenuName + "/Reload   ", 'nuke.load("Reload"); reloadSpecific("F Toolsets", "F_Toolsets")', icon="F_reload.png")
 
@@ -44,7 +45,7 @@ if os.path.exists(dirName):
                         name = filename.split(".nk")[0]
                         name = name.split(".gizmo")[0]
                         filePath =  dirName + folder + '\\' + filename
-                        nuke.menu('Nuke').addCommand(toolsetMenuName + "/SHARED SCRIPT" + '/' + folder + '/' + name ,"nuke.nodePaste(filePath)")
+                        nuke.menu('Nuke').addCommand(toolsetMenuName + "/SHARED SCRIPT" + '/' + folder + '/' + name ,"nuke.nodePaste('"+ dirName + folder + "/" + filename +"')")
 
         else:
             name = filename.split(".nk")[0].replace("_", " ")
@@ -56,5 +57,6 @@ if os.path.exists(dirName):
 # dis.setVisible( False )
 
 
-print'- F Toolsets .................... OK'
+FT = '- Franklin Toolsets ............. OK'
+nuke.tprint(FT)
 ##############################          #

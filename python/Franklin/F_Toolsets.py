@@ -2,6 +2,7 @@ import nuke, nukescripts, sys, os, platform
 from menu_pipe import pipe_path
 
 
+
 # TOOLSET ADD MENU -----------------------------------------------------------------
 
 ftoolsets = nuke.menu("Nuke").addMenu('F Toolsets', "F_deeptopos.png")    # Dossier 
@@ -11,9 +12,10 @@ if platform.system() == "Darwin":
     openFolder = "os.system('open \"%s\"')" % (dirName)
 
 elif platform.system() == "Windows":
-    dirName = "D:\\WORK\\SHARING_SCRIPTS\\"
+    dirName = pipe_path + "gizmos/Toolsets/"
+    dirName = dirName.replace('/','\\\\')
     openFolder = "os.system('explorer \"%s\"')" % (dirName)
-
+    
 
 toolsetMenuName = 'F Toolsets'
 
@@ -56,5 +58,6 @@ if os.path.exists(dirName):
 # dis.setVisible( False )
 
 
-print'- Franklin Toolsets ............. OK'
+FT = '- Franklin Toolsets ............. OK'
+nuke.tprint(FT)
 ##############################          #

@@ -36,17 +36,17 @@ nuke.pluginAddPath(pipe_path + './icons/nodes/color');
 nuke.pluginAddPath(pipe_path + './python');
 nuke.pluginAddPath(pipe_path + './python/Franklin');
 nuke.pluginAddPath(pipe_path + './python/C');
-nuke.pluginAddPath(pipe_path + './python/MM');
+#nuke.pluginAddPath(pipe_path + './python/MM');
 nuke.pluginAddPath(pipe_path + './python/Other');
 
 nuke.pluginAddPath(pipe_path + './gizmos');
 nuke.pluginAddPath(pipe_path + './gizmos/Franklin');
 nuke.pluginAddPath(pipe_path + './gizmos/C');
 nuke.pluginAddPath(pipe_path + './gizmos/C/icons');
-nuke.pluginAddPath(pipe_path + './gizmos/MM');
+#nuke.pluginAddPath(pipe_path + './gizmos/MM');
+nuke.pluginAddPath(pipe_path + './gizmos/Toolsets');
 nuke.pluginAddPath(pipe_path + './gizmos/Other');
 nuke.pluginAddPath(pipe_path + './gizmos/Other/pixelfudger');
-
 
 # nuke.pluginAddPath(pipe_path + './smartScripter');
 

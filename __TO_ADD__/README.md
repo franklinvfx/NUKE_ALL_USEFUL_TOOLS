@@ -59,9 +59,6 @@ Suppress.
 ## Thanks
 Many of the tools in this collection are based on tools made available freely by the VFX community.
 
-The resources shared by the community have been invaluable to us at Spin VFX and this collection is our first small
-step in our effort to give back.
-
 We would like to thank all of the members of the VFX community who made this possible, in particular:
 - Frank Rueter, for creating and maintaining Nukepedia.
 - Mads Hagbarth, for the innovating techniques shared online and the Blinkscript inspiration.

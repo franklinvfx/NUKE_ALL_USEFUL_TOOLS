@@ -1,0 +1,203 @@
+set cut_paste_input [stack 0]
+version 9.0 v6
+push $cut_paste_input
+Group {
+ name auto_cleanplate4
+ help http://richardfrazer.com/tools-tutorials/auto-cleanplate-for-nuke/
+ knobChanged "\nn = nuke.thisNode()\nk = nuke.thisKnob()\n#print n\['customframerange'].getValue()\nif k.name()==\"customframerange\":\n    n\['framerangestart'].setEnabled((n\['customframerange'].getValue())!=0)\n    n\['framerangeend'].setEnabled(n\['customframerange'].getValue()!=0)\n    n\['numberframes'].setEnabled((1-n\['customframerange'].getValue())!=0)\nif k.name()==\"invertalpha\":\n    n\['defaultinvert'].setValue((n\['invertalpha'].getValue())!=0)\nif k.name()==\"method\":\n    n\['vectordetail'].setVisible((n\['method'].getValue())==2)\n    n\['smooth'].setVisible(n\['method'].getValue()==2)\n    n\['differencegain'].setVisible((n\['method'].getValue())==1)\n    n\['differencetimeoffset'].setVisible(n\['method'].getValue()==1)\n    if n\['method'].getValue()==0:\n        n\['invertalpha'].setValue(n\['defaultinvert'].getValue())\n    if n\['method'].getValue()==2:\n        n\['invertalpha'].setValue(0)\n"
+ selected true
+ xpos 133
+ ypos -32
+ addUserKnob {20 User}
+ addUserKnob {26 text1 l "" +STARTLINE T "Foreground mask\n"}
+ addUserKnob {4 method M {"Input alpha" "Difference Key" "Auto generated (Warning - HEAVY!)" "" ""}}
+ addUserKnob {7 vectordetail l "Vector detail" +HIDDEN}
+ vectordetail 1
+ addUserKnob {3 differencegain l "Difference Gain" +HIDDEN}
+ differencegain 2000
+ addUserKnob {3 differencetimeoffset l "Time offset" +HIDDEN}
+ differencetimeoffset 1
+ addUserKnob {7 smooth l Smoothness +HIDDEN}
+ smooth 0.1
+ addUserKnob {6 invertalpha l "Invert alpha" +STARTLINE}
+ invertalpha true
+ addUserKnob {6 defaultinvert l INVISIBLE -STARTLINE +INVISIBLE}
+ defaultinvert true
+ addUserKnob {7 blur l "blur alpha" R 0 100}
+ blur 15
+ addUserKnob {26 ""}
+ addUserKnob {26 text2 l "" +STARTLINE T "Frame blend\n"}
+ addUserKnob {3 numberframes l "Number of frames" +DISABLED}
+ numberframes 20
+ addUserKnob {3 framerangestart l "Frame Range"}
+ framerangestart 1
+ addUserKnob {3 framerangeend l "" -STARTLINE}
+ framerangeend 100
+ addUserKnob {6 customframerange l Custom -STARTLINE}
+ customframerange true
+ addUserKnob {22 InputRange l "Input Range" -STARTLINE T "n = nuke.thisNode()\nf = n.firstFrame()\nl = n.lastFrame() \n\nn\['framerangestart'].setValue(f)\nn\['framerangeend'].setValue(l)"}
+ addUserKnob {20 About}
+ addUserKnob {26 textabout l "" +STARTLINE T "Auto Cleanplate v1.1\nby Richard Frazer 2015\n\nCleans foreground objects from the background \nto create a cleanplate. \nThe image must be stabilized so that the \nbackground is locked.\nRequires a matte for the foreground objects, \nwhich can either be the input alpha channel or \nautomatically generated using a differnce key or motion vectors.\n\nFull tutorial at http://richardfrazer.com/tools-tutorials/auto-cleanplate-for-nuke/"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -1386
+  ypos 934
+ }
+ Dot {
+  name Dot63
+  xpos -1352
+  ypos 1003
+ }
+set N71c9400 [stack 0]
+ Dot {
+  name Dot1
+  xpos -987
+  ypos 1055
+ }
+set N7205800 [stack 0]
+ Dot {
+  name Dot2
+  xpos -849
+  ypos 1055
+ }
+ OFXuk.co.thefoundry.furnace.f_vectorgenerator_v403 {
+  vectorDetail {{parent.vectordetail i}}
+  smoothness {{parent.smooth i}}
+  output Foreground
+  matteComponent None
+  Advanced 0
+  blockSize 6
+  oversmooth false
+  Tolerances 0
+  weightRed 0.3
+  weightGreen 0.6
+  weightBlue 0.1
+  cacheBreaker true
+  name F_VectorGenerator1
+  xpos -883
+  ypos 1117
+ }
+ Shuffle {
+  in forward
+  blue black
+  alpha black
+  name Shuffle1
+  xpos -883
+  ypos 1155
+ }
+ Expression {
+  expr3 1-(r==0&&g==0?0:1)
+  name Expression2
+  selected true
+  xpos -883
+  ypos 1196
+ }
+push $N7205800
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy8
+  xpos -1021
+  ypos 1196
+ }
+ Dot {
+  name Dot4
+  xpos -987
+  ypos 1272
+ }
+push $N71c9400
+ Dot {
+  name Dot17
+  xpos -1230
+  ypos 1062
+ }
+set N1dc03c00 [stack 0]
+push $N1dc03c00
+ TimeOffset {
+  time_offset {{parent.differencetimeoffset i}}
+  time ""
+  name TimeOffset2
+  xpos -1170
+  ypos 1078
+ }
+ Difference {
+  inputs 2
+  gain {{parent.differencegain i}}
+  name Difference2
+  xpos -1170
+  ypos 1139
+ }
+ Invert {
+  channels alpha
+  name Invert7
+  xpos -1170
+  ypos 1182
+ }
+push $N1dc03c00
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy1
+  xpos -1256
+  ypos 1261
+ }
+push $N71c9400
+ Switch {
+  inputs 3
+  which {{parent.method i}}
+  name Switch1
+  xpos -1386
+  ypos 1337
+ }
+ Dot {
+  name Dot3
+  xpos -1352
+  ypos 1375
+ }
+set N1dc02800 [stack 0]
+ Invert {
+  channels alpha
+  name Invert2
+  xpos -1490
+  ypos 1435
+ }
+push $N1dc02800
+ Switch {
+  inputs 2
+  which {{parent.invertalpha}}
+  name Switch2
+  xpos -1386
+  ypos 1516
+ }
+ Blur {
+  channels alpha
+  size {{parent.blur}}
+  name Blur1
+  xpos -1386
+  ypos 1649
+ }
+ Premult {
+  name Premult1
+  xpos -1386
+  ypos 1705
+ }
+ FrameBlend {
+  numframes {{parent.numberframes x1014 100}}
+  startframe {{parent.framerangestart}}
+  endframe {{parent.framerangeend}}
+  userange {{parent.customframerange}}
+  name FrameBlend3
+  xpos -1386
+  ypos 1751
+ }
+ Unpremult {
+  name Unpremult4
+  xpos -1386
+  ypos 1843
+ }
+ Output {
+  name Output1
+  xpos -1386
+  ypos 1942
+ }
+end_group

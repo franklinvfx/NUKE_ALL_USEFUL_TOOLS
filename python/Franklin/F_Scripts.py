@@ -14,10 +14,10 @@ try:      # > Nuke 7
 	pref.knob('hotboxLocation').setValue(pipe_path + 'Python/W_hotbox/')
 	pref.knob('hotboxIconLocation').setValue(pipe_path + 'Python/W_hotbox/icons/')
 	pref.knob('hotboxShortcut').setValue('<')
-	WH = '        W_Hotbox ................ OK'
+	WH = '- Various Script:\n        W_Hotbox ................ OK'
 	nuke.tprint(WH)
 except:   # < Nuke 6
-	W = '         W_hotbox ................ NONE'
+	W = '- Various Script:\n         W_hotbox ................ NONE'
 	nuke.tprint(W)
 	pass
 
@@ -76,6 +76,7 @@ try:      # ALL Exist
 	import pixelfudger
 	import Dots
 	import mirrorNodes
+	import cmdExecute
 
 	import F_Backdrop
 	nukescripts.autoBackdrop = F_Backdrop.autoBackdrop # Original backdrop function replacement

@@ -17,8 +17,8 @@ F_menu = toolbar.addMenu("F_tools", icon="F_menu.png")
 ##############################################################
 #  DRAW
 ##############################################################
-F_menu.addMenu( 'Draw',  icon='Draw.png' )
-F_menu.addCommand( 'Draw/Volet', "nuke.createNode(\"Volet\")" , icon="Volet.png")
+F_menu.addMenu( 'Draw',  icon='F_draw2.png' )
+F_menu.addCommand( 'Draw/Volet', "nuke.createNode(\"Volet\")" , icon="F_volet.png")
 
 ##############################################################
 #  TIME

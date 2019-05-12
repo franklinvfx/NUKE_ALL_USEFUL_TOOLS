@@ -1,0 +1,64 @@
+Group {
+ name Write_Prism
+ knobChanged "listenedKnobs = \['task', 'comment']\n\nif nuke.thisKnob().name() in listenedKnobs:\n    print 'knobchange'\n    pcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())\n    fileName = nuke.thisNode().knob('fileName').value()\n    \n    nuke.thisNode().knob('file').setValue(fileName)\n\n    filepath = nuke.thisNode().knob('file').value()\n    imagesName = filepath.split(\"/\")\[-1]\n    imagesName = '/' + imagesName\n    \n    file = filepath.replace(imagesName, \" \")\n    \n    nuke.thisNode().knob('file').setValue(file)\n    \n    nuke.toNode('WritePrismBase').knob('file').setValue(fileName)\n\n    \n"
+ updateUI "pcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())"
+ tile_color 0xccc400ff
+ note_font Verdana
+ selected true
+ addUserKnob {20 User l WritePrism}
+ addUserKnob {1 task}
+ task WIP
+ addUserKnob {1 comment l "comment (optional)"}
+ addUserKnob {6 localOutput l "local output" +INVISIBLE +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 channels T WritePrismBase.channels}
+ addUserKnob {41 file_type l "file type" T WritePrismBase.file_type}
+ addUserKnob {41 colorspace T WritePrismBase.colorspace}
+ addUserKnob {26 ""}
+ addUserKnob {1 fileName l filepath}
+ fileName /data/gcs/F_Storage/PROD_MISSP/01_Workflow/Shots/001-020/Rendering/2dRender/WIP/v0004/shot_001-020_WIP_v0004.####.cin
+ addUserKnob {2 file +INVISIBLE}
+ file "/data/gcs/F_Storage/PROD_MISSP/01_Workflow/Shots/001-020/Rendering/2dRender/WIP/v0004 "
+ addUserKnob {22 refresh l "<img src=\":qrc/images/revert.png\">" -STARTLINE T "pcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())"}
+ addUserKnob {22 createDir l "Create Directory" T "import os\npcore.createFolder(os.path.dirname(nuke.thisNode().knob(\"fileName\").value()), showMessage=True)" +STARTLINE}
+ addUserKnob {22 openDir l "Open In Explorer" -STARTLINE T "import os\npcore.openFolder(os.path.dirname(nuke.thisNode().knob(\"fileName\").value()))"}
+ addUserKnob {22 createRead l "Create Read" -STARTLINE +INVISIBLE T "groupNode = nuke.thisNode()\n\nfilePath = nuke.thisNode().knob(\"fileName\").value()\nchannels = nuke.thisNode().knob(\"channels\").value()\nfirstFrame = nuke.root().knob('first_frame').value()\nfirstFrame = int(firstFrame)\nlastFrame = nuke.root().knob('last_frame').value()\nlastFrame = int(lastFrame)\n\nr = nuke.createNode('Read')\nr.knob(\"file\").setValue(filePath)\nr.knob(\"first\").setValue(firstFrame)\nr.knob(\"last\").setValue(lastFrame)\n\nr.setSelected(True)\n\nnuke.nodeCopy('%clipboard%')\n\n\n############################\n\n\n\n##########################\ndef updateNukeNodes():\n\tfor i in nuke.selectedNodes():\n\n\t\tcurPath = i.knob(\"file\").value()\n\n        curFile = os.path.basename(curPath)\n        passName = os.path.basename(os.path.dirname(curPath))\n        \n        if passName.startswith(\"v\") and unicode(passName\[1:5]).isnumeric():\n        \tcurVersion = passName\[:5]\n        \tpassName = \"\"\n        \ttaskPath = os.path.dirname(os.path.dirname(curPath))\n        else:\n        \tcurVersion = os.path.basename(os.path.dirname(os.path.dirname(curPath)))\[:5]\n        \ttaskPath = os.path.dirname(os.path.dirname(os.path.dirname(curPath)))\n        \n        latestVersion = self.getHighestTaskVersion(taskPath, getExisting=True, ignoreEmpty=True)\n        \n        newPath = \"\"\n        for k in os.listdir(taskPath):\n            if k.startswith(latestVersion):\n                newPath = os.path.join(taskPath, k, passName)\n                break\n                \n        newPath = os.path.join(newPath, curFile.replace(curVersion, latestVersion)).replace(\"\\\\\",\"/\")\n        \n        return newPath\n\n        #newPath = getLatestCompositingVersion(curPath)\n\n        if os.path.exists(os.path.dirname(newPath)) and not curPath.startswith(os.path.dirname(newPath)):\n            i.knob(\"file\").setValue(newPath)\n\nupdateNukeNodes()\n\n\nn = nuke.selectedNode()\nnuke.delete(n)\n\nnuke.selectAll() \nnuke.invertSelection()\n\nnodePos = ( nuke.thisNode().xpos(), nuke.thisNode().ypos()) \n\n\n\ngroupNode.end()\n\nfor node in nuke.allNodes():\n    node.setSelected(False)\n\nnuke.nodePaste('%clipboard%')\n\ngroupNode.setSelected(False)"}
+ addUserKnob {26 ""}
+ addUserKnob {22 b_startRenderLastVersion l Render -STARTLINE T "pcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())\nfileName = nuke.thisNode().knob('fileName').value()\nprint 'render'\nnuke.thisNode().knob('file').setValue(fileName)\n\nfilepath = nuke.thisNode().knob('file').value()\nimagesName = filepath.split(\"/\")\[-1]\nimagesName = '/' + imagesName\n\nfile = filepath.replace(imagesName, \" \")\n\nnuke.thisNode().knob('file').setValue(file)\n\nnuke.toNode('WritePrismBase').knob('file').setValue(fileName)\n\npcore.appPlugin.startRender(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode(), useLastVersion=True)"}
+ addUserKnob {22 b_startRender l "Render (Version UP)" -STARTLINE T "pcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())\nfileName = nuke.thisNode().knob('fileName').value()\nprint 'render'\nnuke.thisNode().knob('file').setValue(fileName)\n\nfilepath = nuke.thisNode().knob('file').value()\nimagesName = filepath.split(\"/\")\[-1]\nimagesName = '/' + imagesName\n\nfile = filepath.replace(imagesName, \" \")\n\nnuke.thisNode().knob('file').setValue(file)\n\nnuke.toNode('WritePrismBase').knob('file').setValue(fileName)\n\npcore.appPlugin.startRender(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())"}
+ addUserKnob {26 ""}
+ addUserKnob {22 b_startComputeRenderLastVersion l RenderFarm +INVISIBLE T "pcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())\nfileName = nuke.thisNode().knob('fileName').value()\nprint 'render'\nnuke.thisNode().knob('file').setValue(fileName)\n\nfilepath = nuke.thisNode().knob('file').value()\nimagesName = filepath.split(\"/\")\[-1]\nimagesName = '/' + imagesName\n\nfile = filepath.replace(imagesName, \" \")\n\nnuke.thisNode().knob('file').setValue(file)\n\nnuke.toNode('WritePrismBase').knob('file').setValue(fileName)\n\npcore.appPlugin.startCompute(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode(), useLastVersion=True)\nComputeWindow(parent=get_main_window()).show()" +STARTLINE}
+ addUserKnob {22 b_startComputeRender l "Render on Farm (Version UP)" -STARTLINE T "pcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())\nfileName = nuke.thisNode().knob('fileName').value()\nprint 'render'\nnuke.thisNode().knob('file').setValue(fileName)\n\nfilepath = nuke.thisNode().knob('file').value()\nimagesName = filepath.split(\"/\")\[-1]\nimagesName = '/' + imagesName\n\nfile = filepath.replace(imagesName, \" \")\n\nnuke.thisNode().knob('file').setValue(file)\n\nnuke.toNode('WritePrismBase').knob('file').setValue(fileName)\n\npcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())\nComputeWindow(parent=get_main_window()).show()"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -263
+  ypos -185
+ }
+ Write {
+  channels all
+  file /data/gcs/F_Storage/PROD_MISSP/01_Workflow/Shots/001-020/Rendering/2dRender/WIP/v0004/shot_001-020_WIP_v0004.####.dpx
+  file_type cin
+  create_directories true
+  checkHashOnRead false
+  version 30
+  beforeRender "try: pcore.appPlugin.getOutputPath(nuke.thisNode(), nuke.thisGroup(), render=True)\nexcept: pass"
+  afterRender "try: pcore.appPlugin.isRendering = \[False,\"\"]\nexcept: pass"
+  name WritePrismBase
+  selected true
+  xpos -263
+  ypos -123
+  addUserKnob {20 caravr l CaraVR}
+  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams "stereo cams" all}}
+  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v and not ('_left' in v or '_right' in v)]\nelif viewPreset == 3:\n  selectedViews = \[v for v in scriptViews if 'cam' in v and ('_left' in v or '_right' in v)]\nelif viewPreset == 4:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+  addUserKnob {20 tab}
+  addUserKnob {2 nodeName l name}
+  nodeName Write_Prism
+ }
+ Output {
+  name Output1
+  xpos -263
+  ypos -44
+ }
+end_group

@@ -16,7 +16,7 @@ Group {
  addUserKnob {41 colorspace T WritePrismBase.colorspace}
  addUserKnob {26 ""}
  addUserKnob {1 fileName l filepath}
- fileName /data/gcs/F_Storage/PROD_MISSP/01_Workflow/Shots/001-020/Rendering/2dRender/WIP/v0004/shot_001-020_WIP_v0004.####.cin
+ fileName D:/WORK/4_ATHERA_PROD/PROD_MISSP/01_Workflow/Shots/001-010/Rendering/2dRender/WIP/v0009/shot_001-010_WIP_v0009.####.exr
  addUserKnob {2 file +INVISIBLE}
  file "/data/gcs/F_Storage/PROD_MISSP/01_Workflow/Shots/001-020/Rendering/2dRender/WIP/v0004 "
  addUserKnob {22 refresh l "<img src=\":qrc/images/revert.png\">" -STARTLINE T "pcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())"}
@@ -39,8 +39,7 @@ Group {
  Write {
   channels all
   file /data/gcs/F_Storage/PROD_MISSP/01_Workflow/Shots/001-020/Rendering/2dRender/WIP/v0004/shot_001-020_WIP_v0004.####.dpx
-  file_type cin
-  create_directories true
+  file_type exr
   checkHashOnRead false
   version 30
   beforeRender "try: pcore.appPlugin.getOutputPath(nuke.thisNode(), nuke.thisGroup(), render=True)\nexcept: pass"

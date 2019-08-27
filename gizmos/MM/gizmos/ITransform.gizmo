@@ -1,0 +1,250 @@
+#! /usr/local/Nuke10.0v3/libnuke-10.0.3.so -nx
+version 10.0 v3
+Gizmo {
+ inputs 2
+ addUserKnob {20 "" l Transform}
+ addUserKnob {41 from0 l "control channel" T Copy4.from0}
+ addUserKnob {7 rootWarp l "root warp"}
+ rootWarp 1
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 matrix T Transform1.matrix}
+ addUserKnob {41 translate T Transform1.translate}
+ addUserKnob {41 rotate T Transform1.rotate}
+ addUserKnob {41 scale T Transform1.scale}
+ addUserKnob {41 skew +INVISIBLE T Transform1.skew}
+ addUserKnob {41 center T Transform1.center}
+ addUserKnob {41 filter T Transform1.filter}
+ addUserKnob {41 clamp T Transform1.clamp}
+ addUserKnob {41 crop l "black outside" +INVISIBLE T Transform1.crop}
+ addUserKnob {41 clip l "knob crop \$value" +INVISIBLE T Transform1.clip}
+ addUserKnob {14 AdjBBox1_numpixels l INVISIBLE +INVISIBLE R 0 100}
+ AdjBBox1_numpixels 1024
+}
+ Input {
+  inputs 0
+  name img
+  xpos -385
+  ypos -226
+ }
+set N6ecd7f0 [stack 0]
+ Dot {
+  name Dot6
+  xpos -452
+  ypos -222
+ }
+set N11324750 [stack 0]
+push $N11324750
+ Dot {
+  name Dot5
+  xpos -577
+  ypos -222
+ }
+ Transform {
+  center {1024 1024}
+  black_outside false
+  name Transform1
+  label "expresison link this\nto avoid st map overlay"
+  xpos -611
+  ypos 145
+ }
+ Dot {
+  name Dot7
+  xpos -577
+  ypos 277
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos -486
+  ypos 273
+ }
+ Input {
+  inputs 0
+  name ctrlMask
+  xpos -39
+  ypos -247
+  number 1
+ }
+set N6eb9f90 [stack 0]
+ Dot {
+  name Dot8
+  xpos 108
+  ypos -243
+ }
+ AddChannels {
+  channels alpha
+  name AddChannels1
+  xpos 74
+  ypos -192
+ }
+ Dot {
+  name Dot9
+  xpos 108
+  ypos -136
+ }
+push $N6eb9f90
+ Remove {
+  channels alpha
+  name Remove3
+  xpos -39
+  ypos -206
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos -39
+  ypos -146
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  alpha black
+  name Shuffle1
+  xpos -39
+  ypos -56
+ }
+ Multiply {
+  value {{parent.rootWarp}}
+  name Multiply1
+  xpos -39
+  ypos -30
+ }
+push $N6ecd7f0
+ Remove {
+  name Remove1
+  xpos -210
+  ypos -232
+ }
+ AdjBBox {
+  numpixels {{parent.AdjBBox1_numpixels.w} {parent.AdjBBox1_numpixels.h}}
+  name AdjBBox1
+  xpos -210
+  ypos -194
+ }
+ Expression {
+  expr0 x
+  expr1 y
+  name Expression1
+  xpos -210
+  ypos -140
+ }
+set N6ee2fd0 [stack 0]
+ Dot {
+  name Dot2
+  xpos -286
+  ypos -136
+ }
+ Transform {
+  translate {{parent.Transform1.translate} {parent.Transform1.translate}}
+  rotate {{parent.Transform1.rotate}}
+  scale {{parent.Transform1.scale} {parent.Transform1.scale}}
+  skewX {{parent.Transform1.skewX}}
+  skewY {{parent.Transform1.skewY}}
+  center {{parent.Transform1.center} {parent.Transform1.center}}
+  filter {{Transform1.filter}}
+  clamp {{parent.Transform1.clamp}}
+  black_outside {{parent.Transform1.black_outside}}
+  motionblur {{parent.Transform1.motionblur}}
+  shutter {{parent.Transform1.shutter}}
+  shutteroffset {{Transform1.shutteroffset}}
+  shuttercustomoffset {{parent.Transform1.shuttercustomoffset}}
+  name Transform2
+  xpos -320
+  ypos -72
+ }
+push $N6ee2fd0
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos -210
+  ypos -72
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos -210
+  ypos -24
+ }
+set N6f14e80 [stack 0]
+ Dot {
+  name Dot1
+  xpos -270
+  ypos -21
+ }
+ Dot {
+  name Dot3
+  xpos -270
+  ypos 162
+ }
+push $N6ecd7f0
+ Dot {
+  name Dot4
+  xpos -351
+  ypos 48
+ }
+set N6f2d9e0 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  from1 rgba.green
+  to1 rgba.green
+  name Copy2
+  xpos -385
+  ypos 144
+ }
+ IDistort {
+  channels none
+  name IDistort1
+  xpos -385
+  ypos 182
+ }
+push $N6f14e80
+push $N6f2d9e0
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy1
+  xpos -210
+  ypos 30
+ }
+ IDistort {
+  uv forward
+  name IDistort2
+  xpos -210
+  ypos 86
+ }
+ Remove {
+  channels none
+  name Remove2
+  xpos -210
+  ypos 124
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy3
+  xpos -210
+  ypos 182
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos -210
+  ypos 273
+ }
+ Output {
+  name Output1
+  xpos -210
+  ypos 325
+ }
+end_group

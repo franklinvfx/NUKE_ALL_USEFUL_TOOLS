@@ -8,7 +8,12 @@ nuke.pluginAddPath(pipe_path + './Gizmos/MM');
 nuke.pluginAddPath(pipe_path + './Gizmos/MM/gizmos');
 nuke.pluginAddPath(pipe_path + './Gizmos/MM/gonzo_gizmos');
 nuke.pluginAddPath(pipe_path + './Gizmos/MM/gonzo_icons');
-nuke.pluginAddPath(pipe_path + './Gizmos/MM/3DE4');
+
+if str(nuke.NUKE_VERSION_MAJOR)=='10':
+    nuke.pluginAddPath(pipe_path + './Gizmos/MM/10.5/3DE4');
+
+if str(nuke.NUKE_VERSION_MAJOR)=='11':
+	nuke.pluginAddPath(pipe_path + './Gizmos/MM/11.2/3DE4');
 
 
 menubar = nuke.menu("Nuke")

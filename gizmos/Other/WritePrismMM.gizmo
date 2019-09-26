@@ -1,0 +1,173 @@
+BackdropNode {
+inputs 0
+name REFORMAT_BackdropNode1
+tile_color 0x2b262eff
+label "<\[value position]>\[value text]\[if \{\[value text]==\"\"\}  \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\}  \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+note_font "Verdana Bold Bold Bold Bold Bold Bold"
+note_font_size 20
+selected true
+xpos -572
+ypos -477
+bdwidth 140
+bdheight 234
+addUserKnob {20 FT l BackdropNode}
+addUserKnob {1 text l Text}
+text REFORMAT
+addUserKnob {4 position l "" -STARTLINE M {left Center}}
+position Center
+addUserKnob {26 S01 l " " T " "}
+addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef grow(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()-step)\n            n\['ypos'].setValue(n\['ypos'].getValue()-step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()+step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()+step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\ngrow(n,50)"}
+addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef shrink(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()+step)\n            n\['ypos'].setValue(n\['ypos'].getValue()+step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()-step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()-step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\nshrink(n,50)"}
+addUserKnob {22 colorandom l " <img src=\"ColorBars.png\">" -STARTLINE T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )"}
+addUserKnob {22 red l " <img src=\"F_r.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.0, 0.77, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 orange l " <img src=\"F_o.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.1, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 yellow l " <img src=\"F_y.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.16, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 green l " <img src=\"F_g.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.33, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 cyan l " <img src=\"F_c.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.46, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 blue l " <img src=\"F_b.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.6, 0.7, 0.76]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 darkblue l " <img src=\"F_db.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.67, 0.74, 0.6]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 magenta l " <img src=\"F_m.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.8, 0.74, 0.65]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 pink l " <img src=\"F_p.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.92, 0.74, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+}
+BackdropNode {
+inputs 0
+name WRITE_BackdropNode2
+tile_color 0xcc2e2eff
+label "<\[value position]>\[value text]\[if \{\[value text]==\"\"\}  \{return \"\[knob this.name \[python \{nuke.thisNode().name().split('_')\[-1]\}]]\"\}  \{return \"\[knob this.name \"\[value text]_\[python \{nuke.thisNode().name().split('_')\[-1]\}]\"]\"\}]"
+note_font "Verdana Bold Bold Bold Bold Bold Bold"
+note_font_size 30
+selected true
+xpos -572
+ypos -225
+bdwidth 140
+bdheight 220
+addUserKnob {20 FT l BackdropNode}
+addUserKnob {1 text l Text}
+text WRITE
+addUserKnob {4 position l "" -STARTLINE M {left Center}}
+position Center
+addUserKnob {26 S01 l " " T " "}
+addUserKnob {22 grow l " <img src=\"F_scalep.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef grow(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()-step)\n            n\['ypos'].setValue(n\['ypos'].getValue()-step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()+step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()+step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\ngrow(n,50)"}
+addUserKnob {22 shrink l " <img src=\"F_scalem.png\">" -STARTLINE T "n=nuke.thisNode()\n\ndef shrink(node=None,step=50):\n    try:\n        if not node:\n            n=nuke.selectedNode()\n        else:\n            n=node\n            n\['xpos'].setValue(n\['xpos'].getValue()+step)\n            n\['ypos'].setValue(n\['ypos'].getValue()+step)\n            n\['bdwidth'].setValue(n\['bdwidth'].getValue()-step*2)\n            n\['bdheight'].setValue(n\['bdheight'].getValue()-step*2)\n    except Exception,e:\n        print('Error:: %s' % e)\n\nshrink(n,50)"}
+addUserKnob {22 colorandom l " <img src=\"ColorBars.png\">" -STARTLINE T "import colorsys, random\nn=nuke.thisNode()\nR,G,B= colorsys.hsv_to_rgb(random.random(),.1+random.random()*.15,.15+random.random()*.15)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ) )"}
+addUserKnob {22 red l " <img src=\"F_r.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.0, 0.77, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 orange l " <img src=\"F_o.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.1, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 yellow l " <img src=\"F_y.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.16, 0.8, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 green l " <img src=\"F_g.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.33, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 cyan l " <img src=\"F_c.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.46, 0.8, 0.7]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 blue l " <img src=\"F_b.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.6, 0.7, 0.76]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 darkblue l " <img src=\"F_db.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.67, 0.74, 0.6]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 magenta l " <img src=\"F_m.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.8, 0.74, 0.65]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+addUserKnob {22 pink l " <img src=\"F_p.png\">" -STARTLINE T "import colorsys\nn=nuke.thisNode()\nR,G,B= \[0.92, 0.74, 0.8]\nR,G,B=colorsys.hsv_to_rgb(R,G,B)\nn\['tile_color'].setValue( int('%02x%02x%02x%02x' % (R*255,G*255,B*255,255), 16 ))\n"}
+}
+push $cut_paste_input
+Log2Lin {
+operation lin2log
+name Log2Lin1
+selected true
+xpos -542
+ypos -371
+}
+Reformat {
+format "2048 1152 0 0 2048 1152 1 GSTAR_OUT"
+filter Lanczos6
+name Reformat5
+selected true
+xpos -542
+ypos -345
+}
+Log2Lin {
+name Log2Lin2
+selected true
+xpos -542
+ypos -307
+}
+Write {
+file W:/G_STAR/02_PROD/Shots/01.GSTAR.CL-SH0010/Rendering/2dRender/WIP/v0009/shot_01GSTARCL-SH0010_WIP_v0009.####.exr
+colorspace sRGB
+file_type exr
+first_part none
+create_directories true
+name Write1
+knobChanged "listenedKnobs = \['task', 'comment']\n\nif nuke.thisKnob().name() in listenedKnobs:\n    nuke.thisNode().knob('refresh').execute()\n    '''\n    nuke.toNode(\"LINKED\").knob('refresh').execute()\n    opath = nuke.toNode(\"LINKED\").knob('fileName').value()\n    nuke.thisNode().knob('file').setValue(opath)\n    '''"
+selected true
+xpos -542
+ypos -105
+addUserKnob {20 tab l Prism}
+addUserKnob {41 task T LINKED.task}
+addUserKnob {41 comment l "comment (optional)" T LINKED.comment}
+addUserKnob {26 ""}
+addUserKnob {41 channels_1 l channels T Write1.channels}
+addUserKnob {41 file_type_1 l "file type" T Write1.file_type}
+addUserKnob {41 colorspace_1 l colorspace T Write1.colorspace}
+addUserKnob {26 ""}
+addUserKnob {41 file_1 l file T Write1.file}
+addUserKnob {22 refresh T "nuke.toNode(\"LINKED\").knob('refresh').execute()\nopath = nuke.toNode(\"LINKED\").knob('fileName').value()\nnuke.thisNode().knob('file').setValue(opath)" +STARTLINE}
+addUserKnob {41 createDir l "Create directory" -STARTLINE T LINKED.createDir}
+addUserKnob {41 openDir l "Open in explorer" -STARTLINE T LINKED.openDir}
+addUserKnob {26 ""}
+addUserKnob {41 b_startRender l Render T LINKED.b_startRender}
+addUserKnob {41 b_startRenderLastVersion l "Render as previous version" -STARTLINE T LINKED.b_startRenderLastVersion}
+addUserKnob {26 ""}
+addUserKnob {22 RenderFarm T "nuke.toNode(\"LINKED\").knob('refresh').execute()\nopath = nuke.toNode(\"LINKED\").knob('fileName').value()\nnuke.toNode(\"LINKED\").knob('file').setValue(opath)\nnuke.thisNode().knob('file').setValue(opath)\n\nnuke.load('rrSubmit_Nuke_5'), rrSubmit_Nuke()" +STARTLINE}
+addUserKnob {22 RenderFarmPrevious l "RenderFarm previous version" -STARTLINE T "nuke.toNode(\"LINKED\").knob('refresh').execute()\nopath = nuke.toNode(\"LINKED\").knob('file').value()\nnuke.thisNode().knob('file').setValue(opath)\n\nnuke.load('rrSubmit_Nuke_5'), rrSubmit_Nuke()"}
+}
+Group {
+name LINKED
+knobChanged "listenedKnobs = \['task', 'comment']\n\nif nuke.thisKnob().name() in listenedKnobs:\n    pcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())\n    opath = nuke.thisNode().knob('fileName').value()\n    nuke.thisNode().knob('file').setValue(opath)\n    nuke.toNode(\"Write1\").knob('file').setValue(opath)"
+tile_color 0xffee00ff
+note_font Verdana
+note_font_size 1
+selected true
+xpos -542
+ypos -53
+icon F_zebrar.png
+hide_input true
+addUserKnob {20 User l WritePrism}
+addUserKnob {1 task}
+task WIP
+addUserKnob {1 comment l "comment (optional)"}
+addUserKnob {6 localOutput l "local output" +INVISIBLE +STARTLINE}
+addUserKnob {26 ""}
+addUserKnob {41 channels T WritePrismBase.channels}
+addUserKnob {41 file_type l "file type" T Write1.file_type_1}
+addUserKnob {41 colorspace T WritePrismBase.colorspace}
+addUserKnob {26 ""}
+addUserKnob {1 fileName l filepath}
+fileName W:/G_STAR/02_PROD/Shots/01.GSTAR.CL-SH0010/Rendering/2dRender/WIP/v0009/shot_01GSTARCL-SH0010_WIP_v0009.####.exr
+addUserKnob {41 file T WritePrismBase.file}
+addUserKnob {22 refresh T "pcore.appPlugin.getOutputPath(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())" +STARTLINE}
+addUserKnob {22 createDir l "Create directory" -STARTLINE T "import os\npcore.createFolder(os.path.dirname(nuke.thisNode().knob(\"fileName\").value()), showMessage=True)"}
+addUserKnob {22 openDir l "Open in explorer" -STARTLINE T "import os\npcore.openFolder(os.path.dirname(nuke.thisNode().knob(\"fileName\").value()))"}
+addUserKnob {26 ""}
+addUserKnob {22 b_startRender l Render T "opath = nuke.thisGroup().knob(\"fileName\").toScript()\nnuke.toNode('WritePrismBase').knob('file').setValue(opath)\n\npcore.appPlugin.startRender(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode())" +STARTLINE}
+addUserKnob {22 b_startRenderLastVersion l "Render as previous version" -STARTLINE T "#opath = pcore.appPlugin.getOutputPath(nuke.thisNode(), nuke.thisGroup())\n#nuke.toNode('WritePrismBase').knob('file').setValue(opath)\npcore.appPlugin.startRender(nuke.thisNode().node(\"WritePrismBase\"), nuke.thisNode(), useLastVersion=True)"}
+addUserKnob {26 ""}
+}
+Input {
+inputs 0
+name Input
+xpos -263
+ypos -185
+}
+Write {
+file W:/G_STAR/02_PROD/Shots/01.GSTAR.CL-SH0010/Rendering/2dRender/WIP/v0008/shot_01GSTARCL-SH0010_WIP_v0008.####.exr
+colorspace sRGB
+file_type exr
+first_part none
+create_directories true
+version 34
+beforeRender "try: pcore.appPlugin.getOutputPath(nuke.thisNode(), nuke.thisGroup(), render=True)\nexcept: pass"
+afterRender "try: pcore.appPlugin.isRendering = \[False,\"\"]\nexcept: pass"
+name WritePrismBase
+selected true
+xpos -263
+ypos -130
+addUserKnob {20 tab l Prism}
+}
+Output {
+name Output1
+xpos -263
+ypos -44
+}
+end_group

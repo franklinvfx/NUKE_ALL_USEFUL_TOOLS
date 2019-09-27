@@ -26,6 +26,8 @@ nuke.knobDefault("BackdropNode.note_font", "bold")
 #nuke.knobDefault("Read.before", "3")
 #nuke.knobDefault("Read.after", "3")
 #nuke.knobDefault("Read.on_error", "1")
+nuke.knobDefault("Write.beforeRender", "import nuke, os\nnuke.scriptSave()\n\nsrc = nuke.root().knob('name').value()\nfileName = src.split('/')[-1]\nfilePath = nuke.thisNode().knob('file').value()\nseqName = filePath.split('/')[-1]\ndst = filePath.replace(seqName ,'')\nfileDirectory = dst + fileName\n\ntry:\n    os.remove(fileDirectory)\nexcept:\n    pass\n\nfrom shutil import copy\ncopy(src, dst)\n\nfrom datetime import datetime\nnow = datetime.now()\n\ndate_time = now.strftime(\"%m-%d-%Y_%H%M%S\")\nsrcNameModified = fileDirectory.replace('.nk', '_' + date_time + '.nk')\nprint fileDirectory\nprint srcNameModified\nos.rename(fileDirectory, srcNameModified)\n\nprint 'Save a backup of the current script here:'\n\nprint ' - ' + srcNameModified")
+nuke.knobDefault("Write.create_directories", "True")
 
 #############################################################
 # PRINT IN NODE LABEL

@@ -2,7 +2,7 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Convert 
+# NAME: Convert
 #
 #----------------------------------------------------------------------------------------------------------
 
@@ -18,18 +18,18 @@ emptySelection(selection)
 for i in selection:
     postion = [i.xpos()-i.screenWidth()/2,i.ypos()]
     
-    Oflow = nuke.createNode("OFlow2")
-    Oflow.knob('timing2').setExpression(name +'.timing2')
-    Oflow.knob('input.first').setExpression(name +'.input.first')
-    Oflow.knob('input.last').setExpression(name +'.input.last')
-    Oflow.knob('timingOutputSpeed').setExpression(name +'.timingOutputSpeed')
-    Oflow.knob('timingInputSpeed').setExpression(name +'.timingInputSpeed')
-    Oflow.knob('interpolation').setExpression(name +'.interpolation')
-    Oflow.knob('timingFrame2').setExpression(name +'.timingFrame2')
-    Oflow.knob('label').setValue('(' + name + ')')
-    Oflow.setXpos(postion[0]+200-Oflow.screenWidth()/2)
-    Oflow.setYpos(postion[1])
-    Oflow.knob('selected').setValue(False)
+    kro = nuke.createNode("Kronos")
+    kro.knob('timing2').setExpression(name +'.timing2')
+    kro.knob('input.first').setExpression(name +'.input.first')
+    kro.knob('input.last').setExpression(name +'.input.last')
+    kro.knob('timingOutputSpeed').setExpression(name +'.timingOutputSpeed')
+    kro.knob('timingInputSpeed').setExpression(name +'.timingInputSpeed')
+    kro.knob('interpolation').setExpression(name +'.interpolation')
+    kro.knob('timingFrame2').setExpression(name +'.timingFrame2')
+    # kro.knob('label').setValue('(' + name + ')')
+    kro.setXpos(postion[0]+200-kro.screenWidth()/2)
+    kro.setYpos(postion[1])
+    kro.knob('selected').setValue(False)
     
     try:
         Twix = nuke.createNode("OFXcom.revisionfx.twixtorpro_v5")
@@ -45,7 +45,6 @@ for i in selection:
         pass
 
     if i.knob('timing2').value() == 'Frame':
-        print 'tttt'
         Twarp = nuke.createNode("TimeWarp")
         Twarp.knob('lookup').setExpression(name +'.timingFrame2')
         Twarp.knob('label').setValue('(' + name + ')')

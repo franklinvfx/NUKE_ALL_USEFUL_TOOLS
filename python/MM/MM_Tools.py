@@ -9,6 +9,12 @@ nuke.pluginAddPath(pipe_path + './Gizmos/MM/gizmos');
 nuke.pluginAddPath(pipe_path + './Gizmos/MM/gonzo_gizmos');
 nuke.pluginAddPath(pipe_path + './Gizmos/MM/gonzo_icons');
 
+if str(nuke.NUKE_VERSION_MAJOR)=='10':
+    nuke.pluginAddPath(pipe_path + './Gizmos/MM/10.5/3DE4');
+
+if str(nuke.NUKE_VERSION_MAJOR)=='11':
+	nuke.pluginAddPath(pipe_path + './Gizmos/MM/11.2/3DE4');
+
 
 menubar = nuke.menu("Nuke")
 toolbar = nuke.toolbar("Nodes")
@@ -37,6 +43,9 @@ m.addCommand("L_Despill_v05", "nuke.createNode(\"L_Despill_v05.gizmo\")", icon="
 m.addCommand("L_Fuse_v06", "nuke.createNode(\"L_Fuse_v06.gizmo\")", icon="icon.png")
 m.addCommand("LumaKeyer", "nuke.createNode(\"LumaKeyer.gizmo\")", icon="icon.png")
 m.addCommand("CardToTrack", "nuke.createNode(\"CardToTrack.gizmo\")", icon="my.png")
+m.addCommand("fxT_chromaticAberration", "nuke.createNode(\"fxT_chromaticAberration.gizmo\")", icon="icon.png")
+m.addCommand("ITransform", "nuke.createNode(\"ITransform.gizmo\")", icon="icon.png")
+
 
 
 
@@ -67,11 +76,12 @@ try:      # 3DE Exist
 	nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Standard_Degree_4", "nuke.createNode('LD_3DE4_Radial_Standard_Degree_4')")
 	nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Fisheye_Degree_8", "nuke.createNode('LD_3DE4_Radial_Fisheye_Degree_8')")
 	nuke.menu("Nodes").addCommand("3DE4/LD_3DE_Classic_LD_Model", "nuke.createNode('LD_3DE_Classic_LD_Model')")
-	DE1 = '- Machine Molle 3DE ............. OK'
+	DE1 = '- 3DE ........................... OK'
 	nuke.tprint(DE1)
 except:   # 3DE Don't exist
-	DE2 = '- Machine Molle 3DE ............. FALSE'
+	DE2 = '- 3DE ........................... FALSE'
 	nuke.tprint(DE2)
+	##############################           #
 	pass
 
 
